@@ -9,5 +9,5 @@ Hier ein kurzes Beispiel, wie du ein Tutorial direkt in eine Markdown-Seite einf
 
 <div class="tutorial-embed"
    data-tutorial="/assets/tutorials/vendor_demo"
-   style="width:900px">
+   style="width:800px">
 </div>
