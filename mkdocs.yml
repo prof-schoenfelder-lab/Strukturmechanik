@@ -1,0 +1,24 @@
+site_name: ANSYS Tutorials – Vendor Import Demo
+theme:
+  name: material
+  language: de
+  features:
+    - navigation.tabs
+    - toc.integrate
+markdown_extensions:
+  - admonition
+  - pymdownx.arithmatex:
+      generic: true
+  - toc:
+      permalink: true
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - 'assets/tutorials/player.js'
+  - 'assets/tutorials/player-bootstrap.js'
+  
+extra_css:
+  - 'assets/tutorials/player.css'
+  - 'styles/overrides.css'
+nav:
+  - Start: index.md
+
