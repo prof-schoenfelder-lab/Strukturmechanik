@@ -22,11 +22,14 @@ Die MkDocs-Dokumentation wird automatisch auf GitHub Pages bereitgestellt. Bei j
 
 1. Der Workflow installiert Python und die erforderlichen MkDocs-Pakete
 2. Erstellt die statische Website mit `mkdocs build`
-3. Deployed die Website auf GitHub Pages
+3. Erstellt eine `.nojekyll`-Datei (wichtig für die korrekte Darstellung aller Assets)
+4. Deployed die Website auf GitHub Pages
 
 Die Website ist dann verfügbar unter: `https://<username>.github.io/<repository>/`
 
 **Hinweis:** Beim ersten Deployment muss in den Repository-Einstellungen unter **Settings → Pages** die Source auf "GitHub Actions" gesetzt werden.
+
+**Wichtig:** Die `.nojekyll`-Datei stellt sicher, dass GitHub Pages die Website nicht mit Jekyll verarbeitet, was dazu führen kann, dass Bilder und andere Assets nicht korrekt angezeigt werden.
 
 ## Default-Höhe einstellen
 
@@ -133,6 +136,7 @@ extra_css:
 ## Troubleshooting (häufige Probleme)
 
 - 404 auf `imported.json` oder Bilder: prüfe, ob `imported.json` und `img/` im richtigen `docs/...`-Pfad liegen (in diesem Repo: `docs/assets/tutorials/<folder>/`).
+- Bilder werden auf GitHub Pages nicht angezeigt: Der Workflow erstellt automatisch eine `.nojekyll`-Datei. Falls Bilder trotzdem nicht sichtbar sind, überprüfe die Browser-Konsole auf Fehler.
 - Browser-Cache: harte Neuladung (Cmd+Shift+R) oder Inkognito-Fenster benutzen.
 - Alte `mkdocs serve` Instanz: beende den Prozess und starte `mkdocs serve` neu.
 - Wenn der Player falsche Pfade probiert: setze `jsonUrl` explizit auf `/assets/tutorials/<folder>/imported.json` im Embed (oder im `TutorialPlayer.init`).
