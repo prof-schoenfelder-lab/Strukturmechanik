@@ -16,6 +16,18 @@ Kurz: Die Spieler-Assets liegen in `docs/assets/tutorials/`. Tutorial-Content (B
 
 Beim Build kopiert MkDocs alles unter `docs/` nach `site/` — daher werden die Assets beim Deploy mitgenommen.
 
+## GitHub Pages Deployment
+
+Die MkDocs-Dokumentation wird automatisch auf GitHub Pages bereitgestellt. Bei jedem Push auf den `main`-Branch wird der GitHub Actions Workflow `.github/workflows/deploy-mkdocs.yml` ausgeführt:
+
+1. Der Workflow installiert Python und die erforderlichen MkDocs-Pakete
+2. Erstellt die statische Website mit `mkdocs build`
+3. Deployed die Website auf GitHub Pages
+
+Die Website ist dann verfügbar unter: `https://<username>.github.io/<repository>/`
+
+**Hinweis:** Beim ersten Deployment muss in den Repository-Einstellungen unter **Settings → Pages** die Source auf "GitHub Actions" gesetzt werden.
+
 ## Default-Höhe einstellen
 
 Es gibt drei einfache Wege, die Höhe des Players zu setzen:
