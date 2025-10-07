@@ -1,0 +1,41 @@
+/* HERO oben */
+.hero { text-align:center; margin:0 0 1.5rem; }
+.hero img {
+  display:block; margin-inline:auto; max-width:min(100%, 1200px);
+  border-radius:.5rem; box-shadow:var(--md-shadow-z2);
+}
+
+/* H1 nur auf Startseite verstecken (per Marker .page--home) */
+.md-content:has(.page--home) .md-content__inner > h1:first-of-type { display:none; }
+
+/* Cards: Grundstil + Hover */
+.grid.cards > ul > li {
+  position:relative; border-radius:1rem;
+  box-shadow:var(--md-shadow-z2);
+  transition:transform .08s ease, box-shadow .08s ease;
+}
+.grid.cards > ul > li:hover { transform:translateY(-1px); box-shadow:var(--md-shadow-z3); }
+
+/* Vollflächiger Link */
+.grid.cards > ul > li > a.card-link {
+  position:absolute; inset:0; z-index:3; border-radius:inherit;
+  text-indent:-9999px; overflow:hidden; cursor:pointer;
+}
+.grid.cards > ul > li > a.card-link:focus-visible {
+  outline:3px solid var(--md-accent-fg-color); outline-offset:3px;
+}
+
+/* Deaktivierte Karten optisch & funktional aus */
+.grid.cards > ul > li > a.card-link[aria-disabled="true"] { pointer-events:none; }
+.grid.cards > ul > li:has(> a.card-link[aria-disabled="true"]) { opacity:.6; cursor:default; }
+
+/* Elemente über dem Overlay weiterhin klickbar */
+.grid.cards > ul > li .keep-clickable { position:relative; z-index:4; }
+
+/* Bild oben in der Karte */
+.grid.cards .card-thumb {
+  width:100%; height:auto; display:block; border-radius:.75rem; margin:0 0 .6rem 0;
+}
+
+/* Trennlinie in der Karte */
+.grid.cards li > hr { margin:.4rem 0 .6rem; opacity:.6; }

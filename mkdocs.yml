@@ -1,5 +1,17 @@
 site_name: Angewandte FEM in der Strukturmechanik
 theme:
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
   name: material
   language: de
   features:
@@ -7,13 +19,25 @@ theme:
     - navigation.tracking
     - navigation.tabs
     - navigation.sections
-    - navigation.expand
     - navigation.path
+    - navigation.indexes
     - navigation.top
+    - navigation.footer
     - content.code.copy
+    - search.suggest
+    - search.highlight
+    - content.footer
 
 plugins:
-  - glightbox
+  - glightbox:
+      skip_classes:
+        - no-lightbox
+  - macros
+  - search
+  - git-revision-date-localized:
+      type: timeago
+      locale: de
+      fallback_to_build_date: true
 
 markdown_extensions:
   - toc:
@@ -26,27 +50,43 @@ markdown_extensions:
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
   - md_in_html
+  - attr_list
+  - admonition
 
 extra_javascript:
   - javascripts/mathjax.js
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
-  - 'assets/tutorials/player.js'
-  - 'assets/tutorials/player-bootstrap.js'
-  
+  - "assets/tutorials/player.js"
+  - "assets/tutorials/player-bootstrap.js"
+
 extra_css:
-  - 'assets/tutorials/player.css'
-  - 'styles/overrides.css'
-  - 'styles/steps.css'
+  - "assets/tutorials/player.css"
+  - "styles/overrides.css"
+  - "styles/steps.css"
+  - "styles/home.css"
 nav:
   - Home: index.md
   - EINFÜHRUNG:
-        - Lernziele: Einfuehrung/Lernziele.md
-        - GRUNDLAGEN:
-            - Grundprinzipien der Finite-Elemente-Methode: Einfuehrung/Grundlagen/Grundprinzipien-FEM.md
-            - Simulationssoftware: Einfuehrung/Grundlagen/Software.md
-        - VORZEIGEBEISPIELE:
-            - zweiseitig gelagerter Balken: Einfuehrung/Vorzeigebeispiele/zweiseitig-gelagerter-balken/README.md
+      - P1_Einfuehrung/README.md
+      - GRUNDLAGEN:
+          - Grundprinzipien der Finite-Elemente-Methode: P1_Einfuehrung/01_Grundlagen/Grundprinzipien-FEM.md
+          - Simulationssoftware: P1_Einfuehrung/01_Grundlagen/Software.md
+      - LÖSUNGSBEISPIEL:
+          - Aufgabenstellung: P1_Einfuehrung/02_Vorzeigebeispiele/zweiseitig-gelagerter-balken/Aufgabenstellung.md # = index
+          - Lösung mit ANSYS:
+              - P1_Einfuehrung/02_Vorzeigebeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/README.md
+              - Material: P1_Einfuehrung/02_Vorzeigebeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/material.md
+              - Geometrie: P1_Einfuehrung/02_Vorzeigebeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/geometrie.md
+              - Vernetzung: P1_Einfuehrung/02_Vorzeigebeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/vernetzung.md
+              - Lagerung und Lasten: P1_Einfuehrung/02_Vorzeigebeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/lagerung-und-lasten.md
+              - Materialzuordnung: P1_Einfuehrung/02_Vorzeigebeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/materialzuordnung.md
+              - Gleichungssystem lösen: P1_Einfuehrung/02_Vorzeigebeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/gleichungssystem-losen.md
+              - Gesuchte Werte bestimmen: P1_Einfuehrung/02_Vorzeigebeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/gesuchte-werte-bestimmen.md
+          - Analytische Lösung: P1_Einfuehrung/02_Vorzeigebeispiele/zweiseitig-gelagerter-balken/analytische-loesung.md

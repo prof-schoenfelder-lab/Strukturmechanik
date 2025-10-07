@@ -165,7 +165,3 @@ extra_css:
   });
 </script>
 ```
-
----
-
-Wenn du willst, schreibe ich noch ein kurzes Beispielskript, das automatisch alle `docs/assets/<folder>/imported.json`-Tutorials listet, oder ich ergänze eine kleine Testseite im `docs/` mit eingebettetem Player. Welche Ergänzung hättest du gern?
