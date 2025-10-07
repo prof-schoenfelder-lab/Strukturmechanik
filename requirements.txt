@@ -1,0 +1,6 @@
+mkdocs
+mkdocs-material
+pymdown-extensions
+mkdocs-macros-plugin
+mkdocs-glightbox
+mkdocs-git-revision-date-localized-plugin
