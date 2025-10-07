@@ -31,9 +31,6 @@ theme:
     - content.footer
 
 plugins:
-  - glightbox:
-      skip_classes:
-        - no-lightbox
   - macros
   - search
   - git-revision-date-localized:
