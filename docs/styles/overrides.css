@@ -18,3 +18,13 @@
 /* Example: per-embed override
 <div class="tutorial-embed" data-tutorial="/assets/tutorials/vendor_demo" style="--tp-max-width:800px; --tp-fixed-height:420px"></div>
 */
+
+/* Deaktiviert die Einklappbarkeit der Navigation */
+.md-nav__item--nested > input {
+  display: none;
+}
+
+/* Stellt sicher, dass alle Navigationselemente sichtbar sind */
+.md-nav__item--nested > .md-nav__list {
+  display: block;
+}

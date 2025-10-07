@@ -1,24 +1,52 @@
-site_name: ANSYS Tutorials – Vendor Import Demo
+site_name: Angewandte FEM in der Strukturmechanik
 theme:
   name: material
   language: de
   features:
+    - toc.follow
+    - navigation.tracking
     - navigation.tabs
-    - toc.integrate
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - content.code.copy
+
+plugins:
+  - glightbox
+
 markdown_extensions:
-  - admonition
+  - toc:
+      permalink: True
+  - pymdownx.tasklist:
+      clickable_checkbox: true
   - pymdownx.arithmatex:
       generic: true
-  - toc:
-      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - md_in_html
+
 extra_javascript:
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
   - 'assets/tutorials/player.js'
   - 'assets/tutorials/player-bootstrap.js'
   
 extra_css:
   - 'assets/tutorials/player.css'
   - 'styles/overrides.css'
+  - 'styles/steps.css'
 nav:
-  - Start: index.md
-
+  - Home: index.md
+  - EINFÜHRUNG:
+        - Lernziele: Einfuehrung/Lernziele.md
+        - GRUNDLAGEN:
+            - Grundprinzipien der Finite-Elemente-Methode: Einfuehrung/Grundlagen/Grundprinzipien-FEM.md
+            - Simulationssoftware: Einfuehrung/Grundlagen/Software.md
+        - VORZEIGEBEISPIELE:
+            - zweiseitig gelagerter Balken: Einfuehrung/Vorzeigebeispiele/zweiseitig-gelagerter-balken/README.md

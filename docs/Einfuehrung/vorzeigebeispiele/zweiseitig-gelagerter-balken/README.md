@@ -1,30 +1,37 @@
----
-icon: file-circle-plus
----
-
 # zweiseitig gelagerter Balken
 
 Als einfaches Beispiel starten wir mit einem zweiseitig gelagerten Balken mit Linienlast. Dieser ist in der Geometrie leicht zu erstellen und wir können die Lösungen leicht mit analytischen Gleichungen überprüfen.
 
-{% include "../../.gitbook/includes/p1-bsp1.md" %}
+<figure style="text-align:center;">
+    <img src="images/Aufgabenstellung.png" alt="Aufgabenstellung" width="500">
+</figure>
 
-### **Material**
+## Material
 
-{% include "../../.gitbook/includes/p1-bsp1-material.md" %}
+Stahl
 
-### **Geometrie**
+- Elastizitätsmodul $E=200 \mathrm{GPa}$
+- Querkontraktionszahl $\nu=0,3$
 
-{% include "../../.gitbook/includes/p1-bsp1-geometrie.md" %}
+## Geometrie
 
-### **Vernetzung**
+Balken mit rechteckigem Querschnitt
 
-{% include "../../.gitbook/includes/p1-bsp1-netz.md" %}
+- Länge $L=1000 \mathrm{~mm}$
+- Breite $b=30 \mathrm{~mm}$
+- Breite $h=30 \mathrm{~mm}$
 
-### **Randbedingungen (Lagerung und Belastung)**
+## Vernetzung
 
-{% include "../../.gitbook/includes/p1-bsp1-randbedingungen.md" %}
+- Netzgröße global: 15 mm
 
-### Gesucht
+## Randbedingungen (Lagerung und Belastung)
 
-{% include "../../.gitbook/includes/p1-bsp1-gesucht.md" %}
+- Loslager auf der linken Seite
+- Festlager auf der rechten Seite
+- Flächenlast $q_0=1000 \mathrm{~N}$
 
+## Gesucht
+
+1. Die maximale Durchbiegung $u_{\max }$
+2. Die maximale Spannung in y-Richtung $\sigma_{y, \max }$
