@@ -1,5 +1,7 @@
 site_name: Angewandte FEM in der Strukturmechanik
+copyright: Copyright &copy; 2025 Felix Kaule & Stephan Schönfelder
 theme:
+  logo: assets/images/HTWK_white_text.png
   palette:
     # Palette toggle for light mode
     - scheme: default

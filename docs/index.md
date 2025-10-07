@@ -1,6 +1,6 @@
 ---
 icon: material/home
-title: ""
+title: Angewandte FEM in der Strukturmechanik
 hide:
   - title
   - navigation
