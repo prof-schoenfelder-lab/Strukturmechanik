@@ -157,7 +157,12 @@ function resolveImageUrlGlobal(imgPath){
         // join relative to jsonBase
         try{ candidateImage = new URL(candidateImage, location.origin + jsonBase).pathname; }catch(e){}
       }
-      tmp.src = (typeof resolveImageUrl === 'function' ? resolveImageUrl(candidateImage) : resolveImageUrlGlobal(candidateImage));
+      // Compute final src using resolver and log it for debugging
+      try{
+        const finalSrc = (typeof resolveImageUrl === 'function' ? resolveImageUrl(candidateImage) : resolveImageUrlGlobal(candidateImage));
+        console.log('tutorial player: step', i, 'image candidate="' + candidateImage + '" -> resolved="' + finalSrc + '"');
+        tmp.src = finalSrc;
+      }catch(e){ tmp.src = (typeof resolveImageUrl === 'function' ? resolveImageUrl(candidateImage) : resolveImageUrlGlobal(candidateImage)); }
       bar.style.width = ((i+1)/data.steps.length*100).toFixed(2) + '%';
       clearTimeout(timer);
       if(playing){ const dur = step.duration_ms ?? data.default_duration_ms ?? 1800; timer = setTimeout(next, dur); }
@@ -214,6 +219,8 @@ function resolveImageUrlGlobal(imgPath){
           jsonBase = p.replace(/\/[^\/]*$/, '/');
         }
       }catch(e){ jsonBase = null; }
+      // Debug: report where the JSON was loaded from and the derived base path for images
+      try{ console.log('tutorial player: loaded json from', path, '-> jsonBase=', jsonBase); }catch(e){}
       i=0; playing=false; if(titleEl && data && data.title) titleEl.textContent = data.title; render(); if(cfg.zoom) setZoom(parseFloat(cfg.zoom));
     }).catch(err=>{ console.error('player load error',err); const dbg = document.createElement('div'); dbg.style.marginTop='8px'; dbg.style.fontSize='0.85em'; dbg.style.color='#a00'; dbg.textContent = 'Getestete Pfade: ' + candidates.join(' | '); try{ root.appendChild(dbg); }catch(e){} });
 
@@ -224,4 +231,3 @@ function resolveImageUrlGlobal(imgPath){
 
 })(window);
 
- 
