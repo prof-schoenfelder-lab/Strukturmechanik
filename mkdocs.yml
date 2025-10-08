@@ -66,9 +66,9 @@ markdown_extensions:
         - docs
       check_paths: true
   - pymdownx.pathconverter:
-      base_path: docs # dein docs-Verzeichnis
+      base_path: . # use current docs dir (avoid prefixing with '/docs')
       relative_path: . # relativ zur aktuellen Seite umschreiben
-      absolute: true # auch /absolute/pfade konvertieren
+      absolute: false # avoid converting to leading-absolute paths like '/docs/...'
   - pymdownx.superfences
   - md_in_html
   - attr_list
