@@ -26,8 +26,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // assume the last path part is the examples folder name
         const folder = parts.length ? parts[parts.length-1] : '';
         if(!folder) return;
-  // prefer assets/tutorials path where player assets & tutorials live under docs/assets/tutorials
-  jsonUrl = '/assets/tutorials/' + folder + '/imported.json';
+        // prefer to resolve the tutorial JSON relative to this bootstrap script's location
+        // this avoids leading-root paths ("/assets/...") breaking on project pages hosted under a subpath
+        try{
+          const scriptSrc = (document.currentScript && document.currentScript.src) || document.currentScript || '';
+          if(scriptSrc){
+            // derive the base folder where this script lives, typically .../assets/tutorials/
+            const base = scriptSrc.replace(/\/player-bootstrap\.js(\?.*)?$/, '/') ;
+            jsonUrl = new URL(folder + '/imported.json', base).href;
+          } else {
+            jsonUrl = '/assets/tutorials/' + folder + '/imported.json';
+          }
+        }catch(e){
+          jsonUrl = '/assets/tutorials/' + folder + '/imported.json';
+        }
       }
 
       // apply per-embed CSS overrides if provided
