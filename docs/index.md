@@ -16,7 +16,7 @@ hide:
 
 <div class="grid cards" markdown>
 
---   <a class="card-link" href="P1_Einfuehrung/">
+-   <a class="card-link" href="P1_Einfuehrung/">
         __Praktikum 1<br>:material-rocket-launch: Einführung in ANSYS Workbench__{ .xxxl .middle .center }
         <figure style="text-align:center;">
           <img src="P1_Einfuehrung/01_Grundlagen/images/Uebersicht.png" alt="Aufgabenstellung" width="400" class="no-lightbox">

@@ -8,7 +8,7 @@ Als einfaches Beispiel starten wir mit einem zweiseitig gelagerten Balken mit Li
 
 <!-- --8<-- [start:Aufgabenstellung] -->
 <figure style="text-align:center;">
-  <img src="/P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/images/Aufgabenstellung.png" alt="Aufgabenstellung" width="400" class="no-lightbox">
+  <img src="P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/images/Aufgabenstellung.png" alt="Aufgabenstellung" width="400" class="no-lightbox">
 </figure>
 <!-- --8<-- [end:Aufgabenstellung] -->
 
