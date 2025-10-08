@@ -29,16 +29,24 @@ document.addEventListener('DOMContentLoaded', () => {
         // prefer to resolve the tutorial JSON relative to this bootstrap script's location
         // this avoids leading-root paths ("/assets/...") breaking on project pages hosted under a subpath
         try{
-          const scriptSrc = (document.currentScript && document.currentScript.src) || document.currentScript || '';
+          // Find the script tag robustly: prefer document.currentScript, otherwise search for a
+          // script element whose src contains 'player-bootstrap.js' (take the last occurrence).
+          let scriptTag = document.currentScript;
+          if(!scriptTag){
+            const scripts = Array.from(document.getElementsByTagName('script'));
+            for(let i=scripts.length-1;i>=0;i--){ const s = scripts[i]; if(s && s.src && s.src.indexOf('player-bootstrap.js')!==-1){ scriptTag = s; break; } }
+          }
+          const scriptSrc = (scriptTag && scriptTag.src) ? scriptTag.src : '';
           if(scriptSrc){
             // derive the base folder where this script lives, typically .../assets/tutorials/
             const base = scriptSrc.replace(/\/player-bootstrap\.js(\?.*)?$/, '/') ;
             jsonUrl = new URL(folder + '/imported.json', base).href;
           } else {
-            jsonUrl = '/assets/tutorials/' + folder + '/imported.json';
+            // fallback to relative assets path (avoid leading-root when possible)
+            jsonUrl = 'assets/tutorials/' + folder + '/imported.json';
           }
         }catch(e){
-          jsonUrl = '/assets/tutorials/' + folder + '/imported.json';
+          jsonUrl = 'assets/tutorials/' + folder + '/imported.json';
         }
       }
 
