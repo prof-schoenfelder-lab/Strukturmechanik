@@ -205,8 +205,14 @@ function resolveImageUrlGlobal(imgPath){
       // compute base dir for images relative to the json path (keep trailing slash)
       try{
         let p = String(path || '');
-        if(!p.startsWith('/')) p = '/' + p;
-        jsonBase = p.replace(/\/[^\/]*$/, '/') ;
+        // if we were given an absolute URL (http(s)), derive the pathname from it
+        if(/^https?:\/\//.test(p)){
+          try{ jsonBase = new URL(p).pathname.replace(/\/[^\/]*$/, '/'); }
+          catch(e){ jsonBase = null; }
+        } else {
+          if(!p.startsWith('/')) p = '/' + p;
+          jsonBase = p.replace(/\/[^\/]*$/, '/');
+        }
       }catch(e){ jsonBase = null; }
       i=0; playing=false; if(titleEl && data && data.title) titleEl.textContent = data.title; render(); if(cfg.zoom) setZoom(parseFloat(cfg.zoom));
     }).catch(err=>{ console.error('player load error',err); const dbg = document.createElement('div'); dbg.style.marginTop='8px'; dbg.style.fontSize='0.85em'; dbg.style.color='#a00'; dbg.textContent = 'Getestete Pfade: ' + candidates.join(' | '); try{ root.appendChild(dbg); }catch(e){} });
