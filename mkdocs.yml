@@ -85,13 +85,14 @@ extra_css:
   - "styles/overrides.css"
   - "styles/steps.css"
   - "styles/home.css"
+  - "styles/grid.css"
 nav:
   - Home: index.md
   - EINFÜHRUNG:
       - P1_Einfuehrung/index.md
       - GRUNDLAGEN:
           - Grundprinzipien der Finite-Elemente-Methode: P1_Einfuehrung/01_Grundlagen/Grundprinzipien-FEM.md
-          - Simulationssoftware: P1_Einfuehrung/01_Grundlagen/Software.md
+          - Simulationssoftware: P1_Einfuehrung/01_Grundlagen/Simulationssoftware.md
       - LÖSUNGSBEISPIEL:
           - Aufgabenstellung: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/Aufgabenstellung.md # = index
           - Lösung mit ANSYS:

@@ -16,10 +16,12 @@ hide:
 
 <div class="grid cards" markdown>
 
--   __Praktikum 1<br>:material-rocket-launch: Einführung in ANSYS Workbench__
-    <a class="card-link" href="/P1_Einfuehrung/" aria-label="Praktikum 1 – Einführung"></a>
-    <hr />
-    [:octicons-arrow-right-24: Zum Praktikum](/P1_Einfuehrung/){ .keep-clickable }
+-   <a class="card-link" href="/P1_Einfuehrung/">
+        __Praktikum 1<br>:material-rocket-launch: Einführung in ANSYS Workbench__{ .xxxl .middle .center }
+        <figure style="text-align:center;">
+          <img src="/P1_Einfuehrung/01_Grundlagen/images/Uebersicht.png" alt="Aufgabenstellung" width="400" class="no-lightbox">
+        </figure>
+    </a>
 
 -   __Praktikum 2<br>:material-cube: Geometrieaufbereitung, Lagerung und Lasten__
     <hr />
