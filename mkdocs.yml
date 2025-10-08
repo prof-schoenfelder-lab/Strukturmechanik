@@ -80,6 +80,7 @@ extra_javascript:
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
   - "assets/tutorials/player.js"
   - "assets/tutorials/player-bootstrap.js"
+  - "assets/js/answer-checker.js"
 
 extra_css:
   - "assets/tutorials/player.css"
@@ -87,6 +88,7 @@ extra_css:
   - "styles/steps.css"
   - "styles/home.css"
   - "styles/grid.css"
+  - "assets/styles/answer-checker.css"
 nav:
   - Home: index.md
   - EINFÜHRUNG:
@@ -108,3 +110,6 @@ nav:
           - Analytische Lösung: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/analytische-loesung.md
       - SELBSTTESTS:
           - Übung 1: P1_Einfuehrung/03_Selbsttests/Uebung-1.md
+          - Übung 2: P1_Einfuehrung/03_Selbsttests/Uebung-2.md
+          - Übung 3: P1_Einfuehrung/03_Selbsttests/Uebung-3.md
+  - Auswertung: leaderboard.md

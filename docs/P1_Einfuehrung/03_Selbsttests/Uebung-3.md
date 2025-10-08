@@ -6,7 +6,7 @@ hide:
   - footer
 ---
 
-# Übung 1 (copy) - Träger mit einfacher Lagerung
+# Übung 3 - Träger mit einfacher Lagerung
 
 Kurze Übung zur Bestimmung der Auflagerreaktionen eines zweiseitig gelagerten Trägers mit gleichmäßig verteilter Last q. Verwenden Sie die folgenden einfachen Annahmen und tragen Sie die Ergebnisse ein.
 
