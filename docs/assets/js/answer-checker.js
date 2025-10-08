@@ -14,7 +14,63 @@
   function setPageClaimed(pid){ try { localStorage.setItem(pageClaimKey(pid), '1'); } catch(e){} }
   function getPlayerLevel(){ return parseInt(localStorage.getItem('player_level')||'0',10) || 0; }
   function setPlayerLevel(n){ try { localStorage.setItem('player_level', String(n)); } catch(e){} }
-  function incrementPlayerLevel(){ var l = getPlayerLevel(); l += 1; setPlayerLevel(l); updatePlayerBadge(); }
+  function incrementPlayerLevel(){ var l = getPlayerLevel(); l += 1; setPlayerLevel(l); updatePlayerBadge(); try{ showLevelUp(l); }catch(e){} }
+
+  // ensure styles for level-up notification/animation exist
+  function ensureLevelUpStyles(){
+    try{
+      if (window.__answerCheckerLevelStyles) return;
+      var css = '\n' +
+        '.ac-level-overlay{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden}\n' +
+  '.ac-spark{position:absolute;left:50%;top:40%;width:10px;height:10px;border-radius:50%;transform:translate(-50%,-50%);opacity:1;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.20))}\n' +
+        '@keyframes ac-spark-move{0%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0.6)}}\n' +
+        '.ac-spark.move{animation:ac-spark-move 2200ms cubic-bezier(.22,.9,.4,1) forwards}\n' +
+        '.ac-toast{position:fixed;right:20px;bottom:20px;background:linear-gradient(135deg,#111827,#1f2937);color:#fff;padding:12px 16px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.35);z-index:10001;pointer-events:auto;opacity:0;transform:translateY(10px);transition:opacity .24s,transform .24s;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}\n' +
+        '.ac-toast.show{opacity:1;transform:translateY(0)}\n' +
+        '.ac-toast .title{font-weight:700;margin-bottom:6px;display:block;font-size:1.05rem}\n' +
+        '.ac-toast .desc{font-size:0.95rem;opacity:0.95}\n';
+      var s = document.createElement('style'); s.id = 'answer-checker-level-styles'; s.appendChild(document.createTextNode(css)); document.head.appendChild(s);
+      window.__answerCheckerLevelStyles = true;
+    }catch(e){}
+  }
+
+  // show a small firework-like particle burst and a toast notification for level up
+  function showLevelUp(level){
+    try{
+      ensureLevelUpStyles();
+      // overlay
+      var overlay = document.createElement('div'); overlay.className = 'ac-level-overlay';
+      // create multi-colored sparks
+      var colors = ['#ff7f50','#ffd700','#7cfc00','#00bfff','#ff6fbf','#ffa500'];
+      for (var i = 0; i < 24; i++){
+        var sp = document.createElement('span'); sp.className = 'ac-spark';
+        var angle = (Math.PI * 2) * (i / 12) + (Math.random() * 0.5 - 0.25);
+        var angleOffset = (Math.random()*0.8 - 0.4);
+        angle = (Math.PI * 2) * (i / 24) + angleOffset;
+        var dist = 140 + Math.random() * 420; // px (bigger spread)
+        var tx = Math.round(Math.cos(angle) * dist) + 'px';
+        var ty = Math.round(Math.sin(angle) * dist) + 'px';
+        sp.style.setProperty('--tx', tx);
+        sp.style.setProperty('--ty', ty);
+        sp.style.background = colors[i % colors.length];
+        overlay.appendChild(sp);
+        // kick animation slightly staggered
+        (function(el, delay){ setTimeout(function(){ try{ el.classList.add('move'); }catch(e){} }, delay); })(sp, i * 30 + Math.random()*140);
+      }
+      document.body.appendChild(overlay);
+      // remove overlay after animation (allow some buffer)
+      setTimeout(function(){ try{ overlay.parentNode && overlay.parentNode.removeChild(overlay); }catch(e){} }, 2600);
+
+      // toast
+      var toast = document.createElement('div'); toast.className = 'ac-toast';
+      toast.innerHTML = '<span class="title">Level ' + (parseInt(level,10) || '') + ' erreicht!</span><span class="desc">Gut gemacht — weiter so!</span>';
+      document.body.appendChild(toast);
+  // show
+  setTimeout(function(){ try{ toast.classList.add('show'); }catch(e){} }, 20);
+  // hide and remove after longer display
+  setTimeout(function(){ try{ toast.classList.remove('show'); setTimeout(function(){ try{ toast.parentNode && toast.parentNode.removeChild(toast); }catch(e){} }, 300); }catch(e){} }, 7000);
+    }catch(e){}
+  }
 
   function updatePlayerBadge(){
     var header = document.querySelector('.md-header__inner');
@@ -377,7 +433,17 @@
         if (isFinite(p)) max += p;
       }
     }
-    var pct = (max > 0) ? Math.round((t.allTime / max) * 100) : 0;
+    // If no explicit max could be determined (e.g. leaderboard opened standalone), try to infer
+    // from stored per-question bests or per-question max entries. This avoids showing 0% when
+    // the user does have stored points but no answer_max_* keys.
+    if (max === 0 && t.details && t.details.length > 0){
+      for (var d = 0; d < t.details.length; d++){
+        var qid = t.details[d].qid;
+        var mp2 = parseFloat(localStorage.getItem('answer_max_' + qid));
+        if (isFinite(mp2)) max += mp2; else max += (parseFloat(t.details[d].points) || 0);
+      }
+    }
+    var pct = (max > 0) ? Math.round((t.allTime / max) * 100) : (t.allTime > 0 ? 100 : 0);
 
     // Fun rank system
     var rank = '';
@@ -395,6 +461,36 @@
     el.appendChild(stats);
 
     // We intentionally do not show a per-question detail table here — only overall own score and max.
+  }
+
+  // Observe content changes and render summary when the leaderboard placeholder is inserted.
+  function ensureContentObserver(){
+    try{
+      if (window.__answerCheckerContentObserverInstalled) return;
+      var attempts = 0, maxAttempts = 8;
+      function tryAttach(){
+        var container = document.querySelector('main') || document.querySelector('.md-content') || document.body;
+        if (container && container.nodeType === 1){
+          if (typeof MutationObserver !== 'undefined'){
+            var mo = new MutationObserver(function(muts){
+              try{
+                // if leaderboard placeholder is present, render summary
+                if (document.getElementById('leaderboard-summary')) renderSummary();
+              }catch(e){}
+            });
+            try{ mo.observe(container, { childList: true, subtree: true }); window.__answerCheckerContentObserver = mo; window.__answerCheckerContentObserverInstalled = true; }
+            catch(e){ /* ignore */ window.__answerCheckerContentObserverInstalled = true; }
+          } else {
+            // fallback polling
+            var poll = setInterval(function(){ try{ if (document.getElementById('leaderboard-summary')) renderSummary(); }catch(e){} }, 500);
+            window.__answerCheckerContentObserverInstalled = true; window.__answerCheckerContentPoll = poll;
+          }
+        } else {
+          attempts++; if (attempts <= maxAttempts) setTimeout(tryAttach, 300);
+        }
+      }
+      tryAttach();
+    }catch(e){}
   }
 
   function setupQuestion(q, index){
