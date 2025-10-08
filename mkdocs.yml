@@ -106,3 +106,5 @@ nav:
               - Gleichungssystem lösen: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/gleichungssystem-losen.md
               - Gesuchte Werte bestimmen: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/gesuchte-werte-bestimmen.md
           - Analytische Lösung: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/analytische-loesung.md
+      - SELBSTTESTS:
+          - Übung 1: P1_Einfuehrung/03_Selbsttests/Uebung-1.md
