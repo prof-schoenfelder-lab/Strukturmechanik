@@ -6,9 +6,11 @@ icon: material/help-box
 
 Als einfaches Beispiel starten wir mit einem zweiseitig gelagerten Balken mit Linienlast. Dieser ist in der Geometrie leicht zu erstellen und wir können die Lösungen leicht mit analytischen Gleichungen überprüfen.
 
+<!-- --8<-- [start:Aufgabenstellung] -->
 <figure style="text-align:center;">
-    <img src="../images/Aufgabenstellung.png" alt="Aufgabenstellung" width="500">
+  <img src="/P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/images/Aufgabenstellung.png" alt="Aufgabenstellung" width="400" class="no-lightbox">
 </figure>
+<!-- --8<-- [end:Aufgabenstellung] -->
 
 ## Gesucht
 

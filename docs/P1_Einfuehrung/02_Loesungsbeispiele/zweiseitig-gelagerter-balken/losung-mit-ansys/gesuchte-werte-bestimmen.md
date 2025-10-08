@@ -1,8 +1,10 @@
 ---
 icon: material/timeline-check-outline
+hide:
+    - toc
 ---
 
-# Geometrie
+# Gesuchte Werte bestimmen
 
 ## Aufgabenstellung
 
