@@ -1,0 +1,84 @@
+{
+    "guide": {
+        "title": "Strukturmechanische Analyse hinzufügen und umbenennen",
+        "description": ""
+    },
+    "steps": [
+        {
+            "id": "FmH1nu1v2-Oe99btsgC8S",
+            "index": 0,
+            "parentId": null,
+            "title": "Analyse Hinzufügen durch `Doppelklick` auf `Static Structural` (Unter Analysis Systems)",
+            "description": "",
+            "screenshotFilename": "step-0.png",
+            "indexString": "1.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 1.75,
+                    "x": 2,
+                    "y": 317
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-0.png"
+        },
+        {
+            "id": "WDNWKC4OHIO4WsCrltVWs",
+            "index": 1,
+            "parentId": null,
+            "title": "Analyse umbennen durch `Doppelklick` auf den Namen `Static Structural` und entsprechenden Namen eingeben z.B. `Lösungsbeispiel` und mit `Enter` bestätigen",
+            "description": "",
+            "screenshotFilename": "step-1.png",
+            "indexString": "2.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 2,
+                    "x": 102,
+                    "y": 146
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-1.png"
+        }
+    ]
+}

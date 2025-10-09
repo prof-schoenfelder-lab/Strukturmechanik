@@ -46,7 +46,8 @@ function resolveImageUrlGlobal(imgPath){
       return {
         title: v.guide.title || 'Tutorial',
         default_duration_ms: 1800,
-        steps: v.steps.map(s=>({ label: s.title||'', text: s.description||'', image: s.screenshotRelativePath || '', highlights: s.highlights || [] }))
+        // Prefer explicit filename when available, fall back to relative path if present
+        steps: v.steps.map(s=>({ label: s.title||'', text: s.description||'', image: (s.screenshotFilename || s.screenshotRelativePath || '') , highlights: s.highlights || [] }))
       };
     }
     return v;
@@ -153,7 +154,20 @@ function resolveImageUrlGlobal(imgPath){
       tmp.onload = ()=>{ imgEl.src = tmp.src; computeBaseScaleAndFit(tmp); renderHighlights(step); };
       // Resolve image paths relative to the discovered jsonBase if possible
       let candidateImage = step.image || '';
+      try{
+        // normalize Windows-style backslashes and remove leading slashes so
+        // paths like "\\img\\step-0.png" become "img/step-0.png" and
+        // will be resolved relative to the imported.json base path.
+        if(typeof candidateImage === 'string'){
+          candidateImage = candidateImage.replace(/\\\\/g,'/').replace(/\\/g,'/');
+          candidateImage = candidateImage.replace(/^\/+/, '');
+        }
+      }catch(e){}
       if(candidateImage && jsonBase && !/^https?:\/\//.test(candidateImage) && !candidateImage.startsWith('/')){
+        // if it's only a filename (like 'step-0.png'), prefix with img/
+        try{
+          if(typeof candidateImage === 'string' && candidateImage.indexOf('/') === -1){ candidateImage = 'img/' + candidateImage; }
+        }catch(e){}
         // join relative to jsonBase
         try{ candidateImage = new URL(candidateImage, location.origin + jsonBase).pathname; }catch(e){}
       }

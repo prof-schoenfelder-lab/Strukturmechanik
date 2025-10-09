@@ -1,0 +1,312 @@
+{
+    "guide": {
+        "title": "Material hinzufügen (Stahl 210GPa)",
+        "description": ""
+    },
+    "steps": [
+        {
+            "id": "wkmEfeHiLYN0aquCC-7ol",
+            "index": 0,
+            "parentId": null,
+            "title": "`Rechtsklick` auf `Engineering Data`",
+            "description": "",
+            "screenshotFilename": "step-0.png",
+            "indexString": "1.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 2,
+                    "x": 0,
+                    "y": 0
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-0.png"
+        },
+        {
+            "id": "Vs-LSS-Qly7oBwXjOWLik",
+            "index": 1,
+            "parentId": null,
+            "title": "`Klick` auf `Edit...`",
+            "description": "",
+            "screenshotFilename": "step-1.png",
+            "indexString": "2.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 2.25,
+                    "x": 222,
+                    "y": 174
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-1.png"
+        },
+        {
+            "id": "bUScTblywZk3te5gQrJIO",
+            "index": 2,
+            "parentId": null,
+            "title": "Klick \"Click here to add new Material\" und gib den Materialnamen `Stahl` ein",
+            "description": "",
+            "screenshotFilename": "step-2.png",
+            "indexString": "3.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 2,
+                    "x": 0,
+                    "y": 0
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-2.png"
+        },
+        {
+            "id": "vRn380TejYCApugO1de29",
+            "index": 3,
+            "parentId": null,
+            "title": "Das neue Material auswählen durch `klick` auf `Stahl`",
+            "description": "",
+            "screenshotFilename": "step-3.png",
+            "indexString": "4.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 2.25,
+                    "x": 0,
+                    "y": 0
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-3.png"
+        },
+        {
+            "id": "vlidiTxYM3AQ2w88W6Ul7",
+            "index": 4,
+            "parentId": null,
+            "title": "Klick auf `Isotropic Elasticity`",
+            "description": "",
+            "screenshotFilename": "step-4.png",
+            "indexString": "5.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 2.5,
+                    "x": 0,
+                    "y": 0
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-4.png"
+        },
+        {
+            "id": "86mm31463_fj8LeJDs3Lv",
+            "index": 6,
+            "parentId": null,
+            "title": "Copy Im Properties Fenster die Einheit von Young's Modulus auf `GPa` stellen und den Wert `210` eintragen und anschließend bei `Poisson's Ratio` den Wert `0,3` eintragen",
+            "description": "",
+            "screenshotFilename": "step-5.png",
+            "indexString": "6.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 1.75,
+                    "x": 166,
+                    "y": 289
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-5.png"
+        },
+        {
+            "id": "osABTeBmnSe9NgME8kgI9",
+            "index": 8,
+            "parentId": null,
+            "title": "So müsste es am ende aussehen",
+            "description": "",
+            "screenshotFilename": "step-6.png",
+            "indexString": "7.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 2,
+                    "x": 234,
+                    "y": 395
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-6.png"
+        },
+        {
+            "id": "Usd3VMBMgvM74VR8OHhQE",
+            "index": 9,
+            "parentId": null,
+            "title": "Durch Klick auf den Tab `Projekt` kommen Sie zurück ins Projektmenü",
+            "description": "",
+            "screenshotFilename": "step-7.png",
+            "indexString": "8.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 1.25,
+                    "x": 0,
+                    "y": 0
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-7.png"
+        }
+    ]
+}

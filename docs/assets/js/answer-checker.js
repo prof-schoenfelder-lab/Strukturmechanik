@@ -391,9 +391,9 @@
     return { allTime: all, today: today, details: details };
   }
 
-  // Remove answer entries older than `maxAgeMs` (default 24h)
+  // Remove answer entries older than `maxAgeMs` (default 12h)
   function cleanupOldEntries(maxAgeMs) {
-    maxAgeMs = typeof maxAgeMs === 'number' ? maxAgeMs : 24 * 60 * 60 * 1000; // 24h
+    maxAgeMs = typeof maxAgeMs === 'number' ? maxAgeMs : 12 * 60 * 60 * 1000; // 12h
     var now = Date.now();
     var toRemove = [];
     for (var i = 0; i < localStorage.length; i++){
