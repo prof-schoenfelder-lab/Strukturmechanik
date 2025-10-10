@@ -410,6 +410,33 @@
     toRemove.forEach(function(k){
       try { localStorage.removeItem(k); localStorage.removeItem('answer_attempts_' + k.replace('answer_best_', '')); } catch(e){}
     });
+    // After removing old answer entries, ensure page-claimed markers are still valid.
+    // If a claimed page no longer has full points (percent < 1), remove the claim.
+    try{
+      var claimKeys = [];
+      for (var j = 0; j < localStorage.length; j++){
+        var kk = localStorage.key(j);
+        if (!kk) continue;
+        if (kk.indexOf('page_claimed_') === 0) claimKeys.push(kk);
+      }
+      claimKeys.forEach(function(ck){ try{
+          var pid = ck.replace('page_claimed_', '');
+          var pct = 0;
+          try{ pct = computePagePercent(pid); }catch(e){}
+          if (!(pct >= 1)){
+            try{ localStorage.removeItem(ck); }catch(e){}
+          }
+        }catch(e){}
+      });
+      // Recompute player level as number of remaining claimed pages
+      var newLevel = 0;
+      for (var k2 = 0; k2 < localStorage.length; k2++){
+        var key2 = localStorage.key(k2);
+        if (!key2) continue;
+        if (key2.indexOf('page_claimed_') === 0) newLevel++;
+      }
+      try{ setPlayerLevel(newLevel); updatePlayerBadge(); initializeNavIcons(); }catch(e){}
+    }catch(e){}
   }
 
   function renderSummary(){
