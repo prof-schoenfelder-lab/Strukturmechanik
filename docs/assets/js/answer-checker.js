@@ -19,17 +19,31 @@
   // ensure styles for level-up notification/animation exist
   function ensureLevelUpStyles(){
     try{
-      if (window.__answerCheckerLevelStyles) return;
       var css = '\n' +
         '.ac-level-overlay{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden}\n' +
-  '.ac-spark{position:absolute;left:50%;top:40%;width:10px;height:10px;border-radius:50%;transform:translate(-50%,-50%);opacity:1;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.20))}\n' +
-        '@keyframes ac-spark-move{0%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0.6)}}\n' +
-        '.ac-spark.move{animation:ac-spark-move 2200ms cubic-bezier(.22,.9,.4,1) forwards}\n' +
+        '.ac-piece{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);pointer-events:none;will-change:transform,opacity}\n' +
+        '.ac-piece .dot{width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 1px 3px rgba(0,0,0,0.25)}\n' +
+        '.ac-piece .confetti{width:10px;height:6px;background:currentColor;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,0.18)}\n' +
+        '.ac-piece.triangle .confetti{width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:10px solid currentColor;background:transparent;border-radius:0}\n' +
+        '.ac-piece.ribbon{width:12px;height:80px;border-radius:6px;background:linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0));transform-origin:center top;overflow:visible}\n' +
+        '.ac-piece .tail{position:absolute;left:50%;top:50%;width:6px;height:40px;transform:translate(-50%,-10%);border-radius:3px;background:linear-gradient(180deg,currentColor,transparent);filter:blur(2px);opacity:0.9}\n' +
+        '@keyframes ac-move-long{0%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0deg)}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0.7) rotate(var(--rot,0deg))}}\n' +
+        '@keyframes ac-wiggle{0%{transform:translateX(0)}25%{transform:translateX(var(--wx,6px))}50%{transform:translateX(calc(var(--wx,6px) * -1))}75%{transform:translateX(var(--wx,4px))}100%{transform:translateX(0)}}\n' +
+        '.ac-piece.move{animation:ac-move-long var(--dur,3200ms) cubic-bezier(.22,.9,.4,1) forwards}\n' +
+        '.ac-piece .inner-wiggle{display:block;animation:ac-wiggle calc(var(--dur,3200ms) / 2) ease-in-out infinite}\n' +
+        '.ac-ribbon-curve{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}\n' +
         '.ac-toast{position:fixed;right:20px;bottom:20px;background:linear-gradient(135deg,#111827,#1f2937);color:#fff;padding:12px 16px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.35);z-index:10001;pointer-events:auto;opacity:0;transform:translateY(10px);transition:opacity .24s,transform .24s;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}\n' +
         '.ac-toast.show{opacity:1;transform:translateY(0)}\n' +
         '.ac-toast .title{font-weight:700;margin-bottom:6px;display:block;font-size:1.05rem}\n' +
         '.ac-toast .desc{font-size:0.95rem;opacity:0.95}\n';
-      var s = document.createElement('style'); s.id = 'answer-checker-level-styles'; s.appendChild(document.createTextNode(css)); document.head.appendChild(s);
+      var sid = 'answer-checker-level-styles';
+      var existing = document.getElementById(sid);
+      if (existing){
+        try{ existing.textContent = css; }catch(e){ /* ignore */ }
+      } else {
+        var s = document.createElement('style'); s.id = sid; s.appendChild(document.createTextNode(css)); document.head.appendChild(s);
+      }
+      // keep a flag for quick checks
       window.__answerCheckerLevelStyles = true;
     }catch(e){}
   }
@@ -38,28 +52,36 @@
   function showLevelUp(level){
     try{
       ensureLevelUpStyles();
-      // overlay
-      var overlay = document.createElement('div'); overlay.className = 'ac-level-overlay';
-      // create multi-colored sparks
-      var colors = ['#ff7f50','#ffd700','#7cfc00','#00bfff','#ff6fbf','#ffa500'];
-      for (var i = 0; i < 24; i++){
-        var sp = document.createElement('span'); sp.className = 'ac-spark';
-        var angle = (Math.PI * 2) * (i / 12) + (Math.random() * 0.5 - 0.25);
-        var angleOffset = (Math.random()*0.8 - 0.4);
-        angle = (Math.PI * 2) * (i / 24) + angleOffset;
-        var dist = 140 + Math.random() * 420; // px (bigger spread)
-        var tx = Math.round(Math.cos(angle) * dist) + 'px';
-        var ty = Math.round(Math.sin(angle) * dist) + 'px';
-        sp.style.setProperty('--tx', tx);
-        sp.style.setProperty('--ty', ty);
-        sp.style.background = colors[i % colors.length];
-        overlay.appendChild(sp);
-        // kick animation slightly staggered
-        (function(el, delay){ setTimeout(function(){ try{ el.classList.add('move'); }catch(e){} }, delay); })(sp, i * 30 + Math.random()*140);
+      // try to use canvas-confetti for a nicer burst; load it dynamically if missing
+      var colors = ['#ff4d6d','#ffd14d','#6ef27a','#4fd3ff','#c77bff','#ffb86b'];
+      function loadConfetti(cb){
+        if (window.confetti) return cb();
+        try{
+          var s = document.createElement('script');
+          s.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js';
+          s.async = true;
+          s.onload = function(){ setTimeout(cb, 10); };
+          s.onerror = function(){ cb(); };
+          document.head.appendChild(s);
+        }catch(e){ cb(); }
       }
-      document.body.appendChild(overlay);
-      // remove overlay after animation (allow some buffer)
-      setTimeout(function(){ try{ overlay.parentNode && overlay.parentNode.removeChild(overlay); }catch(e){} }, 2600);
+      loadConfetti(function(){
+        try{
+          if (window.confetti && typeof window.confetti === 'function'){
+            // create an instance that auto-resizes
+            var conf = window.confetti;
+            // do two bursts for a fuller look
+            try {
+              conf({ particleCount: 40, spread: 60, startVelocity: 40, ticks: 500, origin: { x: 0.5, y: 0.45 }, colors: colors });
+              setTimeout(function(){ try{ conf({ particleCount: 80, spread: 140, startVelocity: 30, ticks: 600, origin: { x: 0.5, y: 0.6 }, colors: colors }); }catch(e){} }, 140);
+            } catch(e){ /* fallback single call */
+              try{ conf({ particleCount: 100, spread: 100, origin: { y: 0.5 }, colors: colors }); }catch(e){}
+            }
+          } else {
+            // library not available: no-op (toast still shows)
+          }
+        }catch(e){}
+      });
 
       // toast
       var toast = document.createElement('div'); toast.className = 'ac-toast';
@@ -639,6 +661,7 @@
     // create reset UI for authors/local testing if allowed
     try{ createPerPageResetIfAllowed(); }catch(e){}
     try{ ensureNavObserver(); }catch(e){}
+  try{ ensureLevelUpStyles(); }catch(e){}
 
     // Global reset removed to prevent easy deletion of local results by students
 
@@ -646,5 +669,12 @@
   });
 
   // local debug tools removed
+
+  // expose a tiny test helper so authors can trigger the level-up animation from the console
+  try{
+    if (typeof window !== 'undefined'){
+      window.__ac_test_levelup = function(level){ try{ showLevelUp(level || getPlayerLevel() || 1); }catch(e){ console.warn('Level-up helper failed', e); } };
+    }
+  }catch(e){}
 
 })();
