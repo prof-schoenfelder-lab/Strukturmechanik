@@ -1,0 +1,114 @@
+site_name: Angewandte FEM in der Strukturmechanik
+site_url: https://prof-schoenfelder-lab.github.io/Strukturmechanik
+copyright: Copyright &copy; 2025 Felix Kaule & Stephan Schönfelder
+repo_name: prof-schoenfelder-lab/Strukturmechanik
+repo_url: https://github.com/prof-schoenfelder-lab/Strukturmechanik
+edit_uri: edit/main/docs/
+theme:
+  logo: assets/images/HTWK_white_text.png
+  icon:
+    repo: fontawesome/brands/git-alt
+    edit: material/pencil
+    view: material/eye
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  name: material
+  language: de
+  features:
+    - toc.follow
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.path
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+    - content.footer
+    - content.action.edit
+
+plugins:
+  - macros
+  - search
+  - git-revision-date-localized:
+      type: timeago
+      locale: de
+      fallback_to_build_date: true
+
+markdown_extensions:
+  - toc:
+      permalink: True
+  - pymdownx.tasklist:
+      clickable_checkbox: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      base_path:
+        - docs
+      check_paths: true
+  - pymdownx.pathconverter:
+      base_path: . # use current docs dir (avoid prefixing with '/docs')
+      relative_path: . # relativ zur aktuellen Seite umschreiben
+      absolute: false # avoid converting to leading-absolute paths like '/docs/...'
+  - pymdownx.superfences
+  - md_in_html
+  - attr_list
+  - admonition
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+  - "assets/tutorials/player.js"
+  - "assets/tutorials/player-bootstrap.js"
+  - "assets/js/answer-checker.js"
+
+extra_css:
+  - "assets/tutorials/player.css"
+  - "styles/overrides.css"
+  - "styles/steps.css"
+  - "styles/home.css"
+  - "styles/grid.css"
+  - "assets/styles/answer-checker.css"
+nav:
+  - Home: index.md
+  - EINFÜHRUNG:
+      - P1_Einfuehrung/index.md
+      - GRUNDLAGEN:
+          - Grundprinzipien der Finite-Elemente-Methode: P1_Einfuehrung/01_Grundlagen/Grundprinzipien-FEM.md
+          - Simulationssoftware: P1_Einfuehrung/01_Grundlagen/Simulationssoftware.md
+      - LÖSUNGSBEISPIEL:
+          - Aufgabenstellung: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/Aufgabenstellung.md # = index
+          - Lösung mit ANSYS:
+              - P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/README.md
+              - Material: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/material.md
+              - Geometrie: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/geometrie.md
+              - Vernetzung: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/vernetzung.md
+              - Lagerung und Lasten: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/lagerung-und-lasten.md
+              - Materialzuordnung: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/materialzuordnung.md
+              - Gleichungssystem lösen: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/gleichungssystem-losen.md
+              - Gesuchte Werte bestimmen: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/gesuchte-werte-bestimmen.md
+          - Analytische Lösung: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/analytische-loesung.md
+      - SELBSTTESTS:
+          - Übung 1: P1_Einfuehrung/03_Selbsttests/Uebung-1.md
+          - Übung 2: P1_Einfuehrung/03_Selbsttests/Uebung-2.md
+          - Übung 3: P1_Einfuehrung/03_Selbsttests/Uebung-3.md

@@ -1,0 +1,84 @@
+{
+  "title": "How to add a new contact in the Less Annoying CRM",
+  "default_duration_ms": 1800,
+  "steps": [
+    {
+      "label": "Go to the Login Page",
+      "text": "<p>Open the <a href=\"https://account.lessannoyingcrm.com/login/\" rel=\"noopener noreferrer\" target=\"_blank\">login page</a> and fill in the Login form with:</p><p>1) You email</p><p>2) Your password </p>",
+      "image": "img/step-0.jpeg",
+      "hotspot_use_first": false
+    },
+    {
+      "label": "Klick auf `Login` Button",
+      "text": "<p>Click <strong>Log in</strong> button</p>",
+      "image": "img/step-1.jpeg",
+      "hotspot_use_first": false
+    },
+    {
+      "label": "`New Contact` auswählen, das ist ein `Test` was passiert wenn ich ganz viel Text rein mache und auf `klicken` klicke!",
+      "text": "<p>After you log in, select the \"New Contact\" in the left menu</p>",
+      "image": "img/step-2.jpeg",
+      "hotspot_use_first": false
+    },
+    {
+      "label": "Creating Contact form",
+      "text": "<p>Proceed with filling in the form with</p><p>1) <strong>Name</strong></p><p>2) <strong>Email</strong></p><p>3) <strong>Company name</strong></p>",
+      "image": "img/step-3.jpeg",
+      "hotspot_use_first": false
+    },
+    {
+      "label": "Adding Notes",
+      "text": "<p>Click \"Note\" button to add a new note</p>",
+      "image": "img/step-4.jpeg",
+      "hotspot_use_first": false
+    },
+    {
+      "label": "Add text",
+      "text": "<p><span style=\"background-color: rgb(255, 255, 255);\">Fill in the notes.</span></p>",
+      "image": "img/step-5.jpeg",
+      "hotspot_use_first": false
+    },
+    {
+      "label": "Adding a task",
+      "text": "<p>Click the \"Task\"</p>",
+      "image": "img/step-6.jpeg",
+      "hotspot_use_first": false
+    },
+    {
+      "label": "Add Task details",
+      "text": "<p>1) Task name</p><p>2) Due date </p><p>3) Task description</p>",
+      "image": "img/step-7.jpeg",
+      "hotspot_use_first": false
+    },
+    {
+      "label": "Confirm the new contact",
+      "text": "<p>Click \"Create contact\" to confirm the new account creation</p>",
+      "image": "img/step-8.jpeg",
+      "hotspot_use_first": false
+    },
+    {
+      "label": "Adding a new Lead",
+      "text": "<p>Continue with creating a new lead </p>",
+      "image": "img/step-9.jpeg",
+      "hotspot_use_first": false
+    },
+    {
+      "label": "Creating the sales lead",
+      "text": "<p>Move user to a corresponding Sales status</p>",
+      "image": "img/step-10.jpeg",
+      "hotspot_use_first": false
+    },
+    {
+      "label": "Add Optional notes",
+      "text": "",
+      "image": "img/step-11.jpeg",
+      "hotspot_use_first": false
+    },
+    {
+      "label": "Finish creating a sales lead",
+      "text": "",
+      "image": "img/step-12.jpeg",
+      "hotspot_use_first": false
+    }
+  ]
+}

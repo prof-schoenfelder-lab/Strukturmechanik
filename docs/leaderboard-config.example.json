@@ -1,0 +1,13 @@
+{
+  "csv_url": "https://docs.google.com/spreadsheets/d/e/1wEtgG5wxgGOneFfRiNNrh6XQ61g3-_KP_uiElbB-3_4/pub?output=csv",
+  "maxPoints": null,
+  "google_form": {
+    "url": "https://docs.google.com/forms/d/e/1FAIpQLScN75CSs5a6yMsGYCqHhuVCTMmbOaY46qghsaXh30QMm25EiA/formResponse",
+    "fields": {
+      "participant_id": "entry.371364895",
+      "allTime": "entry.1613814749",
+      "today": "entry.1280412760",
+      "ts": "entry.935256181"
+    }
+  }
+}

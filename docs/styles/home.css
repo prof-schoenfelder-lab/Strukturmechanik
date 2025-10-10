@@ -1,0 +1,10 @@
+/* HERO oben */
+.hero { text-align:center; margin:0 0 1.5rem; }
+.hero img {
+  display:block; margin-inline:auto; max-width:min(100%, 1200px);
+  border-radius:.5rem; box-shadow:var(--md-shadow-z2);
+}
+
+/* H1 nur auf Startseite verstecken (per Marker .page--home) */
+.md-content:has(.page--home) .md-content__inner > h1:first-of-type { display:none; }
+
