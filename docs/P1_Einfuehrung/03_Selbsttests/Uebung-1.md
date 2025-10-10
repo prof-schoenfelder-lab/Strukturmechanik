@@ -90,7 +90,7 @@ Belastung:
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Im Mechanical: Alte Flächenlast löschen</p>
-    <p><code>Im Strukturbaum Rechtsklick</code> auf <code>Force (alte Flächenlast)</code> und anschließend auf <code>Delete</code> klicken.</p>
+    <p>Im Strukturbaum: <code>Rechtsklick</code> auf <code>Force (alte Flächenlast)</code> und anschließend auf <code>Delete</code> klicken.</p>
   </div>
 
 </div>
