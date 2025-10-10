@@ -1,0 +1,11 @@
+INFO    -  Building documentation...
+INFO    -  [macros] - No default module `main` found
+INFO    -  [macros] - Config variables: ['extra', 'config', 'environment', 'plugin', 'git', 'macros', 'filters', 'filters_builtin']
+INFO    -  [macros] - Config macros: ['context', 'macros_info', 'now', 'fix_url']
+INFO    -  [macros] - Config filters: ['pretty', 'relative_url']
+INFO    -  Cleaning site directory
+INFO    -  The following pages exist in the docs directory, but are not included in the "nav" configuration:
+  - leaderboard.md
+INFO    -  Documentation built in 158.85 seconds
+INFO    -  [12:55:37] Watching paths for changes: 'docs', 'mkdocs.yml'
+INFO    -  [12:55:37] Serving on http://127.0.0.1:8000/Strukturmechanik/
