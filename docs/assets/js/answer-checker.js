@@ -295,17 +295,56 @@
       function normalizePath(p) { try { var s = String(p || ''); if (!s.startsWith('/')) { try { s = new URL(s, location.href).pathname; } catch (e) { } } s = decodeURIComponent(s); if (s.length > 1 && s.endsWith('/')) s = s.slice(0, -1); return s; } catch (e) { return String(p || ''); } }
       var normPage = normalizePath(pagePath);
       var sumBest = 0, sumMax = 0;
+      var qidSet = Object.create(null);
+      // collect qids from answer_max_
       for (var i = 0; i < localStorage.length; i++) {
-        var k = localStorage.key(i);
-        if (!k || k.indexOf('answer_best_') !== 0) continue;
-        var qid = k.replace('answer_best_', '');
-        var base = String(qid).split(':q')[0] || qid;
-        var normBase = normalizePath(base);
-        if (normBase !== normPage) continue; // only questions from this page
-        var rec = safeJSONParse(localStorage.getItem(k));
-        if (rec && typeof rec.points === 'number') sumBest += rec.points;
-        var maxVal = parseFloat(localStorage.getItem('answer_max_' + qid));
-        if (isFinite(maxVal)) sumMax += maxVal;
+        try {
+          var k = localStorage.key(i);
+          if (!k) continue;
+          if (k.indexOf('answer_max_') === 0) {
+            var qid = k.replace('answer_max_', '');
+            var base = String(qid).split(':q')[0] || qid;
+            var normBase = normalizePath(base);
+            if (normBase === normPage) qidSet[qid] = true;
+          }
+        } catch (e) { }
+      }
+      // also include qids that have best entries even if max missing
+      for (var j = 0; j < localStorage.length; j++) {
+        try {
+          var kk = localStorage.key(j);
+          if (!kk || kk.indexOf('answer_best_') !== 0) continue;
+          var qid2 = kk.replace('answer_best_', '');
+          var base2 = String(qid2).split(':q')[0] || qid2;
+          var normBase2 = normalizePath(base2);
+          if (normBase2 === normPage) qidSet[qid2] = true;
+        } catch (e) { }
+      }
+      // compute sums
+      for (var qidKey in qidSet) {
+        if (!Object.prototype.hasOwnProperty.call(qidSet, qidKey)) continue;
+        try {
+          var rec = safeJSONParse(localStorage.getItem('answer_best_' + qidKey));
+          if (rec && typeof rec.points === 'number') sumBest += rec.points;
+        } catch (e) { }
+        try {
+          var maxVal2 = parseFloat(localStorage.getItem('answer_max_' + qidKey));
+          if (isFinite(maxVal2)) sumMax += maxVal2;
+          else {
+            // fallback: try to find question element on the current page and read dataset.points
+            try {
+              var sel = '[data-qid="' + qidKey.replace(/"/g, '\\"') + '"]';
+              var el = document.querySelector(sel);
+              if (el && el.dataset && el.dataset.points) {
+                var p = parseFloat(el.dataset.points || 0);
+                if (isFinite(p)) sumMax += p;
+              } else {
+                // as a last resort, if no max is known use recorded best as a conservative max
+                if (rec && typeof rec.points === 'number') sumMax += rec.points;
+              }
+            } catch (e) { }
+          }
+        } catch (e) { }
       }
       if (sumMax <= 0) return 0;
       return Math.max(0, Math.min(1, sumBest / sumMax));
