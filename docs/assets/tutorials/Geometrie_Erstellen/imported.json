@@ -1,0 +1,420 @@
+{
+    "guide": {
+        "title": "Geometrie erstellen (Balken 30x30x1000)",
+        "description": ""
+    },
+    "steps": [
+        {
+            "id": "IiifwLfJ6P0l0UavoQOdC",
+            "index": 0,
+            "parentId": null,
+            "title": "`Rechtsklick` auf Geometry`",
+            "description": "<pre>&nbsp;</pre>",
+            "screenshotFilename": "step-0.png",
+            "indexString": "1.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 2,
+                    "x": 0,
+                    "y": 0
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-0.png"
+        },
+        {
+            "id": "iQEvL3mVP0kPtpIfg07Wx",
+            "index": 4,
+            "parentId": null,
+            "title": "`Klick` auf `New SpaceClaim Geometry...`",
+            "description": "",
+            "screenshotFilename": "step-1.png",
+            "indexString": "2.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": false,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 1
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-1.png"
+        },
+        {
+            "id": "4ma7B4yoXxgJsOrb1IZQU",
+            "index": 6,
+            "parentId": null,
+            "title": "Links unten ein Hinweis dass `SpaceClaim` gestartet wird",
+            "description": "",
+            "screenshotFilename": "step-2.png",
+            "indexString": "3.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 1,
+                    "x": 0,
+                    "y": 0
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-2.png"
+        },
+        {
+            "id": "lZrpNPs-v8pWc6s3MQQjJ",
+            "index": 7,
+            "parentId": null,
+            "title": "`Klick` auf `Plane View` (oder `v` drücken)",
+            "description": "",
+            "screenshotFilename": "step-3.png",
+            "indexString": "4.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 1,
+                    "x": 1,
+                    "y": 0
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-3.png"
+        },
+        {
+            "id": "Rs2K6X6E6Lj6WTAJRNmwM",
+            "index": 9,
+            "parentId": null,
+            "title": "`Klick` auf `Rectangle` (im Tab Sketch)",
+            "description": "",
+            "screenshotFilename": "step-4.png",
+            "indexString": "5.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 2.25,
+                    "x": 1,
+                    "y": 0
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-4.png"
+        },
+        {
+            "id": "noBA1cc1YB1CUB-d7h0od",
+            "index": 12,
+            "parentId": null,
+            "title": "Fläche mit 30x30 Maßen erstellen (siehe Screenshot)",
+            "description": "",
+            "screenshotFilename": "step-5.png",
+            "indexString": "6.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": false,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 1
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-5.png"
+        },
+        {
+            "id": "ZeLdR6aFdkPDe_S7YGPFs",
+            "index": 13,
+            "parentId": null,
+            "title": "`Klick` auf `End Sketch Editing`",
+            "description": "",
+            "screenshotFilename": "step-6.png",
+            "indexString": "7.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 1.5,
+                    "x": 234,
+                    "y": 4
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-6.png"
+        },
+        {
+            "id": "WpggyCzM8jOevw0Q-1_Be",
+            "index": 14,
+            "parentId": null,
+            "title": "`Klick` auf `Trimetric` (im Tab Design)",
+            "description": "",
+            "screenshotFilename": "step-7.png",
+            "indexString": "8.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 2,
+                    "x": 0,
+                    "y": 0
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-7.png"
+        },
+        {
+            "id": "9vyEbHZ8-AdIz_Y0E97JI",
+            "index": 15,
+            "parentId": null,
+            "title": "`Klick` auf `Pull` (im Tab Design)",
+            "description": "",
+            "screenshotFilename": "step-8.png",
+            "indexString": "9.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 2.25,
+                    "x": 0,
+                    "y": 0
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-8.png"
+        },
+        {
+            "id": "ZdMaNEyNDq4iIfqnhJWGD",
+            "index": 16,
+            "parentId": null,
+            "title": "Fläche auf 1000mm extrudieren (siehe Screenshot)",
+            "description": "",
+            "screenshotFilename": "step-9.png",
+            "indexString": "10.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": false,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 1
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-9.png"
+        },
+        {
+            "id": "pN9QlNtOg-j_Twane90KO",
+            "index": 19,
+            "parentId": null,
+            "title": "2x `ESC` drücken und Fenster `schließen`",
+            "description": "",
+            "screenshotFilename": "step-10.png",
+            "indexString": "11.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 1.75,
+                    "x": 525,
+                    "y": 4
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-10.png"
+        }
+    ]
+}

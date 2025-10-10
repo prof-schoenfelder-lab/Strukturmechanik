@@ -1,0 +1,198 @@
+{
+    "guide": {
+        "title": "Vernetzung",
+        "description": ""
+    },
+    "steps": [
+        {
+            "id": "qAmV98EMj8AJSNYYiw3ff",
+            "index": 0,
+            "parentId": null,
+            "title": "In der Leiste rechts unten `Klick` auf `Metric ..` und anschließend auf `Metric (mm,t,...`",
+            "description": "",
+            "screenshotFilename": "step-0.png",
+            "indexString": "1.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 2,
+                    "x": 700,
+                    "y": 423
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-0.png"
+        },
+        {
+            "id": "OGdlFs3vfphzotYN7l5c5",
+            "index": 4,
+            "parentId": null,
+            "title": "Im Strukturbaum: `Klick` auf `Mesh`",
+            "description": "",
+            "screenshotFilename": "step-1.png",
+            "indexString": "2.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 2,
+                    "x": 0,
+                    "y": 0
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-1.png"
+        },
+        {
+            "id": "hYPVAcmxfU_sk6u9k8sL8",
+            "index": 5,
+            "parentId": null,
+            "title": "Im Detailfenster `Klick` auf `Default` (neben Element Size) und den Wert `15` eingeben und mit `Enter` bestätigen",
+            "description": "",
+            "screenshotFilename": "step-2.png",
+            "indexString": "3.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 1.5,
+                    "x": 6,
+                    "y": 208
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-2.png"
+        },
+        {
+            "id": "0xMa7WkRm4nykJrG7ghZ_",
+            "index": 9,
+            "parentId": null,
+            "title": "Im Strukturbaum `Rechtsklick` auf `Mesh` und auf `Generate Mesh` `klicken`",
+            "description": "",
+            "screenshotFilename": "step-3.png",
+            "indexString": "4.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 2.25,
+                    "x": 0,
+                    "y": 192
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-3.png"
+        },
+        {
+            "id": "hKWzZH_bKSVIBgG-wHFXW",
+            "index": 11,
+            "parentId": null,
+            "title": "So sollte es final aussehen",
+            "description": "",
+            "screenshotFilename": "step-4.png",
+            "indexString": "5.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 1,
+                    "x": 0,
+                    "y": 0
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-4.png"
+        }
+    ]
+}

@@ -1,0 +1,198 @@
+{
+    "guide": {
+        "title": "Festlager",
+        "description": ""
+    },
+    "steps": [
+        {
+            "id": "TOuFFHzKQHxXQG2yG9jsJ",
+            "index": 0,
+            "parentId": null,
+            "title": "In der Menüleiste `Display` (Tab) > `Show` (ganz rechts) > ` All Coordinate Systems`",
+            "description": "",
+            "screenshotFilename": "step-0.png",
+            "indexString": "1.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 1,
+                    "x": 0,
+                    "y": 0
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-0.png"
+        },
+        {
+            "id": "eCc4k0SAO4-omvbuTPuor",
+            "index": 4,
+            "parentId": null,
+            "title": "`Mittlere Maustaste` gedrückt halten und Maus bewegen bis Kante so sichtbar ist wie hier",
+            "description": "",
+            "screenshotFilename": "step-1.png",
+            "indexString": "2.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 2.25,
+                    "x": 564,
+                    "y": 228
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-1.png"
+        },
+        {
+            "id": "qm4aaKu4akncjpSWFZLcy",
+            "index": 5,
+            "parentId": null,
+            "title": "Zweite `Lupe` von Links `anklicken` (Box-Zoom) und mit `gedrückte Maustaste` eine `Box` um Geometrie ziehen",
+            "description": "",
+            "screenshotFilename": "step-2.png",
+            "indexString": "3.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 1.75,
+                    "x": 268,
+                    "y": 62
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-2.png"
+        },
+        {
+            "id": "Q7ls3JO2iEH5eKieEhETG",
+            "index": 6,
+            "parentId": null,
+            "title": "`Klick` auf `Kantenauswahl` und untere Kante `auswählen`",
+            "description": "",
+            "screenshotFilename": "step-3.png",
+            "indexString": "4.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 1.75,
+                    "x": 400,
+                    "y": 42
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-3.png"
+        },
+        {
+            "id": "LUvUqQpv5517aLhH7Ygj3",
+            "index": 7,
+            "parentId": null,
+            "title": "Im Strukturbaum: `Rechtsklick` auf `Static Structural` > `Insert` > `Fixed Support`",
+            "description": "",
+            "screenshotFilename": "step-4.png",
+            "indexString": "5.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 1.75,
+                    "x": 2,
+                    "y": 96
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-4.png"
+        }
+    ]
+}

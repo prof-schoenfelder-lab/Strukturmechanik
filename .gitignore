@@ -45,6 +45,13 @@ yarn-error.log*
 .env
 .env.*
 
+# mkdocs logs
+mkdocs-serve.log
+mkdocs-serve.pid
+
 # Misc
 *.swp
 *~
+docs/.DS_Store
+docs/assets/.DS_Store
+docs/assets/tutorials/.DS_Store

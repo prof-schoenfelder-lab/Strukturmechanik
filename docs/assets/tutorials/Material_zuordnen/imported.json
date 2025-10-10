@@ -1,0 +1,236 @@
+{
+    "guide": {
+        "title": "Mechanical öffnen und Material zuordnen",
+        "description": ""
+    },
+    "steps": [
+        {
+            "id": "DaxqNL5SmdGsU23_Se-O4",
+            "index": 0,
+            "parentId": null,
+            "title": "`Doppelklick` auf `Model`",
+            "description": "",
+            "screenshotFilename": "step-0.png",
+            "indexString": "1.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 2.25,
+                    "x": 0,
+                    "y": 0
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-0.png"
+        },
+        {
+            "id": "kYu5Icv_ydDCS0ChXBUuw",
+            "index": 2,
+            "parentId": null,
+            "title": "Nach dem Start das Programm `Mechanical` öffnen",
+            "description": "",
+            "screenshotFilename": "step-1.png",
+            "indexString": "2.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 1,
+                    "x": 0,
+                    "y": 0
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-1.png"
+        },
+        {
+            "id": "PWQI9f8BEAASPeyRRngBB",
+            "index": 3,
+            "parentId": null,
+            "title": "Im Strukturbaum: `Klick` auf `+` neben `Geometry`",
+            "description": "",
+            "screenshotFilename": "step-2.png",
+            "indexString": "3.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 2.5,
+                    "x": 0,
+                    "y": 150
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-2.png"
+        },
+        {
+            "id": "5MaET-04LaAc4IQNPyddF",
+            "index": 5,
+            "parentId": null,
+            "title": "`Klick` auf `SYS\\Solid` (unsere vorher erstellte Geometrie)",
+            "description": "",
+            "screenshotFilename": "step-3.png",
+            "indexString": "4.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 2.5,
+                    "x": 2,
+                    "y": 62
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-3.png"
+        },
+        {
+            "id": "gInko1Fu2ILszVuBQe7xO",
+            "index": 6,
+            "parentId": null,
+            "title": "Im Detailfenster: `Klick` auf das `Dreieck` neben Structural",
+            "description": "",
+            "screenshotFilename": "step-4.png",
+            "indexString": "5.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 1.5,
+                    "x": 10,
+                    "y": 211
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-4.png"
+        },
+        {
+            "id": "DH9YmMpb5B4CMxDcR181d",
+            "index": 7,
+            "parentId": null,
+            "title": "`Klick` auf `Stahl` (unser vorher definiertes Material)",
+            "description": "",
+            "screenshotFilename": "step-5.png",
+            "indexString": "6.",
+            "textblocks": [],
+            "includeInToc": true,
+            "settings": {
+                "forceToANewPage": false,
+                "multiImageStep": false,
+                "focusedView": true,
+                "contentBlock": false,
+                "focusedViewSettings": {
+                    "scale": 1.75,
+                    "x": 2,
+                    "y": 304
+                },
+                "substepBlocksSettings": [
+                    {
+                        "id": "title",
+                        "show": false
+                    },
+                    {
+                        "id": "image",
+                        "show": true
+                    },
+                    {
+                        "id": "description",
+                        "show": false
+                    }
+                ],
+                "textblocks": []
+            },
+            "screenshotRelativePath": "\\img\\step-5.png"
+        }
+    ]
+}

@@ -84,7 +84,7 @@
             "id": "bUScTblywZk3te5gQrJIO",
             "index": 2,
             "parentId": null,
-            "title": "Klick \"Click here to add new Material\" und gib den Materialnamen `Stahl` ein",
+            "title": "`Klick` auf `Click here to add new Material` und den Materialnamen `Stahl` eingeben",
             "description": "",
             "screenshotFilename": "step-2.png",
             "indexString": "3.",
@@ -122,7 +122,7 @@
             "id": "vRn380TejYCApugO1de29",
             "index": 3,
             "parentId": null,
-            "title": "Das neue Material auswählen durch `klick` auf `Stahl`",
+            "title": "`Klick` auf `Stahl`",
             "description": "",
             "screenshotFilename": "step-3.png",
             "indexString": "4.",
@@ -160,7 +160,7 @@
             "id": "vlidiTxYM3AQ2w88W6Ul7",
             "index": 4,
             "parentId": null,
-            "title": "Klick auf `Isotropic Elasticity`",
+            "title": "`Klick` auf `Isotropic Elasticity`",
             "description": "",
             "screenshotFilename": "step-4.png",
             "indexString": "5.",
@@ -198,7 +198,7 @@
             "id": "86mm31463_fj8LeJDs3Lv",
             "index": 6,
             "parentId": null,
-            "title": "Copy Im Properties Fenster die Einheit von Young's Modulus auf `GPa` stellen und den Wert `210` eintragen und anschließend bei `Poisson's Ratio` den Wert `0,3` eintragen",
+            "title": "Im `Properties Fenster` die Einheit von `Young's Modulus` auf `GPa` stellen und den Wert `210` eintragen und anschließend bei `Poisson's Ratio` den Wert `0,3` eintragen",
             "description": "",
             "screenshotFilename": "step-5.png",
             "indexString": "6.",
@@ -233,10 +233,10 @@
             "screenshotRelativePath": "\\img\\step-5.png"
         },
         {
-            "id": "osABTeBmnSe9NgME8kgI9",
-            "index": 8,
+            "id": "aguqCZSI_1Dn1qGJVfJAf",
+            "index": 9,
             "parentId": null,
-            "title": "So müsste es am ende aussehen",
+            "title": "So müsste es aussehen",
             "description": "",
             "screenshotFilename": "step-6.png",
             "indexString": "7.",
@@ -248,9 +248,9 @@
                 "focusedView": true,
                 "contentBlock": false,
                 "focusedViewSettings": {
-                    "scale": 2,
-                    "x": 234,
-                    "y": 395
+                    "scale": 1,
+                    "x": 0,
+                    "y": 0
                 },
                 "substepBlocksSettings": [
                     {
@@ -272,9 +272,9 @@
         },
         {
             "id": "Usd3VMBMgvM74VR8OHhQE",
-            "index": 9,
+            "index": 10,
             "parentId": null,
-            "title": "Durch Klick auf den Tab `Projekt` kommen Sie zurück ins Projektmenü",
+            "title": "`Klick` auf den Tab `Project` um zurück ins Projektmenü zu kommen",
             "description": "",
             "screenshotFilename": "step-7.png",
             "indexString": "8.",
