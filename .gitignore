@@ -45,6 +45,10 @@ yarn-error.log*
 .env
 .env.*
 
+# mkdocs logs
+mkdocs-serve.log
+mkdocs-serve.pid
+
 # Misc
 *.swp
 *~

@@ -102,8 +102,13 @@
   }
 
   // ensure styles for level-up notification/animation exist
+<<<<<<< HEAD
   function ensureLevelUpStyles() {
     try {
+=======
+  function ensureLevelUpStyles(){
+    try{
+>>>>>>> adafc6e (feat: Update level-up animation styles and integrate canvas-confetti for enhanced visual effects)
       var css = '\n' +
         '.ac-level-overlay{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden}\n' +
         '.ac-piece{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);pointer-events:none;will-change:transform,opacity}\n' +
@@ -123,8 +128,13 @@
         '.ac-toast .desc{font-size:0.95rem;opacity:0.95}\n';
       var sid = 'answer-checker-level-styles';
       var existing = document.getElementById(sid);
+<<<<<<< HEAD
       if (existing) {
         try { existing.textContent = css; } catch (e) { /* ignore */ }
+=======
+      if (existing){
+        try{ existing.textContent = css; }catch(e){ /* ignore */ }
+>>>>>>> adafc6e (feat: Update level-up animation styles and integrate canvas-confetti for enhanced visual effects)
       } else {
         var s = document.createElement('style'); s.id = sid; s.appendChild(document.createTextNode(css)); document.head.appendChild(s);
       }
@@ -134,6 +144,7 @@
   }
 
   // show a small firework-like particle burst and a toast notification for level up
+<<<<<<< HEAD
   var LEVEL_NAMES = [
     'FEM-Frischling',
     'Netz-Neuling',
@@ -144,6 +155,41 @@
     'FEM-Fuchs',
     'Kurs-Kapitän'
   ];
+=======
+  function showLevelUp(level){
+    try{
+      ensureLevelUpStyles();
+      // try to use canvas-confetti for a nicer burst; load it dynamically if missing
+      var colors = ['#ff4d6d','#ffd14d','#6ef27a','#4fd3ff','#c77bff','#ffb86b'];
+      function loadConfetti(cb){
+        if (window.confetti) return cb();
+        try{
+          var s = document.createElement('script');
+          s.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js';
+          s.async = true;
+          s.onload = function(){ setTimeout(cb, 10); };
+          s.onerror = function(){ cb(); };
+          document.head.appendChild(s);
+        }catch(e){ cb(); }
+      }
+      loadConfetti(function(){
+        try{
+          if (window.confetti && typeof window.confetti === 'function'){
+            // create an instance that auto-resizes
+            var conf = window.confetti;
+            // do two bursts for a fuller look
+            try {
+              conf({ particleCount: 40, spread: 60, startVelocity: 40, ticks: 500, origin: { x: 0.5, y: 0.45 }, colors: colors });
+              setTimeout(function(){ try{ conf({ particleCount: 80, spread: 140, startVelocity: 30, ticks: 600, origin: { x: 0.5, y: 0.6 }, colors: colors }); }catch(e){} }, 140);
+            } catch(e){ /* fallback single call */
+              try{ conf({ particleCount: 100, spread: 100, origin: { y: 0.5 }, colors: colors }); }catch(e){}
+            }
+          } else {
+            // library not available: no-op (toast still shows)
+          }
+        }catch(e){}
+      });
+>>>>>>> adafc6e (feat: Update level-up animation styles and integrate canvas-confetti for enhanced visual effects)
 
   function getLevelName(level) {
     try { var idx = (parseInt(level, 10) || 1) - 1; if (idx < 0) idx = 0; if (idx >= LEVEL_NAMES.length) idx = LEVEL_NAMES.length - 1; return LEVEL_NAMES[idx]; } catch (e) { return ''; }
@@ -853,9 +899,15 @@
     try { updatePlayerBadge(); checkPageCompletion(); } catch (e) { }
 
     // create reset UI for authors/local testing if allowed
+<<<<<<< HEAD
     try { createPerPageResetIfAllowed(); } catch (e) { }
     try { ensureNavObserver(); } catch (e) { }
     try { ensureLevelUpStyles(); } catch (e) { }
+=======
+    try{ createPerPageResetIfAllowed(); }catch(e){}
+    try{ ensureNavObserver(); }catch(e){}
+  try{ ensureLevelUpStyles(); }catch(e){}
+>>>>>>> adafc6e (feat: Update level-up animation styles and integrate canvas-confetti for enhanced visual effects)
 
     // Global reset removed to prevent easy deletion of local results by students
 
@@ -865,6 +917,7 @@
   // local debug tools removed
 
   // expose a tiny test helper so authors can trigger the level-up animation from the console
+<<<<<<< HEAD
   try {
     if (typeof window !== 'undefined') {
       window.__ac_test_levelup = function (level, stars) { try { showLevelUp(level || getPlayerLevel() || 1, typeof stars === 'number' ? stars : undefined); } catch (e) { console.warn('Level-up helper failed', e); } };
@@ -878,5 +931,12 @@
       };
     }
   } catch (e) { }
+=======
+  try{
+    if (typeof window !== 'undefined'){
+      window.__ac_test_levelup = function(level){ try{ showLevelUp(level || getPlayerLevel() || 1); }catch(e){ console.warn('Level-up helper failed', e); } };
+    }
+  }catch(e){}
+>>>>>>> adafc6e (feat: Update level-up animation styles and integrate canvas-confetti for enhanced visual effects)
 
 })();
