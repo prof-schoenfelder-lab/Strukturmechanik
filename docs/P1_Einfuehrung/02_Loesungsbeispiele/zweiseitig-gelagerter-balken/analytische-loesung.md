@@ -17,11 +17,11 @@ $$
 Für den Fall des zweiseitig gelagerten Balkens mit Linienlast können wir die Durchbiegung berechnen nach:
 
 $$
-u_{max}=\frac{5\,q\,L^3}{384\,E\,I}=\frac{5\cdot1000\,\mathrm{N}\,(1000\,\mathrm{mm})^3}{384\cdot210000\,\mathrm{MPa}\cdot67500\,\mathrm{mm}^4}=0{,}9185773075\,\mathrm{mm}
+u_{max}=\frac{5\,q\,L^3}{384\,E\,I}=\frac{5\cdot1000\,\mathrm{N}\,(1000\,\mathrm{mm})^3}{384\cdot210000\,\mathrm{MPa}\cdot67500\,\mathrm{mm}^4}=0{,}919\,\mathrm{mm}
 $$
 !!! success
 
-    Dieser Wert stimmt gut mit dem Wert aus unserer Simulation mit $u_{max,Simulation}=0{,}967\,\mathrm{mm}$ überein. Bei einer Verschiebung von $\approx 1 \mathrm{mm}$ ist eine Abweichung von $1 \mathrm{\mu m}$ akzeptabel, da es ein Tausendstel der Ergebnisgröße ist.
+    Dieser Wert stimmt gut mit dem Wert aus unserer Simulation mit $u_{max,Simulation}=0{,}922\,\mathrm{mm}$ überein. Bei einer Verschiebung von $\approx 1 \mathrm{mm}$ ist eine Abweichung von $3 \mathrm{\mu m}$ akzeptabel.
 
 ## Maximale Spannung
 
@@ -45,4 +45,4 @@ $$
 
 !!! success
 
-    Auch dieser Wert stimmt gut mit Wert aus unserer Simulation mit $\sigma_{max,Simulation}=27{,}789\,\mathrm{MPa}$ überein.
+    Auch dieser Wert stimmt sehr gut mit Wert aus unserer Simulation mit $\sigma_{max,Simulation}=27{,}789\,\mathrm{MPa}$ überein.

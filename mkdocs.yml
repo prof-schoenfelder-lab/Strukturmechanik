@@ -104,11 +104,13 @@ nav:
               - Geometrie: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/geometrie.md
               - Materialzuordnung: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/materialzuordnung.md
               - Vernetzung: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/vernetzung.md
+              - Navigation: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/navigation.md
               - Lagerung: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/lagerung.md
               - Belastung: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/belastung.md
               - Gleichungssystem lösen: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/gleichungssystem-losen.md
               - Gesuchte Werte bestimmen: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/gesuchte-werte-bestimmen.md
           - Analytische Lösung: P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/analytische-loesung.md
       - SELBSTTESTS:
+          - Einleitung: P1_Einfuehrung/03_Selbsttests/Einleitung.md
           - Übung 1: P1_Einfuehrung/03_Selbsttests/Uebung-1.md
           - Übung 2: P1_Einfuehrung/03_Selbsttests/Uebung-2.md

@@ -49,6 +49,9 @@ yarn-error.log*
 mkdocs-serve.log
 mkdocs-serve.pid
 
+# ANSYS files
+ANSYS-PROJEKTE/*
+
 # Misc
 *.swp
 *~

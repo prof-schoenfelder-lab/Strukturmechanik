@@ -1,18 +1,23 @@
 /* Global overrides for tutorial player defaults */
-:root{
-  --tp-fixed-height:700px; /* default player height (can be overridden per-embed) */
-  --tp-pill-min-height:48px; /* baseline pill height */
+:root {
+  --tp-fixed-height: 700px;
+  /* default player height (can be overridden per-embed) */
+  --tp-pill-min-height: 48px;
+  /* baseline pill height */
 }
 
 /* Example helper: smaller global player if you want site-wide compact players */
-.site-wide-compact { --tp-fixed-height:900px }
+.site-wide-compact {
+  --tp-fixed-height: 900px
+}
 
 /* Make embeds centered by default. Control width with --tp-max-width or inline width. */
-.tutorial-embed{
-  display:block;
-  width:100%;
-  max-width:var(--tp-max-width,900px);
-  margin:0 auto 18px auto; /* centered with a little bottom gap */
+.tutorial-embed {
+  display: block;
+  width: 100%;
+  max-width: var(--tp-max-width, 900px);
+  margin: 0 auto 18px auto;
+  /* centered with a little bottom gap */
 }
 
 /* Example: per-embed override
@@ -20,11 +25,45 @@
 */
 
 /* Deaktiviert die Einklappbarkeit der Navigation */
-.md-nav__item--nested > input {
+.md-nav__item--nested>input {
   display: none;
 }
 
 /* Stellt sicher, dass alle Navigationselemente sichtbar sind */
-.md-nav__item--nested > .md-nav__list {
+.md-nav__item--nested>.md-nav__list {
   display: block;
+}
+
+/* Global inline-code style: match the visual appearance used inside .step (pill-like) */
+:root {
+  --inline-code-bg: rgba(47, 106, 246, .10);
+  --inline-code-border: rgba(47, 106, 246, .22);
+  --inline-code-color: #1a3ba8;
+  --inline-code-radius: 6px;
+  --inline-code-pad-y: .12em;
+  --inline-code-pad-x: .40em;
+}
+
+/* Apply to inline <code> inside the rendered Markdown content (but not code blocks in <pre>) */
+.md-typeset :not(pre)>code,
+.md-content :not(pre)>code {
+  background: var(--inline-code-bg);
+  color: var(--inline-code-color);
+  padding: var(--inline-code-pad-y) var(--inline-code-pad-x);
+  border: 1px solid var(--inline-code-border);
+  border-radius: var(--inline-code-radius);
+  font: 0.95em/1.25 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  white-space: normal;
+  /* allow wrapping */
+  word-break: break-word;
+}
+
+/* Keep code blocks unaffected */
+.md-typeset pre>code,
+.md-content pre>code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  white-space: pre;
 }

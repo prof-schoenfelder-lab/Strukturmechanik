@@ -2,9 +2,9 @@
 icon: material/help-box
 ---
 
-# zweiseitig gelagerter Balken
+# zweiseitig gelagerter Balken mit Flächenlast
 
-Als einfaches Beispiel starten wir mit einem zweiseitig gelagerten Balken mit Linienlast. Dieser ist in der Geometrie leicht zu erstellen und wir können die Lösungen leicht mit analytischen Gleichungen überprüfen.
+Als einfaches Beispiel starten wir mit einem zweiseitig gelagerten Balken mit Flächenlast. Dieser ist in der Geometrie leicht zu erstellen und wir können die Lösungen leicht mit analytischen Gleichungen überprüfen.
 
 <figure style="text-align:center;">
   <img src="../images/Aufgabenstellung.png" alt="Aufgabenstellung" width="400" class="no-lightbox">
