@@ -1,5 +1,4 @@
 ---
-icon: material/checkbox-blank-circle-outline
 title: Übung 3 - Träger mit einfacher Lagerung
 hide:
   - toc

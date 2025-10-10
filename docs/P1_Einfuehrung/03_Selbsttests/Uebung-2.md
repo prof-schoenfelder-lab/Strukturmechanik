@@ -1,5 +1,4 @@
 ---
-icon: material/checkbox-blank-circle-outline
 title: Übung 2 - Einseitig eingespanntes Balken mit Einzelkraft
 hide:
   - toc

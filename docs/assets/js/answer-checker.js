@@ -180,9 +180,9 @@
             var base = mapping[starCount] || 80;
             var secondary = Math.round(base * 1.4);
             try {
-              conf({ particleCount: Math.max(6, Math.round(base * 0.6)), spread: 55, startVelocity: 40, ticks: 500, origin: { x: 0.5, y: 0.45 }, colors: colors });
-              setTimeout(function () { try { conf({ particleCount: base, spread: 120 + starCount * 8, startVelocity: 30, ticks: 600, origin: { x: 0.5, y: 0.6 }, colors: colors }); } catch (e) { } }, 120);
-              setTimeout(function () { try { conf({ particleCount: secondary, spread: 160 + starCount * 10, startVelocity: 20, ticks: 700, origin: { x: 0.5, y: 0.7 }, colors: colors }); } catch (e) { } }, 300);
+              conf({ particleCount: Math.max(6, Math.round(base * 0.6)), spread: 55, startVelocity: 40, ticks: 125, origin: { x: 0.5, y: 0.45 }, colors: colors });
+              setTimeout(function () { try { conf({ particleCount: base, spread: 120 + starCount * 8, startVelocity: 30, ticks: 150, origin: { x: 0.5, y: 0.6 }, colors: colors }); } catch (e) { } }, 30);
+              setTimeout(function () { try { conf({ particleCount: secondary, spread: 160 + starCount * 10, startVelocity: 20, ticks: 175, origin: { x: 0.5, y: 0.7 }, colors: colors }); } catch (e) { } }, 75);
             } catch (e) { /* fallback single call */
               try { conf({ particleCount: Math.max(40, base), spread: 100, origin: { y: 0.5 }, colors: colors }); } catch (e) { }
             }
