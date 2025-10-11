@@ -371,6 +371,12 @@
       var links = document.querySelectorAll('.md-nav__link');
       links.forEach(function (link) {
         var href = link.getAttribute('href'); if (!href) return;
+        // Skip links that are part of the page TOC / secondary nav (we don't want stars in the in-page TOC)
+        try {
+          // Only skip when the link is inside the secondary nav container (the in-page TOC),
+          // not for all nav lists (primary left nav uses .md-nav__list as well).
+          if (link.closest && link.closest('.md-nav--secondary')) return;
+        } catch (e) { }
         try {
           var url = new URL(href, location.href);
           var linkPath = url.pathname || '';

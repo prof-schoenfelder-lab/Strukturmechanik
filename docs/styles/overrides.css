@@ -36,9 +36,12 @@
 
 /* Global inline-code style: match the visual appearance used inside .step (pill-like) */
 :root {
-  --inline-code-bg: rgba(47, 106, 246, .10);
-  --inline-code-border: rgba(47, 106, 246, .22);
-  --inline-code-color: #1a3ba8;
+  /* Derive inline-code pill colors from the steps --blue token so they match visually */
+  --inline-code-accent: var(--blue, var(--md-color-primary, #2f6af6));
+  /* Use the accent as the pill background and the theme-on-primary (white) as text */
+  --inline-code-bg: var(--inline-code-accent);
+  --inline-code-border: color-mix(in srgb, var(--inline-code-accent) 22%, var(--md-default-bg-color, #ffffff) 78%);
+  --inline-code-color: var(--tp-accent-contrast, #ffffff);
   --inline-code-radius: 6px;
   --inline-code-pad-y: .12em;
   --inline-code-pad-x: .40em;
@@ -56,6 +59,16 @@
     --inline-code-border: var(--md-code-hl-color--light, rgba(126, 168, 255, .20));
     --inline-code-color: var(--md-code-fg-color, #e7f3ff);
   }
+}
+
+/* Also support Material palette toggle classes/attributes (slate) so variables update
+   whether the dark mode is via prefers-color-scheme or Material's palette toggle */
+.md-scheme-slate,
+.md-theme-slate,
+[data-md-color-scheme="slate"] {
+  --inline-code-bg: var(--md-code-bg-color, rgba(47, 106, 246, .14));
+  --inline-code-border: var(--md-code-hl-color--light, rgba(126, 168, 255, .20));
+  --inline-code-color: var(--md-code-fg-color, #e7f3ff);
 }
 
 /* Material theme palette toggles (class and attribute variants) */
