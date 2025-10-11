@@ -8,7 +8,7 @@ hide:
 
 # :material-information-variant-box: Einleitung
 
-Nachdem Sie im [Lösungsbeispiel](../../02_Loesungsbeispiele/zweiseitig-gelagerter-balken/Aufgabenstellung/) eine strukturmechanische FEM‑Simulation in ANSYS durchgeführt haben, sollen Sie diesen Ablauf nun eigenständig wiederholen. Die Übungen führen schrittweise in neue Inhalte ein. Bereits behandelte Themen können Sie jederzeit im [Lösungsbeispiel](../../02_Loesungsbeispiele/zweiseitig-gelagerter-balken/Aufgabenstellung/) nachschlagen.
+Nachdem Sie im [Lösungsbeispiel](../../02_Loesungsbeispiele/zweiseitig-gelagerter-balken/Aufgabenstellung.md) eine strukturmechanische FEM‑Simulation in ANSYS durchgeführt haben, sollen Sie diesen Ablauf nun eigenständig wiederholen. Die Übungen führen schrittweise in neue Inhalte ein. Bereits behandelte Themen können Sie jederzeit im [Lösungsbeispiel](../../02_Loesungsbeispiele/zweiseitig-gelagerter-balken/Aufgabenstellung.md) nachschlagen.
 
 ## :material-bike-fast: Gamification
 

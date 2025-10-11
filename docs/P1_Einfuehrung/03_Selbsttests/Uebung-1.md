@@ -1,5 +1,4 @@
 ---
-title: Übung 3 - Träger mit einfacher Lagerung
 hide:
 ---
 
@@ -8,7 +7,7 @@ hide:
 Zum Start ein einfaches Beispiel bei dem sich nur die Belastung von einer Linienlast zu einer Einzellast ausgetauscht wird.
 
 <figure style="text-align:center;">
-  <img src="../images/Uebung-01.png" alt="Aufgabenstellung Übung 1" width="400" class="no-lightbox">
+  <img src="../images/Uebung-01.png" alt="Zweiseitig gelagerter Balken mit Einzelkraft" width="400" class="no-lightbox">
 </figure>
 
 ## Gegeben
