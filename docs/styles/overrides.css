@@ -49,19 +49,19 @@
    - class-based: .md-scheme-slate / .md-theme-slate
    - attribute-based: [data-md-color-scheme="slate"]; this ensures the
      rules apply regardless of how the theme is injected. */
-@media (prefers-color-scheme: dark){
-  :root{
+@media (prefers-color-scheme: dark) {
+  :root {
     /* Prefer Material variables if present */
-    --inline-code-bg: var(--md-code-bg-color, rgba(47,106,246,.14));
-    --inline-code-border: var(--md-code-hl-color--light, rgba(126,168,255,.20));
+    --inline-code-bg: var(--md-code-bg-color, rgba(47, 106, 246, .14));
+    --inline-code-border: var(--md-code-hl-color--light, rgba(126, 168, 255, .20));
     --inline-code-color: var(--md-code-fg-color, #e7f3ff);
   }
 }
 
 /* Material theme palette toggles (class and attribute variants) */
-.md-scheme-slate :not(pre) > code,
-.md-theme-slate :not(pre) > code,
-[data-md-color-scheme="slate"] :not(pre) > code {
+.md-scheme-slate :not(pre)>code,
+.md-theme-slate :not(pre)>code,
+[data-md-color-scheme="slate"] :not(pre)>code {
   background: var(--inline-code-bg);
   color: var(--inline-code-color);
   border-color: var(--inline-code-border);
