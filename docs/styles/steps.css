@@ -17,6 +17,7 @@
   --line-w: 3px;                  /* Linienbreite */
   --badge: 30px;                  /* Durchmesser des Zahlenkreises */
   --halo: 6px;                    /* weißer Halo um den Kreis (muss zum box-shadow passen) */
+  --halo-color: #ffffff;         /* default halo color for light theme */
   --gap: 6px;                     /* zusätzlicher Abstand zwischen Kreis und Text */
   --blue: #2f6af6;                /* Kreis- & Titel-Farbe */
   --line: rgba(47,106,246,.20);   /* Linienfarbe */
@@ -73,7 +74,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 0 var(--halo) #fff, 0 1px 0 rgba(0,0,0,.05);
+  box-shadow: 0 0 0 var(--halo) var(--halo-color), 0 1px 0 rgba(0,0,0,.05);
   z-index:2;
 }
 
@@ -201,4 +202,69 @@
   background: rgba(47,106,246,.14);
   border-color: rgba(47,106,246,.28);
   color: #0f2f8a;
+}
+
+/* ——— Dark theme overrides ———
+   Make the step timeline and inline code visible on dark (slate) theme.
+   We support both user-preferred color-scheme and the Material 'slate' palette toggle.
+*/
+@media (prefers-color-scheme: dark){
+  :root{
+    /* slightly lighter, desaturated blue for badges on dark backgrounds */
+      /* Prefer Material theme variables where available, fall back to our sensible defaults */
+      --blue: var(--md-typeset-a-color, #6ea3ff);
+      --line: var(--md-typeset-table-color--light, rgba(110,163,255,.12));
+      --code-bg: var(--md-code-bg-color, rgba(47,106,246,.14));
+      --code-border: var(--md-code-hl-color--light, rgba(126,168,255,.20));
+      --code-color: var(--md-code-fg-color, #e7f3ff);
+      /* halo color follows default background if variable exists */
+      --halo-color: var(--md-default-bg-color, #1F2128);
+      --step-text: var(--md-typeset-color, #e6eef8);
+  }
+
+  .steps::before{ background: var(--line); }
+
+  /* Badge: use the same badge color but pick a readable label color and a dark halo */
+  .step::before{
+    background: var(--blue);
+    /* label color: use theme fg or high-contrast fallback */
+    color: var(--md-default-bg-color, #041028);
+    box-shadow: 0 0 0 var(--halo) var(--halo-color), 0 1px 0 rgba(255,255,255,.03);
+  }
+
+  /* Body text inside steps */
+  .step p{ color: var(--step-text); }
+  .step figure > figcaption{ color: #cfd9ea; }
+
+  /* inline code inside steps: lighter text on subtle blue background */
+  .step :not(pre) > code{
+    background: var(--code-bg);
+    color: var(--code-color);
+    border-color: var(--code-border);
+  }
+
+  /* code blocks get a darker panel */
+  .step pre{
+    background: rgba(8,12,20,.55);
+    border-color: rgba(255,255,255,.04);
+  }
+}
+
+/* Support the material palette toggle which sometimes adds a scheme class */
+/* If the Material theme adds a slate-specific class, set the halo and step text variables */
+.md-scheme-slate,
+.md-theme-slate,
+[data-md-color-scheme="slate"]{
+  /* halo behind the badge should match the dark page background used by slate */
+  --halo-color: #1F2128;
+  --step-text: #e6eef8;
+}
+
+/* Extra: ensure badge number color is high-contrast on dark backgrounds */
+[data-md-color-scheme="slate"] .step::before,
+.md-scheme-slate .step::before,
+.md-theme-slate .step::before{
+  /* If theme provides a variable for default background use it for the label color; otherwise use a near-black for contrast against the light badge */
+  color: var(--md-default-bg-color, #041028);
+  box-shadow: 0 0 0 var(--halo) var(--halo-color), 0 1px 0 rgba(255,255,255,.03);
 }
