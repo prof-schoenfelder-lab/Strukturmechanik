@@ -36,14 +36,14 @@ hide:
     </a>
 
 -   <a class="card-link" href="03_Selbsttests/Uebung-1/">
-        :material-checkbox-marked-outline: __Übung 1__{ .xxxl .middle .center }
+        :material-star: __Übung 1__{ .xxxl .middle .center }
         <figure style="text-align:center;">
           <img src="03_Selbsttests/images/Uebung-01.png" alt="Übung 1" width="400" class="no-lightbox">
         </figure>
     </a>
 
 -   <a class="card-link" href="03_Selbsttests/Uebung-2/">
-        :material-checkbox-marked-outline: __Übung 2__{ .xxxl .middle .center }
+        :material-star: __Übung 2__{ .xxxl .middle .center }
         <figure style="text-align:center;">
           <img src="03_Selbsttests/images/Uebung-02.png" alt="Übung 2" width="400" class="no-lightbox">
         </figure>

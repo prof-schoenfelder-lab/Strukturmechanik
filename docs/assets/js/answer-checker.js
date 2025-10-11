@@ -770,10 +770,14 @@
     function submit() {
       if (attempts >= attemptsAllowed) { reveal(); return; }
       var raw = input && input.value;
-      if (typeof raw === 'string') raw = raw.replace(',', '.');
+      if (typeof raw === 'string') raw = raw.trim().replace(',', '.');
+      // If nothing was entered (empty string or whitespace) or parsing yields NaN,
+      // do NOT count this as an attempt. Prompt the user to enter a number.
+      if (!raw) { fb.innerHTML = '<span class="numeric-wrong">Bitte eine Zahl eingeben.</span>'; updateUI(); return; }
       var val = parseFloat(raw);
-      attempts += 1; saveAttempts();
       if (!isFinite(val)) { fb.innerHTML = '<span class="numeric-wrong">Bitte eine Zahl eingeben.</span>'; updateUI(); return; }
+      // Only now count the attempt because a valid number was supplied
+      attempts += 1; saveAttempts();
       if (Math.abs(val - answer) <= tol) {
         // Linear scaling across allowed attempts (Option A):
         // earned = round(points * (attemptsAllowed - attemptNumber + 1) / attemptsAllowed)

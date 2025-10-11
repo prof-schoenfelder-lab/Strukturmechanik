@@ -1,6 +1,5 @@
 ---
 hide:
-  - toc
 ---
 
 # Kragarm mit Einzelkraft
@@ -103,7 +102,7 @@ Auf der Stirnseite werden durch den `Fixed Support` (oder `Displacement` mit x=0
 Durch die `sprunghafte Änderung der Randbedingung an den Ecken` entsteht dort eine `Singularität`. Die Spannung an der Singularität steigt mit immer kleinere Netzgröße immer weiter an:
 
 <center>
-<iframe title="Maximale Spannung bei unterschiedlicher Netzgröße" aria-label="Liniendiagramm" id="datawrapper-chart-2WMO0" src="https://datawrapper.dwcdn.net/KckxX/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 60% !important; border: none;" height="400" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
+<iframe title="Maximale Spannung bei unterschiedlicher Netzgröße" aria-label="Liniendiagramm" id="datawrapper-chart-2WMO0" src="https://datawrapper.dwcdn.net/KckxX/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 80% !important; border: none;" height="400" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
 </center>
 An solchen `Singularitäten` dürfen die Spannungen also nicht ausgewertet werden. Wie können wir diese also verhindern?
 
@@ -163,5 +162,5 @@ Berechnen Sie nun erneut die Spannung:
 Hier noch mal die neue Lösung im Vergleich mit unterschiedlichen Netzgrößen
 
 <center>
-<iframe title="Maximale Spannung bei unterschiedlicher Netzgröße" aria-label="Liniendiagramm" id="datawrapper-chart-2WMO0" src="https://datawrapper.dwcdn.net/2WMO0/6/" scrolling="no" frameborder="0" style="width: 0; min-width: 60% !important; border: none;" height="400" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
+<iframe title="Maximale Spannung bei unterschiedlicher Netzgröße" aria-label="Liniendiagramm" id="datawrapper-chart-2WMO0" src="https://datawrapper.dwcdn.net/2WMO0/6/" scrolling="no" frameborder="0" style="width: 0; min-width: 80% !important; border: none;" height="400" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
 </center>
