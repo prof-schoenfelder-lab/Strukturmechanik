@@ -234,6 +234,14 @@ html:not([data-md-color-scheme="slate"]) .numeric-answer-input,
 	line-height: 1
 }
 
+/* Light-theme fix: make muted (unfilled) stars visible on light/default palette */
+html:not([data-md-color-scheme="slate"]) .page-stars .star:not(.filled),
+.md-scheme-default .page-stars .star:not(.filled),
+.md-theme-default .page-stars .star:not(.filled) {
+	/* Use a readable darkened gray in light mode for unfilled stars; filled stars stay gold */
+	color: rgba(0,0,0,0.45);
+}
+
 .page-stars .star.filled {
 	color: gold
 }
