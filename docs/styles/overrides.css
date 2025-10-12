@@ -111,3 +111,33 @@
   color: inherit;
   white-space: pre;
 }
+
+/* High-specificity override for .step text color in dark/slate palettes
+   We add selectors that target both prefers-color-scheme and Material's
+   palette toggles. This block intentionally mirrors the token used by the
+   typeset so it should maintain correct contrast without using !important. */
+@media (prefers-color-scheme: dark) {
+
+  html[data-md-color-scheme="slate"] .md-typeset .step p,
+  html[data-md-color-scheme="slate"] .md-content .step p,
+  .md-scheme-slate .md-typeset .step p,
+  .md-scheme-slate .md-content .step p,
+  html[data-md-color-scheme="slate"] .md-typeset .step figure>figcaption,
+  html[data-md-color-scheme="slate"] .md-content .step figure>figcaption,
+  .md-scheme-slate .md-typeset .step figure>figcaption,
+  .md-scheme-slate .md-content .step figure>figcaption {
+    color: var(--md-typeset-color, var(--md-default-fg-color, #e6eefc));
+  }
+}
+
+/* Also apply when Material theme toggles are used (class/attribute variants) */
+[data-md-color-scheme="slate"] .md-typeset .step p,
+[data-md-color-scheme="slate"] .md-content .step p,
+.md-theme-slate .md-typeset .step p,
+.md-theme-slate .md-content .step p,
+[data-md-color-scheme="slate"] .md-typeset .step figure>figcaption,
+[data-md-color-scheme="slate"] .md-content .step figure>figcaption,
+.md-theme-slate .md-typeset .step figure>figcaption,
+.md-theme-slate .md-content .step figure>figcaption {
+  color: var(--md-typeset-color, var(--md-default-fg-color, #e6eefc));
+}

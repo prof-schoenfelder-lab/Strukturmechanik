@@ -9,8 +9,10 @@ hide:
 
 ### :material-bullseye-arrow: Lernziele
 
-- [ ] Grundlegendes Verständnis über das Grundprinzip Finite-Elemente Methode (FEM)
-- [ ] Kennenlernen von Abläufen im Simulationsprogramm (ANSYS Workbench) zum Lösen von strukturmechanischen Problemstellungen
+- [ ] Workflow zum Lösen von strukturmechanischen Problemstellungen mit ANSYS Workbench (Mechanical) lernen und wiederholen (`Lösungsbeispiel`)
+- [ ] Im ANSYS Geometrie Tool SpaceClaim einfache Balkengeometrien erstellen und mit dem Split Tool Kanten/Flächen erzeugen für Randbedingungen (`Übung 1+2`)
+- [ ] Verstehen was Singularitäten sind und wie man diese ggf. vermeidet (`Übung 2+3`)
+- [ ] Einfluss der Netzgröße auf das Ergebnis (`Übung 3+4`)
 
 ### :material-table-of-contents: Inhalte
 

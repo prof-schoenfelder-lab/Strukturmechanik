@@ -278,17 +278,21 @@
   .step::before {
     background: var(--blue);
     /* label color: use theme fg or high-contrast fallback */
-    color: var(--md-default-bg-color, #041028);
+    color: var(--md-color-on-primary, #ffffff);
     box-shadow: 0 0 0 var(--halo) var(--halo-color), 0 1px 0 rgba(255, 255, 255, .03);
   }
 
-  /* Body text inside steps */
+  /* Body text inside steps — add high-specificity selectors to avoid overrides */
+  .md-typeset .step p,
+  .md-content .step p,
   .step p {
     color: var(--step-text);
   }
 
+  .md-typeset .step figure>figcaption,
+  .md-content .step figure>figcaption,
   .step figure>figcaption {
-    color: #cfd9ea;
+    color: var(--md-typeset-color, #cfd9ea);
   }
 
   /* inline code inside steps: lighter text on subtle blue background */
@@ -320,6 +324,6 @@
 .md-scheme-slate .step::before,
 .md-theme-slate .step::before {
   /* If theme provides a variable for default background use it for the label color; otherwise use a near-black for contrast against the light badge */
-  color: var(--md-default-bg-color, #041028);
+  color: var(--md-color-on-primary, #ffffff);
   box-shadow: 0 0 0 var(--halo) var(--halo-color), 0 1px 0 rgba(255, 255, 255, .03);
 }
