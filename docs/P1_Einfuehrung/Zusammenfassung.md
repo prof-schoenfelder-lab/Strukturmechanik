@@ -12,11 +12,11 @@ Hier noch mal die wichtigsten Kernaussagen des ersten Praktikums:
 <div class="steps" markdown="1">
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Fixierte Lagerung und Punktlasten führten zu Singularitäten</p>
+    <p class="step-title" role="heading" aria-level="2">Fixierte Lagerung und Punktlasten führen zu Singularitäten</p>
   </div>
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Spannungen an Singularitäten sind nicht real und sollten deshalb nicht ausgewertet werden.</p>
+    <p class="step-title" role="heading" aria-level="2">Spannungen an Singularitäten sollten nicht ausgewertet werden</p>
   </div>
 
 </div>
