@@ -48,16 +48,21 @@ hide:
 
 <div class="grid cards" markdown>
 
-- <img src="assets/people/Felix_Kaule.jpg" alt="Felix Kaule" class="no-lightbox" />
+-  <a class="card-link" href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/18448121873/CourseNode/1633401058120725004" target="_blank" rel="noopener noreferrer">
+ <img src="assets/people/Felix_Kaule.jpg" alt="Felix Kaule" class="no-lightbox" />
   **M.Eng. Felix Kaule**  
   Felix(dot)Kaule(at)htwk-leipzig.de
+  </a>
 
-- <img src="assets/people/Klaus_Schneller.jpeg" alt="Klaus Schneller" class="no-lightbox" />
+- <a class="card-link" href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/18448121873/CourseNode/1760236690964595011" target="_blank" rel="noopener noreferrer"> 
+<img src="assets/people/Klaus_Schneller.jpeg" alt="Klaus Schneller" class="no-lightbox" />
   **M.Eng. Klaus Schneller**  
   Klaus(dot)Schneller(at)htwk-leipzig(.)de
+  </a>
 
-- <img src="assets/people/Stephan_Schoenfelder.png" alt="Prof. Dr.-Ing. Stephan Schönfelder" class="no-lightbox" />
+- <a class="card-link" href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/18448121873/CourseNode/98344428551217" target="_blank" rel="noopener noreferrer"> 
+<img src="assets/people/Stephan_Schoenfelder.png" alt="Prof. Dr.-Ing. Stephan Schönfelder" class="no-lightbox" />
   **Prof. Dr.-Ing. Stephan Schönfelder**  
   Stephan(dot)Schoenfelder(at)htwk-leipzig.de
-
+  </a>
 </div>
