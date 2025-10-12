@@ -25,22 +25,22 @@ Alu
 
 ### Geometrie
 
-[:material-paperclip: Lenker2024.scdoc](../assets/Lenker_2024R2.scdoc)
+[:material-paperclip: Lenker.scdoc](../assets/Lenker.scdoc)
 
 
 ### Randbedingungen
 
 Lagerung:
 
-- feste Einspannung im mittleren Bereich (Klemmung Vorbau)
+- feste Einspannung im mittleren Bereich auf einer Breite von 50mm (Klemmung Vorbau)
 
 Belastung:
 
-Linke Handauflage:<br>
+Linke Handauflage auf einer Breite von 80mm:<br>
 - Kraft $F_y=-200 \mathrm{N}$ (Richtung Boden)<br>
 - Kraft $F_z=-500 \mathrm{N}$ (Fahrtrichtung)<br>
 
-Rechte Handauflage:<br>
+Rechte Handauflage auf einer Breite von 80mm:<br>
 - Kraft $F_y=-200 \mathrm{N}$ (Richtung Boden)<br>
 - Kraft $F_z=-500 \mathrm{N}$ (Fahrtrichtung)<br>
 

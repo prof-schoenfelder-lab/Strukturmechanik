@@ -48,15 +48,15 @@ hide:
 
 <div class="grid cards" markdown>
 
--- <img src="assets/people/Felix_Kaule.jpg" alt="Felix Kaule" class="no-lightbox" />
+- <img src="assets/people/Felix_Kaule.jpg" alt="Felix Kaule" class="no-lightbox" />
   **M.Eng. Felix Kaule**  
   Felix(dot)Kaule(at)htwk-leipzig.de
 
--- <img src="assets/people/Klaus_Schneller.jpeg" alt="Klaus Schneller" class="no-lightbox" />
+- <img src="assets/people/Klaus_Schneller.jpeg" alt="Klaus Schneller" class="no-lightbox" />
   **M.Eng. Klaus Schneller**  
   Klaus(dot)Schneller(at)htwk-leipzig(.)de
 
--- <img src="assets/people/Stephan_Schoenfelder.png" alt="Prof. Dr.-Ing. Stephan Schönfelder" class="no-lightbox" />
+- <img src="assets/people/Stephan_Schoenfelder.png" alt="Prof. Dr.-Ing. Stephan Schönfelder" class="no-lightbox" />
   **Prof. Dr.-Ing. Stephan Schönfelder**  
   Stephan(dot)Schoenfelder(at)htwk-leipzig.de
 

@@ -10,9 +10,8 @@ hide:
 ### :material-bullseye-arrow: Lernziele
 
 - [ ] Workflow zum Lösen von strukturmechanischen Problemstellungen mit ANSYS Workbench (Mechanical) lernen und wiederholen (`Lösungsbeispiel`)
-- [ ] Im ANSYS Geometrie Tool SpaceClaim einfache Balkengeometrien erstellen und mit dem Split Tool Kanten/Flächen erzeugen für Randbedingungen (`Übung 1+2`)
-- [ ] Verstehen was Singularitäten sind und wie man diese ggf. vermeidet (`Übung 2+3`)
-- [ ] Einfluss der Netzgröße auf das Ergebnis (`Übung 3+4`)
+- [ ] Erstellung und Bearbeitung einfacher Geometrien in SpaceClaim (Geometrie Tool von ANSYS) (`Übung 1+2+3`)
+- [ ] Was sind Singularitäten und wie geht man damit um (`Übung 2+3+4`)
 
 ### :material-table-of-contents: Inhalte
 
@@ -48,6 +47,20 @@ hide:
         :material-star: __Übung 2__{ .xxxl .middle .center }
         <figure style="text-align:center;">
           <img src="03_Selbsttests/images/Uebung-02.png" alt="Übung 2" width="400" class="no-lightbox">
+        </figure>
+    </a>
+
+-   <a class="card-link" href="03_Selbsttests/Uebung-3/">
+        :material-star: __Übung 3__{ .xxxl .middle .center }
+        <figure style="text-align:center;">
+          <img src="03_Selbsttests/images/Uebung-03.png" alt="Übung 3" width="400" class="no-lightbox">
+        </figure>
+    </a>
+
+-   <a class="card-link" href="03_Selbsttests/Uebung-4/">
+        :material-star: __Übung 4__{ .xxxl .middle .center }
+        <figure style="text-align:center;">
+          <img src="03_Selbsttests/images/Uebung-04.png" alt="Übung 4" width="400" class="no-lightbox">
         </figure>
     </a>
 
