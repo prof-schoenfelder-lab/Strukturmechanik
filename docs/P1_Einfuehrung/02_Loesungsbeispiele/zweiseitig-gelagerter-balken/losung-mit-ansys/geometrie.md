@@ -20,6 +20,6 @@ hide:
 Wir erstellen die Geometrie mit dem ANSYS eigenen Tool `SpaceClaim`. 
 
 <div class="tutorial-embed"
-   data-tutorial="/assets/tutorials/Geometrie_erstellen"
+   data-tutorial="/assets/tutorials/Geometrie_Erstellen"
    style="width:800px">
 </div>
