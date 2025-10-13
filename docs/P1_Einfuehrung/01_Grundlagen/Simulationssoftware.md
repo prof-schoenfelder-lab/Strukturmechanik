@@ -18,9 +18,6 @@ Die Software die wir zur Finite-Elemente Simulation benutzen lautet **ANSYS Work
     <p>Im Windows Start Menü unter Lehre auf <code>ANSYS Worbench 2024R2</code> drücken</p>
   </div>
 
-  <div class="step" >
-    <p class="step-title" role="heading" aria-level="2">Analyse hinzufügen</p>
-    <p>In der Menüleiste links auf <code>Structural Analysis</code> doppelklicken</p>
-  </div>
-
 </div>
+
+Weitere Ablauf folgt mit dem nachfolgendem Lösungsbeispiel.
