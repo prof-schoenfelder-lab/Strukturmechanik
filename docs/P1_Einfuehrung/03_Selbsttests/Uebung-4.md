@@ -72,7 +72,7 @@ Rechte Handauflage auf einer Breite von 80mm:<br>
 
 ### Die maximale Durchbiegung $u_{\max }$ in mm
 
-<div class="numeric-question" data-answer="17.8" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Material zugeordnet? Kraft jeweils auf beide Handflächen separat mit richtigen Kraftkomponenten?">
+<div class="numeric-question" data-answer="17.8" data-tolerance="1.0" data-points="5" data-attempts="5"  data-hints="Material zugeordnet? Kraft jeweils auf beide Handflächen separat mit richtigen Kraftkomponenten?">
 </div>
 
 <!---
