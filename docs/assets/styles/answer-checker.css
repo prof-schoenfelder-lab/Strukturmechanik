@@ -212,7 +212,7 @@ html:not([data-md-color-scheme="slate"]) .numeric-answer-input,
 	color: var(--player-badge-fg, var(--md-default-fg-color, #111111));
 	border-radius: 8px;
 	font-weight: 700;
-	box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
 }
 
 .player-badge .player-icon {
@@ -346,39 +346,39 @@ html:not([data-md-color-scheme="slate"]) .page-stars .star:not(.filled),
 .md-scheme-slate .numeric-question,
 .md-theme-slate .numeric-question,
 [data-md-color-scheme="slate"] .numeric-question {
-  border-color: var(--md-color-fg-muted, rgba(255, 255, 255, 0.08));
-  background: var(--md-surface, #0f1720);
-  background-color: #0f1720 !important;
-  color: var(--md-typeset-color, #e6eef8);
+	border-color: var(--md-color-fg-muted, rgba(255, 255, 255, 0.08));
+	background: var(--md-surface, #0f1720);
+	background-color: #0f1720 !important;
+	color: var(--md-typeset-color, #e6eef8);
 }
 
 .md-scheme-slate .numeric-answer-input,
 .md-theme-slate .numeric-answer-input,
 [data-md-color-scheme="slate"] .numeric-answer-input {
-  background: var(--md-surface-variant, rgba(255, 255, 255, 0.03));
-  background-color: rgba(8, 12, 20, 1) !important;
-  border-color: var(--md-color-fg-muted, rgba(255, 255, 255, 0.06));
-  color: var(--md-typeset-color, #e6eef8);
+	background: var(--md-surface-variant, rgba(255, 255, 255, 0.03));
+	background-color: rgba(8, 12, 20, 1) !important;
+	border-color: var(--md-color-fg-muted, rgba(255, 255, 255, 0.06));
+	color: var(--md-typeset-color, #e6eef8);
 }
 
 .md-scheme-slate .numeric-answer-submit,
 .md-theme-slate .numeric-answer-submit,
 [data-md-color-scheme="slate"] .numeric-answer-submit {
-  background: var(--md-color-primary, #6f42c1);
-  color: var(--md-color-on-primary, #ffffff);
+	background: var(--md-color-primary, #6f42c1);
+	color: var(--md-color-on-primary, #ffffff);
 }
 
 .md-scheme-slate .numeric-hint,
 .md-theme-slate .numeric-hint,
 [data-md-color-scheme="slate"] .numeric-hint {
-  background: rgba(255, 255, 255, 0.02);
-  color: var(--md-color-fg-muted, #9aa4bf);
+	background: rgba(255, 255, 255, 0.02);
+	color: var(--md-color-fg-muted, #9aa4bf);
 }
 
 /* Ensure the player badge remains light in slate/dark palettes */
 .md-scheme-slate .player-badge,
 .md-theme-slate .player-badge,
 [data-md-color-scheme="slate"] .player-badge {
-  background: var(--player-badge-bg, var(--md-default-bg-color, #ffffff)) !important;
-  color: var(--player-badge-fg, var(--md-default-fg-color, #111111)) !important;
+	background: var(--player-badge-bg, var(--md-default-bg-color, #ffffff)) !important;
+	color: var(--player-badge-fg, var(--md-default-fg-color, #111111)) !important;
 }
