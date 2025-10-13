@@ -10,7 +10,7 @@ hide:
 ### :material-bullseye-arrow: Lernziele
 
 - [ ] Workflow zum Lösen von strukturmechanischen Problemstellungen mit ANSYS Workbench (Mechanical) lernen und wiederholen (`Lösungsbeispiel`)
-- [ ] Erstellung und Bearbeitung einfacher Geometrien in SpaceClaim (Geometrie Tool von ANSYS) (`Übung 1+2+3`)
+- [ ] Erstellung und Bearbeitung einfacher Geometrien in SpaceClaim (Geometrie Tool von ANSYS) (`Übung 1+2+3+4`)
 - [ ] Was sind Singularitäten und wie geht man damit um (`Übung 2+3+4`)
 
 ### :material-table-of-contents: Inhalte
