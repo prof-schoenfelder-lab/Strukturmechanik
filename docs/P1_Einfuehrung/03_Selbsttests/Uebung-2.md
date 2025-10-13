@@ -39,7 +39,7 @@ Lagerung:
 
 Belastung:
 
-- Kraft $F=5000 \mathrm{N}$ auf der Kante rechts
+- Kraft $F=3000 \mathrm{N}$ auf der Kante rechts
 
 ## Hinweise
 
