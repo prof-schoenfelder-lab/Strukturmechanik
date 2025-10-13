@@ -16,7 +16,7 @@ Zum Start ein einfaches Beispiel bei dem sich nur die Belastung von einer Linien
 
 Stahl
 
-- Elastizitätsmodul $E=200 \mathrm{GPa}$
+- Elastizitätsmodul $E=210 \mathrm{GPa}$
 - Querkontraktionszahl $\nu=0,3$
 
 ### Geometrie

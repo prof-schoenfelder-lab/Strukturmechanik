@@ -24,7 +24,7 @@ Als einfaches Beispiel starten wir mit einem zweiseitig gelagerten Balken mit Fl
 <!-- --8<-- [start:Material] -->
 Stahl
 
-- Elastizitätsmodul $E=200 \mathrm{GPa}$
+- Elastizitätsmodul $E=210 \mathrm{GPa}$
 - Querkontraktionszahl $\nu=0,3$
 <!-- --8<-- [end:Material] -->
 
