@@ -1,5 +1,5 @@
 ---
-icon: material/information-variant-box
+icon: material/content-save
 hide:
     - toc
 ---
