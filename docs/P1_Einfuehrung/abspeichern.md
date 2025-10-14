@@ -8,27 +8,65 @@ hide:
 # :material-content-save: Abspeichern
 
 
-Zum Schluß können Sie das Projekt abspeichern:
-
+Zum Abspeichern gibt es zwei Möglichkeiten. Die erste sollten Sie immer zu Beginn machen um Fortschritt nicht zu verlieren.
 !!! danger "Keine Umlaute im Dateipfad !!"
 
     Verwenden Sie keine Umlaut (ä,ö,ü) im Dateipfad (also nicht in einem Ordner oder Dateinamen). Also nicht Übung sondern Uebung! Ansonsten kann beim lösen vom Gleichungssystem zu Fehlern kommen.
 
+# Als Projekt speichern
+
+Empfehlung um den Fortschritt während des Praktikums nicht zu verlieren.
+
 <div class="steps" markdown="1">
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Als Projekt (Dateiname.wbpj + Ordner) abspeichern</p>
+    <p class="step-title" role="heading" aria-level="2">Projektdatei (Dateiname.wbpj + Dateinameordner) speichern</p>
     <p>Im Workbench Projektmenü im Menü links oben auf <code>File</code> > <code>Save As...</code></p> 
-    <p>Pfad und Dateinamen aussuchen (<code>Keine Umlaute im Dateipfad!</code>) und abspeichern.</p>
+  </div>
+
+  <div class="step">
+    <p class="step-title" role="heading" aria-level="2">Dateiname</p>
+    <p>Pfad und Dateinamen immer <code>ohne Umlaute im Dateipfad!</code></p>
+    <p>Im PC-Pool Empfehlung auf <code>D:/Studierende/ihrName/Dateiname.wbpj</code> abspeichern </code></p>
     <p>Dabei wird eine Datei <code>Dateiname.wbpj</code> und ein Ordner <code>Dateiname</code> erstellt.</p>
   </div>
+
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Als Projektarchiv ((Dateiname.wbpz) speichern (Empfehlung zum Abspeichern z.B. auf eigenem USB-Stick)</p>
-    <p>Nachdem das Projekt gespeichert ist, kann es als Projektarchiv gespeichert werden</p>
-    <p>Im Workbench Projektmenü im Menü links oben auf <code>Archive</code> klicken. 
-    <p>den Haken bei <code>Result/solution and retained design point files</code> rausnehmen und auf <code>Archive</code> klicken.
-    <p>Es wird nur eine Datei <code>Dateiname.wbpz</code> erstellt die relativ klein ist (weil Sie die Ergebnisse nicht enhält). </p>
-    <p>Diese Datei kann auch direkt geöffnet werden, dann wird das Archiv lokal entpackt und beim speichern wird die Archivdatei wieder gespeichert</p>
+    <p class="step-title" role="heading" aria-level="2">Ergebnis</p>
+    <p>Projektdatei <code>Dateiname.wbpj</code></p>
+    <p>Projektordner <code>Dateiname</code></p>
+  </div>
+
+</div>
+
+# Als Archiv speichern
+
+Empfehlung zur Mitnahme (erste am Ende!).
+
+<div class="steps" markdown="1">
+
+  <div class="step">
+    <p class="step-title" role="heading" aria-level="2">Falls nocht nicht geschen, als Projektdatei speichern (Anleitung oben)</p>
+  </div>
+
+  <div class="step">
+    <p class="step-title" role="heading" aria-level="2">Als Projektarchiv (Dateiname.wbpz)</p>
+    <p>Im Workbench Projektmenü im Menü links oben auf <code>File</code> > <code>Archive...</code></p> 
+  </div>
+  
+ <div class="step">
+    <p class="step-title" role="heading" aria-level="2">Dateiname</p>
+    <p>Dateinamen immer <code>ohne Umlaute im Dateipfad!</code></p>
+  </div>
+
+  <div class="step">
+    <p class="step-title" role="heading" aria-level="2">Empfehlung: Ergebnisdateien nicht mit speichern</p>
+    <p>Den Haken bei <code>Result/solution and retained design point files</code> rausnehmen um Speicherplatz zu sparen und auf <code>Archive</code> klicken.
+  </div>
+
+  <div class="step">
+    <p class="step-title" role="heading" aria-level="2">Ergebnis</p>
+    <p>Projektarchivdatei <code>Dateiname.wbpz</code></p>
   </div>
 
 

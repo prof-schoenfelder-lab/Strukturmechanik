@@ -24,21 +24,29 @@ hide:
     </a>
 
 -   __Praktikum 2<br>:material-cube: Geometrieaufbereitung, Lagerung und Lasten__
-    <hr />
+    <br>
+    <br>
     Work in Progress
 
 -   __Praktikum 3<br>:material-cube-unfolded: Vernetzung__
-    <hr />
+    <br>
+    <br>
     Work in Progress
 
 -   __Praktikum 4<br>:material-video-2d: Abstraktion__
-    <hr />
+    <br>
+    <br>
     Work in Progress
 
 -   __Praktikum 5<br>:material-chart-box: Post Processing__
-    <hr />
+    <br>
+    <br>
     Work in Progress
 
+-   <a class="card-link" href="00_FAQ/">
+    __:material-frequently-asked-questions: FAQ__
+    <br><br>Antworten auf häufig gestellte Fragen
+    </a>
 </div>
 
 

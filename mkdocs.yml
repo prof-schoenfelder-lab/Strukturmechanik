@@ -119,3 +119,10 @@ nav:
       - ZUSAMMENNFASSUNG:
           - P1_Einfuehrung/abspeichern.md
           - P1_Einfuehrung/Zusammenfassung.md
+  - FAQ:
+      - 00_FAQ/index.md
+      - 00_FAQ/ANSYS_Install.md
+      - 00_FAQ/Fenster_weg.md
+      - 00_FAQ/Fehler_checkliste.md
+      - P1_Einfuehrung/abspeichern.md
+      - P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/navigation.md

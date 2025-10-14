@@ -1,6 +1,8 @@
 ---
 title: Grundprinzip FEM
 icon: material/atom
+hide:
+  - toc
 ---
 
 # Grundprinzipien der Finiten-Elemente-Methode

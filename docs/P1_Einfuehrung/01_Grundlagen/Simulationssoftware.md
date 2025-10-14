@@ -1,7 +1,10 @@
 ---
 title: Simulationssoftware
 icon: material/alpha-a-box
+hide:
+  - toc
 ---
+
 
 # Simulationssoftware
 
