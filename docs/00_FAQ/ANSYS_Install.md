@@ -5,7 +5,14 @@ hide:
   - toc
 ---
 
-# ANSYS Installations Anleitung  
+
+!!! warning "Studentenversion"
+
+    Es gibt neben der Version die im PC Pool installiert ist auch eine kostenlos Studentenversion. Die ist zum einen immer die aktuellste Version, hat aber den Nachteil, dass die Anzahl an Knoten limitiert sind. Dadurch sind manche Praktika vielleicht möglich. Die Empfehlung für das Praktikum ist deshalb die Nicht-Studenten Version zu installieren (Anleitung unten)
+
+
+
+# ANSYS Installations Anleitung für Version im PC Pool ANSYS2024R2
 
 <div class="steps" markdown="1">
 
