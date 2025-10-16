@@ -32,7 +32,8 @@ hide:
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Lizenzserver angeben</p>
-    <p>ansys.htwk-leipzig.de</p>
+    <p>Server: ansys.htwk-leipzig.de</p>
+    <p>Port: 1055</p>
   </div>
 
   <div class="step">
