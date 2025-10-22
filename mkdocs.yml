@@ -119,6 +119,31 @@ nav:
       - ZUSAMMENNFASSUNG:
           - P1_Einfuehrung/abspeichern.md
           - P1_Einfuehrung/Zusammenfassung.md
+  - GEOMETRIE & RANDBEDINGUNGEN:
+      - P2_Geometrie_Randbedingunge/index.md
+      - GEOMETRIEANPASSUNGEN:
+          - Längen & Positionen: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/Move.md
+          - Radius & Verrundungen: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/Pull.md
+          - Übung 1: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/Uebung-1.md
+          - Flächen teilen: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/Split.md
+          - Körper teilen: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/SplitBody.md
+          - Übergänge erstellen: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/Blend.md
+          - Übung 2: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/Uebung-2.md
+          - Vereinfachungen: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/Vereinfachungen.md
+          - Körper zusammenfügen: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/Combine.md
+      - LAGERUNGEN:
+          - Zweck: P2_Geometrie_Randbedingunge/02_Lagerungen/Zweck.md
+          - Geometrieselektion: P2_Geometrie_Randbedingunge/02_Lagerungen/Geometrieselektion.md
+          - Lager: P2_Geometrie_Randbedingunge/02_Lagerungen/Displacement.md
+          - Externe Lager: P2_Geometrie_Randbedingunge/02_Lagerungen/RemoteDisplacement.md
+          - Zylindrische Lager: P2_Geometrie_Randbedingunge/02_Lagerungen/Cylindrical.md
+          - Verbindungen: P2_Geometrie_Randbedingunge/02_Lagerungen/Verbindungen.md
+      - BELASTUNGEN:
+          - Verschiebungen: P2_Geometrie_Randbedingunge/03_Belastungen/DisplacementLoad.md
+          - Kräfte: P2_Geometrie_Randbedingunge/03_Belastungen/Force.md
+          - Externe Kräfte: P2_Geometrie_Randbedingunge/03_Belastungen/RemoteForce.md
+          - Druck: P2_Geometrie_Randbedingunge/03_Belastungen/Pressure.md
+          - Beschleunigungen: P2_Geometrie_Randbedingunge/03_Belastungen/Beschleunigungen.md
   - FAQ:
       - 00_FAQ/index.md
       - 00_FAQ/ANSYS_Install.md

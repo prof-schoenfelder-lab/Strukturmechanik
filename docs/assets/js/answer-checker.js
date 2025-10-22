@@ -380,23 +380,22 @@
         try {
           var url = new URL(href, location.href);
           var linkPath = url.pathname || '';
-          if (linkPath.indexOf('/03_Selbsttests/') !== -1 || linkPath.indexOf('/Selbsttests/') !== -1) {
-            if (encodeURIComponent(url.pathname) === pid) {
-              var existing = link.querySelector('.page-stars');
-              if (!attempted) {
-                // remove any existing stars if page not yet attempted
-                if (existing) { try { existing.parentNode && existing.parentNode.removeChild(existing); } catch (e) { } }
+          // Show stars for all pages with numeric questions (removed path restriction)
+          if (encodeURIComponent(url.pathname) === pid) {
+            var existing = link.querySelector('.page-stars');
+            if (!attempted) {
+              // remove any existing stars if page not yet attempted
+              if (existing) { try { existing.parentNode && existing.parentNode.removeChild(existing); } catch (e) { } }
+            } else {
+              if (existing) {
+                // only replace if different to avoid triggering mutation observers
+                try { if ((existing.outerHTML || '').trim() !== (starsHtml || '').trim()) existing.outerHTML = starsHtml; } catch (e) { }
               } else {
-                if (existing) {
-                  // only replace if different to avoid triggering mutation observers
-                  try { if ((existing.outerHTML || '').trim() !== (starsHtml || '').trim()) existing.outerHTML = starsHtml; } catch (e) { }
-                } else {
-                  var span = link.querySelector('.md-ellipsis') || link;
-                  // avoid inserting duplicate if already present
-                  if (!span.querySelector || !span.querySelector('.page-stars')) {
-                    var wrap = document.createElement('span'); wrap.innerHTML = starsHtml;
-                    span.appendChild(wrap.firstChild);
-                  }
+                var span = link.querySelector('.md-ellipsis') || link;
+                // avoid inserting duplicate if already present
+                if (!span.querySelector || !span.querySelector('.page-stars')) {
+                  var wrap = document.createElement('span'); wrap.innerHTML = starsHtml;
+                  span.appendChild(wrap.firstChild);
                 }
               }
             }
@@ -446,11 +445,9 @@
         try {
           var url = new URL(href, location.href);
           var linkPath = url.pathname || '';
-          // only initialize icons for Selbsttests navigation items
-          if (linkPath.indexOf('/03_Selbsttests/') !== -1 || linkPath.indexOf('/Selbsttests/') !== -1) {
-            var linkPid = encodeURIComponent(url.pathname);
-            try { updateStarsForPage(linkPid); } catch (e) { }
-          }
+          // Initialize stars for all pages with numeric questions (removed path restriction)
+          var linkPid = encodeURIComponent(url.pathname);
+          try { updateStarsForPage(linkPid); } catch (e) { }
         } catch (e) { }
       });
     } catch (e) { }
