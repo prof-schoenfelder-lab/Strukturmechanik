@@ -36,7 +36,7 @@ stark vereinfachte v-Break:
 Lagerung:
 
 - Drehbar gelagert 
-- Elastische Bettung m Bereich des Bremsklotz mit Fundamentsteifigkeit $k=30/,N/mm^3 $ 
+- Elastische Bettung m Bereich des Bremsklotz mit Fundamentsteifigkeit $k=30\,N/mm^3 $ 
 
 Belastung:
 
