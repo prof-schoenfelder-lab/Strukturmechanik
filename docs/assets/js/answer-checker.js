@@ -303,7 +303,8 @@
           if (!k) continue;
           if (k.indexOf('answer_max_') === 0) {
             var qid = k.replace('answer_max_', '');
-            var base = String(qid).split(':q')[0] || qid;
+            // Split by :q or :mc to get the base path
+            var base = String(qid).split(/:q|:mc/)[0] || qid;
             var normBase = normalizePath(base);
             if (normBase === normPage) qidSet[qid] = true;
           }
@@ -315,7 +316,8 @@
           var kk = localStorage.key(j);
           if (!kk || kk.indexOf('answer_best_') !== 0) continue;
           var qid2 = kk.replace('answer_best_', '');
-          var base2 = String(qid2).split(':q')[0] || qid2;
+          // Split by :q or :mc to get the base path
+          var base2 = String(qid2).split(/:q|:mc/)[0] || qid2;
           var normBase2 = normalizePath(base2);
           if (normBase2 === normPage) qidSet[qid2] = true;
         } catch (e) { }
@@ -417,7 +419,8 @@
         if (!k) continue;
         if (k.indexOf('answer_attempts_') === 0 || k.indexOf('answer_best_') === 0) {
           var qid = k.replace(/^answer_(?:attempts|best)_/, '');
-          var base = String(qid).split(':q')[0] || qid;
+          // Split by :q or :mc to get the base path
+          var base = String(qid).split(/:q|:mc/)[0] || qid;
           var normBase = normalizePath(base);
           if (normBase === normPage) {
             // if attempts key, check value > 0; if best key, any stored record counts as attempt
@@ -546,15 +549,25 @@
         updatePlayerBadge(); updateNavForPageClaim(pid); return;
       }
     } catch (e) { }
+
+    // Check both numeric and multiple choice questions
     var qs = document.querySelectorAll('.numeric-question');
-    if (!qs || qs.length === 0) return;
+    var mcqs = document.querySelectorAll('.multiple-choice-question');
+    var allQuestions = [];
+
+    for (var i = 0; i < qs.length; i++) allQuestions.push(qs[i]);
+    for (var j = 0; j < mcqs.length; j++) allQuestions.push(mcqs[j]);
+
+    if (allQuestions.length === 0) return;
+
     // All questions must have a stored best > 0
-    for (var i = 0; i < qs.length; i++) {
-      var q = qs[i];
-      var qid = q.dataset.qid || ((document.location.pathname || location.href) + ':q' + i);
+    for (var k = 0; k < allQuestions.length; k++) {
+      var q = allQuestions[k];
+      var qid = q.dataset.qid || ((document.location.pathname || location.href) + ':q' + k);
       var rec = safeJSONParse(localStorage.getItem('answer_best_' + qid));
       if (!rec || !(rec.points > 0)) return; // not completed yet
     }
+
     // All completed → compute stars for this page and award level
     var pctNow = 0;
     try { pctNow = computePagePercent(pid); } catch (e) { }
@@ -568,10 +581,18 @@
   // Check if all questions on the page are finished (either correct or attempts exhausted)
   function checkAllQuestionsFinished() {
     var qs = document.querySelectorAll('.numeric-question');
-    if (!qs || qs.length === 0) return false;
-    for (var i = 0; i < qs.length; i++) {
-      var q = qs[i];
-      var qid = q.dataset.qid || ((document.location.pathname || location.href) + ':q' + i);
+    var mcqs = document.querySelectorAll('.multiple-choice-question');
+    var allQuestions = [];
+
+    // Collect all questions
+    for (var i = 0; i < qs.length; i++) allQuestions.push({ el: qs[i], type: 'numeric' });
+    for (var j = 0; j < mcqs.length; j++) allQuestions.push({ el: mcqs[j], type: 'mc' });
+
+    if (allQuestions.length === 0) return false;
+
+    for (var k = 0; k < allQuestions.length; k++) {
+      var q = allQuestions[k].el;
+      var qid = q.dataset.qid || ((document.location.pathname || location.href) + ':q' + k);
       var attemptsAllowed = parseInt(q.dataset.attempts || q.dataset.attemptsAllowed || ATTEMPTS_ALLOWED, 10) || ATTEMPTS_ALLOWED;
       var attempts = parseInt(localStorage.getItem('answer_attempts_' + qid) || '0', 10) || 0;
       var bestRec = safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0, updated: null };
@@ -866,6 +887,202 @@
     updateUI();
   }
 
+  // Setup Multiple Choice Question
+  function setupMultipleChoiceQuestion(q, index) {
+    var normPath = (function () { try { var p = window.location && window.location.pathname ? window.location.pathname : (new URL(window.location.href)).pathname; if (p.indexOf('/index.html') !== -1) p = p.replace(/\/index\.html$/, '/'); if (p.length > 1 && p.endsWith('/')) p = p.slice(0, -1); return p; } catch (e) { return (document.location.pathname || document.location.href); } })();
+    var fallbackQid = normPath + ':mc' + index;
+    var qid = q.dataset.qid || fallbackQid;
+    q.dataset.qid = qid;
+
+    var correctAnswers = (q.dataset.correct || '').split(',').map(function (s) { return s.trim(); }).filter(function (s) { return s.length > 0; });
+    var points = parseFloat(q.dataset.points || 1) || 1;
+    try { localStorage.setItem('answer_max_' + qid, String(points)); } catch (e) { }
+    var hints = (q.dataset.hints || '').split('|').map(function (h) { return h.trim(); });
+
+    var attempts = parseInt(localStorage.getItem('answer_attempts_' + qid) || '0', 10) || 0;
+    var attemptsAllowed = parseInt(q.dataset.attempts || q.dataset.attemptsAllowed || ATTEMPTS_ALLOWED, 10) || ATTEMPTS_ALLOWED;
+    var bestRec = safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0, updated: null };
+
+    // Find or create options container
+    var optionsContainer = q.querySelector('.mc-options');
+    if (!optionsContainer) {
+      optionsContainer = document.createElement('div');
+      optionsContainer.className = 'mc-options';
+      q.appendChild(optionsContainer);
+    }
+
+    // Get all option elements
+    var options = optionsContainer.querySelectorAll('.mc-option');
+
+    // Create submit button
+    var btn = q.querySelector('.mc-submit');
+    if (!btn) {
+      btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'mc-submit';
+      btn.textContent = 'Antwort prüfen';
+      q.appendChild(btn);
+    }
+
+    var fb = q.querySelector('.mc-feedback');
+    if (!fb) {
+      fb = document.createElement('div');
+      fb.className = 'mc-feedback';
+      q.appendChild(fb);
+    }
+
+    var scoreEl = q.querySelector('.mc-score');
+    if (!scoreEl) {
+      scoreEl = document.createElement('div');
+      scoreEl.className = 'mc-score';
+      q.appendChild(scoreEl);
+    }
+
+    function saveAttempts() { localStorage.setItem('answer_attempts_' + qid, String(attempts)); }
+    function saveBest(pointsVal) {
+      localStorage.setItem('answer_best_' + qid, JSON.stringify({ points: pointsVal, updated: new Date().toISOString() }));
+      bestRec = { points: pointsVal, updated: new Date().toISOString() };
+    }
+
+    function disableControls() {
+      if (btn) btn.disabled = true;
+      options.forEach(function (opt) {
+        var checkbox = opt.querySelector('input[type="checkbox"]');
+        if (checkbox) checkbox.disabled = true;
+      });
+    }
+
+    function enableControls() {
+      if (btn) btn.disabled = false;
+      options.forEach(function (opt) {
+        var checkbox = opt.querySelector('input[type="checkbox"]');
+        if (checkbox) checkbox.disabled = false;
+      });
+    }
+
+    function reveal() {
+      fb.innerHTML += '<div class="mc-reveal">Richtige Antworten: <strong>' + correctAnswers.join(', ') + '</strong></div>';
+      disableControls();
+      // Highlight correct answers
+      options.forEach(function (opt) {
+        var value = opt.dataset.value || '';
+        if (correctAnswers.indexOf(value) !== -1) {
+          opt.classList.add('mc-correct-answer');
+        }
+      });
+    }
+
+    function updateUI() {
+      bestRec = safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0, updated: null };
+      attempts = parseInt(localStorage.getItem('answer_attempts_' + qid) || '0', 10) || 0;
+      if (bestRec.points > 0) {
+        scoreEl.textContent = 'Punkte: ' + bestRec.points + '/' + points;
+        fb.innerHTML = '<span class="mc-correct">Richtig — ' + bestRec.points + ' Punkte.</span>';
+        disableControls();
+        // Highlight the selected answers
+        var savedSelection = safeJSONParse(localStorage.getItem('answer_selection_' + qid)) || [];
+        options.forEach(function (opt) {
+          var checkbox = opt.querySelector('input[type="checkbox"]');
+          var value = opt.dataset.value || '';
+          if (checkbox && savedSelection.indexOf(value) !== -1) {
+            checkbox.checked = true;
+          }
+        });
+      } else if (attempts >= attemptsAllowed) {
+        scoreEl.textContent = 'Punkte: 0/' + points;
+        reveal();
+      } else {
+        scoreEl.textContent = 'Versuche: ' + attempts + '/' + attemptsAllowed;
+      }
+    }
+
+    function submit() {
+      if (attempts >= attemptsAllowed) { reveal(); return; }
+
+      // Get selected options
+      var selected = [];
+      options.forEach(function (opt) {
+        var checkbox = opt.querySelector('input[type="checkbox"]');
+        if (checkbox && checkbox.checked) {
+          selected.push(opt.dataset.value || '');
+        }
+      });
+
+      // Check if at least one option is selected
+      if (selected.length === 0) {
+        fb.innerHTML = '<span class="mc-wrong">Bitte mindestens eine Antwort auswählen.</span>';
+        return;
+      }
+
+      attempts += 1;
+      saveAttempts();
+
+      // Check if answer is correct (all correct selected, no wrong selected)
+      var isCorrect = true;
+
+      // Check if all correct answers are selected
+      for (var i = 0; i < correctAnswers.length; i++) {
+        if (selected.indexOf(correctAnswers[i]) === -1) {
+          isCorrect = false;
+          break;
+        }
+      }
+
+      // Check if any wrong answers are selected
+      for (var j = 0; j < selected.length; j++) {
+        if (correctAnswers.indexOf(selected[j]) === -1) {
+          isCorrect = false;
+          break;
+        }
+      }
+
+      if (isCorrect) {
+        var attemptNumber = attempts;
+        var earned;
+        if (attemptNumber === 1) {
+          earned = Math.round(points);
+        } else {
+          earned = Math.floor(points * ((attemptsAllowed - attemptNumber + 1) / attemptsAllowed));
+        }
+        if (!isFinite(earned) || earned < 0) earned = 0;
+        if (earned > points) earned = Math.round(points);
+
+        var prevRec = safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0, updated: null };
+        var prev = prevRec.points || 0;
+        if (earned > prev) {
+          saveBest(earned);
+          // Save the selection for display later
+          try { localStorage.setItem('answer_selection_' + qid, JSON.stringify(selected)); } catch (e) { }
+        }
+
+        try { checkPageCompletion(); } catch (e) { }
+        try {
+          var myPid = getPageId();
+          updateStarsForPage(myPid);
+        } catch (e) { }
+        try { (function (pid) { setTimeout(function () { try { updateStarsForPage(pid); } catch (e) { } }, 250); })(getPageId()); } catch (e) { }
+
+        fb.innerHTML = '<span class="mc-correct">Richtig — ' + earned + ' Punkte.</span>';
+        scoreEl.textContent = 'Punkte: ' + (safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: earned }).points + '/' + points;
+        disableControls();
+        try { showSolutionImages(); } catch (e) { }
+      } else {
+        var s = '<span class="mc-wrong">Falsch (' + attempts + '/' + attemptsAllowed + ').</span>';
+        if (hints[attempts - 1]) s += '<div class="mc-hint">Hinweis: ' + hints[attempts - 1] + '</div>';
+        fb.innerHTML = s;
+        if (attempts >= attemptsAllowed) {
+          scoreEl.textContent = 'Punkte: 0/' + points;
+          reveal();
+          try { showSolutionImages(); } catch (e) { }
+        } else updateUI();
+      }
+      renderSummary();
+    }
+
+    btn.addEventListener('click', submit);
+    updateUI();
+  }
+
   function onReady(fn) { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
 
   onReady(function () {
@@ -873,8 +1090,15 @@
     cleanupOldEntries();
     // initialize nav icons according to localStorage (claimed vs not)
     try { initializeNavIcons(); } catch (e) { }
+
+    // Setup numeric questions
     var questions = document.querySelectorAll('.numeric-question');
     for (var i = 0; i < questions.length; i++) setupQuestion(questions[i], i);
+
+    // Setup multiple choice questions
+    var mcQuestions = document.querySelectorAll('.multiple-choice-question');
+    for (var j = 0; j < mcQuestions.length; j++) setupMultipleChoiceQuestion(mcQuestions[j], j);
+
     // update player badge and nav
     try { updatePlayerBadge(); checkPageCompletion(); } catch (e) { }
 

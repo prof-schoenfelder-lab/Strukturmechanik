@@ -1,5 +1,6 @@
 ---
 hide:
+    - toc
 ---
 
 # Vergleich verschiedener Lagerungsbedingungen am Beispiel des Inbus
@@ -50,22 +51,29 @@ Belastung:
 
 ## Gesucht
 
-### Die maximale Durchbiegung $u_{\max }$ in mm
+### Spannungen
 
-<div class="numeric-question" data-answer="2.06" data-tolerance="0.2" data-points="5" data-attempts="5"  data-hints="Material zugeordnet?">
+Welche Lagerung führt zur ähnlichen Spannung wie die Variante mit dem Schraubkopf?
+
+Hinweis: Wenn sie die Körperauswahl verwenden und den Inbus der jeweiligen Randbedingung auswählen bevor Sie die Spannung einfügen, können Sie auch nur die Spannung des jeweiligen Bauteils anzeigen.
+
+<div class="multiple-choice-question" data-correct="C,D" data-points="5" data-attempts="3">
+  <div class="mc-options">
+    <div class="mc-option" data-value="A">
+      <input type="checkbox" id="q1a" name="q1">
+      <label for="q1a">Fixed Support</label>
+    </div>
+    <div class="mc-option" data-value="B">
+      <input type="checkbox" id="q1b" name="q1">
+      <label for="q1b">Remote Displacement (rigid)</label>
+    </div>
+    <div class="mc-option" data-value="C">
+      <input type="checkbox" id="q1c" name="q1">
+      <label for="q1c">Remote Displacement (deformable)</label>
+    </div>
+    <div class="mc-option" data-value="D">
+      <input type="checkbox" id="q1d" name="q1">
+      <label for="q1d">Elastic Support</label>
+    </div>
+  </div>
 </div>
-
-<!---
-Fixed Support: 1,9867 mm
-RemoteDisp (Fläche): 2,1309 mm
--->
-
-### Die maximale Spannung in von-Mises Spannung 
-
-<div class="numeric-question" data-answer="353.11" data-tolerance="3" data-points="5" data-attempts="5"  data-hints="Haben Sie die von-Mises Spannung ausgewertet? Fixierte Lagerung mit Remote Displacement?">
-</div>
-
-<!---
-Fixed Support: 353,11 MPa
-RemoteDisp+ (Fläche): 353,11 MPa
--->

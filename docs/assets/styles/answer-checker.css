@@ -426,3 +426,172 @@ html:not([data-md-color-scheme="slate"]) .page-stars .star:not(.filled),
 [data-md-color-scheme="slate"] .solution-images h4 {
 	color: var(--md-color-primary, #8b5cf6);
 }
+
+/* Multiple Choice Question Styles */
+.multiple-choice-question {
+	border: 1px solid var(--md-color-fg-muted, #e6e6e6);
+	padding: 0.8rem;
+	border-radius: 8px;
+	margin: 0.75rem 0;
+	background: var(--md-surface, #ffffff);
+	color: var(--md-typeset-color, #111);
+}
+
+.mc-options {
+	margin: 0.75rem 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.mc-option {
+	display: flex;
+	align-items: center;
+	padding: 0.6rem 0.8rem;
+	border: 1px solid var(--md-color-fg-muted, #e0e0e0);
+	border-radius: 6px;
+	background: var(--md-surface, #ffffff);
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.mc-option:hover {
+	background: var(--md-surface-variant, #f5f5f5);
+	border-color: var(--md-color-primary, #6f42c1);
+}
+
+.mc-option input[type="checkbox"] {
+	margin-right: 0.75rem;
+	cursor: pointer;
+	width: 18px;
+	height: 18px;
+	accent-color: var(--md-color-primary, #6f42c1);
+}
+
+.mc-option label {
+	cursor: pointer;
+	flex: 1;
+	user-select: none;
+	margin: 0;
+}
+
+.mc-option.mc-correct-answer {
+	background: rgba(11, 102, 35, 0.1);
+	border-color: var(--md-color-positive, #0b6623);
+}
+
+.mc-submit {
+	background: var(--md-color-primary, #6f42c1);
+	color: var(--md-color-on-primary, #ffffff);
+	border: none;
+	padding: 0.5rem 1.2rem;
+	border-radius: 6px;
+	cursor: pointer;
+	font-weight: 500;
+	font-size: 0.95rem;
+	transition: all 0.2s ease;
+	margin-top: 0.5rem;
+}
+
+.mc-submit:hover:not(:disabled) {
+	background: var(--md-color-primary-light, #8b5cf6);
+	transform: translateY(-1px);
+	box-shadow: 0 2px 8px rgba(111, 66, 193, 0.3);
+}
+
+.mc-submit:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.mc-feedback {
+	margin-top: 0.6rem;
+	font-size: 0.95rem;
+}
+
+.mc-correct {
+	color: var(--md-color-positive, #0b6623);
+	font-weight: 600;
+}
+
+.mc-wrong {
+	color: var(--md-color-negative, #b00020);
+	font-weight: 600;
+}
+
+.mc-hint {
+	margin-top: 0.5rem;
+	padding: 0.5rem;
+	background: rgba(111, 66, 193, 0.08);
+	border-left: 3px solid var(--md-color-primary, #6f42c1);
+	border-radius: 4px;
+	color: var(--md-color-fg-muted, #6b6b6b);
+	font-size: 0.9rem;
+}
+
+.mc-reveal {
+	margin-top: 0.5rem;
+	padding: 0.6rem;
+	background: rgba(0, 0, 0, 0.03);
+	border-radius: 6px;
+	border-left: 3px solid var(--md-color-primary, #6f42c1);
+}
+
+.mc-score {
+	margin-top: 0.5rem;
+	font-size: 0.9rem;
+	color: var(--md-color-fg-muted, #6b6b6b);
+	font-weight: 500;
+}
+
+/* Dark mode support for Multiple Choice */
+.md-scheme-slate .multiple-choice-question,
+.md-theme-slate .multiple-choice-question,
+[data-md-color-scheme="slate"] .multiple-choice-question {
+	background: var(--md-surface, #0f1720);
+	border-color: var(--md-color-fg-muted, rgba(255, 255, 255, 0.08));
+	color: var(--md-typeset-color, #e6eef8);
+}
+
+.md-scheme-slate .mc-option,
+.md-theme-slate .mc-option,
+[data-md-color-scheme="slate"] .mc-option {
+	background: rgba(255, 255, 255, 0.02);
+	border-color: var(--md-color-fg-muted, rgba(255, 255, 255, 0.06));
+}
+
+.md-scheme-slate .mc-option:hover,
+.md-theme-slate .mc-option:hover,
+[data-md-color-scheme="slate"] .mc-option:hover {
+	background: rgba(255, 255, 255, 0.05);
+	border-color: var(--md-color-primary, #8b5cf6);
+}
+
+.md-scheme-slate .mc-option.mc-correct-answer,
+.md-theme-slate .mc-option.mc-correct-answer,
+[data-md-color-scheme="slate"] .mc-option.mc-correct-answer {
+	background: rgba(110, 242, 122, 0.12);
+	border-color: rgba(110, 242, 122, 0.4);
+}
+
+.md-scheme-slate .mc-submit,
+.md-theme-slate .mc-submit,
+[data-md-color-scheme="slate"] .mc-submit {
+	background: var(--md-color-primary, #8b5cf6);
+	color: var(--md-color-on-primary, #ffffff);
+}
+
+.md-scheme-slate .mc-hint,
+.md-theme-slate .mc-hint,
+[data-md-color-scheme="slate"] .mc-hint {
+	background: rgba(139, 92, 246, 0.1);
+	border-left-color: var(--md-color-primary, #8b5cf6);
+	color: var(--md-color-fg-muted, #9aa4bf);
+}
+
+.md-scheme-slate .mc-reveal,
+.md-theme-slate .mc-reveal,
+[data-md-color-scheme="slate"] .mc-reveal {
+	background: rgba(255, 255, 255, 0.02);
+	border-left-color: var(--md-color-primary, #8b5cf6);
+}
