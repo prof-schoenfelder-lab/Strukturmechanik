@@ -151,11 +151,11 @@ hide:
 
 -   <a class="card-link" href="03_Belastungen/RemoteForce/">:material-arrow-down-bold-outline: __externe Kräfte__{ .xxxl .middle .center }
        <figure style="text-align:center;">
-          <img src="03_Belastungen/images/RemoteDisplacement_Fahrradbeispiel.excalidraw.png" alt="Verschiebung als Last" width="400" class="no-lightbox">
+          <img src="03_Belastungen/images/RemoteForce_Fahrradbeispiel.excalidraw.png" alt="Verschiebung als Last" width="400" class="no-lightbox">
       </figure>
     </a>
 
--   <a class="card-link" href="02_Lagerungen/Uebung-7/">:material-star: __Übung 7__{ .xxxl .middle .center }
+-   <a class="card-link" href="03_Belastungen/Uebung-7/">:material-star: __Übung 7__{ .xxxl .middle .center }
        <figure style="text-align:center;">
           <img src="03_Belastungen/images/Uebung-07.excalidraw.png" alt="Übung 7" width="400" class="no-lightbox">
       </figure>
