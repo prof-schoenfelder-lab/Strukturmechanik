@@ -6,4 +6,4 @@ hide:
 
 # Druck mit `Pressure`
 
-- quasi das gleiche wie Kraft nur bezogen auf Fläche
+Druck ist eine Kraft pro Fläche und verteilt sich damit auf allen ausgewählten Geometrien gleich und ist bei `positivem Wert` senkrecht zur Oberfläche (Druck) und bei `negativem Wert` mit Zug beaufschlagt.

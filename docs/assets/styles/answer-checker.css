@@ -382,3 +382,47 @@ html:not([data-md-color-scheme="slate"]) .page-stars .star:not(.filled),
 	background: var(--player-badge-bg, var(--md-default-bg-color, #ffffff)) !important;
 	color: var(--player-badge-fg, var(--md-default-fg-color, #111111)) !important;
 }
+
+/* Solution images container - hidden by default, shown when all questions finished */
+.solution-images {
+	display: none;
+	margin-top: 2rem;
+	padding: 1.5rem;
+	border: 2px solid var(--md-color-primary, #6f42c1);
+	border-radius: 12px;
+	background: var(--md-surface, #ffffff);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.solution-images.solution-shown {
+	display: block;
+}
+
+.solution-images h3,
+.solution-images h4 {
+	color: var(--md-color-primary, #6f42c1);
+	margin-top: 0;
+	margin-bottom: 1rem;
+}
+
+.solution-images figure {
+	margin: 1rem 0;
+}
+
+/* Dark mode support for solution images */
+.md-scheme-slate .solution-images,
+.md-theme-slate .solution-images,
+[data-md-color-scheme="slate"] .solution-images {
+	background: var(--md-surface, #0f1720);
+	border-color: var(--md-color-primary, #8b5cf6);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.md-scheme-slate .solution-images h3,
+.md-scheme-slate .solution-images h4,
+.md-theme-slate .solution-images h3,
+.md-theme-slate .solution-images h4,
+[data-md-color-scheme="slate"] .solution-images h3,
+[data-md-color-scheme="slate"] .solution-images h4 {
+	color: var(--md-color-primary, #8b5cf6);
+}

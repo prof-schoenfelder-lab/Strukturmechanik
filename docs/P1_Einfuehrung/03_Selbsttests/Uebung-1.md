@@ -105,3 +105,34 @@ Belastung:
 
 <div class="numeric-question" data-answer="275.03" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Kraft auf -5000N in z-Richtung auf der Kante?">
 </div>
+
+<!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->
+<div class="solution-images">
+
+### 🎯 Lösung
+
+Hier sehen Sie die korrekte Lösung für diese Übung:
+
+<figure style="text-align:center;">
+  <img src="../images/Uebung-01_Loesung_Kraft.png" alt="Kraft auf Kante" width="700">
+  <figcaption>Schritt 1: Kraft korrekt auf der Kante appliziert (-5000N in z-Richtung)</figcaption>
+</figure>
+
+<figure style="text-align:center;">
+  <img src="../images/Uebung-01_Loesung_Durchbiegung.png" alt="Durchbiegung Ergebnis" width="700">
+  <figcaption>Schritt 2: Maximale Durchbiegung u_max = 7.378 mm (Total Deformation)</figcaption>
+</figure>
+
+<figure style="text-align:center;">
+  <img src="../images/Uebung-01_Loesung_Spannung.png" alt="Spannung Ergebnis" width="700">
+  <figcaption>Schritt 3: Maximale Spannung in y-Richtung σ_y,max = 275.03 MPa (Normal Stress Y)</figcaption>
+</figure>
+
+**Wichtige Punkte:**
+- Einheit auf mm umstellen (nicht vergessen!)
+- Kraft muss auf der **Kante** appliziert werden (nicht auf der Fläche)
+- Kraftrichtung: -5000N in **z-Richtung** (negativ!)
+- Spannung in **y-Richtung** auswerten (Längsrichtung des Balkens)
+
+</div>
+

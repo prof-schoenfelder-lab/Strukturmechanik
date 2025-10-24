@@ -565,6 +565,44 @@
     // Do NOT change nav icons anymore. Only stars (via updateStarsForPage) reflect progress.
   }
 
+  // Check if all questions on the page are finished (either correct or attempts exhausted)
+  function checkAllQuestionsFinished() {
+    var qs = document.querySelectorAll('.numeric-question');
+    if (!qs || qs.length === 0) return false;
+    for (var i = 0; i < qs.length; i++) {
+      var q = qs[i];
+      var qid = q.dataset.qid || ((document.location.pathname || location.href) + ':q' + i);
+      var attemptsAllowed = parseInt(q.dataset.attempts || q.dataset.attemptsAllowed || ATTEMPTS_ALLOWED, 10) || ATTEMPTS_ALLOWED;
+      var attempts = parseInt(localStorage.getItem('answer_attempts_' + qid) || '0', 10) || 0;
+      var bestRec = safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0, updated: null };
+      // Question is finished if: either got points OR used all attempts
+      if (!(bestRec.points > 0 || attempts >= attemptsAllowed)) {
+        return false; // at least one question not finished yet
+      }
+    }
+    return true; // all questions finished
+  }
+
+  // Show solution images when all questions are finished
+  function showSolutionImages() {
+    try {
+      var container = document.querySelector('.solution-images');
+      if (!container) return;
+      // Check if already shown to avoid re-showing on every check
+      if (container.classList.contains('solution-shown')) return;
+      if (checkAllQuestionsFinished()) {
+        container.classList.add('solution-shown');
+        container.style.display = 'block';
+        // Add a smooth fade-in effect
+        container.style.opacity = '0';
+        setTimeout(function () {
+          container.style.transition = 'opacity 0.5s ease-in';
+          container.style.opacity = '1';
+        }, 10);
+      }
+    } catch (e) { }
+  }
+
   function computeTotals() {
     var all = 0, today = 0, details = [];
     var todayKey = new Date().toISOString().slice(0, 10);
@@ -805,11 +843,18 @@
         fb.innerHTML = '<span class="numeric-correct">Richtig — ' + earned + ' Punkte.</span>';
         scoreEl.textContent = 'Punkte: ' + (safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: earned }).points + '/' + points;
         disableControls();
+        // Check if all questions are finished and show solution images if so
+        try { showSolutionImages(); } catch (e) { }
       } else {
         var s = '<span class="numeric-wrong">Falsch (' + attempts + '/' + attemptsAllowed + ').</span>';
         if (hints[attempts - 1]) s += '<div class="numeric-hint">Hinweis: ' + hints[attempts - 1] + '</div>';
         fb.innerHTML = s;
-        if (attempts >= attemptsAllowed) { scoreEl.textContent = 'Punkte: 0/' + points; reveal(); } else updateUI();
+        if (attempts >= attemptsAllowed) {
+          scoreEl.textContent = 'Punkte: 0/' + points;
+          reveal();
+          // Check if all questions are finished and show solution images if so
+          try { showSolutionImages(); } catch (e) { }
+        } else updateUI();
       }
       renderSummary();
     }
@@ -832,6 +877,9 @@
     for (var i = 0; i < questions.length; i++) setupQuestion(questions[i], i);
     // update player badge and nav
     try { updatePlayerBadge(); checkPageCompletion(); } catch (e) { }
+
+    // Check if solution images should be shown (on page load)
+    try { showSolutionImages(); } catch (e) { }
 
     // create reset UI for authors/local testing if allowed
     try { createPerPageResetIfAllowed(); } catch (e) { }

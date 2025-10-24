@@ -7,12 +7,12 @@ hide:
 
 # Geometrieaufbereitung und Randbedingungen
 
-### :material-bullseye-arrow: Lernziele
+### :material-bullseye-arrow: LERNZIELE
 
 - [ ] Kennenlernen der grundlegenden Methoden zur Veränderung und Vereinfachung von CAD Geometrien mit SpaceClaim 
 - [ ] Kennenlernen der möglichen Lagerungs- und Belastungsmethoden in ANSYS Mechanical
 
-### :material-table-of-contents: Geometrieanpassungen
+### :material-table-of-contents: GEOMETRIEANPASSUNGEN
 
 <div class="grid cards" markdown>
 
@@ -67,6 +67,30 @@ hide:
 -   <a class="card-link" href="01_Geometrie_anpassen/Combine/">:material-plus-circle: __Körper zusammenfügen__{ .xxxl .middle .center }
        <figure style="text-align:center;">
           <img src="01_Geometrie_anpassen/images/Koerper_zusammenfuegen.gif" alt="Körper zusammenfügen" width="400" class="no-lightbox">
+      </figure>
+    </a>
+
+</div>
+
+### :material-table-of-contents: LAGERUNGEN
+
+<div class="grid cards" markdown>
+
+-   <a class="card-link" href="02_Lagerungen/Einfuehrung/">:material-information-variant-box: __Einführung__{ .xxxl .middle .center }
+       <figure style="text-align:center;">
+          <img src="02_Lagerungen/images/Starrkoerperbewegungen.png" alt="Starrkörperbewegungen" width="400" class="no-lightbox">
+      </figure>
+    </a>
+
+-   <a class="card-link" href="02_Lagerungen/Displacement/">:material-triangle: __Lager__{ .xxxl .middle .center }
+       <figure style="text-align:center;">
+          <img src="02_Lagerungen/images/Lager.png" alt="Lager" width="400" class="no-lightbox">
+      </figure>
+    </a>
+
+-   <a class="card-link" href="02_Lagerungen/Uebung-3/">:material-star: __Übung 3__{ .xxxl .middle .center }
+       <figure style="text-align:center;">
+          <img src="02_Lagerungen/images/Lagerungsbeispiel_Lineal.png" alt="Übung 3" width="400" class="no-lightbox">
       </figure>
     </a>
 

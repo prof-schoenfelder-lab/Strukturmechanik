@@ -6,4 +6,4 @@ hide:
 
 # Belastung durch Verschiebungen
 
-- Äquivalenz zur Kraft
+Neben den klassischen Lasten wie Kräfte und Drücke kann ein Bauteil auch durch eine Verschiebung (`Displacement`) und einem Wert $\ne0$ beaufschlagt werden. Wichtig ist dabei auch zu verstehen, dass Kraft und Verschiebung gleichwertige Belastungen sein können.

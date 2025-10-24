@@ -132,16 +132,20 @@ nav:
           - Vereinfachungen: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/Vereinfachungen.md
           - Körper zusammenfügen: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/Combine.md
       - LAGERUNGEN:
-          - Zweck: P2_Geometrie_Randbedingunge/02_Lagerungen/Zweck.md
-          - Geometrieselektion: P2_Geometrie_Randbedingunge/02_Lagerungen/Geometrieselektion.md
+          - Einführung: P2_Geometrie_Randbedingunge/02_Lagerungen/Einfuehrung.md
           - Lager: P2_Geometrie_Randbedingunge/02_Lagerungen/Displacement.md
+          - Übung 3: P2_Geometrie_Randbedingunge/02_Lagerungen/Uebung-3.md
           - Externe Lager: P2_Geometrie_Randbedingunge/02_Lagerungen/RemoteDisplacement.md
+          - Übung 4: P2_Geometrie_Randbedingunge/02_Lagerungen/Uebung-4.md
           - Zylindrische Lager: P2_Geometrie_Randbedingunge/02_Lagerungen/Cylindrical.md
-          - Verbindungen: P2_Geometrie_Randbedingunge/02_Lagerungen/Verbindungen.md
+          - gefederte Lagerung: P2_Geometrie_Randbedingunge/02_Lagerungen/Elastic.md
+          - Übung 5: P2_Geometrie_Randbedingunge/02_Lagerungen/Uebung-5.md
+          - Übung 6: P2_Geometrie_Randbedingunge/02_Lagerungen/Uebung-6.md
       - BELASTUNGEN:
           - Verschiebungen: P2_Geometrie_Randbedingunge/03_Belastungen/DisplacementLoad.md
           - Kräfte: P2_Geometrie_Randbedingunge/03_Belastungen/Force.md
           - Externe Kräfte: P2_Geometrie_Randbedingunge/03_Belastungen/RemoteForce.md
+          - Übung 7: P2_Geometrie_Randbedingunge/03_Belastungen/Uebung-7.md
           - Druck: P2_Geometrie_Randbedingunge/03_Belastungen/Pressure.md
           - Beschleunigungen: P2_Geometrie_Randbedingunge/03_Belastungen/Beschleunigungen.md
   - FAQ:
