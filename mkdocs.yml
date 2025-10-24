@@ -120,38 +120,35 @@ nav:
           - P1_Einfuehrung/abspeichern.md
           - P1_Einfuehrung/Zusammenfassung.md
   - GEOMETRIE & RANDBEDINGUNGEN:
-      - P2_Geometrie_Randbedingunge/index.md
+      - P2_Geometrie_Randbedingungen/index.md
       - GEOMETRIEANPASSUNGEN:
-          - Längen & Positionen: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/Move.md
-          - Radius & Verrundungen: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/Pull.md
-          - Übung 1: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/Uebung-1.md
-          - Flächen teilen: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/Split.md
-          - Körper teilen: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/SplitBody.md
-          - Übergänge erstellen: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/Blend.md
-          - Übung 2: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/Uebung-2.md
-          - Vereinfachungen: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/Vereinfachungen.md
-          - Körper zusammenfügen: P2_Geometrie_Randbedingunge/01_Geometrie_anpassen/Combine.md
+          - Längen & Positionen: P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Move.md
+          - Radius & Verrundungen: P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Pull.md
+          - Übung 1: P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Uebung-1.md
+          - Flächen teilen: P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Split.md
+          - Körper teilen: P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/SplitBody.md
+          - Übergänge erstellen: P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Blend.md
+          - Übung 2: P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Uebung-2.md
+          - Vereinfachungen: P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Vereinfachungen.md
+          - Körper zusammenfügen: P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Combine.md
       - LAGERUNGEN:
-          - Einführung: P2_Geometrie_Randbedingunge/02_Lagerungen/Einfuehrung.md
-          - Lager: P2_Geometrie_Randbedingunge/02_Lagerungen/Displacement.md
-          - Übung 3: P2_Geometrie_Randbedingunge/02_Lagerungen/Uebung-3.md
-          - Externe Lager: P2_Geometrie_Randbedingunge/02_Lagerungen/RemoteDisplacement.md
-          - Übung 4: P2_Geometrie_Randbedingunge/02_Lagerungen/Uebung-4.md
-          - Zylindrische Lager: P2_Geometrie_Randbedingunge/02_Lagerungen/Cylindrical.md
-          - gefederte Lagerung: P2_Geometrie_Randbedingunge/02_Lagerungen/Elastic.md
-          - Übung 5: P2_Geometrie_Randbedingunge/02_Lagerungen/Uebung-5.md
-          - Übung 6: P2_Geometrie_Randbedingunge/02_Lagerungen/Uebung-6.md
+          - Einführung: P2_Geometrie_Randbedingungen/02_Lagerungen/Einfuehrung.md
+          - Lager: P2_Geometrie_Randbedingungen/02_Lagerungen/Displacement.md
+          - Übung 3: P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-3.md
+          - Externe Lager: P2_Geometrie_Randbedingungen/02_Lagerungen/RemoteDisplacement.md
+          - Übung 4: P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-4.md
+          - Zylindrische Lager: P2_Geometrie_Randbedingungen/02_Lagerungen/Cylindrical.md
+          - elastische Lagerung: P2_Geometrie_Randbedingungen/02_Lagerungen/Elastic.md
+          - Übung 5: P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-5.md
+          - Übung 6: P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-6.md
       - BELASTUNGEN:
-          - Verschiebungen: P2_Geometrie_Randbedingunge/03_Belastungen/DisplacementLoad.md
-          - Kräfte: P2_Geometrie_Randbedingunge/03_Belastungen/Force.md
-          - Externe Kräfte: P2_Geometrie_Randbedingunge/03_Belastungen/RemoteForce.md
-          - Übung 7: P2_Geometrie_Randbedingunge/03_Belastungen/Uebung-7.md
-          - Druck: P2_Geometrie_Randbedingunge/03_Belastungen/Pressure.md
-          - Beschleunigungen: P2_Geometrie_Randbedingunge/03_Belastungen/Beschleunigungen.md
+          - Verschiebungen: P2_Geometrie_Randbedingungen/03_Belastungen/DisplacementLoad.md
+          - Kräfte: P2_Geometrie_Randbedingungen/03_Belastungen/Force.md
+          - Externe Kräfte: P2_Geometrie_Randbedingungen/03_Belastungen/RemoteForce.md
+          - Übung 7: P2_Geometrie_Randbedingungen/03_Belastungen/Uebung-7.md
+          - Druck: P2_Geometrie_Randbedingungen/03_Belastungen/Pressure.md
   - FAQ:
       - 00_FAQ/index.md
       - 00_FAQ/ANSYS_Install.md
       - 00_FAQ/Fenster_weg.md
       - 00_FAQ/Fehler_checkliste.md
-      - P1_Einfuehrung/abspeichern.md
-      - P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/navigation.md

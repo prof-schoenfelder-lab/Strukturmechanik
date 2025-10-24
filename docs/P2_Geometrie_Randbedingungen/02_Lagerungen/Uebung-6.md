@@ -31,7 +31,7 @@ Stahl
 
 - Netzgröße global: 1 mm
 
-### Geometrie
+### Archivdatei mit Material, Geometrie, Netz und Belastung
 
 [:material-paperclip: Uebung-06.wpbz](../assets/Uebung-06.wpbz)
 
@@ -77,3 +77,16 @@ Hinweis: Wenn sie die Körperauswahl verwenden und den Inbus der jeweiligen Rand
     </div>
   </div>
 </div>
+
+
+<!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->
+<div class="solution-images">
+
+🎯 <strong>Lösung</strong>
+
+<iframe title="maximale Spannungen (MPa)" aria-label="Balken" id="datawrapper-chart-ZVQD6" src="https://datawrapper.dwcdn.net/ZVQD6/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="185" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
+
+<iframe title="maximale Spannungen (MPa)" aria-label="Bar Chart" id="datawrapper-chart-pQGBH" src="https://datawrapper.dwcdn.net/pQGBH/3/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="185" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
+
+</div>
+

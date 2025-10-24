@@ -94,4 +94,77 @@ hide:
       </figure>
     </a>
 
+-   <a class="card-link" href="02_Lagerungen/RemoteDisplacement/">:material-triangle-outline: __externe Lager__{ .xxxl .middle .center }
+       <figure style="text-align:center;">
+          <img src="02_Lagerungen/images/FixedSupport_vs_RemoteDisplacement.excalidraw.png" alt="externe Lager" width="400" class="no-lightbox">
+      </figure>
+    </a>
+
+
+-   <a class="card-link" href="02_Lagerungen/Uebung-4/">:material-star: __Übung 4__{ .xxxl .middle .center }
+       <figure style="text-align:center;">
+          <img src="02_Lagerungen/images/Uebung-04.excalidraw.png" alt="Übung 4" width="400" class="no-lightbox">
+      </figure>
+    </a>
+
+-   <a class="card-link" href="02_Lagerungen/Cylindrical/">:material-circle: __zylindrische Lager__{ .xxxl .middle .center }
+       <figure style="text-align:center;">
+          <img src="02_Lagerungen/images/Radial_Axial_Tangential.excalidraw.png" alt="zylindrische Lager" width="400" class="no-lightbox">
+      </figure>
+    </a>
+
+-   <a class="card-link" href="02_Lagerungen/Elastic/">:material-car-brake-worn-linings: __elastische Lager__{ .xxxl .middle .center }
+      $$
+      k_{\mathrm{f}} \approx \frac{E}{h}
+      $$
+    </a>
+
+-   <a class="card-link" href="02_Lagerungen/Uebung-5/">:material-star: __Übung 5__{ .xxxl .middle .center }
+       <figure style="text-align:center;">
+          <img src="02_Lagerungen/images/Uebung-05.png" alt="Übung 5" width="400" class="no-lightbox">
+      </figure>
+    </a>
+
+-   <a class="card-link" href="02_Lagerungen/Uebung-6/">:material-star: __Übung 6__{ .xxxl .middle .center }
+       <figure style="text-align:center;">
+          <img src="02_Lagerungen/images/Uebung-06.png" alt="Übung 6" width="400" class="no-lightbox">
+      </figure>
+    </a>
+
+</div>
+
+### :material-table-of-contents: BELASTUNGEN
+
+<div class="grid cards" markdown>
+
+-   <a class="card-link" href="03_Belastungen/DisplacementLoad/">:material-arrow-all: __Verschiebungen als Last__{ .xxxl .middle .center }
+       <figure style="text-align:center;">
+          <img src="03_Belastungen/images/Verschiebung_Kraft.excalidraw.png" alt="Verschiebung als Last" width="400" class="no-lightbox">
+      </figure>
+    </a>
+
+-   <a class="card-link" href="03_Belastungen/Force/">:material-arrow-all: __Kräfte__{ .xxxl .middle .center }
+      $$
+      F
+      $$
+    </a>
+
+-   <a class="card-link" href="03_Belastungen/RemoteForce/">:material-arrow-down-bold-outline: __externe Kräfte__{ .xxxl .middle .center }
+       <figure style="text-align:center;">
+          <img src="03_Belastungen/images/RemoteDisplacement_Fahrradbeispiel.excalidraw.png" alt="Verschiebung als Last" width="400" class="no-lightbox">
+      </figure>
+    </a>
+
+-   <a class="card-link" href="02_Lagerungen/Uebung-7/">:material-star: __Übung 7__{ .xxxl .middle .center }
+       <figure style="text-align:center;">
+          <img src="03_Belastungen/images/Uebung-07.excalidraw.png" alt="Übung 7" width="400" class="no-lightbox">
+      </figure>
+    </a>
+
+-   <a class="card-link" href="03_Belastungen/Pressure/">:material-arrow-collapse-down: __Druck__{ .xxxl .middle .center }
+      $$
+      p
+      $$
+    </a>
+
 </div>

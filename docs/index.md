@@ -19,14 +19,16 @@ hide:
 -   <a class="card-link" href="P1_Einfuehrung/">
         __Praktikum 1<br>:material-rocket-launch: Einführung in ANSYS Workbench__{ .xxxl .middle .center }
         <figure style="text-align:center;">
-          <img src="P1_Einfuehrung/01_Grundlagen/images/Uebersicht.png" alt="Aufgabenstellung" width="400" class="no-lightbox">
+          <img src="P1_Einfuehrung/01_Grundlagen/images/Uebersicht.png" alt="Einführung" width="400" class="no-lightbox">
         </figure>
     </a>
 
--   __Praktikum 2<br>:material-cube: Geometrieaufbereitung, Lagerung und Lasten__
-    <br>
-    <br>
-    Work in Progress
+-   <a class="card-link" href="P2_Geometrie_Randbedingungen/">
+        __Praktikum 2<br>:material-cube: Geometrieaufbereitung, Lagerung und Lasten__{ .xxxl .middle .center }
+        <figure style="text-align:center;">
+          <img src="P2_Geometrie_Randbedingungen/02_Lagerungen/images/Lager.png" alt="Lager" width="400" class="no-lightbox">
+        </figure>
+    </a>
 
 -   __Praktikum 3<br>:material-cube-unfolded: Vernetzung__
     <br>

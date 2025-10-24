@@ -11,5 +11,5 @@ Externe Kräfte verhalten sich analog wie externe Verschiebungen. Auch kann eine
 Ein Beispiel dafür wäre die Belastung des Fahrradfahrers auf dem Sattel bei unserem Rahmenmodel:
 
 <figure style="text-align:center;">
-    <img src="../images/RemoteDisplacement_Fahrradbeispiel.excalidraw.png" alt="Beispiel Remote Force am Fahrradsattel" width="700">
+    <img src="../images/RemoteForce_Fahrradbeispiel.excalidraw.png" alt="Beispiel Remote Force am Fahrradsattel" width="700">
 </figure>

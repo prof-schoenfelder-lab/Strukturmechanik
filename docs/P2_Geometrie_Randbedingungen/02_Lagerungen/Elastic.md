@@ -4,7 +4,7 @@ hide:
   - toc
 ---
 
-# gefederte Lagerung `Elastic Support`
+# elastische Lagerung `Elastic Support`
 
 Mit Hilfe des `Elastic Support` kann man eine sonst zu steife Lagerung durch `Fixed Support` ersetzen und dadurch auch Singularitäten verhindern. Dabei wird die sogenannten `Fundamentsteifigkeit` in der Einheit $\frac{N}{mm^3}$ verwendet.
 

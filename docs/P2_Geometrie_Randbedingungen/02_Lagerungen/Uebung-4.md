@@ -110,7 +110,7 @@ Berechnen Sie anschließend die folgenden Größen:
 </figure>
 
 <figure style="text-align:center;">
-  <img src="../images/Uebung-04-Loesung-disp-y.png" alt="Lagerung Lösung" width="500">
+  <img src="../images/Uebung-04-Loesung-disp-z.png" alt="Lagerung Lösung" width="500">
   <figcaption>Verschiebung in z-Richtung</figcaption>
 </figure>
 
