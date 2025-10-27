@@ -15,7 +15,7 @@ Im dritten Beispiel versuchen wir Lagerungsbedingungen aus einem realen Beispiel
 
 Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung):
 
-[:material-paperclip: Uebung-03.wbpz](../assets/Uebung-03.wbpz)
+[:material-paperclip: Uebung-03.wbpz](assets/Uebung-03.wbpz)
 
 ## Aufgabenstellung
 

@@ -15,7 +15,7 @@ Zur Übung der ersten Geometrieanpassung verwenden wir folgendes Beispiel welche
 
 Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz,Lagerung und Belastung):
 
-[:material-paperclip: Uebung-01.wbpz](../assets/Uebung-01.wbpz)
+[:material-paperclip: Uebung-01.wbpz](assets/Uebung-01.wbpz)
 
 <div class="steps" markdown="1">
 

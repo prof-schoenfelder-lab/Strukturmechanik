@@ -33,7 +33,7 @@ Stahl
 
 ### Archivdatei mit Material, Geometrie, Netz und Belastung
 
-[:material-paperclip: Uebung-06.wpbz](../assets/Uebung-06.wpbz)
+[:material-paperclip: Uebung-06.wbpz](assets/Uebung-06.wbpz)
 
 ### Randbedingungen
 

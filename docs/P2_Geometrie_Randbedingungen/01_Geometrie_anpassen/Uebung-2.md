@@ -15,7 +15,7 @@ Als zweites Beispiel verwenden wir den Lenker aus dem ersten Praktikum und wolle
 
 Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz,Lagerung und Belastung):
 
-[:material-paperclip: Uebung-02.wbpz](../assets/Uebung-02.wbpz)
+[:material-paperclip: Uebung-02.wbpz](assets/Uebung-02.wbpz)
 
 ## Aufgabenstellung
 

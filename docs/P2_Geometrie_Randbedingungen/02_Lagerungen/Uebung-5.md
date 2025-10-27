@@ -25,7 +25,7 @@ Stahl
 
 stark vereinfachte v-Break: 
 
-[:material-paperclip: v_Break_vereinfacht.scdoc](../assets/v_Break_vereinfacht.scdoc)
+[:material-paperclip: v_Break_vereinfacht.scdoc](assets/v_Break_vereinfacht.scdoc)
 
 ### Vernetzung
 

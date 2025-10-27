@@ -24,7 +24,7 @@ Aluminiumlegierung 6061-T6
 
 Selbstvereinfachte Rahmengeometrie oder diese fertig aufbereitete:
 
-[:material-paperclip: TrekkingRahmen_vereinfacht.scdoc](../assets/TrekkingRahmen_vereinfacht.scdoc)
+[:material-paperclip: TrekkingRahmen_vereinfacht.scdoc](assets/TrekkingRahmen_vereinfacht.scdoc)
 
 ### Vernetzung
 

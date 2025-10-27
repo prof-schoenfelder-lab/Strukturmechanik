@@ -16,7 +16,7 @@ Wir starten in diese Fall mit einer Step Datei eines Fahrradrahmens:
     <img src="../images/Trekkingrahmen.png" alt="Trekkingrahmen" width="300">
 </figure>
 
-[:material-paperclip: TrekkingRahmen_Original_v2.stp](../assets/TrekkingRahmen_Original_v2.stp)
+[:material-paperclip: TrekkingRahmen_Original_v2.stp](assets/TrekkingRahmen_Original_v2.stp)
 
 <div class="steps" markdown="1">
 
