@@ -36,15 +36,14 @@ Selbstvereinfachte Rahmengeometrie oder diese fertig aufbereitete:
 
 Lagerung:
 
-- Remote Displacement auf die Hinterradaufhängung (verformbare Geometrie)
+- Remote Displacement auf die Hinterradaufhängung (Kugelgelenk, alle Rotationen frei) (verformbare Geometrie)
     - horizontaler Abstand $dz=0\,\mathrm{mm}$
     - vertikaler Abstand $dy=-390\,\mathrm{mm}$
     - $\sum u_x=0$
     - $\sum u_y=0$
     - $\sum u_z=0$
-    - $\sum rot_y=0$
 
-- Remote Displacement auf die Innenseite des Steuerrohrs (verformbare Geometrie)
+- Remote Displacement auf die Innenseite des Steuerrohrs (zylindrisches Lager, eine Rotationen frei)  (verformbare Geometrie)
     - horizontaler Abstand $dz=-210\,\mathrm{mm}$
     - vertikaler Abstand $dy=-460\,\mathrm{mm}$
     - $\sum u_y=0$
@@ -77,7 +76,7 @@ Berechnen Sie anschließend die folgenden Größen:
 </div>
 
 
-<div class="numeric-question" data-answer="0.138" data-tolerance="0.02" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Verschiebung in z-Richtung ausgewertet?">
+<div class="numeric-question" data-answer="0.44616" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Verschiebung in z-Richtung ausgewertet?">
 </div>
 
 ### Die maximale Verschiebung in y-Richtung $u_{y,max}$ in mm
@@ -96,7 +95,7 @@ Berechnen Sie anschließend die folgenden Größen:
 
 </div>
 
-<div class="numeric-question" data-answer="0.0287" data-tolerance="0.002" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Verschiebung in y-Richtung ausgewertet?">
+<div class="numeric-question" data-answer="0.11199" data-tolerance="0.02" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Verschiebung in y-Richtung ausgewertet?">
 </div>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->
