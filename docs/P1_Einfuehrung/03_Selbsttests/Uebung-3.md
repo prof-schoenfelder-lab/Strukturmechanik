@@ -25,7 +25,7 @@ Stahl
 
 ### Geometrie
 
-[:material-paperclip: Inbus.scdoc](../assets/Inbus.scdoc)
+[:material-paperclip: Inbus.scdoc](assets/Inbus.scdoc)
 
 <div class="steps" markdown="1">
 

@@ -25,7 +25,7 @@ Alu
 
 ### Geometrie
 
-[:material-paperclip: Lenker.scdoc](../assets/Lenker.scdoc)
+[:material-paperclip: Lenker.scdoc](assets/Lenker.scdoc)
 
 
 ### Randbedingungen
