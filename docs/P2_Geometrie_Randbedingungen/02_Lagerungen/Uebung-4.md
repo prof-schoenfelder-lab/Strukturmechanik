@@ -10,7 +10,7 @@ Im vierten Beispiel verwenden wir den vereinfachten Fahrradrahmen. Wer dies in d
 Es sollen zwei externe Lager laut folgender Abbildung und eine Kraft im Tretlager angebracht werden:
 
 <figure style="text-align:center;">
-  <img src="../images/Uebung-04.excalidraw.png" alt="Fahrradrahmen mit externen Lagern" width="500" class="no-lightbox">
+  <img src="../images/Uebung-04.excalidraw.png" alt="Fahrradrahmen mit externen Lagern" width="550" class="no-lightbox">
 </figure>
 
 ## Gegeben
@@ -36,14 +36,28 @@ Selbstvereinfachte Rahmengeometrie oder diese fertig aufbereitete:
 
 Lagerung:
 
-- Remote Displacement auf die Hinterradaufhängung (Kugelgelenk, alle Rotationen frei) (verformbare Geometrie)
+- <code>Remote Displacement</code> auf die Hinterradaufhängung (Kugelgelenk, alle Rotationen frei) (verformbare Geometrie)
     - horizontaler Abstand $dz=0\,\mathrm{mm}$
     - vertikaler Abstand $dy=-390\,\mathrm{mm}$
     - $\sum u_x=0$
     - $\sum u_y=0$
     - $\sum u_z=0$
 
-- Remote Displacement auf die Innenseite des Steuerrohrs (zylindrisches Lager, eine Rotationen frei)  (verformbare Geometrie)
+!!! info inline 
+
+    Damit das Koordinatensystem in der Mitte zwischen den zwei Ausfallenden liegt, müssen Sie die zwei Linien der Radien (nicht die Flächen) für den Ursprung des Koordinatensystems verwenden
+
+<figure style="text-align:center;">
+  <img src="../images/Uebung-04-Hinweis-KOS-hinten.png" alt="Koordinatensystem hinten" width="550" class="no-lightbox">
+</figure>
+
+- <code>Frictionless Support</code> auf den Innenseiten der Ausfallenden (weil sich sonst die Endpunkte des Rahmens hinten auseinanderschieben)
+<figure style="text-align:center;">
+  <img src="../images/Uebung-04-Hinweis-FrictionlessSupport-hinten.png" alt="Frictionless Support hinten" width="550" class="no-lightbox">
+</figure>
+
+
+- <code>Remote Displacement</code> auf die Innenseite des Steuerrohrs (zylindrisches Lager, eine Rotationen frei)  (verformbare Geometrie)
     - horizontaler Abstand $dz=-210\,\mathrm{mm}$
     - vertikaler Abstand $dy=-460\,\mathrm{mm}$
     - $\sum u_y=0$
@@ -59,7 +73,7 @@ Belastung:
 
 Berechnen Sie anschließend die folgenden Größen:
 
-### Die maximale Verschiebung in z-Richtung $u_{z,max}$ in mm
+### Die maximale Verschiebung in z-Richtung (entgegen Fahrtrichtung) $u_{z}$ in mm
 
 <div class="steps" markdown="1">
 
@@ -76,10 +90,10 @@ Berechnen Sie anschließend die folgenden Größen:
 </div>
 
 
-<div class="numeric-question" data-answer="0.44616" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Verschiebung in z-Richtung ausgewertet?">
+<div class="numeric-question" data-answer="0.39728" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Verschiebung in z-Richtung ausgewertet?">
 </div>
 
-### Die maximale Verschiebung in y-Richtung $u_{y,max}$ in mm
+### Die maximale Verschiebung des Rahmens in <code>negative</code> y-Richtung (Richtung Boden) $u_{y}$ in mm
 
 <div class="steps" markdown="1">
 
@@ -95,7 +109,7 @@ Berechnen Sie anschließend die folgenden Größen:
 
 </div>
 
-<div class="numeric-question" data-answer="0.11199" data-tolerance="0.02" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Verschiebung in y-Richtung ausgewertet?">
+<div class="numeric-question" data-answer="0.17581" data-tolerance="0.02" data-points="5" data-attempts="5"  data-hints="Wert in negative z-Richtung ist hier der kleinste Wert (im negativen), hier aber nur Betrag angeben!">
 </div>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->
@@ -104,13 +118,13 @@ Berechnen Sie anschließend die folgenden Größen:
 🎯 <strong>Lösung</strong>
 
 <figure style="text-align:center;">
-  <img src="../images/Uebung-04-Loesung-disp-y.png" alt="Lagerung Lösung" width="500">
-  <figcaption>Verschiebung in y-Richtung</figcaption>
+  <img src="../images/Uebung-04-Loesung-disp-z.png" alt="Lagerung Lösung" width="700">
+  <figcaption>Verschiebung in z-Richtung</figcaption>
 </figure>
 
 <figure style="text-align:center;">
-  <img src="../images/Uebung-04-Loesung-disp-z.png" alt="Lagerung Lösung" width="500">
-  <figcaption>Verschiebung in z-Richtung</figcaption>
+  <img src="../images/Uebung-04-Loesung-disp-y.png" alt="Lagerung Lösung" width="700">
+  <figcaption>Verschiebung in y-Richtung</figcaption>
 </figure>
 
 </div>

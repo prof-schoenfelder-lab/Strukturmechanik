@@ -36,7 +36,7 @@ stark vereinfachte v-Break:
 Lagerung:
 
 - Drehbar gelagert 
-- Elastische Bettung m Bereich des Bremsklotz mit Fundamentsteifigkeit $k=30\,N/mm^3 $ 
+- Elastische Bettung m Bereich des Bremsklotz mit Fundamentsteifigkeit $k=30\,\mathrm{N/mm^3}$ 
 
 Belastung:
 
@@ -82,7 +82,7 @@ Berechnen Sie anschließend die folgenden Größen:
 
 ### Die maximale von-Mises Vergleichsspannung $\sigma_{Mises, \max }$ in MPa
 
-<div class="numeric-question" data-answer="27.473" data-tolerance="0.25" data-points="5" data-attempts="5"  data-hints="Einheit auf mm (MPa) gewechselt?">
+<div class="numeric-question" data-answer="27.473" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Einheit auf mm (MPa) gewechselt?">
 </div>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->
@@ -93,6 +93,16 @@ Berechnen Sie anschließend die folgenden Größen:
 <figure style="text-align:center;">
   <img src="../images/Uebung-05-Loesung-RB.png" alt="Lagerung" width="500">
   <figcaption>Lagerung (cylindrical mit tangential frei)</figcaption>
+</figure>
+
+<figure style="text-align:center;">
+  <img src="../images/Uebung-05-Loesung-umax.png" alt="Gesamtverschiebung Lösung" width="500">
+  <figcaption>Gesamtverschiebung Lösung"</figcaption>
+</figure>
+
+<figure style="text-align:center;">
+  <img src="../images/Uebung-05-Loesung-uz.png" alt="z-Verschiebung Bettung Lösung" width="500">
+  <figcaption>z-Verschiebung Bettung Lösung"</figcaption>
 </figure>
 
 <figure style="text-align:center;">

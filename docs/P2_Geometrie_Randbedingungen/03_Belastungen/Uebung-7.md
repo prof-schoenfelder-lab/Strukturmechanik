@@ -66,7 +66,7 @@ Berechnen Sie anschließend die folgenden Größen:
 
 <figure style="text-align:center;">
   <img src="../images/Uebung-07-Loesung-RB.png" alt="Lagerung Lösung" width="500">
-  <figcaption>Randbedingung</figcaption>
+  <figcaption>Randbedingung (Fixiertes Lager im Bereich der Achsauflage)</figcaption>
 </figure>
 
 <figure style="text-align:center;">

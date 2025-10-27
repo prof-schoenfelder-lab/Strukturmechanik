@@ -32,10 +32,6 @@ Berechnen Sie anschließend die folgenden Größen:
 <div class="numeric-question" data-answer="17.044" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt?">
 </div>
 
-### Die maximale von-Mises Vergleichsspannung $\sigma_{Mises, \max }$ in MPa
-
-<div class="numeric-question" data-answer="29.692" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Einheit auf mm (MPa) gewechselt?">
-</div>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->
 <div class="solution-images">
@@ -50,11 +46,6 @@ Berechnen Sie anschließend die folgenden Größen:
 <figure style="text-align:center;">
   <img src="../images/Uebung-03-Loesung-disp.png" alt="Verschiebung Lösung" width="700">
   <figcaption>Gesamtverschiebung</figcaption>
-</figure>
-
-<figure style="text-align:center;">
-  <img src="../images/Uebung-03-Loesung-stress.png" alt="Spannung Lösung" width="700">
-  <figcaption>von-Mises Vergleichsspannung</figcaption>
 </figure>
 
 </div>
