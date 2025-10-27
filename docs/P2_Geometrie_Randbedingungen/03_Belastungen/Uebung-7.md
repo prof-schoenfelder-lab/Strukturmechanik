@@ -34,21 +34,7 @@ Selbstvereinfachte Rahmengeometrie oder diese fertig aufbereitete:
 
 Lagerung:
 
-- Remote Displacement auf die Hinterradaufhängung (verformbare Geometrie)
-    - horizontaler Abstand $dz=0\,\mathrm{mm}$
-    - vertikaler Abstand $dy=-390\,\mathrm{mm}$
-    - $\sum u_x=0$
-    - $\sum u_y=0$
-    - $\sum u_z=0$
-    - $\sum rot_y=0$
-
-- Remote Displacement auf die Innenseite des Steuerrohrs (verformbare Geometrie)
-    - horizontaler Abstand $dz=-210\,\mathrm{mm}$
-    - vertikaler Abstand $dy=-460\,\mathrm{mm}$
-    - $\sum u_y=0$
-    - $\sum u_z=0$
-    - $\sum rot_y=0$
-    - $\sum rot_z=0$
+- Feste Einspannung im Bereich der hinteren Achslagerung
 
 Belastung:
 
