@@ -85,5 +85,5 @@ Berechnen Sie anschließend die folgenden Größen:
 
 ### Die maximale von-Mises Vergleichsspannung $\sigma_{Mises, \max }$ in MPa
 
-<div class="numeric-question" data-answer="151.13" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Einheit auf mm (MPa) gewechselt?">
+<div class="numeric-question" data-answer="151.13" data-tolerance="1.5" data-points="5" data-attempts="5"  data-hints="Einheit auf mm (MPa) gewechselt?">
 </div>
