@@ -27,6 +27,12 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz,Lagerung und B
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Archivdatei importieren</p>
+    <p>Im Workbench Projektmenü in der Menüleiste auf <code>File</code> und <code>Save As ..</code> das Projekt abspeichern</p>
+    <p>Am besten legen Sie sich unter <code>D:\Studierende\</code> ein Ordner mit ihrem Namen an und speichern dort das Projekt mit dem Namen <code>Praktikum2</code>
+  </div>
+
+  <div class="step">
+    <p class="step-title" role="heading" aria-level="2">Archivdatei importieren</p>
     <p>Im Workbench Projektmenü in der Menüleiste auf <code>File</code> und <code>Import</code> klicken</p>
     <figure style="text-align:center;">
     <img src="../images/Import_01.png" alt="Import" width="400" class="no-lightbox">
