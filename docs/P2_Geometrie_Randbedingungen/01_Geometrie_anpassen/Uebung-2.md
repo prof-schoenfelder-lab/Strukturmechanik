@@ -37,7 +37,7 @@ Nach dem Import der Archivdatei öffnen Sie die Geometrie mit SpaceClaim und än
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2"><code>SpaceClaim</code>: Wanddicken um  2mm erhöhen</p>
-    <p>Mit dem <code>Pull</code> Tool die Wandstärken um 2 mm erhöhen (Innenradius 2 mm größer).</p>
+    <p>Mit dem <code>Pull</code> Tool die Wandstärken um 2 mm erhöhen (Innenradius 2 mm kleiner).</p>
   </div>
 
   <div class="step">
