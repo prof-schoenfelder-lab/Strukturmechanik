@@ -56,7 +56,7 @@ Berechnen Sie anschließend die folgenden Größen:
 
 ### Die maximale Verschiebung in x-Richtung $u_{x,max}$ in mm
 
-<div class="numeric-question" data-answer="1.057" data-tolerance="0.1" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Koordinatensystem eingefügt? Kraft in richtige Richtung? Richtige Verschiebungsrichtung ausgewertet?">
+<div class="numeric-question" data-answer="3.1152" data-tolerance="0.25" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Koordinatensystem eingefügt? Kraft in richtige Richtung? Richtige Verschiebungsrichtung ausgewertet?">
 </div>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->
