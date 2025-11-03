@@ -109,7 +109,7 @@ Berechnen Sie anschließend die folgenden Größen:
 
 </div>
 
-<div class="numeric-question" data-answer="0.17581" data-tolerance="0.02" data-points="5" data-attempts="5"  data-hints="Wert in negative z-Richtung ist hier der kleinste Wert (im negativen), hier aber nur Betrag angeben!">
+<div class="numeric-question" data-answer="0.17581" data-tolerance="0.02" data-points="5" data-attempts="5"  data-hints="Wert in negative y-Richtung ist hier der kleinste Wert (im negativen), hier aber nur Betrag angeben!">
 </div>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->
