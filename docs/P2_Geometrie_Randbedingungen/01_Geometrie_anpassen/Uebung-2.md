@@ -28,8 +28,8 @@ Nach dem Import der Archivdatei öffnen Sie die Geometrie mit SpaceClaim und än
 <div class="steps" markdown="1">
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2"><code>SpaceClaim</code>:  Körper an Übergangsstellen mit  <code>Split</code>  auftrennen und Übergang entfernen</p>
-    <p>Im Übergangsbereich kann die Wandstärke nicht geändert werden (weil diese auf beiden Seiten auch unterschiedlich ist). Trennen Sie die Übergangsbereiche auf mit <code>Split</code>  und löschen Sie diesen und erzeugen Sie den Übergang nach der Anpassung der Wandstärke erneut</p>
+    <p class="step-title" role="heading" aria-level="2"><code>SpaceClaim</code>:  Körper an Übergangsstellen mit  <code>Split Body</code>  auftrennen und Übergang entfernen</p>
+    <p>Im Übergangsbereich kann die Wandstärke nicht geändert werden (weil diese auf beiden Seiten auch unterschiedlich ist). Trennen Sie die Übergangsbereiche auf mit <code>Split Body</code>  und löschen Sie diesen und erzeugen Sie den Übergang nach der Anpassung der Wandstärke erneut</p>
     <figure style="text-align:center;">
     <img src="../images/Uebung-02c.png" alt="Lenker" width="600" class="no-lightbox">
     </figure>
