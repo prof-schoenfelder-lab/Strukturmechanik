@@ -38,7 +38,7 @@ Lagerung:
 
 Belastung:
 
-- Kraft $F=800\,\mathrm{N}$ vertikal nach unten auf die Innenseite des Tretlagers
+- Kraft $F_{x}=100\,\mathrm{N}$ horizontal quer zur Fahrtrichtung auf den Remote Point
 
 ## Hinweis
 
