@@ -74,6 +74,7 @@ markdown_extensions:
   - md_in_html
   - attr_list
   - admonition
+  - pymdownx.details
 
 extra_javascript:
   - javascripts/mathjax.js
@@ -147,6 +148,15 @@ nav:
           - Externe Kräfte: P2_Geometrie_Randbedingungen/03_Belastungen/RemoteForce.md
           - Übung 7: P2_Geometrie_Randbedingungen/03_Belastungen/Uebung-7.md
           - Druck: P2_Geometrie_Randbedingungen/03_Belastungen/Pressure.md
+  - VERNETZUNG:
+      - P3_Vernetzung/index.md
+      - Grundlagen:
+          - Elementtypen: P3_Vernetzung/01_Grundlagen/Elementtypen.md
+          - Sensitivitaetsanalyse: P3_Vernetzung/01_Grundlagen/Sensitivitaetsanalyse.md
+      - Umsetzung in ANSYS:
+          - Globale Netzverfeinerung: P3_Vernetzung/02_ANSYS_Umsetzung/Globale_Netzverfeinerung.md
+          - Lokale Netzverfeinerung: P3_Vernetzung/02_ANSYS_Umsetzung/Lokale_Netzverfeinerung.md
+          - Diskussion: P3_Vernetzung/02_ANSYS_Umsetzung/Diskussion.md
   - FAQ:
       - 00_FAQ/index.md
       - 00_FAQ/ANSYS_Install.md

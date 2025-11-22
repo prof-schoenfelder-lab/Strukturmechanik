@@ -30,10 +30,9 @@ hide:
         </figure>
     </a>
 
--   __Praktikum 3<br>:material-cube-unfolded: Vernetzung__
-    <br>
-    <br>
-    Work in Progress
+-   <a class="card-link" href="P3_Vernetzung/">
+        __Praktikum 2<br>:material-cube-unfolded: Vernetzung__{ .xxxl .middle .center }
+    </a>
 
 -   __Praktikum 4<br>:material-video-2d: Abstraktion__
     <br>
