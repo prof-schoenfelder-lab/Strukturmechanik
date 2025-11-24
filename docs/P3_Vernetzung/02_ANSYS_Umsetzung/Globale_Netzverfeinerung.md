@@ -4,7 +4,9 @@ hide:
 
 # Globale Netzverfeinerung
 
-Zur globalen Netzverfeinerung verwenden wir unser bekanntes Beispiel mit dem Inbus, das hier heruntergeladen werden kann:
+Zur globalen Netzverfeinerung verwenden wir unser bekanntes Beispiel mit dem Inbus, das hier heruntergeladen werden kann.
+
+Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung):
 
 [:material-paperclip: Übung 01 – Inbus.wbpz](assets/Ubeung-01-Inbus.wbpz)
 

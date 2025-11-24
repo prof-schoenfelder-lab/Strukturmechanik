@@ -31,7 +31,10 @@ hide:
     </a>
 
 -   <a class="card-link" href="P3_Vernetzung/">
-        __Praktikum 2<br>:material-cube-unfolded: Vernetzung__{ .xxxl .middle .center }
+        __Praktikum 3<br>:material-cube-unfolded: Vernetzung__{ .xxxl .middle .center }
+        <figure style="text-align:center;">
+          <img src="P3_Vernetzung/01_Grundlagen/images/Netzverfeinerung.excalidraw.png" alt="Netzverfeinerung" width="400" class="no-lightbox">
+        </figure>
     </a>
 
 -   __Praktikum 4<br>:material-video-2d: Abstraktion__

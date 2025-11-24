@@ -53,6 +53,16 @@ Hier nun alle Werte für unser Beispiel:
 | 0,5               | 586                           | <span style="color:red;">+6,9&nbsp;%</span>                          | <span style="color:green;">9&nbsp;%</span>      | <span style="color:red;">Nein</span>            |
 | 0,25              | 582                           | <span style="color:green;">−0,6&nbsp;%</span>                        | <span style="color:green;">5&nbsp;%</span>      | <span style="color:green;">Ja</span>            |
 
+!!! important "Wichtig"
+
+    Auch die Netzgröße von 0,5 mm ist in diesem Fall ausreichend, 
+    da sie nahezu die gleiche Spannung liefert wie 0,25 mm und 
+    ebenfalls eine Nodal Fraction < 10 % aufweist. 
+    Um dies sicher beurteilen zu können, musste jedoch zunächst 
+    bis auf 0,25 mm verfeinert werden, um zu zeigen, dass sich 
+    die Spannung gegenüber 0,5 mm nicht mehr nennenswert ändert.
+
+
 !!! info "Vereinfacht kann man auch sagen:"
 
     Wenn sich die der rote Bereich der Spannung über mehrere Elemente erstreckt, ist der Spannungsgradient im Element meist klein genug.

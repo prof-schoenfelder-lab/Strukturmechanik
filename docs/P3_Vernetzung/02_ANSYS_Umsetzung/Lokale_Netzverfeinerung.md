@@ -4,7 +4,11 @@ hide:
 
 # Globale Netzverfeinerung
 
-Zunächst starten wir mit der globalen Netzverfeinerung, um den Unterschied besser zu erkennen. Als Beispiel verwenden wir das L-Profil aus dem zweiten Praktikum.
+Zunächst starten wir mit der globalen Netzverfeinerung, um den Unterschied besser zu erkennen. Als Beispiel verwenden wir das L-Profil aus dem zweiten Praktikum
+
+Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung):
+
+[:material-paperclip: Übung 01 – Inbus.wbpz](assets/Uebung-02-L-Profil.wbpz)
 
 <figure style="text-align:center;">
     <img src="../../../P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/images/Uebung-01.png" alt="L-Profil" width="500">

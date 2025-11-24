@@ -157,6 +157,11 @@ nav:
           - Globale Netzverfeinerung: P3_Vernetzung/02_ANSYS_Umsetzung/Globale_Netzverfeinerung.md
           - Lokale Netzverfeinerung: P3_Vernetzung/02_ANSYS_Umsetzung/Lokale_Netzverfeinerung.md
           - Diskussion: P3_Vernetzung/02_ANSYS_Umsetzung/Diskussion.md
+          - Ergebnis-Tracking: P3_Vernetzung/02_ANSYS_Umsetzung/Ergenis_Tracking.md
+          - Übung 3: P3_Vernetzung/02_ANSYS_Umsetzung/Uebung-3.md
+          - Übung 4: P3_Vernetzung/02_ANSYS_Umsetzung/Uebung-4.md
+          - Übung 5: P3_Vernetzung/02_ANSYS_Umsetzung/Uebung-5.md
+      - Zusammenfassung: P3_Vernetzung/02_ANSYS_Umsetzung/Zusammenfassung.md
   - FAQ:
       - 00_FAQ/index.md
       - 00_FAQ/ANSYS_Install.md
