@@ -8,7 +8,7 @@ Zunächst starten wir mit der globalen Netzverfeinerung, um den Unterschied bess
 
 Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung):
 
-[:material-paperclip: ÜUebung-02-L-Profil.wbpz](assets/Uebung-02-L-Profil.wbpz)
+[:material-paperclip: Uebung-02-L-Profil.wbpz](assets/Uebung-02-L-Profil.wbpz)
 
 <figure style="text-align:center;">
     <img src="../../../P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/images/Uebung-01.png" alt="L-Profil" width="500">
