@@ -66,9 +66,9 @@ Wenn eine Verrundung noch nicht vorhanden ist kann diese mit dem `Pull` Tool auc
     <p><code>Kante</code> anklicken die verrundet werden soll</p>
   </div>
 
-  <div class="step" >
+ <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Verrundung erstellen und bemaßen</p>
-    <p>mit <code>gedrückter linker Maustaste</code> von der Kante weg ziehen und <code>Leertaste</code> drücken und <code>Radius</code> eingeben und mit 2x <code>ESC</code> beenden</p>
+    <p><code>Wert eingeben</code> mit <code>ENTER</code> bestätigen und mit zweimal <code>ESC</code> beenden.</p> (Animation zeigt anderen Weg, der hier ist einfacher)
   </div>
 
 </div>

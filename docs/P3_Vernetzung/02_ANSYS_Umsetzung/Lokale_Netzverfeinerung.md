@@ -56,7 +56,7 @@ Wie im Praktikum&nbsp;2 zur Geometrieanpassung gezeigt, können innenliegende Ka
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Verrundung erstellen und bemaßen</p>
-    <p>Mit <code>gedrückter linker Maustaste</code> von der Kante wegziehen, <code>Leertaste</code> drücken, den gewünschten <code>Radius</code> eingeben und mit zweimal <code>ESC</code> beenden.</p>
+    <p><code>Wert eingeben (3mm in diesem Fall)</code> mit <code>ENTER</code> bestätigen und mit zweimal <code>ESC</code> beenden.</p>
   </div>
 
   <div class="step" >
