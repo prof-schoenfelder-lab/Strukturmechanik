@@ -21,7 +21,7 @@ Bei besonders dünnen Wafern und bei der vertikalen Ausrichtung der Carrier kann
 
 ### Material
 
-multikristallines Siliium
+multikristallines Silizium
 
 - Elastizitätsmodul: \(E = 163\,\mathrm{GPa}\)
 - Querkontraktionszahl: \(\nu = 0{,}22\)
