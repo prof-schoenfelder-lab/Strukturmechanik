@@ -84,7 +84,7 @@ Durch eingeschaltete Beta-Option (siehe oben), können wir das Netz und die Erge
 Dafür muss im Strukturbaum auf <code>Symmetry</code> geklickt werden und im Detailfenster eingestellt werden wie gespiegelt werden soll. 
 
 - Es muss angegeben werden, wie oft gespiegelt wird (hier jeweils 2 Mal) mit der Methode <code>Half</code>.
-- Der Abstand senkrecht zur Symmetrieebene sollte sehr klein sein (z. B. \(1\mathrm{e}{-3}\,\mathrm{mm}\)).
+- Es wird der Abstand senkrecht zur Symmetrieebene angegeben. Wenn die Symmetrieebene genau in der Koordinate 0 liegt muss einfach ein sehr kleiner Wert angegeben werden. Liegt die Symmetrieebene z.B. 20mm entfernt muss der Wert 20mm angegeben werden
 
 <figure style="text-align:center;">
 <img src="../images/Spiegelungseinstellung.png" alt="Spiegelungseinstellung" width="600" class="no-lightbox">
