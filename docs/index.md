@@ -37,10 +37,12 @@ hide:
         </figure>
     </a>
 
--   __Praktikum 4<br>:material-video-2d: Abstraktion__
-    <br>
-    <br>
-    Work in Progress
+-   <a class="card-link" href="P4_Abstraktionen/">
+        __Praktikum 4<br>:material-video-2d: Abstraktionen__{ .xxxl .middle .center }
+        <figure style="text-align:center;">
+          <img src="P4_Abstraktionen/Praktikum04.excalidraw.png" alt="Abstraktionen" width="400" class="no-lightbox">
+        </figure>
+    </a>
 
 -   __Praktikum 5<br>:material-chart-box: Post Processing__
     <br>

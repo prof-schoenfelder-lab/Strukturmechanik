@@ -58,19 +58,19 @@ hide:
       </figure>
     </a>
 
--   <a class="card-link" href="02_ANSYS_Umsetzung/Uebung-3/">:material-note-text-outline: __Übung 3__{ .xxxl .middle .center }
+-   <a class="card-link" href="02_ANSYS_Umsetzung/Uebung-3/">:material-star: __Übung 3__{ .xxxl .middle .center }
        <figure style="text-align:center;">
           <img src="02_ANSYS_Umsetzung/images/Kurbelarm.png" alt="Kurbelarm" width="400" class="no-lightbox">
       </figure>
     </a>
 
--   <a class="card-link" href="02_ANSYS_Umsetzung/Uebung-4/">:material-note-text-outline: __Übung 4__{ .xxxl .middle .center }
+-   <a class="card-link" href="02_ANSYS_Umsetzung/Uebung-4/">:material-star: __Übung 4__{ .xxxl .middle .center }
        <figure style="text-align:center;">
           <img src="02_ANSYS_Umsetzung/images/Uebung-04-Vorbau.jpeg" alt="Vorbau" width="400" class="no-lightbox">
       </figure>
     </a>
 
--   <a class="card-link" href="02_ANSYS_Umsetzung/Uebung-5/">:material-note-text-outline: __Übung 5__{ .xxxl .middle .center }
+-   <a class="card-link" href="02_ANSYS_Umsetzung/Uebung-5/">:material-star: __Übung 5__{ .xxxl .middle .center }
        <figure style="text-align:center;">
           <img src="02_ANSYS_Umsetzung/images/Uebung-05.png" alt="bike Fahrradrahmen" width="400" class="no-lightbox">
       </figure>
