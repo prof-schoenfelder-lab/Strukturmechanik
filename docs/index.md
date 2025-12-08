@@ -43,12 +43,7 @@ hide:
           <img src="P4_Abstraktionen/Praktikum04.excalidraw.png" alt="Abstraktionen" width="400" class="no-lightbox">
         </figure>
     </a>
-
--   __Praktikum 5<br>:material-chart-box: Post Processing__
-    <br>
-    <br>
-    Work in Progress
-
+    
 -   <a class="card-link" href="00_FAQ/">
     __:material-frequently-asked-questions: FAQ__
     <br><br>Antworten auf häufig gestellte Fragen
