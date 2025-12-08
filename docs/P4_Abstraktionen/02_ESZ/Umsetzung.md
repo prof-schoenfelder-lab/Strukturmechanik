@@ -38,13 +38,13 @@ Im Workbench Projektmenü Rechtsklick auf `Geometry` und im Properties Fenster `
 Im Mechanical die `Geometry auswählen` und im Detailfenster `2D Behavior=Plane Stress` einstellen:  
 
 <figure style="text-align:left;">
-    <img src="../images/planestress.png" alt="Einstellung Mechanical" width="400">
+    <img src="../images/PlaneStress.png" alt="Einstellung Mechanical" width="400">
 </figure>
 
 Im Mechanical die `Fläche auswählen` und im Detailfenster über `thickness` die Dicke in die Richtung die reduziert wurde (z-Richtung) einstellen:  
 
 <figure style="text-align:left;">
-    <img src="../images/planestress2.png" alt="Dicke einstellen" width="400">
+    <img src="../images/PlaneStress2.png" alt="Dicke einstellen" width="400">
 </figure>
 
 Im 2D werden `Lagerungen`, `Lasten` sowie mögliche `Ergebnisauswertungen` auf Punkten und Linien angebracht:
