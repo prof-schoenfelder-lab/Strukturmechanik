@@ -78,12 +78,12 @@ Berechnen Sie die folgenden Größen:
 
 ### Die maximale Durchbiegung im Bauteil \(u_\text{max}\) in mm
 
-<div class="numeric-question" data-answer="0.64" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Loslager am Ring eingestellt? Material zugeordnet? Rotationssymmetrie eingestellt?">
+<div class="numeric-question" data-answer="0.064" data-tolerance="0.005" data-points="5" data-attempts="5"  data-hints="Loslager am Ring eingestellt? Material zugeordnet? Rotationssymmetrie eingestellt?">
 </div>
 
 ### Die maximale 1. Hauptspannung im Bauteil \(\sigma_\text{1}\) in MPa
 
-<div class="numeric-question" data-answer="82.5" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Loslager am Ring eingestellt? Material zugeordnet? Rotationssymmetrie eingestellt?">
+<div class="numeric-question" data-answer="82.5" data-tolerance="1.0" data-points="5" data-attempts="5"  data-hints="Loslager am Ring eingestellt? Material zugeordnet? Rotationssymmetrie eingestellt?">
 </div>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->
