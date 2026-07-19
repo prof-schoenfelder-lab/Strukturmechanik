@@ -50,8 +50,8 @@ Balken mit rechteckigem Querschnitt
 Lagerung:
 
 <!-- --8<-- [start:Lagerung] -->
-- Loslager auf der linken Seite
-- Festlager auf der rechten Seite
+- Festlager auf der linken Seite
+- Loslager auf der rechten Seite
 <!-- --8<-- [end:Lagerung] -->
 
 Belastung:

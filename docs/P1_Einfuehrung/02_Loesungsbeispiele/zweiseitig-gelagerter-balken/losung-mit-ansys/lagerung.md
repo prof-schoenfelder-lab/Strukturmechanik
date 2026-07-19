@@ -24,7 +24,7 @@ Wir beginnen mit dem Festlager auf der unteren Kante der linken Seite. Wir wolle
    style="width:800px">
 </div>
 
-Das Loslager ist Unterseite unten gegenüber. Hier sollen nur die Verschiebungsfreiheitsgrade in  x und z Richtung verhindert werden (also auf Null gesetzt). Dafür verwenden wir die Randbedingung `Displacement`.
+Das Loslager kommt auf die untere Kante der gegenüberliegenden (rechten) Seite. Hier sollen nur die Verschiebungsfreiheitsgrade in x und z Richtung verhindert werden (also auf Null gesetzt). Dafür verwenden wir die Randbedingung `Displacement`.
 
 <div class="tutorial-embed"
    data-tutorial="/assets/tutorials/Loslager_anbringen"
