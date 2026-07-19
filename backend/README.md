@@ -91,11 +91,34 @@ serverseitig geführt, Gäste bekommen nur richtig/falsch-Feedback.
 (Die Antworten stehen weiterhin in den Markdown-Quellen im öffentlichen Repo —
 bewusste Entscheidung, es sind Übungen.)
 
-## Bewusste Prototyp-Grenzen / nächste Schritte
+## Noten-Rückkanal zu OPAL (AGS)
 
-- **Noten-Rückkanal zu OPAL** (LTI Basic Outcomes/AGS): Endpunkt-Daten werden
-  bereits gespeichert, das Zurückschreiben der Punkte in die OPAL-Bewertung ist
-  aber noch nicht implementiert.
+Bei jeder Punkteverbesserung meldet das Backend die Gesamtpunktzahl als
+Score an OPAL (LTI Assignment & Grade Services): Access-Token per signierter
+JWT-Assertion gegen `LTI13_TOKEN_URL`, dann POST auf den beim Launch
+mitgelieferten Lineitem-Endpunkt. Voraussetzungen:
+
+1. Im OPAL-Kursbaustein die **Bewertung aktivieren** (Tab „Bewertung") —
+   erst dann schickt OPAL beim Launch den AGS-Endpunkt mit.
+2. `LTI13_TOKEN_URL` in der `.env` (Default: OPAL „OAuth2 Access Token URL").
+3. `AGS_ENABLED=1` (Default an; `0` schaltet den Rückkanal komplett ab).
+
+**Datenschutz-Hinweis:** Für AGS muss die originale OPAL-Nutzer-ID gespeichert
+werden — sie liegt **verschlüsselt** (Fernet, Schlüssel aus `SECRET_KEY`) in
+der Spalte `users.sub_enc` und wird ausschließlich für den Score-Push
+entschlüsselt. Ohne `SECRET_KEY` ist keine Re-Identifikation möglich. Mit
+`AGS_ENABLED=0` wird sie gar nicht erst gespeichert.
+
+## Betrieb
+
+- **Deploy:** `./backend/deploy.sh` baut die Site (erzeugt `answers.json`) und
+  kopiert Backend + Antworten auf den Server; Restart nur bei app.py-Änderungen
+  nötig (`sudo systemctl restart fem-backend`).
+- **Backup:** Auf dem Server läuft täglich 3:17 Uhr `~/fem-backend/backup.sh`
+  (Cron des Users `guacamole`), behält die letzten 14 Stände der Datenbank
+  unter `~/fem-backend/backups/`.
+
+## Bewusste Prototyp-Grenzen / nächste Schritte
 - SQLite reicht für einen Kurs locker; bei Bedarf `DB_PATH` auf ein Volume legen
   oder auf Postgres wechseln.
 - Deployment hosting-neutral: läuft überall, wo Python läuft (HTWK-VM, Docker,

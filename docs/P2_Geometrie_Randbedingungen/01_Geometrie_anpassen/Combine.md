@@ -30,7 +30,7 @@ Körper werden zusammengeführt um das Netz über die Grenzen hinaus zu verwende
 
 ## Fahrradrahmen zusammenführen
 
-- [ ] Fügen Sie nun die restlichen Teile des Fahrradrahmens die nach der Vereinfachung übrig sind (also alle Rohre) zu einem einzelnen Volumenkörper mit<code>Combine</code> zusammen
+- [ ] Nun die restlichen Teile des Fahrradrahmens die nach der Vereinfachung übrig sind (also alle Rohre) zu einem einzelnen Volumenkörper mit<code>Combine</code> zusammenfügen
 
 So müsste der Rahmen final aussehen:
 

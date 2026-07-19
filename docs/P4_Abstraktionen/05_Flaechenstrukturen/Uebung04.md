@@ -29,7 +29,7 @@ multikristallines Silizium
 
 ## Symmetrie
 
-- Verwenden Sie eine Viertelsymmetrie
+- Eine Viertelsymmetrie verwenden
 
 ### Geometrie
 
@@ -49,11 +49,11 @@ multikristallines Silizium
 
 **Belastung:**
 
-- Fügen Sie `Standard Earth Gravity` hinzu (über die Dichte des Materials wird dadurch die Durchbiegung durch das Eigengewicht berechnet)  
+- `Standard Earth Gravity` hinzufügen (über die Dichte des Materials wird dadurch die Durchbiegung durch das Eigengewicht berechnet)  
 
 ## Aufgabenstellung
 
-!!! abstract "Lösen Sie die Aufgabe mit der 2D-Abstraktion mit SHELL-Elementen und voller Ausnutzung jeglicher Symmetrien"
+!!! abstract "Die Aufgabe mit der 2D-Abstraktion mit SHELL-Elementen und voller Ausnutzung jeglicher Symmetrien lösen"
 
 ## Hinweise
 
@@ -71,7 +71,7 @@ multikristallines Silizium
 
 ## Gesucht
 
-Berechnen Sie die folgenden Größen:
+Die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung im Bauteil \(u_\text{max}\) in mm
 

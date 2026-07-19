@@ -46,9 +46,9 @@ Balken mit rechteckigem Querschnitt
 
 ## Aufgabenstellung
 
-!!! abstract "Lösen Sie die Aufgabe mit der 2D Abstraktion / Ebener Spannungszustand"
+!!! abstract "Die Aufgabe mit der 2D Abstraktion / Ebener Spannungszustand lösen"
 
-!!! abstract "Zusatz: Verwenden Sie alle möglichen Symmetrien"
+!!! abstract "Zusatz: Alle möglichen Symmetrien verwenden"
 
 
 ## Hinweise
@@ -68,7 +68,7 @@ Balken mit rechteckigem Querschnitt
 
 ## Gesucht
 
-Berechnen Sie die folgenden Größen:
+Die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung im Bauteil \(u_\text{max}\) in mm
 

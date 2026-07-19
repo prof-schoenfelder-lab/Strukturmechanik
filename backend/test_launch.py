@@ -43,14 +43,36 @@ platform_jwk = json.loads(jwt.algorithms.RSAAlgorithm.to_jwk(platform_key.public
 platform_jwk.update({"kid": "opal-key-1", "alg": "RS256", "use": "sig"})
 
 
+ags_received = []  # von der Mock-Plattform empfangene Score-Posts
+
+
 class JWKSHandler(http.server.BaseHTTPRequestHandler):
-    def do_GET(self):
-        body = json.dumps({"keys": [platform_jwk]}).encode()
-        self.send_response(200)
+    def _json(self, obj, status=200):
+        body = json.dumps(obj).encode()
+        self.send_response(status)
         self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body)
+
+    def do_GET(self):
+        self._json({"keys": [platform_jwk]})
+
+    def do_POST(self):
+        length = int(self.headers.get("Content-Length", 0))
+        raw = self.rfile.read(length).decode()
+        if self.path == "/token":
+            form = dict(urllib.parse.parse_qsl(raw))
+            claims = jwt.decode(form.get("client_assertion", ""), options={"verify_signature": False})
+            if claims.get("iss") != CLIENT_ID:
+                return self._json({"error": "bad assertion"}, 400)
+            return self._json({"access_token": "mock-ags-token", "expires_in": 3600})
+        if self.path.startswith("/lineitem/7/scores"):
+            if self.headers.get("Authorization") != "Bearer mock-ags-token":
+                return self._json({"error": "unauthorized"}, 401)
+            ags_received.append(json.loads(raw))
+            return self._json({"ok": True})
+        return self._json({"error": "not found"}, 404)
 
     def log_message(self, *a):
         pass
@@ -96,6 +118,7 @@ def main():
                LTI13_ISSUER=PLATFORM,
                LTI13_AUTH_URL=PLATFORM + "/auth",
                LTI13_KEYSET_URL=PLATFORM + "/keys",
+               LTI13_TOKEN_URL=PLATFORM + "/token",
                LTI13_CLIENT_ID=CLIENT_ID,
                LTI_CONSUMER_KEY=KEY,
                LTI_CONSUMER_SECRET=SECRET,
@@ -215,6 +238,19 @@ def main():
               r["correct"] and r["earned"] == 4 and r.get("solution") == ["a", "c"], str(r))
         me2 = requests.get(BACKEND + "/api/me", headers=headers).json()
         check("checked points land in /api/me", me2["total_points"] == 16, str(me2))
+
+        # ---- AGS: Score-Push an die Mock-Plattform -----------------------
+        for _ in range(40):
+            if ags_received:
+                break
+            time.sleep(0.25)
+        check("AGS score received by platform", len(ags_received) > 0, str(ags_received))
+        if ags_received:
+            last = ags_received[-1]
+            check("AGS userId is original sub", last.get("userId") == "opal-user-13", str(last))
+            check("AGS scoreGiven = total points", last.get("scoreGiven") == 16, str(last))
+            check("AGS scoreMaximum from answers.json", last.get("scoreMaximum") == 9, str(last))
+            check("AGS grading complete", last.get("gradingProgress") == "FullyGraded")
 
     finally:
         server.terminate()

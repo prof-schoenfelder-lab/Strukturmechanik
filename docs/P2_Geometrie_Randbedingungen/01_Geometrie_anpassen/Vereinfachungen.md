@@ -39,7 +39,7 @@ Wir starten in diese Fall mit einer Step Datei eines Fahrradrahmens:
 
 ## Unnötige Teile löschen mit `Select`
 
-- [ ] Löschen Sie alle nicht benötigten Kleinteile aus der Geometrie (Anleitung siehe unten)
+- [ ] Alle nicht benötigten Kleinteile aus der Geometrie löschen (Anleitung siehe unten)
 
 !!! hint "Hinweis zum Selektieren von Volumenkörpern"
 
@@ -74,7 +74,7 @@ Wir starten in diese Fall mit einer Step Datei eines Fahrradrahmens:
 
 ## Unnötige Features löschen mit `Select`
 
-- [ ] Entfernen Sie die Bohrungen im Steuerrohr
+- [ ] Die Bohrungen im Steuerrohr entfernen
 
 <figure style="text-align:center;">
     <img src="../images/Select_same_radius_and_Fill.gif" alt="gleiche Features entfernen" width="800">

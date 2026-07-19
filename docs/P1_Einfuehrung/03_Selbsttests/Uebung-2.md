@@ -154,7 +154,7 @@ Um den Unterschied zur `Fixed Support` zu sehen fügen wir eine weitere Analyse 
 
 ### Die maximale Spannung in y-Richtung $\sigma_{y, \max }$ in MPa
 
-Berechnen Sie nun erneut die Spannung:
+Nun erneut die Spannung berechnen:
 
 <div class="numeric-question" data-answer="87.7" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Spannung in y-Richtung (Längsrichtung des Balkens) ausgewertet?">
 </div>

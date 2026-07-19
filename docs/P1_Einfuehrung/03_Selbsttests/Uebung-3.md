@@ -83,13 +83,13 @@ Belastung:
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Kraft auf die Fläche anbringen</p>
-    <p>Zur Erstellung der Geometrieflächen beachten Sie das Klick-Tutorial weiter oben</p> 
-    <p>In Mechanical: Um dann in mehrere Flächen für eine Randbedingung auszuwählen halten Sie `STRG` gedrückt</p> 
+    <p>Zur Erstellung der Geometrieflächen das Klick-Tutorial weiter oben beachten</p> 
+    <p>In Mechanical: Um dann in mehrere Flächen für eine Randbedingung auszuwählen `STRG` gedrückt halten</p> 
   </div>
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Alternative fixierte Lagerung</p>
-    <p>Verwenden Sie in diesem Fall zum Ersatz der fixierten Lagerung nur `Remote Displacement` mit allen Freiheitsgraden auf Null gesetzt.</p> 
+    <p>In diesem Fall zum Ersatz der fixierten Lagerung nur `Remote Displacement` mit allen Freiheitsgraden auf Null gesetzt verwenden.</p> 
   </div>
 
 </div>
@@ -108,7 +108,7 @@ RemoteDisp (Fläche): 2,1309 mm
 
 ### Die maximale von-Mises-Spannung in MPa
 
-<div class="numeric-question" data-answer="353.11" data-tolerance="3" data-points="5" data-attempts="5"  data-hints="Haben Sie die von-Mises Spannung ausgewertet? Fixierte Lagerung mit Remote Displacement?">
+<div class="numeric-question" data-answer="353.11" data-tolerance="3" data-points="5" data-attempts="5"  data-hints="Wurde die von-Mises Spannung ausgewertet? Fixierte Lagerung mit Remote Displacement?">
 </div>
 
 <!---

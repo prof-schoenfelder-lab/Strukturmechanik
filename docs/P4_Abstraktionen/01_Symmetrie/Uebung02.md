@@ -48,13 +48,13 @@ Belastung:
 
 ## Aufgabenstellung
 
-!!! abstract "Nutzen Sie alle möglichen Symmetrien aus und berechnen Sie die unten gefragten Verschiebung."
+!!! abstract "Alle möglichen Symmetrien ausnutzen und die unten gefragten Verschiebung berechnen."
 
 ### Symmetrie
 
 Welche Symmetrieebenen sind im Bauteil möglich?  Das Koordinatensystem liegt genau im Schwerpunkt des Bauteils.
 
-Denken Sie daran:
+Daran denken:
 
 Um eine Symmetrie zu verwenden, müssen bei der Spiegelung um diese Symmetrieebene folgende Komponenten identisch zum Vollmodell bleiben:
 

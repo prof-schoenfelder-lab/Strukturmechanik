@@ -90,5 +90,5 @@ Dafür muss im Strukturbaum auf <code>Symmetry</code> geklickt werden und im Det
 <img src="../images/Spiegelungseinstellung.png" alt="Spiegelungseinstellung" width="600" class="no-lightbox">
 </figure>
 
-Wenn Sie diese Einstellungen übernehmen, wird Ihr Viertelmodell (2 Symmetrieebenen) als Vollmodell im Netz und in den Lösungskonturen dargestellt.
+Werden diese Einstellungen übernommen, wird das Viertelmodell (2 Symmetrieebenen) als Vollmodell im Netz und in den Lösungskonturen dargestellt.
 <!-- --8<-- [end:Darstellung] -->

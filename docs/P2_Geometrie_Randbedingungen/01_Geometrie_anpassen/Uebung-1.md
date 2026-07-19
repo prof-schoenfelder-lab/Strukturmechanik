@@ -22,7 +22,7 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz,Lagerung und B
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Projekt speichern</p>
     <p>Im Workbench Projektmenü in der Menüleiste auf <code>File</code> und <code>Save As..</code> das Projekt abspeichern</p>
-    <p>Am besten legen Sie sich unter <code>D:\Studierende\</code> ein Ordner mit ihrem Namen an und speichern dort das Projekt mit dem Namen <code>Praktikum2</code>. Denken Sie daran keine Umlaute und Leerzeichen zu verwenden!</p>
+    <p>Am besten unter <code>D:\Studierende\</code> einen Ordner mit dem eigenen Namen anlegen und dort das Projekt mit dem Namen <code>Praktikum2</code> speichern. Daran denken, keine Umlaute und Leerzeichen zu verwenden!</p>
   </div>
   
   <div class="step">
@@ -45,16 +45,16 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz,Lagerung und B
 
 ## Aufgabenstellung
 
-Nach dem Import der Archivdatei (siehe oben) öffnen Sie die Geometrie mit SpaceClaim und ändern die Geometrie wie folgt:
+Nach dem Import der Archivdatei (siehe oben) die Geometrie mit SpaceClaim öffnen und wie folgt ändern:
 
-- [ ] Verlängern Sie die Geometrie auf die in dem Bild dargestellte Länge 100mm 
-- [ ] Erzeugen Sie eine Kantenverrundung im Radius von 10mm
+- [ ] Die Geometrie auf die in dem Bild dargestellte Länge 100mm verlängern 
+- [ ] Eine Kantenverrundung im Radius von 10mm erzeugen
 
 <figure style="text-align:center;">
   <img src="../images/Uebung-01b.png" alt="L-Profil mit Geometrieänderung" width="600" class="no-lightbox">
 </figure>
 
-Berechnen Sie anschließend die folgenden Größen:
+Anschließend die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung $u_{\max }$ in mm
 

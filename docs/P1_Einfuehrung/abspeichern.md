@@ -8,10 +8,10 @@ hide:
 # :material-content-save: Abspeichern
 
 
-Zum Abspeichern gibt es zwei Möglichkeiten. Die erste sollten Sie immer zu Beginn machen um Fortschritt nicht zu verlieren.
+Zum Abspeichern gibt es zwei Möglichkeiten. Die erste sollte immer zu Beginn gemacht werden um Fortschritt nicht zu verlieren.
 !!! danger "Keine Umlaute im Dateipfad !!"
 
-    Verwenden Sie keine Umlaut (ä,ö,ü) im Dateipfad (also nicht in einem Ordner oder Dateinamen). Also nicht Übung sondern Uebung! Ansonsten kann es beim Lösen des Gleichungssystems zu Fehlern kommen.
+    Keine Umlaute (ä,ö,ü) im Dateipfad verwenden (also nicht in einem Ordner oder Dateinamen). Also nicht Übung sondern Uebung! Ansonsten kann es beim Lösen des Gleichungssystems zu Fehlern kommen.
 
 # Als Projekt speichern
 

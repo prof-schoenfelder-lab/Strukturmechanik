@@ -42,7 +42,7 @@ Belastung:
 
 ## Hinweis
 
-Für die Remote Force müssen Sie ein neues Koordinatensystem in das Steuerrohr setzen und gleichzeitig die y-Achse als Referenz auswählen damit die Richtung der y-Achse der Richtung des Steuerrohrs entspricht. Dadurch können Sie den Abstand von 1000mm vom Mittelpunkt des Steuerrohrs genau einstellen.
+Für die Remote Force muss ein neues Koordinatensystem in das Steuerrohr gesetzt und gleichzeitig die y-Achse als Referenz ausgewählt werden damit die Richtung der y-Achse der Richtung des Steuerrohrs entspricht. Dadurch lässt sich der Abstand von 1000mm vom Mittelpunkt des Steuerrohrs genau einstellen.
 
 <figure style="text-align:center;">
   <img src="../images/Uebung-07-Koordinatensystem.png" alt="Koordinatensystem" width="600" class="no-lightbox">
@@ -52,7 +52,7 @@ Für die Remote Force müssen Sie ein neues Koordinatensystem in das Steuerrohr 
 
 ## Gesucht
 
-Berechnen Sie anschließend die folgenden Größen:
+Anschließend die folgenden Größen berechnen:
 
 ### Die maximale Verschiebung in x-Richtung $u_{x,max}$ in mm
 

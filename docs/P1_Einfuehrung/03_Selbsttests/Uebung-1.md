@@ -111,7 +111,7 @@ Belastung:
 
 ### 🎯 Lösung
 
-Hier sehen Sie die korrekte Lösung für diese Übung:
+Hier ist die korrekte Lösung für diese Übung:
 
 <figure style="text-align:center;">
   <img src="../images/Uebung-01_Loesung_Kraft.png" alt="Kraft auf Kante" width="700">

@@ -44,7 +44,7 @@ Kreisförmige Scheibe
 
 ## Aufgabenstellung
 
-!!! abstract "Lösen Sie die Aufgabe mit der 2D Abstraktion / Rotationssymmetrie"
+!!! abstract "Die Aufgabe mit der 2D Abstraktion / Rotationssymmetrie lösen"
 
 ## Hinweise
 
@@ -74,7 +74,7 @@ Kreisförmige Scheibe
 
 ## Gesucht
 
-Berechnen Sie die folgenden Größen:
+Die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung im Bauteil \(u_\text{max}\) in mm
 

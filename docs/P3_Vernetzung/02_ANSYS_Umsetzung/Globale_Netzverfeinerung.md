@@ -21,7 +21,7 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung)
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Projekt speichern</p>
     <p>Im Workbench-Projektmenü in der Menüleiste auf <code>File</code> und <code>Save As...</code> klicken, um das aktuelle Projekt zu speichern.</p>
-    <p>Am besten legen Sie sich unter <code>D:\Studierende\</code> einen Ordner mit Ihrem Namen an und speichern dort das Projekt unter dem Namen <code>Praktikum3</code>. Denken Sie daran, keine Umlaute und keine Leerzeichen zu verwenden!</p>
+    <p>Am besten unter <code>D:\Studierende\</code> einen Ordner mit dem eigenen Namen anlegen und dort das Projekt unter dem Namen <code>Praktikum3</code> speichern. Daran denken, keine Umlaute und keine Leerzeichen zu verwenden!</p>
   </div>
 
   <div class="step">
@@ -44,13 +44,13 @@ Mit globaler Netzverfeinerung ist gemeint, dass wir die Netzgröße für das ges
   <img src="../images/Inbus_Defaultnetz.png" alt="Inbus mit Standardnetz" width="800" class="no-lightbox">
 </figure>
 
-- [ ] Stellen Sie nun eine Elementgröße von <strong>2&nbsp;mm</strong> ein.
+- [ ] Nun eine Elementgröße von <strong>2&nbsp;mm</strong> einstellen.
 
 <figure style="text-align:center;">
   <img src="../images/Inbus_2mm_einstellen.png" alt="Inbus mit 2 mm Netz" width="800" class="no-lightbox">
 </figure>
 
-- [ ] Lösen Sie die Problemstellung und stellen Sie die <code>von-Mises-Spannung</code> dar.
+- [ ] Die Problemstellung lösen und die <code>von-Mises-Spannung</code> darstellen.
 
 !!! info "Erinnerung zur Darstellung der von-Mises-Spannung"
    
@@ -64,12 +64,12 @@ Die maximale Spannung liegt für die Netzgröße von 2&nbsp;mm im Knick und betr
   <img src="../images/Inbus_ShowMaxStress.png" alt="maximale Spannung darstellen" width="800" class="no-lightbox">
 </figure>
 
-- [ ] Berechnen Sie die von-Mises-Vergleichsspannung in MPa im <code>gesamten Bauteil</code> für eine Netzgröße von <code>1&nbsp;mm</code>.
+- [ ] Die von-Mises-Vergleichsspannung in MPa im <code>gesamten Bauteil</code> für eine Netzgröße von <code>1&nbsp;mm</code> berechnen.
 
 <div class="numeric-question" data-answer="393.35" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Einheit in mm gewechselt?">
 </div>
 
-- [ ] Berechnen Sie die von-Mises-Vergleichsspannung in MPa im <code>gesamten Bauteil</code> für eine Netzgröße von <code>0,5&nbsp;mm</code>.
+- [ ] Die von-Mises-Vergleichsspannung in MPa im <code>gesamten Bauteil</code> für eine Netzgröße von <code>0,5&nbsp;mm</code> berechnen.
 
 <div class="numeric-question" data-answer="562.21" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Einheit in mm gewechselt?">
 </div>
@@ -78,18 +78,18 @@ Zwischen den beiden Spannungswerten ergibt sich eine Steigerung von rund 43 %. D
 
 ## Spannungsauswertung außerhalb der Singularität
 
-Wir verwenden nun unsere erste Lösungsstrategie und werten die Spannung außerhalb der Einspannung aus. Wählen Sie dafür nur die Fläche im Knick für die Spannungsauswertung aus:
+Wir verwenden nun unsere erste Lösungsstrategie und werten die Spannung außerhalb der Einspannung aus. Dafür nur die Fläche im Knick für die Spannungsauswertung auswählen:
 
 <figure style="text-align:center;">
   <img src="../images/Inbus_Spannungsauswertung_lokal.png" alt="Lokale Spannungsauswertung im Knick" width="800" class="no-lightbox">
 </figure>
 
-- [ ] Berechnen Sie die von-Mises-Vergleichsspannung in MPa im <code>Bereich des Knicks</code> für eine Netzgröße von <code>1&nbsp;mm</code>.
+- [ ] Die von-Mises-Vergleichsspannung in MPa im <code>Bereich des Knicks</code> für eine Netzgröße von <code>1&nbsp;mm</code> berechnen.
 
 <div class="numeric-question" data-answer="353.11" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Einheit in mm gewechselt?">
 </div>
 
-- [ ] Berechnen Sie die von-Mises-Vergleichsspannung in MPa im <code>Bereich des Knicks</code> für eine Netzgröße von <code>0,5&nbsp;mm</code>.
+- [ ] Die von-Mises-Vergleichsspannung in MPa im <code>Bereich des Knicks</code> für eine Netzgröße von <code>0,5&nbsp;mm</code> berechnen.
 
 <div class="numeric-question" data-answer="355.06" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Einheit in mm gewechselt?">
 </div>

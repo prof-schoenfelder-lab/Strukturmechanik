@@ -37,7 +37,7 @@ Balken mit rechteckigem Querschnitt
 **Lagerung:**
 
 - entsprechend Skizze  
-- Achten Sie darauf, dass der Balken sich nicht um seine Längsachse dreht
+- Darauf achten, dass der Balken sich nicht um seine Längsachse dreht
 
 **Belastung:**
 
@@ -46,9 +46,9 @@ Balken mit rechteckigem Querschnitt
 
 ## Aufgabenstellung
 
-!!! abstract "Lösen Sie die Aufgabe mit der 1D-Abstraktion mit BEAM-Elementen."
+!!! abstract "Die Aufgabe mit der 1D-Abstraktion mit BEAM-Elementen lösen."
 
-!!! abstract "Zusatz: Verwenden Sie alle möglichen Symmetrien."
+!!! abstract "Zusatz: Alle möglichen Symmetrien verwenden."
 
 ## Hinweise
 
@@ -78,7 +78,7 @@ Balken mit rechteckigem Querschnitt
 
 ## Gesucht
 
-Berechnen Sie die folgenden Größen:
+Die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung im Bauteil \(u_\text{max}\) in mm
 

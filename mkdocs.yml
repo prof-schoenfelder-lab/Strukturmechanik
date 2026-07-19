@@ -23,6 +23,7 @@ theme:
                     icon: material/brightness-4
                     name: Switch to light mode
       name: material
+      custom_dir: overrides
       language: de
       features:
             - toc.follow
@@ -156,6 +157,7 @@ nav:
                       - Externe Kräfte: P2_Geometrie_Randbedingungen/03_Belastungen/RemoteForce.md
                       - Übung 7: P2_Geometrie_Randbedingungen/03_Belastungen/Uebung-7.md
                       - Druck: P2_Geometrie_Randbedingungen/03_Belastungen/Pressure.md
+                      - Beschleunigungen: P2_Geometrie_Randbedingungen/03_Belastungen/Beschleunigungen.md
       - VERNETZUNG:
               - P3_Vernetzung/index.md
               - Grundlagen:
@@ -164,6 +166,7 @@ nav:
               - Umsetzung in ANSYS:
                       - Globale Netzverfeinerung: P3_Vernetzung/02_ANSYS_Umsetzung/Globale_Netzverfeinerung.md
                       - Lokale Netzverfeinerung: P3_Vernetzung/02_ANSYS_Umsetzung/Lokale_Netzverfeinerung.md
+                      - Kantenverrundung: P3_Vernetzung/02_ANSYS_Umsetzung/Kantenverrundung.md
                       - Diskussion: P3_Vernetzung/02_ANSYS_Umsetzung/Diskussion.md
                       - Ergebnis-Tracking: P3_Vernetzung/02_ANSYS_Umsetzung/Ergebnis_Tracking.md
                       - Übung 3: P3_Vernetzung/02_ANSYS_Umsetzung/Uebung-3.md
@@ -175,6 +178,7 @@ nav:
               - Symmetrie:
                       - Theorie: P4_Abstraktionen/01_Symmetrie/Symmetrie.md
                       - Umsetzung ANSYS: P4_Abstraktionen/01_Symmetrie/Umsetzung.md
+                      - Grafikeinstellungen: P4_Abstraktionen/01_Symmetrie/Grafikeinstellungen.md
                       - Übung 1: P4_Abstraktionen/01_Symmetrie/Uebung01.md
                       - Übung 2: P4_Abstraktionen/01_Symmetrie/Uebung02.md
               - 2D Ebener Spannungzustand:

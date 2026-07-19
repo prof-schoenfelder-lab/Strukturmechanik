@@ -55,7 +55,7 @@ Belastung:
 
 Welche Lagerung führt zur ähnlichen Spannung wie die Variante mit dem Schraubkopf?
 
-Hinweis: Wenn sie die Körperauswahl verwenden und den Inbus der jeweiligen Randbedingung auswählen bevor Sie die Spannung einfügen, können Sie auch nur die Spannung des jeweiligen Bauteils anzeigen.
+Hinweis: Wird die Körperauswahl verwendet und der Inbus der jeweiligen Randbedingung ausgewählt bevor die Spannung eingefügt wird, lässt sich auch nur die Spannung des jeweiligen Bauteils anzeigen.
 
 <div class="multiple-choice-question" data-correct="C,D" data-points="5" data-attempts="3">
   <div class="mc-options">

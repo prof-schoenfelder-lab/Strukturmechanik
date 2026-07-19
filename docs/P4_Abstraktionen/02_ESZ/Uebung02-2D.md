@@ -48,7 +48,7 @@ Belastung:
 
 ## Aufgabenstellung
 
-!!! abstract "Lösen Sie die Aufgabe mit der 2D Abstraktion / Ebener Spannungszustand"
+!!! abstract "Die Aufgabe mit der 2D Abstraktion / Ebener Spannungszustand lösen"
 
 ## Hinweise
 

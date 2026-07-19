@@ -19,13 +19,13 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung)
 
 ## Aufgabenstellung
 
-Nach dem Import der Archivdatei öffnen Sie die Geometrie mit SpaceClaim und ändern die Geometrie wie folgt:
+Nach dem Import der Archivdatei die Geometrie mit SpaceClaim öffnen und wie folgt ändern:
 
-- [ ] Fügen Sie die Lagerung analog des gegebenen Bildes nur mit der Randbedingung `Displacement` ein
+- [ ] Die Lagerung analog des gegebenen Bildes nur mit der Randbedingung `Displacement` einfügen
 
 ## Gesucht
 
-Berechnen Sie anschließend die folgenden Größen:
+Anschließend die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung $u_{\max }$ in mm
 

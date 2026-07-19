@@ -16,15 +16,19 @@ Environment variables (see .env.example):
 """
 
 import base64
+import datetime
 import hashlib
 import json
 import os
 import secrets
 import sqlite3
+import threading
 import time
 import urllib.parse
 
 import jwt
+import requests as http_requests
+from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from flask import Flask, g, jsonify, redirect, request
@@ -50,6 +54,8 @@ LTI13_CLIENT_ID = os.environ.get("LTI13_CLIENT_ID", "")
 LTI13_AUTH_URL = os.environ.get("LTI13_AUTH_URL", "https://bildungsportal.sachsen.de/opal/ltiauth/")
 LTI13_KEYSET_URL = os.environ.get("LTI13_KEYSET_URL", "https://bildungsportal.sachsen.de/opal/restapi/lti/keys")
 LTI13_DEPLOYMENT_ID = os.environ.get("LTI13_DEPLOYMENT_ID", "1")
+LTI13_TOKEN_URL = os.environ.get("LTI13_TOKEN_URL", "https://bildungsportal.sachsen.de/opal/restapi/lti/token")
+AGS_ENABLED = os.environ.get("AGS_ENABLED", "1") == "1"
 PRIVATE_KEY_PATH = os.environ.get("PRIVATE_KEY_PATH", os.path.join(os.path.dirname(__file__), "lti_private.pem"))
 
 app = Flask(__name__)
@@ -81,6 +87,7 @@ def init_db():
             context_id TEXT,
             outcome_url TEXT,
             result_sourcedid TEXT,
+            sub_enc TEXT,
             created_at REAL
         );
         CREATE TABLE IF NOT EXISTS results (
@@ -95,6 +102,12 @@ def init_db():
         """
     )
     db.commit()
+    # Migration für Bestandsdatenbanken
+    try:
+        db.execute("ALTER TABLE users ADD COLUMN sub_enc TEXT")
+        db.commit()
+    except sqlite3.OperationalError:
+        pass
     db.close()
 
 
@@ -132,22 +145,95 @@ def pseudonymize(user_id):
     return hashlib.sha256((USER_SALT + ":" + user_id).encode()).hexdigest()[:32]
 
 
+# Verschlüsselte Ablage der OPAL-Nutzer-ID — nötig NUR für den Noten-Rückkanal
+# (AGS verlangt die originale LTI-sub). Nur der Server kann sie entschlüsseln.
+fernet = Fernet(base64.urlsafe_b64encode(hashlib.sha256((SECRET_KEY + ":sub-enc").encode()).digest()))
+
+
 def finish_launch(user_id, context_id, outcome_url=None, result_sourcedid=None):
     """Upsert the pseudonymized user and redirect to the site with a session token."""
     pseudonym = pseudonymize(user_id)
+    sub_enc = fernet.encrypt(user_id.encode()).decode() if AGS_ENABLED else None
     db = get_db()
     db.execute(
-        """INSERT INTO users (pseudonym, context_id, outcome_url, result_sourcedid, created_at)
-           VALUES (?, ?, ?, ?, ?)
+        """INSERT INTO users (pseudonym, context_id, outcome_url, result_sourcedid, sub_enc, created_at)
+           VALUES (?, ?, ?, ?, ?, ?)
            ON CONFLICT(pseudonym) DO UPDATE SET
              context_id=excluded.context_id,
              outcome_url=COALESCE(excluded.outcome_url, users.outcome_url),
-             result_sourcedid=COALESCE(excluded.result_sourcedid, users.result_sourcedid)""",
-        (pseudonym, context_id, outcome_url, result_sourcedid, time.time()),
+             result_sourcedid=COALESCE(excluded.result_sourcedid, users.result_sourcedid),
+             sub_enc=COALESCE(excluded.sub_enc, users.sub_enc)""",
+        (pseudonym, context_id, outcome_url, result_sourcedid, sub_enc, time.time()),
     )
     db.commit()
     token = serializer.dumps({"sub": pseudonym})
     return redirect(SITE_URL + "#ac_token=" + token)
+
+
+# --- AGS: Punkte als Bewertung an OPAL zurückmelden ---------------------------
+
+_ags_token = {"value": None, "exp": 0}
+
+
+def ags_access_token():
+    now = time.time()
+    if _ags_token["value"] and _ags_token["exp"] > now + 30:
+        return _ags_token["value"]
+    assertion = jwt.encode(
+        {"iss": LTI13_CLIENT_ID, "sub": LTI13_CLIENT_ID, "aud": LTI13_TOKEN_URL,
+         "jti": secrets.token_urlsafe(12), "iat": int(now), "exp": int(now) + 300},
+        private_key, algorithm="RS256", headers={"kid": "strukturmechanik-1"},
+    )
+    r = http_requests.post(LTI13_TOKEN_URL, data={
+        "grant_type": "client_credentials",
+        "client_assertion_type": "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+        "client_assertion": assertion,
+        "scope": "https://purl.imsglobal.org/spec/lti-ags/scope/score",
+    }, timeout=10)
+    r.raise_for_status()
+    data = r.json()
+    _ags_token["value"] = data["access_token"]
+    _ags_token["exp"] = now + int(data.get("expires_in", 3600))
+    return _ags_token["value"]
+
+
+def push_score_async(pseudonym):
+    """Gesamtpunktzahl des Users als Score an OPAL melden (fire-and-forget)."""
+    if not (AGS_ENABLED and LTI13_CLIENT_ID):
+        return
+
+    def work():
+        try:
+            db = sqlite3.connect(DB_PATH)
+            db.row_factory = sqlite3.Row
+            user = db.execute("SELECT outcome_url, sub_enc FROM users WHERE pseudonym=?",
+                              (pseudonym,)).fetchone()
+            if not user or not user["outcome_url"] or not user["sub_enc"]:
+                return
+            total = db.execute("SELECT COALESCE(SUM(best),0) t FROM results WHERE pseudonym=?",
+                               (pseudonym,)).fetchone()["t"]
+            db.close()
+            answers = load_answers()
+            score_max = sum(q.get("points", 0) for q in answers.values()) or 100
+            sub = fernet.decrypt(user["sub_enc"].encode()).decode()
+            lineitem = user["outcome_url"]
+            base, _, query = lineitem.partition("?")
+            scores_url = base.rstrip("/") + "/scores" + (("?" + query) if query else "")
+            http_requests.post(scores_url, json={
+                "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                "scoreGiven": total,
+                "scoreMaximum": score_max,
+                "activityProgress": "Submitted",
+                "gradingProgress": "FullyGraded",
+                "userId": sub,
+            }, headers={
+                "Authorization": "Bearer " + ags_access_token(),
+                "Content-Type": "application/vnd.ims.lis.v1.score+json",
+            }, timeout=10).raise_for_status()
+        except Exception as e:
+            app.logger.warning("AGS-Score-Push fehlgeschlagen: %s", e)
+
+    threading.Thread(target=work, daemon=True).start()
 
 
 # --- LTI 1.3 (OIDC) ----------------------------------------------------------
@@ -347,6 +433,7 @@ def post_results():
             (pseudonym, str(qid)[:200], best, qmax, attempts, now),
         )
     db.commit()
+    push_score_async(pseudonym)
     return jsonify({"ok": True, "stored": len(results)})
 
 
@@ -424,6 +511,8 @@ def check_answer():
             (pseudonym, qid, best, q["points"], attempts, time.time()),
         )
         db.commit()
+        if best > prev_best:
+            push_score_async(pseudonym)
         resp = {"authed": True, "correct": correct, "earned": earned, "best": best,
                 "attempts": attempts, "attemptsAllowed": attempts_allowed}
         if correct or attempts >= attempts_allowed:

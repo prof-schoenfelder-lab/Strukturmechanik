@@ -44,7 +44,7 @@ Belastung:
 
 ## Gesucht
 
-Berechnen Sie anschließend die folgenden Größen:
+Anschließend die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung $u_{\max }$ in mm
 

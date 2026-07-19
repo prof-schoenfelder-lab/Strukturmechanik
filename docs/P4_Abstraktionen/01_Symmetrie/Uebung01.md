@@ -55,13 +55,13 @@ Balken mit rechteckigem Querschnitt
 
 ## Aufgabenstellung
 
-!!! abstract "Nutzen Sie alle möglichen Symmetrien aus und berechnen Sie die unten gefragten Spannungen und Verschiebungen."
+!!! abstract "Alle möglichen Symmetrien ausnutzen und die unten gefragten Spannungen und Verschiebungen berechnen."
 
 ### Symmetrie
 
 Welche Symmetrieebenen sind im Bauteil möglich?  Das Koordinatensystem liegt genau im Schwerpunkt des Bauteils.
 
-Denken Sie daran:
+Daran denken:
 
 Um eine Symmetrie zu verwenden, müssen bei der Spiegelung um diese Symmetrieebene folgende Komponenten identisch zum Vollmodell bleiben:
 
@@ -124,7 +124,7 @@ Um eine Symmetrie zu verwenden, müssen bei der Spiegelung um diese Symmetrieebe
 
 ## Gesucht
 
-Berechnen Sie die folgenden Größen:
+Die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung im Bauteil \(u_\text{max}\) in mm
 

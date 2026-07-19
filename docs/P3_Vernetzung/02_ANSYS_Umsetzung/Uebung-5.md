@@ -28,7 +28,7 @@ Es ist die Geometrie gegeben:
 
 ### Vernetzung
 
-- Verwenden Sie ein konvergierte Netzgröße im Bereich der Schweißnähte vom Steuerrohr zum Ober- und Unterrohr
+- Eine konvergierte Netzgröße im Bereich der Schweißnähte vom Steuerrohr zum Ober- und Unterrohr verwenden
 
 ### Randbedingungen
 
@@ -48,19 +48,19 @@ Belastung:
 
 ## Aufgabenstellung
 
-Berechnen Sie die Spannung in den Schweißnähten vom Steuerrohr zum Ober- und Unterrohr. Vernetzen Sie diese Schweißnähte entsprechend
+Die Spannung in den Schweißnähten vom Steuerrohr zum Ober- und Unterrohr berechnen. Diese Schweißnähte entsprechend vernetzen
 
 ## Hinweise
 
-- Achten Sie darauf, dass sich die Bereiche wo normalerweise der Gabelschaft ist (Bereich des Kraftangriffs und der Lagerung vorne) der Bereich steif genug ist (so wie es normalerweise wäre, wenn sich dort diese Geometrien befinden). Schalten Sie ggf. für die Remote Forces/Displacement die Verformung aus.
+- Darauf achten, dass sich die Bereiche wo normalerweise der Gabelschaft ist (Bereich des Kraftangriffs und der Lagerung vorne) der Bereich steif genug ist (so wie es normalerweise wäre, wenn sich dort diese Geometrien befinden). Ggf. für die Remote Forces/Displacement die Verformung ausschalten.
 
-- Nutzen Sie das Split Tool von SpaceClaim um den Bereich der maximalen Spannung kleiner zu machen
+- Das Split Tool von SpaceClaim nutzen um den Bereich der maximalen Spannung kleiner zu machen
 
 - Es könnte sein, dass die Rechentechnik im PC Pool nicht ausreicht für eine konvergierte Netzlösung
 
 ## Gesucht
 
-Berechnen Sie die folgenden Größen:
+Die folgenden Größen berechnen:
 
 ### Die maximale von-Mises Vergleichsspannung in den Schweißnähten zum Steuerrohr $\sigma_{von Mises}$ in MPa
 

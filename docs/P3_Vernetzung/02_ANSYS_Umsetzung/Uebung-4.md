@@ -28,7 +28,7 @@ Folgende Geometrie ist gegeben:
 
 ### Vernetzung
 
-- Verwenden Sie eine **konvergierte Netzgröße** im Bereich der maximalen Spannung.
+- Eine **konvergierte Netzgröße** im Bereich der maximalen Spannung verwenden.
 
 ### Randbedingungen
 
@@ -59,17 +59,17 @@ Folgende Geometrie ist gegeben:
 
 ## Aufgabenstellung
 
-Berechnen Sie die maximale Verformung und die maximale von-Mises-Vergleichsspannung für das Bauteil mit einem konvergierten Netz.
+Die maximale Verformung und die maximale von-Mises-Vergleichsspannung für das Bauteil mit einem konvergierten Netz berechnen.
 
 ## Hinweise
 
-- Mit dem **Split-Tool** können Sie den Bereich, in dem Sie das Netz verfeinern, etwas kleiner machen.
-- Achten Sie darauf, dass die Bereiche, in denen sich normalerweise der Gabelschaft befindet (Bereich der festen Einspannung) und in denen der Lenker angreift (Kraftangriffsfläche), insgesamt steif genug sind – so, wie es im realen Aufbau mit eingebautem Gabelschaft und Lenker der Fall wäre.  
-  Schalten Sie ggf. bei den **Remote Forces** die Verformung (Deformation) aus.
+- Mit dem **Split-Tool** lässt sich der Bereich, in dem das Netz verfeinert wird, etwas kleiner machen.
+- Darauf achten, dass die Bereiche, in denen sich normalerweise der Gabelschaft befindet (Bereich der festen Einspannung) und in denen der Lenker angreift (Kraftangriffsfläche), insgesamt steif genug sind – so, wie es im realen Aufbau mit eingebautem Gabelschaft und Lenker der Fall wäre.  
+  Ggf. bei den **Remote Forces** die Verformung (Deformation) ausschalten.
 
 ## Gesucht
 
-Berechnen Sie die folgenden Größen:
+Die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung \(u_{\max}\) in mm
 

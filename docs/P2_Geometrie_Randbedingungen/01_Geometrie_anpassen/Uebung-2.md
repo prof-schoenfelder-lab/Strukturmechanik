@@ -19,9 +19,9 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz,Lagerung und B
 
 ## Aufgabenstellung
 
-Nach dem Import der Archivdatei öffnen Sie die Geometrie mit SpaceClaim und ändern die Geometrie wie folgt:
+Nach dem Import der Archivdatei die Geometrie mit SpaceClaim öffnen und wie folgt ändern:
 
-- [ ] Erhöhen Sie die Wanddicke im gesamten Lenker um 2mm (Innenradius um 2mm verkleinern)
+- [ ] Die Wanddicke im gesamten Lenker um 2mm erhöhen (Innenradius um 2mm verkleinern)
 
 ## Hinweise
 
@@ -29,7 +29,7 @@ Nach dem Import der Archivdatei öffnen Sie die Geometrie mit SpaceClaim und än
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2"><code>SpaceClaim</code>:  Körper an Übergangsstellen mit  <code>Split Body</code>  auftrennen und Übergang entfernen</p>
-    <p>Im Übergangsbereich kann die Wandstärke nicht geändert werden (weil diese auf beiden Seiten auch unterschiedlich ist). Trennen Sie die Übergangsbereiche auf mit <code>Split Body</code>  und löschen Sie diesen und erzeugen Sie den Übergang nach der Anpassung der Wandstärke erneut</p>
+    <p>Im Übergangsbereich kann die Wandstärke nicht geändert werden (weil diese auf beiden Seiten auch unterschiedlich ist). Die Übergangsbereiche mit <code>Split Body</code> auftrennen und löschen und den Übergang nach der Anpassung der Wandstärke erneut erzeugen</p>
     <figure style="text-align:center;">
     <img src="../images/Uebung-02c.png" alt="Lenker" width="600" class="no-lightbox">
     </figure>
@@ -76,7 +76,7 @@ Nach dem Import der Archivdatei öffnen Sie die Geometrie mit SpaceClaim und än
 
 ## Gesucht
 
-Berechnen Sie anschließend die folgenden Größen:
+Anschließend die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung $u_{\max }$ in mm
 

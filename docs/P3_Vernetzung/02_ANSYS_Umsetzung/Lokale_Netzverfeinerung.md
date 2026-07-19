@@ -14,12 +14,12 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung)
     <img src="../../../P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/images/Uebung-01.png" alt="L-Profil" width="500">
 </figure>
 
-- [ ] Berechnen Sie die von-Mises-Vergleichsspannung in MPa im <code>gesamten Bauteil</code> für eine globale Netzgröße von <code>3&nbsp;mm</code>.
+- [ ] Die von-Mises-Vergleichsspannung in MPa im <code>gesamten Bauteil</code> für eine globale Netzgröße von <code>3&nbsp;mm</code> berechnen.
 
 <div class="numeric-question" data-answer="436.89" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Netzgröße auf 3mm gestellt?">
 </div>
 
-- [ ] Berechnen Sie die von-Mises-Vergleichsspannung in MPa im <code>gesamten Bauteil</code> für eine globale Netzgröße von <code>1,5&nbsp;mm</code>.
+- [ ] Die von-Mises-Vergleichsspannung in MPa im <code>gesamten Bauteil</code> für eine globale Netzgröße von <code>1,5&nbsp;mm</code> berechnen.
 
 <div class="numeric-question" data-answer="592.32" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Netzgröße auf 1,5mm gestellt?">
 </div>
@@ -38,7 +38,7 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung)
     <img src="../images/LProfil_Radius.png" alt="Radius" width="400">
 </figure>
 
-- [ ] Erstellen Sie in SpaceClaim mit dem Pull-Tool an der Kante eine Kantenverrundung mit einem Radius von <code>3&nbsp;mm</code>. 
+- [ ] In SpaceClaim mit dem Pull-Tool an der Kante eine Kantenverrundung mit einem Radius von <code>3&nbsp;mm</code> erstellen. 
 
 Wie im Praktikum&nbsp;2 zur Geometrieanpassung gezeigt, können innenliegende Kanten in <code>SpaceClaim</code> mit Hilfe des <code>Pull</code>-Tools verrundet werden (hier im Beispiel an einer Außenkante!):
 
@@ -110,12 +110,12 @@ Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wi
 
 </div>
 
-- [ ] Berechnen Sie die von-Mises-Vergleichsspannung in MPa in der Verrundung mit einem dortigen lokalen Netz von <code>0,5&nbsp;mm</code> (globales Netz 3&nbsp;mm).
+- [ ] Die von-Mises-Vergleichsspannung in MPa in der Verrundung mit einem dortigen lokalen Netz von <code>0,5&nbsp;mm</code> (globales Netz 3&nbsp;mm) berechnen.
 
 <div class="numeric-question" data-answer="586.0" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 0,5mm?">
 </div>
 
-- [ ] Berechnen Sie die von-Mises-Vergleichsspannung in MPa in der Verrundung mit einem dortigen lokalen Netz von <code>0,25&nbsp;mm</code> (globales Netz 3&nbsp;mm).
+- [ ] Die von-Mises-Vergleichsspannung in MPa in der Verrundung mit einem dortigen lokalen Netz von <code>0,25&nbsp;mm</code> (globales Netz 3&nbsp;mm) berechnen.
 
 <div class="numeric-question" data-answer="582.28" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 0,25mm?">
 </div>

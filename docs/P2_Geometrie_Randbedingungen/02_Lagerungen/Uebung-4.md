@@ -45,7 +45,7 @@ Lagerung:
 
 !!! info inline 
 
-    Damit das Koordinatensystem in der Mitte zwischen den zwei Ausfallenden liegt, müssen Sie die zwei Linien der Radien (nicht die Flächen) für den Ursprung des Koordinatensystems verwenden
+    Damit das Koordinatensystem in der Mitte zwischen den zwei Ausfallenden liegt, müssen die zwei Linien der Radien (nicht die Flächen) für den Ursprung des Koordinatensystems verwendet werden
 
 <figure style="text-align:center;">
   <img src="../images/Uebung-04-Hinweis-KOS-hinten.png" alt="Koordinatensystem hinten" width="550" class="no-lightbox">
@@ -71,7 +71,7 @@ Belastung:
 
 ## Gesucht
 
-Berechnen Sie anschließend die folgenden Größen:
+Anschließend die folgenden Größen berechnen:
 
 ### Die maximale Verschiebung in z-Richtung (entgegen Fahrtrichtung) $u_{z}$ in mm
 

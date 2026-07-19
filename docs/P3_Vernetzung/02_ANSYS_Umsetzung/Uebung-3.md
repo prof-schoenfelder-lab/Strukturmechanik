@@ -28,7 +28,7 @@ Es ist die Geometrie gegeben:
 
 ### Vernetzung
 
-- Verwenden Sie eine konvergierte Netzgröße im Bereich der maximalen Spannung
+- Eine konvergierte Netzgröße im Bereich der maximalen Spannung verwenden
 
 ### Randbedingungen
 
@@ -42,11 +42,11 @@ Belastung:
 
 ## Aufgabenstellung
 
-Berechnen Sie die maximale Verformung und maximale von-Mises Vergleichsspannung für das Bauteil mit einem konvergiertem Netz.
+Die maximale Verformung und maximale von-Mises Vergleichsspannung für das Bauteil mit einem konvergiertem Netz berechnen.
 
 ## Gesucht
 
-Berechnen Sie die folgenden Größen:
+Die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung $u_{\max }$ in mm
 
