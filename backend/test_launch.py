@@ -204,7 +204,11 @@ def main():
         check("me is pseudonymous", "opal-user" not in str(me))
         check("no token -> 401", requests.get(BACKEND + "/api/me").status_code == 401)
         r = requests.get(BACKEND + "/api/stats")
-        check("stats anonymous", r.status_code == 200 and "opal-user" not in r.text)
+        check("stats anonymous + solved count", r.status_code == 200 and "opal-user" not in r.text
+              and all("solved" in row for row in r.json()))
+        r = requests.get(BACKEND + "/api/questions")
+        check("question catalog public, no answers",
+              r.status_code == 200 and "/T/Ueb:q0" in r.json() and "answer" not in r.text)
 
         # ---- server-side checking (/api/check) ---------------------------
         # guest: correct within tolerance, no points but solution on success
@@ -226,18 +230,18 @@ def main():
         check("authed wrong attempt 1", not r["correct"] and r["attempts"] == 1 and r["authed"], str(r))
         r = requests.post(BACKEND + "/api/check", headers=headers,
                           json={"qid": "/T/Ueb:q0", "value": 7.378}).json()
-        check("authed correct attempt 2 -> 4 P.",
-              r["correct"] and r["attempts"] == 2 and r["earned"] == 4 and r["best"] == 4, str(r))
+        check("authed correct attempt 2 -> volle 5 P. (Mastery)",
+              r["correct"] and r["attempts"] == 2 and r["earned"] == 5 and r["best"] == 5, str(r))
         r = requests.post(BACKEND + "/api/check", headers=headers,
                           json={"qid": "/T/Ueb:q0", "value": 7.378}).json()
         check("authed re-check keeps attempts/best",
-              r["attempts"] == 2 and r["best"] == 4, str(r))
+              r["attempts"] == 2 and r["best"] == 5, str(r))
         r = requests.post(BACKEND + "/api/check", headers=headers,
                           json={"qid": "/T/Ueb:mc0", "selected": ["a", "c"]}).json()
-        check("authed MC first try -> full points",
-              r["correct"] and r["earned"] == 4 and r.get("solution") == ["a", "c"], str(r))
+        check("authed MC first try -> 4 P. + 1 Bonus",
+              r["correct"] and r["earned"] == 5 and r.get("solution") == ["a", "c"], str(r))
         me2 = requests.get(BACKEND + "/api/me", headers=headers).json()
-        check("checked points land in /api/me", me2["total_points"] == 16, str(me2))
+        check("checked points land in /api/me", me2["total_points"] == 18, str(me2))
 
         # ---- AGS: Score-Push an die Mock-Plattform -----------------------
         for _ in range(40):
@@ -248,8 +252,8 @@ def main():
         if ags_received:
             last = ags_received[-1]
             check("AGS userId is original sub", last.get("userId") == "opal-user-13", str(last))
-            check("AGS scoreGiven = total points", last.get("scoreGiven") == 16, str(last))
-            check("AGS scoreMaximum from answers.json", last.get("scoreMaximum") == 9, str(last))
+            check("AGS scoreGiven = total points", last.get("scoreGiven") == 18, str(last))
+            check("AGS scoreMaximum incl. Bonus", last.get("scoreMaximum") == 11, str(last))
             check("AGS grading complete", last.get("gradingProgress") == "FullyGraded")
 
     finally:

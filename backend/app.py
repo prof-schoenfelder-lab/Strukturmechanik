@@ -214,7 +214,8 @@ def push_score_async(pseudonym):
                                (pseudonym,)).fetchone()["t"]
             db.close()
             answers = load_answers()
-            score_max = sum(q.get("points", 0) for q in answers.values()) or 100
+            # max inkl. des möglichen +1-Volltreffer-Bonus je Frage
+            score_max = sum(q.get("points", 0) + 1 for q in answers.values()) or 100
             sub = fernet.decrypt(user["sub_enc"].encode()).decode()
             lineitem = user["outcome_url"]
             base, _, query = lineitem.partition("?")
@@ -459,12 +460,9 @@ def load_answers():
 
 
 def earned_points(points, attempt_number, attempts_allowed):
-    """Gleiche lineare Staffelung wie bisher im Client."""
-    if attempt_number <= 1:
-        earned = round(points)
-    else:
-        earned = int(points * ((attempts_allowed - attempt_number + 1) / attempts_allowed))
-    return max(0, min(earned, round(points)))
+    """Mastery-Prinzip: Lösen zählt voll, egal beim wievielten Versuch.
+    +1 Bonuspunkt für den Volltreffer im ersten Versuch."""
+    return round(points) + (1 if attempt_number <= 1 else 0)
 
 
 @app.post("/api/check")
@@ -564,10 +562,21 @@ def stats():
     """Anonymous aggregate per question (no auth needed, no personal data)."""
     rows = get_db().execute(
         "SELECT qid, COUNT(*) AS participants, AVG(best) AS avg_best, "
+        "SUM(CASE WHEN best > 0 THEN 1 ELSE 0 END) AS solved, "
         "AVG(attempts) AS avg_attempts, MAX(max) AS max "
         "FROM results GROUP BY qid ORDER BY qid"
     ).fetchall()
     return jsonify([dict(r) for r in rows])
+
+
+@app.get("/api/questions")
+def questions():
+    """Public question catalog: qid -> max points/attempts (keine Antworten!).
+    Grundlage für die Fortschrittsanzeige (wie viele Fragen gibt es je Praktikum)."""
+    out = {}
+    for qid, q in load_answers().items():
+        out[qid] = {"points": q.get("points", 1), "attempts": q.get("attempts", 5)}
+    return jsonify(out)
 
 
 init_db()

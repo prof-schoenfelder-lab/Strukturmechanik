@@ -830,7 +830,7 @@
       if (sol === undefined) sol = isFinite(answer) ? answer : cachedSolution(qid);
       fb.innerHTML += (sol === null || sol === undefined)
         ? '<div class="numeric-reveal">Keine weiteren Versuche.</div>'
-        : '<div class="numeric-reveal">Lösung: <strong>' + sol + '</strong></div>';
+        : '<div class="numeric-reveal">Beim nächsten Mal! Die Lösung: <strong>' + sol + '</strong></div>';
       disableControls();
     }
 
@@ -868,7 +868,7 @@
             if (res.authed) {
               var prev = (safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0 }).points || 0;
               if ((res.best || 0) > prev) saveBest(res.best);
-              fb.innerHTML = '<span class="numeric-correct">Richtig — ' + (res.earned || 0) + ' Punkte.</span>';
+              fb.innerHTML = '<span class="numeric-correct">' + ((res.earned || 0) > points ? 'Volltreffer im ersten Versuch — ' + points + ' Punkte + 1 Bonus!' : 'Richtig — ' + (res.earned || 0) + ' Punkte.') + '</span>';
               scoreEl.textContent = 'Punkte: ' + (res.best || 0) + '/' + points;
               try { checkPageCompletion(); } catch (e) { }
               try { updateStarsForPage(getPageId()); } catch (e) { }
@@ -880,7 +880,7 @@
             try { showSolutionImages(); } catch (e) { }
           } else {
             var aa = res.attemptsAllowed || attemptsAllowed;
-            var s2 = '<span class="numeric-wrong">Falsch (' + attempts + '/' + aa + ').</span>';
+            var s2 = '<span class="numeric-wrong">Noch nicht richtig (' + attempts + '/' + aa + ').</span>';
             if (hints[attempts - 1]) s2 += '<div class="numeric-hint">Hinweis: ' + hints[attempts - 1] + '</div>';
             fb.innerHTML = s2;
             if (attempts >= aa) {
@@ -903,15 +903,9 @@
         // Linear scaling across allowed attempts (Option A):
         // earned = round(points * (attemptsAllowed - attemptNumber + 1) / attemptsAllowed)
         // `attempts` was incremented above and represents the current attempt number (1..attemptsAllowed)
-        var attemptNumber = attempts;
-        var earned;
-        if (attemptNumber === 1) {
-          earned = Math.round(points);
-        } else {
-          earned = Math.floor(points * ((attemptsAllowed - attemptNumber + 1) / attemptsAllowed));
-        }
+        // Mastery-Prinzip: Lösen zählt voll — +1 Bonus für den ersten Versuch
+        var earned = Math.round(points) + (attempts === 1 ? 1 : 0);
         if (!isFinite(earned) || earned < 0) earned = 0;
-        if (earned > points) earned = Math.round(points);
         var prevRec = safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0, updated: null };
         var prev = prevRec.points || 0;
         var didSave = false;
@@ -926,13 +920,13 @@
         } catch (e) { }
         // schedule a short retry to handle themes that re-render the nav after our change
         try { (function (pid) { setTimeout(function () { try { updateStarsForPage(pid); } catch (e) { } }, 250); })(getPageId()); } catch (e) { }
-        fb.innerHTML = '<span class="numeric-correct">Richtig — ' + earned + ' Punkte.</span>';
+        fb.innerHTML = '<span class="numeric-correct">' + (earned > points ? 'Volltreffer im ersten Versuch — ' + points + ' Punkte + 1 Bonus!' : 'Richtig — ' + earned + ' Punkte.') + '</span>';
         scoreEl.textContent = 'Punkte: ' + (safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: earned }).points + '/' + points;
         disableControls();
         // Check if all questions are finished and show solution images if so
         try { showSolutionImages(); } catch (e) { }
       } else {
-        var s = '<span class="numeric-wrong">Falsch (' + attempts + '/' + attemptsAllowed + ').</span>';
+        var s = '<span class="numeric-wrong">Noch nicht richtig (' + attempts + '/' + attemptsAllowed + ').</span>';
         if (hints[attempts - 1]) s += '<div class="numeric-hint">Hinweis: ' + hints[attempts - 1] + '</div>';
         fb.innerHTML = s;
         if (attempts >= attemptsAllowed) {
@@ -1034,7 +1028,7 @@
         disableControls();
         return;
       }
-      fb.innerHTML += '<div class="mc-reveal">Richtige Antworten: <strong>' + correctAnswers.join(', ') + '</strong></div>';
+      fb.innerHTML += '<div class="mc-reveal">Beim nächsten Mal! Richtige Antworten: <strong>' + correctAnswers.join(', ') + '</strong></div>';
       disableControls();
       // Highlight correct answers
       options.forEach(function (opt) {
@@ -1102,7 +1096,7 @@
                 saveBest(res.best);
                 try { localStorage.setItem('answer_selection_' + qid, JSON.stringify(selected)); } catch (e) { }
               }
-              fb.innerHTML = '<span class="mc-correct">Richtig — ' + (res.earned || 0) + ' Punkte.</span>';
+              fb.innerHTML = '<span class="mc-correct">' + ((res.earned || 0) > points ? 'Volltreffer im ersten Versuch — ' + points + ' Punkte + 1 Bonus!' : 'Richtig — ' + (res.earned || 0) + ' Punkte.') + '</span>';
               scoreEl.textContent = 'Punkte: ' + (res.best || 0) + '/' + points;
               try { checkPageCompletion(); } catch (e) { }
               try { updateStarsForPage(getPageId()); } catch (e) { }
@@ -1114,7 +1108,7 @@
             try { showSolutionImages(); } catch (e) { }
           } else {
             var aa = res.attemptsAllowed || attemptsAllowed;
-            var s2 = '<span class="mc-wrong">Falsch (' + attempts + '/' + aa + ').</span>';
+            var s2 = '<span class="mc-wrong">Noch nicht richtig (' + attempts + '/' + aa + ').</span>';
             if (hints[attempts - 1]) s2 += '<div class="mc-hint">Hinweis: ' + hints[attempts - 1] + '</div>';
             fb.innerHTML = s2;
             if (attempts >= aa) {
@@ -1151,15 +1145,9 @@
       }
 
       if (isCorrect) {
-        var attemptNumber = attempts;
-        var earned;
-        if (attemptNumber === 1) {
-          earned = Math.round(points);
-        } else {
-          earned = Math.floor(points * ((attemptsAllowed - attemptNumber + 1) / attemptsAllowed));
-        }
+        // Mastery-Prinzip: Lösen zählt voll — +1 Bonus für den ersten Versuch
+        var earned = Math.round(points) + (attempts === 1 ? 1 : 0);
         if (!isFinite(earned) || earned < 0) earned = 0;
-        if (earned > points) earned = Math.round(points);
 
         var prevRec = safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0, updated: null };
         var prev = prevRec.points || 0;
@@ -1176,12 +1164,12 @@
         } catch (e) { }
         try { (function (pid) { setTimeout(function () { try { updateStarsForPage(pid); } catch (e) { } }, 250); })(getPageId()); } catch (e) { }
 
-        fb.innerHTML = '<span class="mc-correct">Richtig — ' + earned + ' Punkte.</span>';
+        fb.innerHTML = '<span class="mc-correct">' + (earned > points ? 'Volltreffer im ersten Versuch — ' + points + ' Punkte + 1 Bonus!' : 'Richtig — ' + earned + ' Punkte.') + '</span>';
         scoreEl.textContent = 'Punkte: ' + (safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: earned }).points + '/' + points;
         disableControls();
         try { showSolutionImages(); } catch (e) { }
       } else {
-        var s = '<span class="mc-wrong">Falsch (' + attempts + '/' + attemptsAllowed + ').</span>';
+        var s = '<span class="mc-wrong">Noch nicht richtig (' + attempts + '/' + attemptsAllowed + ').</span>';
         if (hints[attempts - 1]) s += '<div class="mc-hint">Hinweis: ' + hints[attempts - 1] + '</div>';
         fb.innerHTML = s;
         if (attempts >= attemptsAllowed) {

@@ -150,3 +150,43 @@
 .md-theme-slate .md-content .step figure>figcaption {
   color: var(--md-typeset-color, var(--md-default-fg-color, #e6eefc));
 }
+/* ---------- Kurs-Statistik unter Übungsfragen ---------- */
+.course-stat {
+  margin-top: .5rem;
+  font-size: .68rem;
+  color: var(--md-default-fg-color--light);
+}
+
+/* ---------- "Mein Fortschritt"-Hub ---------- */
+.ph-summary { font-size: .9rem; margin: 1rem 0 1.2rem; }
+.ph-sync { color: #2e7d32; }
+.ph-sync-off { color: var(--md-default-fg-color--light); }
+.ph-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 1rem;
+}
+.ph-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+  padding: 1.1rem .8rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: .6rem;
+  color: var(--md-default-fg-color) !important;
+  transition: box-shadow .2s, transform .2s;
+}
+.ph-card:hover { box-shadow: var(--md-shadow-z2); transform: translateY(-2px); }
+.ph-ring { width: 7rem; height: 7rem; }
+.ph-ring-bg { fill: none; stroke: var(--md-default-fg-color--lightest); stroke-width: 9; }
+.ph-ring-fg {
+  fill: none; stroke: var(--md-primary-fg-color); stroke-width: 9;
+  stroke-linecap: round; transition: stroke-dashoffset .8s ease;
+}
+.ph-done .ph-ring-fg { stroke: #2e7d32; }
+.ph-ring-num { text-anchor: middle; font-size: 20px; font-weight: 700; fill: var(--md-default-fg-color); }
+.ph-ring-sub { text-anchor: middle; font-size: 11px; fill: var(--md-default-fg-color--light); }
+.ph-name { font-size: .75rem; font-weight: 600; text-align: center; }
+.ph-badge { font-size: .65rem; color: #2e7d32; font-weight: 600; }
+.progress-hub-loading { color: var(--md-default-fg-color--light); }
