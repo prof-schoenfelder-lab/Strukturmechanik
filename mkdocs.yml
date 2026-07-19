@@ -39,6 +39,9 @@ theme:
             - content.footer
             - content.action.edit
 
+hooks:
+      - scripts/answers_hook.py
+
 plugins:
       - macros
       - search

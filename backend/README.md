@@ -73,14 +73,29 @@ gleichnamigen `LTI13_*`-Umgebungsvariablen übernehmen. Anschließend in
 In [docs/assets/js/backend-config.js](../docs/assets/js/backend-config.js) die
 Backend-URL setzen — leer = Sync deaktiviert, Seite läuft rein lokal.
 
+## Serverseitige Antwortprüfung
+
+Der MkDocs-Hook `scripts/answers_hook.py` entfernt beim Build alle
+`data-answer`/`data-correct`-Attribute aus dem HTML und schreibt sie in
+`answers.json` im Projektroot. Diese Datei muss nach jedem Inhalts-Update
+mit aufs Backend:
+
+```bash
+mkdocs build   # erzeugt answers.json
+scp answers.json fing-spool.htwk-leipzig.de:~/fem-backend/
+```
+
+Kein Neustart nötig — die Datei wird bei Änderung automatisch neu geladen.
+`POST /api/check` prüft die Antworten: mit Login werden Versuche und Punkte
+serverseitig geführt, Gäste bekommen nur richtig/falsch-Feedback.
+(Die Antworten stehen weiterhin in den Markdown-Quellen im öffentlichen Repo —
+bewusste Entscheidung, es sind Übungen.)
+
 ## Bewusste Prototyp-Grenzen / nächste Schritte
 
-- **Noten-Rückkanal zu OPAL** (LTI Basic Outcomes): `lis_outcome_service_url` und
-  `lis_result_sourcedid` werden bereits gespeichert, das Zurückschreiben der
-  Punkte in die OPAL-Bewertung ist aber noch nicht implementiert.
-- Die Antworten stehen weiterhin im Klartext in den `data-answer`-Attributen der
-  Seite. Sobald Punkte angerechnet werden, sollte die Prüfung serverseitig
-  erfolgen.
+- **Noten-Rückkanal zu OPAL** (LTI Basic Outcomes/AGS): Endpunkt-Daten werden
+  bereits gespeichert, das Zurückschreiben der Punkte in die OPAL-Bewertung ist
+  aber noch nicht implementiert.
 - SQLite reicht für einen Kurs locker; bei Bedarf `DB_PATH` auf ein Volume legen
   oder auf Postgres wechseln.
 - Deployment hosting-neutral: läuft überall, wo Python läuft (HTWK-VM, Docker,

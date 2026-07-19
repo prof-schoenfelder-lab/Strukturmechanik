@@ -65,3 +65,5 @@ backend/results.db
 backend/*.log
 backend/lti_private.pem
 backend/__pycache__/
+answers.json
+site/

@@ -7,6 +7,20 @@
   // notify optional listeners (e.g. backend-sync.js) that stored results changed
   function emitChanged() { try { document.dispatchEvent(new CustomEvent('answer-checker:changed')); } catch (e) { } }
 
+  // Server-side answer check (data-answer/-correct sind im Build entfernt).
+  // Punkte gibt es nur mit OPAL-Login; Gäste bekommen richtig/falsch-Feedback.
+  function serverCheck(payload) {
+    var base = (window.AC_BACKEND_URL || '').replace(/\/$/, '');
+    if (!base) return Promise.reject(new Error('no-backend'));
+    var headers = { 'Content-Type': 'application/json' };
+    try { var t = localStorage.getItem('ac_backend_token'); if (t) headers['Authorization'] = 'Bearer ' + t; } catch (e) { }
+    return fetch(base + '/api/check', { method: 'POST', headers: headers, body: JSON.stringify(payload) })
+      .then(function (r) { if (!r.ok) throw new Error('check-failed-' + r.status); return r.json(); });
+  }
+  function cacheSolution(qid, sol) { try { localStorage.setItem('answer_solution_' + qid, JSON.stringify(sol)); } catch (e) { } }
+  function cachedSolution(qid) { return safeJSONParse(localStorage.getItem('answer_solution_' + qid)); }
+  var CHECK_OFFLINE_MSG = 'Antwortprüfung nicht erreichbar — dafür ist das HTWK-Netz oder VPN nötig.';
+
   // Configuration: attempts allowed per question
   var ATTEMPTS_ALLOWED = 5;
 
@@ -812,7 +826,13 @@
     function disableControls() { if (btn) btn.disabled = true; if (input) input.disabled = true; }
     function enableControls() { if (btn) btn.disabled = false; if (input) input.disabled = false; }
 
-    function reveal() { fb.innerHTML += '<div class="numeric-reveal">Lösung: <strong>' + answer + '</strong></div>'; disableControls(); }
+    function reveal(sol) {
+      if (sol === undefined) sol = isFinite(answer) ? answer : cachedSolution(qid);
+      fb.innerHTML += (sol === null || sol === undefined)
+        ? '<div class="numeric-reveal">Keine weiteren Versuche.</div>'
+        : '<div class="numeric-reveal">Lösung: <strong>' + sol + '</strong></div>';
+      disableControls();
+    }
 
     function updateUI() {
       bestRec = safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0, updated: null };
@@ -835,6 +855,48 @@
       if (!raw) { fb.innerHTML = '<span class="numeric-wrong">Bitte eine Zahl eingeben.</span>'; updateUI(); return; }
       var val = parseFloat(raw);
       if (!isFinite(val)) { fb.innerHTML = '<span class="numeric-wrong">Bitte eine Zahl eingeben.</span>'; updateUI(); return; }
+
+      // Server-Modus: data-answer ist im Build entfernt, der Server prüft.
+      if (!isFinite(answer)) {
+        if (btn) btn.disabled = true;
+        serverCheck({ qid: qid, value: val, attemptsUsed: attempts }).then(function (res) {
+          if (btn) btn.disabled = false;
+          attempts = res.attempts || (attempts + 1);
+          saveAttempts();
+          if (res.solution !== undefined) cacheSolution(qid, res.solution);
+          if (res.correct) {
+            if (res.authed) {
+              var prev = (safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0 }).points || 0;
+              if ((res.best || 0) > prev) saveBest(res.best);
+              fb.innerHTML = '<span class="numeric-correct">Richtig — ' + (res.earned || 0) + ' Punkte.</span>';
+              scoreEl.textContent = 'Punkte: ' + (res.best || 0) + '/' + points;
+              try { checkPageCompletion(); } catch (e) { }
+              try { updateStarsForPage(getPageId()); } catch (e) { }
+            } else {
+              fb.innerHTML = '<span class="numeric-correct">Richtig! <small>(Punkte gibt es nur mit OPAL-Login.)</small></span>';
+              scoreEl.textContent = '';
+            }
+            disableControls();
+            try { showSolutionImages(); } catch (e) { }
+          } else {
+            var aa = res.attemptsAllowed || attemptsAllowed;
+            var s2 = '<span class="numeric-wrong">Falsch (' + attempts + '/' + aa + ').</span>';
+            if (hints[attempts - 1]) s2 += '<div class="numeric-hint">Hinweis: ' + hints[attempts - 1] + '</div>';
+            fb.innerHTML = s2;
+            if (attempts >= aa) {
+              if (res.authed) scoreEl.textContent = 'Punkte: 0/' + points;
+              reveal(res.solution);
+              try { showSolutionImages(); } catch (e) { }
+            } else updateUI();
+          }
+          renderSummary();
+        }).catch(function () {
+          if (btn) btn.disabled = false;
+          fb.innerHTML = '<span class="numeric-wrong">' + CHECK_OFFLINE_MSG + '</span>';
+        });
+        return;
+      }
+
       // Only now count the attempt because a valid number was supplied
       attempts += 1; saveAttempts();
       if (Math.abs(val - answer) <= tol) {
@@ -964,7 +1026,14 @@
       });
     }
 
-    function reveal() {
+    function reveal(sol) {
+      if (sol === undefined && correctAnswers.length === 0) sol = cachedSolution(qid);
+      if (Array.isArray(sol)) correctAnswers = sol.map(String);
+      if (correctAnswers.length === 0) {
+        fb.innerHTML += '<div class="mc-reveal">Keine weiteren Versuche.</div>';
+        disableControls();
+        return;
+      }
       fb.innerHTML += '<div class="mc-reveal">Richtige Antworten: <strong>' + correctAnswers.join(', ') + '</strong></div>';
       disableControls();
       // Highlight correct answers
@@ -1018,8 +1087,49 @@
         return;
       }
 
-      attempts += 1;
-      saveAttempts();
+      // Server-Modus: data-correct ist im Build entfernt, der Server prüft.
+      if (correctAnswers.length === 0) {
+        if (btn) btn.disabled = true;
+        serverCheck({ qid: qid, selected: selected, attemptsUsed: attempts }).then(function (res) {
+          if (btn) btn.disabled = false;
+          attempts = res.attempts || (attempts + 1);
+          saveAttempts();
+          if (res.solution !== undefined) cacheSolution(qid, res.solution);
+          if (res.correct) {
+            if (res.authed) {
+              var prev = (safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0 }).points || 0;
+              if ((res.best || 0) > prev) {
+                saveBest(res.best);
+                try { localStorage.setItem('answer_selection_' + qid, JSON.stringify(selected)); } catch (e) { }
+              }
+              fb.innerHTML = '<span class="mc-correct">Richtig — ' + (res.earned || 0) + ' Punkte.</span>';
+              scoreEl.textContent = 'Punkte: ' + (res.best || 0) + '/' + points;
+              try { checkPageCompletion(); } catch (e) { }
+              try { updateStarsForPage(getPageId()); } catch (e) { }
+            } else {
+              fb.innerHTML = '<span class="mc-correct">Richtig! <small>(Punkte gibt es nur mit OPAL-Login.)</small></span>';
+              scoreEl.textContent = '';
+            }
+            disableControls();
+            try { showSolutionImages(); } catch (e) { }
+          } else {
+            var aa = res.attemptsAllowed || attemptsAllowed;
+            var s2 = '<span class="mc-wrong">Falsch (' + attempts + '/' + aa + ').</span>';
+            if (hints[attempts - 1]) s2 += '<div class="mc-hint">Hinweis: ' + hints[attempts - 1] + '</div>';
+            fb.innerHTML = s2;
+            if (attempts >= aa) {
+              if (res.authed) scoreEl.textContent = 'Punkte: 0/' + points;
+              reveal(res.solution);
+              try { showSolutionImages(); } catch (e) { }
+            } else updateUI();
+          }
+          renderSummary();
+        }).catch(function () {
+          if (btn) btn.disabled = false;
+          fb.innerHTML = '<span class="mc-wrong">' + CHECK_OFFLINE_MSG + '</span>';
+        });
+        return;
+      }
 
       // Check if answer is correct (all correct selected, no wrong selected)
       var isCorrect = true;

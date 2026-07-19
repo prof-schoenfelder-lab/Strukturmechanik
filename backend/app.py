@@ -17,6 +17,7 @@ Environment variables (see .env.example):
 
 import base64
 import hashlib
+import json
 import os
 import secrets
 import sqlite3
@@ -39,6 +40,7 @@ ALLOWED_ORIGINS = [o.strip() for o in os.environ.get(
     "ALLOWED_ORIGINS", "https://prof-schoenfelder-lab.github.io,http://localhost:8000"
 ).split(",") if o.strip()]
 DB_PATH = os.environ.get("DB_PATH", os.path.join(os.path.dirname(__file__), "results.db"))
+ANSWERS_PATH = os.environ.get("ANSWERS_PATH", os.path.join(os.path.dirname(__file__), "answers.json"))
 TOKEN_MAX_AGE = 60 * 60 * 24 * 90  # 90 days
 
 # LTI 1.3 platform data — in OPAL unter "Tool Konfiguration" ablesbar
@@ -346,6 +348,95 @@ def post_results():
         )
     db.commit()
     return jsonify({"ok": True, "stored": len(results)})
+
+
+# --- server-side answer checking ---------------------------------------------
+
+_answers_cache = {"mtime": None, "data": {}}
+
+
+def load_answers():
+    """answers.json (vom MkDocs-Hook erzeugt), mit Reload bei Dateiänderung."""
+    try:
+        mtime = os.path.getmtime(ANSWERS_PATH)
+    except OSError:
+        return {}
+    if _answers_cache["mtime"] != mtime:
+        try:
+            with open(ANSWERS_PATH) as f:
+                _answers_cache["data"] = json.load(f)
+            _answers_cache["mtime"] = mtime
+        except (OSError, ValueError):
+            return _answers_cache["data"]
+    return _answers_cache["data"]
+
+
+def earned_points(points, attempt_number, attempts_allowed):
+    """Gleiche lineare Staffelung wie bisher im Client."""
+    if attempt_number <= 1:
+        earned = round(points)
+    else:
+        earned = int(points * ((attempts_allowed - attempt_number + 1) / attempts_allowed))
+    return max(0, min(earned, round(points)))
+
+
+@app.post("/api/check")
+def check_answer():
+    payload = request.get_json(silent=True) or {}
+    qid = str(payload.get("qid") or "")
+    q = load_answers().get(qid)
+    if not q:
+        return jsonify({"error": "unbekannte Frage"}), 404
+
+    attempts_allowed = int(q.get("attempts", 5))
+    if "answer" in q:
+        try:
+            val = float(str(payload.get("value")).replace(",", "."))
+        except (TypeError, ValueError):
+            return jsonify({"error": "keine Zahl"}), 400
+        correct = abs(val - q["answer"]) <= q.get("tolerance", 0)
+        solution = q["answer"]
+    else:
+        selected = payload.get("selected")
+        if not isinstance(selected, list):
+            return jsonify({"error": "keine Auswahl"}), 400
+        correct = sorted(str(s) for s in selected) == sorted(q["correct"])
+        solution = q["correct"]
+
+    pseudonym = current_pseudonym()
+    if pseudonym:
+        db = get_db()
+        row = db.execute("SELECT best, attempts FROM results WHERE pseudonym=? AND qid=?",
+                         (pseudonym, qid)).fetchone()
+        prev_best = row["best"] if row else 0
+        attempts = (row["attempts"] if row else 0)
+        exhausted = prev_best <= 0 and attempts >= attempts_allowed
+        if prev_best <= 0 and not exhausted:
+            attempts += 1
+        earned = earned_points(q["points"], attempts, attempts_allowed) if (correct and not exhausted) else 0
+        best = max(prev_best, earned)
+        db.execute(
+            """INSERT INTO results (pseudonym, qid, best, max, attempts, updated_at)
+               VALUES (?, ?, ?, ?, ?, ?)
+               ON CONFLICT(pseudonym, qid) DO UPDATE SET
+                 best=excluded.best, max=excluded.max,
+                 attempts=excluded.attempts, updated_at=excluded.updated_at""",
+            (pseudonym, qid, best, q["points"], attempts, time.time()),
+        )
+        db.commit()
+        resp = {"authed": True, "correct": correct, "earned": earned, "best": best,
+                "attempts": attempts, "attemptsAllowed": attempts_allowed}
+        if correct or attempts >= attempts_allowed:
+            resp["solution"] = solution
+        return jsonify(resp)
+
+    # Gast: keine Speicherung, Versuche zählt der Client (Selbstbetrug erlaubt)
+    attempts = min(int(payload.get("attemptsUsed", 0) or 0) + 1, attempts_allowed)
+    resp = {"authed": False, "correct": correct,
+            "attempts": attempts, "attemptsAllowed": attempts_allowed}
+    if correct or attempts >= attempts_allowed:
+        resp["solution"] = solution
+    return jsonify(resp)
 
 
 @app.get("/api/results")

@@ -83,7 +83,13 @@ def main():
     threading.Thread(target=jwks_srv.serve_forever, daemon=True).start()
 
     tmp = tempfile.mkdtemp()
+    with open(os.path.join(tmp, "answers.json"), "w") as f:
+        json.dump({
+            "/T/Ueb:q0": {"answer": 7.378, "tolerance": 0.1, "points": 5, "attempts": 5},
+            "/T/Ueb:mc0": {"correct": ["a", "c"], "points": 4, "attempts": 3},
+        }, f)
     env = dict(os.environ,
+               ANSWERS_PATH=os.path.join(tmp, "answers.json"),
                DB_PATH=os.path.join(tmp, "test.db"),
                PRIVATE_KEY_PATH=os.path.join(tmp, "key.pem"),
                BACKEND_URL=BACKEND,
@@ -176,6 +182,39 @@ def main():
         check("no token -> 401", requests.get(BACKEND + "/api/me").status_code == 401)
         r = requests.get(BACKEND + "/api/stats")
         check("stats anonymous", r.status_code == 200 and "opal-user" not in r.text)
+
+        # ---- server-side checking (/api/check) ---------------------------
+        # guest: correct within tolerance, no points but solution on success
+        r = requests.post(BACKEND + "/api/check",
+                          json={"qid": "/T/Ueb:q0", "value": "7,4", "attemptsUsed": 0}).json()
+        check("guest numeric correct", r["correct"] and not r["authed"] and "earned" not in r, str(r))
+        r = requests.post(BACKEND + "/api/check",
+                          json={"qid": "/T/Ueb:q0", "value": 9.9, "attemptsUsed": 0}).json()
+        check("guest wrong, no solution yet", not r["correct"] and "solution" not in r, str(r))
+        r = requests.post(BACKEND + "/api/check",
+                          json={"qid": "/T/Ueb:q0", "value": 9.9, "attemptsUsed": 4}).json()
+        check("guest exhausted -> solution", not r["correct"] and r.get("solution") == 7.378, str(r))
+        check("unknown qid -> 404", requests.post(
+            BACKEND + "/api/check", json={"qid": "/nix", "value": 1}).status_code == 404)
+
+        # authed: attempts server-tracked, points scale with attempt number
+        r = requests.post(BACKEND + "/api/check", headers=headers,
+                          json={"qid": "/T/Ueb:q0", "value": 9.9}).json()
+        check("authed wrong attempt 1", not r["correct"] and r["attempts"] == 1 and r["authed"], str(r))
+        r = requests.post(BACKEND + "/api/check", headers=headers,
+                          json={"qid": "/T/Ueb:q0", "value": 7.378}).json()
+        check("authed correct attempt 2 -> 4 P.",
+              r["correct"] and r["attempts"] == 2 and r["earned"] == 4 and r["best"] == 4, str(r))
+        r = requests.post(BACKEND + "/api/check", headers=headers,
+                          json={"qid": "/T/Ueb:q0", "value": 7.378}).json()
+        check("authed re-check keeps attempts/best",
+              r["attempts"] == 2 and r["best"] == 4, str(r))
+        r = requests.post(BACKEND + "/api/check", headers=headers,
+                          json={"qid": "/T/Ueb:mc0", "selected": ["a", "c"]}).json()
+        check("authed MC first try -> full points",
+              r["correct"] and r["earned"] == 4 and r.get("solution") == ["a", "c"], str(r))
+        me2 = requests.get(BACKEND + "/api/me", headers=headers).json()
+        check("checked points land in /api/me", me2["total_points"] == 16, str(me2))
 
     finally:
         server.terminate()
