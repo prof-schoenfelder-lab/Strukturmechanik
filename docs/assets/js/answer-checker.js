@@ -24,6 +24,11 @@
   function cacheSolution(qid, sol) { try { localStorage.setItem('answer_solution_' + qid, JSON.stringify(sol)); } catch (e) { } }
   function cachedSolution(qid) { return safeJSONParse(localStorage.getItem('answer_solution_' + qid)); }
   var CHECK_OFFLINE_MSG = 'Antwortprüfung nicht erreichbar — dafür ist das HTWK-Netz oder VPN nötig.';
+  function opalLoginLink() {
+    var url = window.AC_OPAL_URL;
+    if (!url) return 'OPAL-Login';
+    return '<a href="' + url + '" target="_blank" rel="noopener">OPAL-Login</a>';
+  }
 
   // Configuration: attempts allowed per question
   var ATTEMPTS_ALLOWED = 5;
@@ -953,7 +958,7 @@
               try { checkPageCompletion(); } catch (e) { }
               try { updateStarsForPage(getPageId()); } catch (e) { }
             } else {
-              fb.innerHTML = '<span class="numeric-correct">Richtig! <small>(Punkte gibt es nur mit OPAL-Login.)</small></span>';
+              fb.innerHTML = '<span class="numeric-correct">Richtig! <small>(Punkte gibt es nur mit ' + opalLoginLink() + '.)</small></span>';
               scoreEl.textContent = '';
             }
             disableControls();
@@ -1183,7 +1188,7 @@
               try { checkPageCompletion(); } catch (e) { }
               try { updateStarsForPage(getPageId()); } catch (e) { }
             } else {
-              fb.innerHTML = '<span class="mc-correct">Richtig! <small>(Punkte gibt es nur mit OPAL-Login.)</small></span>';
+              fb.innerHTML = '<span class="mc-correct">Richtig! <small>(Punkte gibt es nur mit ' + opalLoginLink() + '.)</small></span>';
               scoreEl.textContent = '';
             }
             disableControls();

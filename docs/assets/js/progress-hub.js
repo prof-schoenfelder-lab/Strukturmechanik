@@ -104,7 +104,9 @@
       '<div class="ph-summary"><strong>' + totalPoints + ' Punkte</strong> · ' +
       totalSolved + ' von ' + totalQ + ' Aufgaben gelöst' +
       (token ? ' · <span class="ph-sync">✓ über OPAL gespeichert</span>'
-             : ' · <span class="ph-sync ph-sync-off">nur lokal in diesem Browser</span>') +
+             : ' · <span class="ph-sync ph-sync-off">nur lokal in diesem Browser' +
+               (window.AC_OPAL_URL ? ' — <a href="' + window.AC_OPAL_URL + '" target="_blank" rel="noopener">über OPAL anmelden</a>' : '') +
+               '</span>') +
       '</div>' + levelHtml +
       '<div class="ph-grid">' + cards.join('') + '</div>' +
       '<h2>Abzeichen <small>(' + earned + '/' + badges.length + ')</small></h2>' +
