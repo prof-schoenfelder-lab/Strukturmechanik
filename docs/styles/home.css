@@ -8,3 +8,81 @@
 /* H1 nur auf Startseite verstecken (per Marker .page--home) */
 .md-content:has(.page--home) .md-content__inner > h1:first-of-type { display:none; }
 
+
+/* ---------- Scrollytelling-Hero (Balken: Geometrie -> Netz -> RB -> Lösung) */
+.fem-scrolly {
+  position: relative;
+  height: 420vh;              /* Scroll-Strecke der Animation */
+  margin: 0 0 2rem;
+}
+.fem-sticky {
+  position: sticky;
+  top: 3.4rem;                /* unter dem Material-Header */
+  height: calc(100vh - 3.4rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .8rem;
+}
+.fem-sticky svg {
+  width: min(96%, 900px);
+  height: auto;
+  overflow: visible;
+}
+.fem-caption {
+  min-height: 4.6rem;
+  max-width: 40rem;
+  text-align: center;
+}
+.fem-caption strong {
+  display: block;
+  font-size: 1.05rem;
+  color: var(--md-primary-fg-color);
+}
+[data-md-color-scheme="slate"] .fem-caption strong { color: var(--md-primary-bg-color); }
+.fem-caption span { color: var(--md-default-fg-color--light); }
+
+.fem-scrolly {
+  --fem-elem-fill: var(--md-default-bg-color);
+}
+.fem-outline {
+  stroke: var(--md-default-fg-color);
+  transition: opacity .4s;
+}
+.fem-elem {
+  stroke: var(--md-default-fg-color--light);
+  stroke-width: 1;
+  fill: var(--fem-elem-fill);
+  opacity: 0;
+  transition: opacity .25s;
+}
+.fem-bc { opacity: 0; }
+.fem-support {
+  fill: none;
+  stroke: var(--md-default-fg-color);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+.fem-ground { stroke: var(--md-default-fg-color); stroke-width: 2.5; }
+.fem-arrow line, .fem-loadline { stroke: #e53935; stroke-width: 2.5; }
+.fem-arrow polygon { fill: #e53935; }
+.fem-arrow { opacity: 0; transition: opacity .2s; }
+
+/* Scroll-Hinweis am Anfang der Animation */
+.fem-scrolly[data-phase="0"] .fem-sticky::after {
+  content: "▼ weiterscrollen";
+  position: absolute;
+  bottom: 1.2rem;
+  font-size: .7rem;
+  color: var(--md-default-fg-color--light);
+  animation: fem-bounce 1.6s infinite;
+}
+@keyframes fem-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fem-scrolly { height: auto; }
+  .fem-sticky { position: static; height: auto; min-height: 24rem; }
+}

@@ -14,6 +14,13 @@ hide:
   ![Header](assets/images/Header.png){ .no-lightbox data-glightbox="disabled" width="100%" loading=lazy }
 </div>
 
+<section class="fem-scrolly" id="fem-scrolly" data-phase="0" markdown>
+  <div class="fem-sticky">
+    <svg id="fem-svg" role="img" aria-label="Animation: Ein Balken wird vernetzt, gelagert, belastet und gelöst"></svg>
+    <div class="fem-caption" id="fem-caption"><strong>1 · Geometrie</strong><span>Das Bauteil wird als CAD-Geometrie beschrieben: ein Balken auf zwei Lagern.</span></div>
+  </div>
+</section>
+
 <div class="grid cards" markdown>
 
 -   <a class="card-link" href="P1_Einfuehrung/">
