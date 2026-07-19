@@ -131,8 +131,13 @@ AGS gemeldeten Punktestände pro Kursmitglied im OPAL-Bewertungswerkzeug.
 
 `~/fem-backend/reset-course.sh` auf dem Server ausführen: legt ein Backup an
 und leert danach Ergebnisse und Nutzer — die neue Kohorte startet bei null.
-(Alte Browser behalten ihren localStorage; das ist unkritisch, weil neue
-Studierende neue Geräte-Stände haben.)
+
+**Achtung, eigene Test-Browser:** Geräte, auf denen vorher getestet wurde,
+laden ihren localStorage-Stand beim nächsten Besuch automatisch wieder hoch
+(gewolltes Verhalten für offline gesammelte Punkte). Deshalb auf solchen
+Geräten VOR dem Reset einmal auf der Seite `localStorage.clear()` in der
+Browser-Konsole ausführen — sonst tauchen die alten Testdaten direkt wieder
+in der Datenbank auf.
 
 ## Bewusste Prototyp-Grenzen / nächste Schritte
 - SQLite reicht für einen Kurs locker; bei Bedarf `DB_PATH` auf ein Volume legen
