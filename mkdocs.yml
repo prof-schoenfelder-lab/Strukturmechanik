@@ -82,6 +82,8 @@ extra_javascript:
       - "assets/tutorials/player.js"
       - "assets/tutorials/player-bootstrap.js"
       - "assets/js/answer-checker.js"
+      - "assets/js/backend-config.js"
+      - "assets/js/backend-sync.js"
 
 extra_css:
       - "assets/tutorials/player.css"

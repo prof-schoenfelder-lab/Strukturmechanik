@@ -4,6 +4,9 @@
 
   function safeJSONParse(s) { try { return JSON.parse(s); } catch (e) { return null; } }
 
+  // notify optional listeners (e.g. backend-sync.js) that stored results changed
+  function emitChanged() { try { document.dispatchEvent(new CustomEvent('answer-checker:changed')); } catch (e) { } }
+
   // Configuration: attempts allowed per question
   var ATTEMPTS_ALLOWED = 5;
 
@@ -803,8 +806,8 @@
 
     // Per-question local-delete button removed to avoid easy reset by students.
 
-    function saveAttempts() { localStorage.setItem('answer_attempts_' + qid, String(attempts)); }
-    function saveBest(pointsVal) { localStorage.setItem('answer_best_' + qid, JSON.stringify({ points: pointsVal, updated: new Date().toISOString() })); bestRec = { points: pointsVal, updated: new Date().toISOString() }; }
+    function saveAttempts() { localStorage.setItem('answer_attempts_' + qid, String(attempts)); emitChanged(); }
+    function saveBest(pointsVal) { localStorage.setItem('answer_best_' + qid, JSON.stringify({ points: pointsVal, updated: new Date().toISOString() })); bestRec = { points: pointsVal, updated: new Date().toISOString() }; emitChanged(); }
 
     function disableControls() { if (btn) btn.disabled = true; if (input) input.disabled = true; }
     function enableControls() { if (btn) btn.disabled = false; if (input) input.disabled = false; }
@@ -938,10 +941,11 @@
       q.appendChild(scoreEl);
     }
 
-    function saveAttempts() { localStorage.setItem('answer_attempts_' + qid, String(attempts)); }
+    function saveAttempts() { localStorage.setItem('answer_attempts_' + qid, String(attempts)); emitChanged(); }
     function saveBest(pointsVal) {
       localStorage.setItem('answer_best_' + qid, JSON.stringify({ points: pointsVal, updated: new Date().toISOString() }));
       bestRec = { points: pointsVal, updated: new Date().toISOString() };
+      emitChanged();
     }
 
     function disableControls() {

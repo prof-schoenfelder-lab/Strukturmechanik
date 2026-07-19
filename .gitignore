@@ -58,3 +58,10 @@ ANSYS-PROJEKTE/*
 docs/.DS_Store
 docs/assets/.DS_Store
 docs/assets/tutorials/.DS_Store
+
+# Backend (lokal)
+backend/.venv/
+backend/results.db
+backend/*.log
+backend/lti_private.pem
+backend/__pycache__/

@@ -1,0 +1,8 @@
+flask
+oauthlib
+itsdangerous
+PyJWT
+cryptography
+# nur für test_launch.py:
+requests
+requests-oauthlib

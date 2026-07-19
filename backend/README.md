@@ -1,0 +1,87 @@
+# Backend: OPAL-Login (LTI 1.3, Fallback 1.1) + anonyme Ergebnisspeicherung
+
+Kleiner Flask-Dienst, der die statische MkDocs-Seite um zwei Dinge ergänzt:
+
+1. **Login über OPAL** — im OPAL-Kurs wird ein Kursbaustein „LTI-Seite" angelegt.
+   OPAL startet den LTI-1.3/OIDC-Flow, der Dienst validiert das signierte
+   id_token gegen den OPAL-Keyset, **pseudonymisiert** die Nutzer-ID (salted
+   SHA-256, kein Klartext-Login wird gespeichert) und leitet mit einem
+   Session-Token im URL-Fragment auf die Seite weiter. Die Optik der Seite
+   bleibt unberührt — OPAL öffnet sie im neuen Fenster.
+2. **Ergebnisspeicherung** — `backend-sync.js` auf der Seite schickt den
+   localStorage-Punktestand (`answer_best_*`, `answer_attempts_*`) an
+   `POST /api/results`. Ohne Token/Backend-URL läuft die Seite wie bisher rein
+   lokal weiter.
+
+## Lokal ausprobieren
+
+```bash
+cd backend
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+.venv/bin/python app.py                 # startet auf http://127.0.0.1:5000
+.venv/bin/python test_launch.py         # simuliert einen OPAL-Launch, prüft alles
+```
+
+## Endpunkte
+
+| Endpunkt | Zweck |
+|---|---|
+| `GET/POST /lti/login` | LTI 1.3: OIDC-Login-Initiation („Login URL des Tools") |
+| `POST /lti/launch13` | LTI 1.3: Launch-Callback mit id_token („Launch URL des Tools") → Redirect zur Seite mit `#ac_token=…` |
+| `GET /lti/jwks` | LTI 1.3: öffentlicher Schlüsselsatz des Tools („Keyset URL des Tools") |
+| `POST /lti/launch` | LTI-1.1-Fallback (OAuth1-signiert) |
+| `POST /api/results` | Punktestand speichern (Bearer-Token; Best-Score wird nie verschlechtert) |
+| `GET /api/me` | eigener Punktestand (pseudonym) |
+| `GET /api/stats` | anonyme Aggregatstatistik pro Frage (für Lehr-Analytik) |
+
+## Konfiguration (Umgebungsvariablen)
+
+| Variable | Bedeutung |
+|---|---|
+| `BACKEND_URL` | öffentliche URL dieses Dienstes (für die OIDC redirect_uri) |
+| `LTI13_ISSUER` | „Issuer ID (ISS)" aus OPAL (Default: `https://bildungsportal.sachsen.de/opal`) |
+| `LTI13_CLIENT_ID` | „Client ID" aus OPAL (wird beim Speichern des Bausteins vergeben) |
+| `LTI13_AUTH_URL` | „OIDC Auth URL" aus OPAL |
+| `LTI13_KEYSET_URL` | „Keyset URL" aus OPAL (Plattform-Schlüssel) |
+| `LTI13_DEPLOYMENT_ID` | „Deployment-ID" aus OPAL |
+| `PRIVATE_KEY_PATH` | RSA-Schlüssel des Tools (wird beim ersten Start automatisch erzeugt) |
+| `SECRET_KEY` | signiert die Session-Tokens (zufälligen Wert setzen!) |
+| `USER_SALT` | Salt für die Pseudonymisierung (zufälligen Wert setzen, danach nie ändern) |
+| `SITE_URL` | Ziel-URL nach dem Launch (die GitHub-Pages-Seite) |
+| `ALLOWED_ORIGINS` | CORS-Origins, kommagetrennt |
+| `DB_PATH` | SQLite-Datei (Default: `backend/results.db`) |
+| `LTI_CONSUMER_KEY` / `LTI_CONSUMER_SECRET` | nur für den LTI-1.1-Fallback |
+
+## OPAL-Einrichtung (Kursbaustein „LTI-Seite", Tab „Konfiguration")
+
+| OPAL-Feld | Wert |
+|---|---|
+| LTI Version | **LTI 1.3**, Tool: „Eigenes Tool" |
+| Login URL des Tools | `https://<backend-host>/lti/login` |
+| Launch URL des Tools | `https://<backend-host>/lti/launch13` |
+| Schlüsseltyp | „Schlüsselsatz-URL" mit `https://<backend-host>/lti/jwks` — **oder**, wenn das Backend nur per VPN erreichbar ist: „Schlüssel" und den PEM-Text von `https://<backend-host>/lti/pubkey` einfügen |
+| ClientID des Tools | frei wählbar bzw. von OPAL vergeben — derselbe Wert muss in `LTI13_CLIENT_ID` stehen |
+| Anzeige | **„Neues Fenster öffnen"** (sonst klemmt die Seite im OPAL-iFrame) |
+
+Nach dem Speichern zeigt OPAL unter „Tool Konfiguration" Issuer, OIDC Auth URL,
+OAuth2 Token URL, Keyset URL und Deployment-ID an — diese Werte in die
+gleichnamigen `LTI13_*`-Umgebungsvariablen übernehmen. Anschließend in
+`docs/assets/js/backend-config.js` die Backend-URL eintragen.
+
+## Frontend-Aktivierung
+
+In [docs/assets/js/backend-config.js](../docs/assets/js/backend-config.js) die
+Backend-URL setzen — leer = Sync deaktiviert, Seite läuft rein lokal.
+
+## Bewusste Prototyp-Grenzen / nächste Schritte
+
+- **Noten-Rückkanal zu OPAL** (LTI Basic Outcomes): `lis_outcome_service_url` und
+  `lis_result_sourcedid` werden bereits gespeichert, das Zurückschreiben der
+  Punkte in die OPAL-Bewertung ist aber noch nicht implementiert.
+- Die Antworten stehen weiterhin im Klartext in den `data-answer`-Attributen der
+  Seite. Sobald Punkte angerechnet werden, sollte die Prüfung serverseitig
+  erfolgen.
+- SQLite reicht für einen Kurs locker; bei Bedarf `DB_PATH` auf ein Volume legen
+  oder auf Postgres wechseln.
+- Deployment hosting-neutral: läuft überall, wo Python läuft (HTWK-VM, Docker,
+  `gunicorn -w 2 app:app` hinter einem Reverse-Proxy mit TLS).
