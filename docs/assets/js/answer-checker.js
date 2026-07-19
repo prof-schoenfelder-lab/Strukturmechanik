@@ -265,11 +265,10 @@
     var id = 'player-badge';
     var el = document.getElementById(id);
     if (!el) {
-      // Link zur Fortschritt-Seite mit Donut-Icon (statt Level-Zahl im Header)
+      // Link zur Fortschritt-Seite (statt Level-Zahl im Header)
       el = document.createElement('a');
       el.id = id;
       el.className = 'player-badge';
-      el.innerHTML = '<svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path fill="currentColor" d="M13,2.05C17.94,2.55 21.5,6.53 21.95,11H16.9C16.44,9.28 15.03,7.86 13,7.55V2.05M11,2.05V7.55C8.97,7.86 7.56,9.28 7.1,11H2.05C2.5,6.53 6.06,2.55 11,2.05M2.05,13H7.1C7.56,14.72 8.97,16.14 11,16.45V21.95C6.06,21.45 2.5,17.47 2.05,13M13,21.95V16.45C15.03,16.14 16.44,14.72 16.9,13H21.95C21.5,17.47 17.94,21.45 13,21.95Z"/></svg>';
       var logo = document.querySelector('.md-header__button.md-logo');
       if (logo && logo.parentNode) logo.parentNode.insertBefore(el, logo.nextSibling);
       else header.insertBefore(el, header.firstChild);
@@ -281,9 +280,43 @@
     } catch (e) { }
     try {
       var info = computePlayerLevel();
+      // Mini-Fortschrittsring: füllt sich mit dem persönlichen Gesamtfortschritt
+      var total = questionTotal();
+      var pct = total ? Math.max(0, Math.min(1, info.solved / total)) : 0;
+      var C = 56.55; // 2*pi*9
+      el.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">' +
+        '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-opacity=".25" stroke-width="3"/>' +
+        '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"' +
+        ' stroke-dasharray="' + C + '" stroke-dashoffset="' + (C * (1 - pct)).toFixed(2) + '" transform="rotate(-90 12 12)"/></svg>';
       el.setAttribute('aria-label', 'Mein Fortschritt');
-      el.title = 'Mein Fortschritt — Level ' + info.level + ' · ' + getLevelName(Math.max(1, info.level)) +
+      el.title = 'Mein Fortschritt — ' + (total ? info.solved + ' von ' + total + ' Aufgaben gelöst, ' : '') +
+        'Level ' + info.level + ' · ' + getLevelName(Math.max(1, info.level)) +
         (info.next !== null ? ', noch ' + (info.next - info.solved) + ' Aufgabe(n) bis Level ' + (info.level + 1) : ', Maximallevel!');
+    } catch (e) { }
+  }
+
+  // Gesamtzahl der Aufgaben (aus /api/questions), 6h im localStorage gecacht
+  function questionTotal() {
+    try {
+      var rec = safeJSONParse(localStorage.getItem('ac_qtotal'));
+      if (rec && rec.n) return rec.n;
+    } catch (e) { }
+    return null;
+  }
+  function refreshQuestionTotal() {
+    try {
+      var base = (window.AC_BACKEND_URL || '').replace(/\/$/, '');
+      if (!base || !window.fetch) return;
+      var rec = safeJSONParse(localStorage.getItem('ac_qtotal'));
+      if (rec && rec.t && (Date.now() - rec.t) < 21600000) return;
+      fetch(base + '/api/questions')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (cat) {
+          if (!cat) return;
+          localStorage.setItem('ac_qtotal', JSON.stringify({ n: Object.keys(cat).length, t: Date.now() }));
+          updatePlayerBadge();
+        })
+        .catch(function () { });
     } catch (e) { }
   }
 
@@ -1283,6 +1316,7 @@
     } catch (e) { }
     // remove old entries on load (24h default)
     cleanupOldEntries();
+    try { refreshQuestionTotal(); } catch (e) { }
     // initialize nav icons according to localStorage (claimed vs not)
     try { initializeNavIcons(); } catch (e) { }
 
