@@ -56,6 +56,7 @@ LTI13_KEYSET_URL = os.environ.get("LTI13_KEYSET_URL", "https://bildungsportal.sa
 LTI13_DEPLOYMENT_ID = os.environ.get("LTI13_DEPLOYMENT_ID", "1")
 LTI13_TOKEN_URL = os.environ.get("LTI13_TOKEN_URL", "https://bildungsportal.sachsen.de/opal/restapi/lti/token")
 AGS_ENABLED = os.environ.get("AGS_ENABLED", "1") == "1"
+DASHBOARD_TOKEN = os.environ.get("DASHBOARD_TOKEN", "")
 PRIVATE_KEY_PATH = os.environ.get("PRIVATE_KEY_PATH", os.path.join(os.path.dirname(__file__), "lti_private.pem"))
 
 app = Flask(__name__)
@@ -567,6 +568,80 @@ def stats():
         "FROM results GROUP BY qid ORDER BY qid"
     ).fetchall()
     return jsonify([dict(r) for r in rows])
+
+
+@app.get("/dashboard")
+def dashboard():
+    """Lehrenden-Übersicht: wie viele sind wie weit (aggregiert, pseudonym).
+    Zugriff nur mit ?key=<DASHBOARD_TOKEN>."""
+    if not DASHBOARD_TOKEN or request.args.get("key") != DASHBOARD_TOKEN:
+        return "Zugriff nur mit gültigem key-Parameter (DASHBOARD_TOKEN).", 403
+
+    db = get_db()
+    answers = load_answers()
+    total_q = len(answers) or 1
+    praktika = [("P1_Einfuehrung", "Praktikum 1"), ("P2_Geometrie_Randbedingungen", "Praktikum 2"),
+                ("P3_Vernetzung", "Praktikum 3"), ("P4_Abstraktionen", "Praktikum 4")]
+    q_per_p = {key: sum(1 for qid in answers if "/" + key + "/" in qid) or 1 for key, _ in praktika}
+
+    rows = db.execute("SELECT pseudonym, qid, best, attempts FROM results").fetchall()
+    per_user = {}
+    for r in rows:
+        u = per_user.setdefault(r["pseudonym"], {"solved": 0, "points": 0, "per_p": {}})
+        if r["best"] > 0:
+            u["solved"] += 1
+            u["points"] += r["best"]
+            for key, _ in praktika:
+                if "/" + key + "/" in r["qid"]:
+                    u["per_p"][key] = u["per_p"].get(key, 0) + 1
+
+    n = len(per_user)
+    buckets = [("noch nichts gelöst", 0, 0), ("bis 25 %", 0.0001, 0.25), ("bis 50 %", 0.25, 0.5),
+               ("bis 75 %", 0.5, 0.75), ("bis 99 %", 0.75, 0.9999), ("alles gelöst", 0.9999, 10)]
+    dist = []
+    for label, lo, hi in buckets:
+        c = sum(1 for u in per_user.values() if lo <= u["solved"] / total_q <= hi)
+        dist.append((label, c))
+
+    def bar(count):
+        pct = int(100 * count / n) if n else 0
+        return ('<div class="bar"><span style="width:%d%%"></span></div><em>%d (%d %%)</em>'
+                % (max(pct, 1) if count else 0, count, pct))
+
+    p_rows = ""
+    for key, name in praktika:
+        started = sum(1 for u in per_user.values() if u["per_p"].get(key, 0) > 0)
+        done = sum(1 for u in per_user.values() if u["per_p"].get(key, 0) >= q_per_p[key])
+        p_rows += "<tr><td>%s</td><td>%s</td><td>%s</td></tr>" % (name, bar(started), bar(done))
+
+    stats_rows = db.execute(
+        "SELECT qid, COUNT(*) participants, SUM(CASE WHEN best>0 THEN 1 ELSE 0 END) solved, "
+        "AVG(attempts) att FROM results GROUP BY qid ORDER BY qid").fetchall()
+    q_rows = "".join(
+        "<tr><td>%s</td><td>%d/%d</td><td>%.1f</td></tr>"
+        % (r["qid"].replace("/Strukturmechanik/", ""), r["solved"], r["participants"], r["att"] or 0)
+        for r in stats_rows)
+
+    dist_rows = "".join("<tr><td>%s</td><td>%s</td></tr>" % (label, bar(c)) for label, c in dist)
+    html = """<!doctype html><html lang="de"><meta charset="utf-8">
+<title>FEM-Kurs Dashboard</title>
+<style>body{font-family:system-ui,sans-serif;max-width:60rem;margin:2rem auto;padding:0 1rem;color:#222}
+h1{font-size:1.4rem} h2{font-size:1.05rem;margin-top:2rem} table{border-collapse:collapse;width:100%%}
+td,th{padding:.35rem .6rem;border-bottom:1px solid #ddd;text-align:left;font-size:.9rem;vertical-align:middle}
+.bar{display:inline-block;width:12rem;height:.7rem;background:#eee;border-radius:.35rem;vertical-align:middle;margin-right:.5rem}
+.bar span{display:block;height:100%%;background:#3f51b5;border-radius:.35rem}
+em{font-style:normal;color:#555;font-size:.85rem}</style>
+<h1>FEM-Kurs — Fortschritts-Dashboard</h1>
+<p><strong>%d</strong> Teilnehmende mit Login · <strong>%d</strong> Aufgaben im Katalog · Stand: %s</p>
+<h2>Wie weit ist der Kurs? (Anteil gelöster Aufgaben pro Person)</h2>
+<table>%s</table>
+<h2>Pro Praktikum</h2>
+<table><tr><th></th><th>mind. 1 Aufgabe gelöst</th><th>komplett gelöst</th></tr>%s</table>
+<h2>Pro Aufgabe (gelöst / begonnen · ø Versuche)</h2>
+<table><tr><th>Aufgabe</th><th>gelöst</th><th>ø Versuche</th></tr>%s</table>
+</html>""" % (n, len(answers), datetime.datetime.now().strftime("%d.%m.%Y %H:%M"),
+              dist_rows, p_rows, q_rows)
+    return html
 
 
 @app.get("/api/questions")

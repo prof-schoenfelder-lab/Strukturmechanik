@@ -122,6 +122,7 @@ def main():
                LTI13_CLIENT_ID=CLIENT_ID,
                LTI_CONSUMER_KEY=KEY,
                LTI_CONSUMER_SECRET=SECRET,
+               DASHBOARD_TOKEN="test-dashboard-key",
                FLASK_RUN_PORT="5099")
     server = subprocess.Popen(
         [sys.executable, "-c",
@@ -209,6 +210,11 @@ def main():
         r = requests.get(BACKEND + "/api/questions")
         check("question catalog public, no answers",
               r.status_code == 200 and "/T/Ueb:q0" in r.json() and "answer" not in r.text)
+        check("dashboard needs key", requests.get(BACKEND + "/dashboard").status_code == 403)
+        r = requests.get(BACKEND + "/dashboard", params={"key": "test-dashboard-key"})
+        check("dashboard renders overview",
+              r.status_code == 200 and "Teilnehmende" in r.text and "Praktikum 1" in r.text
+              and "opal-user" not in r.text)
 
         # ---- server-side checking (/api/check) ---------------------------
         # guest: correct within tolerance, no points but solution on success

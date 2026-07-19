@@ -118,6 +118,22 @@ entschlüsselt. Ohne `SECRET_KEY` ist keine Re-Identifikation möglich. Mit
   (Cron des Users `guacamole`), behält die letzten 14 Stände der Datenbank
   unter `~/fem-backend/backups/`.
 
+## Lehrenden-Dashboard
+
+`https://<backend-host>/fem/dashboard?key=<DASHBOARD_TOKEN>` zeigt aggregiert
+(pseudonym, keine Namen): Verteilung „wie viele sind wie weit", Fortschritt pro
+Praktikum (begonnen/komplett) und Lösungsquote je Aufgabe. Der Token steht in
+der `.env` auf dem Server. Namentliche Einzelstände gibt es stattdessen direkt
+in OPAL: im Kursbaustein die **Bewertung aktivieren**, dann erscheinen die per
+AGS gemeldeten Punktestände pro Kursmitglied im OPAL-Bewertungswerkzeug.
+
+## Kurs-Reset (Semesterende)
+
+`~/fem-backend/reset-course.sh` auf dem Server ausführen: legt ein Backup an
+und leert danach Ergebnisse und Nutzer — die neue Kohorte startet bei null.
+(Alte Browser behalten ihren localStorage; das ist unkritisch, weil neue
+Studierende neue Geräte-Stände haben.)
+
 ## Bewusste Prototyp-Grenzen / nächste Schritte
 - SQLite reicht für einen Kurs locker; bei Bedarf `DB_PATH` auf ein Volume legen
   oder auf Postgres wechseln.
