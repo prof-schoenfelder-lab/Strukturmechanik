@@ -471,8 +471,11 @@
       for (var qid in qidSet) {
         if (!Object.prototype.hasOwnProperty.call(qidSet, qid)) continue;
         total++;
+        // "gelöst" heißt: Punkte geholt. Das done-Flag (auch bei aufgebrauchten
+        // Versuchen gesetzt) zählt hier bewusst NICHT — sonst gäbe es einen
+        // grünen Haken für 0 Punkte.
         var rec = safeJSONParse(localStorage.getItem('answer_best_' + qid));
-        if ((rec && rec.points > 0) || localStorage.getItem('answer_done_' + qid) === '1') solved++;
+        if (rec && rec.points > 0) solved++;
       }
       return { solved: solved, total: total };
     } catch (e) { return { solved: 0, total: 0 }; }
