@@ -190,3 +190,30 @@
 .ph-name { font-size: .75rem; font-weight: 600; text-align: center; }
 .ph-badge { font-size: .65rem; color: #2e7d32; font-weight: 600; }
 .progress-hub-loading { color: var(--md-default-fg-color--light); }
+
+/* Abzeichen auf der Fortschritt-Seite */
+.ph-level { margin: -0.4rem 0 1rem; font-size: .85rem; color: var(--md-default-fg-color--light); }
+.ph-level strong { color: var(--md-primary-fg-color); }
+[data-md-color-scheme="slate"] .ph-level strong { color: var(--md-primary-bg-color); }
+.ph-medals {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: .8rem;
+  margin-top: .5rem;
+}
+.ph-medal {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "icon name" "icon desc";
+  column-gap: .6rem;
+  align-items: center;
+  padding: .7rem .8rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: .6rem;
+  opacity: .45;
+  filter: grayscale(1);
+}
+.ph-medal.ph-earned { opacity: 1; filter: none; border-color: #2e7d3255; background: #2e7d3211; }
+.ph-medal-icon { grid-area: icon; font-size: 1.6rem; }
+.ph-medal-name { grid-area: name; font-size: .78rem; font-weight: 700; }
+.ph-medal-desc { grid-area: desc; font-size: .68rem; color: var(--md-default-fg-color--light); }

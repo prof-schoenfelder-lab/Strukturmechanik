@@ -5,7 +5,10 @@
   function safeJSONParse(s) { try { return JSON.parse(s); } catch (e) { return null; } }
 
   // notify optional listeners (e.g. backend-sync.js) that stored results changed
-  function emitChanged() { try { document.dispatchEvent(new CustomEvent('answer-checker:changed')); } catch (e) { } }
+  function emitChanged() {
+    try { document.dispatchEvent(new CustomEvent('answer-checker:changed')); } catch (e) { }
+    try { updatePlayerBadge(); maybeCelebrateLevelUp(); } catch (e) { }
+  }
 
   // Server-side answer check (data-answer/-correct sind im Build entfernt).
   // Punkte gibt es nur mit OPAL-Login; Gäste bekommen richtig/falsch-Feedback.
@@ -99,25 +102,54 @@
     } catch (e) { }
     return null;
   }
-  function getPlayerLevel() { return parseInt(localStorage.getItem('player_level') || '0', 10) || 0; }
-  function setPlayerLevel(n) { try { localStorage.setItem('player_level', String(n)); } catch (e) { } }
-  function incrementPlayerLevel(stars, pid) {
+  // Level werden aus der Zahl gelöster Aufgaben berechnet (Meilensteine) —
+  // deterministisch und dank Server-Sync auf jedem Gerät identisch.
+  var LEVEL_THRESHOLDS = [1, 3, 6, 10, 15, 21, 28, 36];
+  function countSolvedQuestions() {
+    var n = 0;
     try {
-      var pidKey = pid ? pid : getPageId();
-      var storagePid = pidForStorage(pidKey);
-      var shownKey = 'page_claimed_shown_' + storagePid;
-      if (localStorage.getItem(shownKey)) {
-        // already awarded for this page — just ensure badge updated
-        try { updatePlayerBadge(); return; } catch (e) { }
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (!k || k.indexOf('answer_best_') !== 0) continue;
+        var rec = safeJSONParse(localStorage.getItem(k));
+        if (rec && rec.points > 0) n++;
       }
-      // increment level and show animation; only write the shown-flag after we attempted to show
-      var l = getPlayerLevel(); l += 1; setPlayerLevel(l); updatePlayerBadge();
-      try {
-        showLevelUp(l, stars);
-      } catch (e) { }
-      try { localStorage.setItem(shownKey, String(Date.now())); } catch (e) { }
-    } catch (e) { try { var l2 = getPlayerLevel(); l2 += 1; setPlayerLevel(l2); updatePlayerBadge(); try { showLevelUp(l2, stars); } catch (e) { } } catch (ee) { } }
+    } catch (e) { }
+    return n;
   }
+  function computePlayerLevel() {
+    var solved = countSolvedQuestions();
+    var level = 0;
+    for (var i = 0; i < LEVEL_THRESHOLDS.length; i++) {
+      if (solved >= LEVEL_THRESHOLDS[i]) level = i + 1;
+    }
+    return {
+      level: level, solved: solved,
+      next: level < LEVEL_THRESHOLDS.length ? LEVEL_THRESHOLDS[level] : null
+    };
+  }
+  function getPlayerLevel() { return computePlayerLevel().level; }
+  function maybeCelebrateLevelUp(stars) {
+    try {
+      var info = computePlayerLevel();
+      var seen = parseInt(localStorage.getItem('player_level_seen') || '0', 10) || 0;
+      if (info.level > seen) {
+        localStorage.setItem('player_level_seen', String(info.level));
+        showLevelUp(info.level, stars);
+      }
+    } catch (e) { }
+  }
+  function incrementPlayerLevel(stars, pid) {
+    try { updatePlayerBadge(); maybeCelebrateLevelUp(stars); } catch (e) { }
+  }
+  // für die Fortschritt-Seite
+  try {
+    window.acLevelInfo = function () {
+      var i = computePlayerLevel();
+      i.name = getLevelName(Math.max(1, i.level));
+      return i;
+    };
+  } catch (e) { }
 
   // ensure styles for level-up notification/animation exist
   function ensureLevelUpStyles() {
@@ -239,6 +271,11 @@
     var custom = localStorage.getItem('player_icon') || document.body && document.body.dataset.playerIcon;
     var iconHtml = custom ? '<span class="player-icon">' + custom + '</span>' : '<span class="player-icon">🛡️</span>';
     el.innerHTML = iconHtml + '<span class="player-level">' + level + '</span>';
+    try {
+      var info = computePlayerLevel();
+      el.title = 'Level ' + info.level + ' · ' + getLevelName(Math.max(1, info.level)) +
+        (info.next !== null ? ' — noch ' + (info.next - info.solved) + ' Aufgabe(n) bis Level ' + (info.level + 1) : ' — Maximallevel!');
+    } catch (e) { }
   }
 
   // --- Per-page reset button (hidden by default) ---
@@ -1230,6 +1267,11 @@
   function onReady(fn) { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
 
   onReady(function () {
+    try {
+      if (!localStorage.getItem('player_level_seen')) {
+        localStorage.setItem('player_level_seen', String(getPlayerLevel()));
+      }
+    } catch (e) { }
     // remove old entries on load (24h default)
     cleanupOldEntries();
     // initialize nav icons according to localStorage (claimed vs not)
