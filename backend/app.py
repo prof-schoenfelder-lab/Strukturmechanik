@@ -348,6 +348,19 @@ def post_results():
     return jsonify({"ok": True, "stored": len(results)})
 
 
+@app.get("/api/results")
+def get_results():
+    """Full stored state of the current user — for merging into localStorage."""
+    pseudonym = current_pseudonym()
+    if not pseudonym:
+        return jsonify({"error": "unauthorized"}), 401
+    rows = get_db().execute(
+        "SELECT qid, best, max, attempts FROM results WHERE pseudonym=?", (pseudonym,)
+    ).fetchall()
+    return jsonify({"results": {r["qid"]: {"best": r["best"], "max": r["max"],
+                                           "attempts": r["attempts"]} for r in rows}})
+
+
 @app.get("/api/me")
 def me():
     pseudonym = current_pseudonym()

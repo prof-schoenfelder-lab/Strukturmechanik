@@ -99,8 +99,46 @@
     timer = setTimeout(push, 1500);
   });
 
+  // Pull server state and merge into localStorage (server best wins if higher),
+  // so points follow the login onto any device/browser. Reloads once if the
+  // merge changed anything, so the question UI reflects the server state.
+  function pullAndMerge() {
+    fetch(BACKEND + '/api/results', { headers: { 'Authorization': 'Bearer ' + token } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !data.results) return;
+        var changed = false;
+        Object.keys(data.results).forEach(function (qid) {
+          var srv = data.results[qid] || {};
+          try {
+            var localBest = 0;
+            try { localBest = (JSON.parse(localStorage.getItem('answer_best_' + qid)) || {}).points || 0; } catch (e) { }
+            if ((srv.best || 0) > localBest) {
+              localStorage.setItem('answer_best_' + qid,
+                JSON.stringify({ points: srv.best, updated: new Date().toISOString() }));
+              changed = true;
+            }
+            var localAtt = parseInt(localStorage.getItem('answer_attempts_' + qid) || '0', 10) || 0;
+            if ((srv.attempts || 0) > localAtt) {
+              localStorage.setItem('answer_attempts_' + qid, String(srv.attempts));
+              changed = true;
+            }
+            if (srv.max && !localStorage.getItem('answer_max_' + qid)) {
+              localStorage.setItem('answer_max_' + qid, String(srv.max));
+              changed = true;
+            }
+          } catch (e) { }
+        });
+        if (changed && !sessionStorage.getItem('ac_merged_reload')) {
+          sessionStorage.setItem('ac_merged_reload', '1');
+          location.reload();
+        }
+      })
+      .catch(function () { });
+  }
+
   // initial sync (covers results collected while logged out or offline) + badge
-  function init() { refreshBadge(); setTimeout(push, 1000); }
+  function init() { refreshBadge(); pullAndMerge(); setTimeout(push, 1000); }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

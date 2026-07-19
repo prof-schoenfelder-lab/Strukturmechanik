@@ -166,6 +166,10 @@ def main():
         r = requests.post(BACKEND + "/api/results", headers=headers,
                           json={"results": {"/P1/Uebung-1:q0": {"best": 1, "max": 5, "attempts": 2}}})
         check("downgrade request ok", r.status_code == 200)
+        r = requests.get(BACKEND + "/api/results", headers=headers)
+        pulled = r.json().get("results", {})
+        check("results pullable for merge",
+              pulled.get("/P1/Uebung-1:q0", {}).get("best") == 5 and len(pulled) == 2, str(pulled))
         me = requests.get(BACKEND + "/api/me", headers=headers).json()
         check("me total = 8 (best kept)", me.get("total_points") == 8, str(me))
         check("me is pseudonymous", "opal-user" not in str(me))
