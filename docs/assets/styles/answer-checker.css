@@ -595,3 +595,14 @@ html:not([data-md-color-scheme="slate"]) .page-stars .star:not(.filled),
 	background: rgba(255, 255, 255, 0.02);
 	border-left-color: var(--md-color-primary, #8b5cf6);
 }
+/* Mastery-Fortschritt in der Navigation (ersetzt die Sterne) */
+.page-stars.page-check {
+  color: #2e7d32;
+  font-weight: 700;
+  margin-left: .35rem;
+}
+.page-stars.page-count {
+  font-size: .68rem;
+  color: var(--md-default-fg-color--light);
+  margin-left: .35rem;
+}

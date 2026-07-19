@@ -371,6 +371,42 @@
     } catch (e) { return 0; }
   }
 
+  function computePageCounts(pid) {
+    try {
+      var pagePath = decodeURIComponent(pid);
+      function normalizePath(p) { try { var s = String(p || ''); if (!s.startsWith('/')) { try { s = new URL(s, location.href).pathname; } catch (e) { } } s = decodeURIComponent(s); if (s.length > 1 && s.endsWith('/')) s = s.slice(0, -1); return s; } catch (e) { return String(p || ''); } }
+      var normPage = normalizePath(pagePath);
+      var qidSet = Object.create(null);
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (!k) continue;
+        var m = null;
+        if (k.indexOf('answer_max_') === 0) m = k.replace('answer_max_', '');
+        else if (k.indexOf('answer_best_') === 0) m = k.replace('answer_best_', '');
+        else if (k.indexOf('answer_done_') === 0) m = k.replace('answer_done_', '');
+        if (!m) continue;
+        var base = String(m).split(/:q|:mc/)[0] || m;
+        if (normalizePath(base) === normPage) qidSet[m] = true;
+      }
+      var total = 0, solved = 0;
+      for (var qid in qidSet) {
+        if (!Object.prototype.hasOwnProperty.call(qidSet, qid)) continue;
+        total++;
+        var rec = safeJSONParse(localStorage.getItem('answer_best_' + qid));
+        if ((rec && rec.points > 0) || localStorage.getItem('answer_done_' + qid) === '1') solved++;
+      }
+      return { solved: solved, total: total };
+    } catch (e) { return { solved: 0, total: 0 }; }
+  }
+
+  // Mastery-Anzeige in der Navigation: Häkchen für komplett gelöste Seiten,
+  // sonst "gelöst/gesamt" — ersetzt die frühere 5-Sterne-Skala.
+  function renderProgressMark(counts) {
+    if (!counts || counts.total <= 0) return '<span class="page-stars" aria-hidden="true"></span>';
+    if (counts.solved >= counts.total) return '<span class="page-stars page-check" aria-hidden="true">✓</span>';
+    return '<span class="page-stars page-count" aria-hidden="true">' + counts.solved + '/' + counts.total + '</span>';
+  }
+
   function renderStarsForPercent(pct) {
     // map pct (0..1) to 0..5 stars using rounding
     var stars = Math.round(Math.max(0, Math.min(1, pct)) * 5);
@@ -386,8 +422,7 @@
     try {
       // Only show stars for a page if the page has been attempted (any question had attempts or stored best)
       var attempted = pageIsAttempted(pid);
-      var pct = computePagePercent(pid);
-      var starsHtml = renderStarsForPercent(pct);
+      var starsHtml = renderProgressMark(computePageCounts(pid));
       var links = document.querySelectorAll('.md-nav__link');
       links.forEach(function (link) {
         var href = link.getAttribute('href'); if (!href) return;
@@ -401,7 +436,7 @@
           var url = new URL(href, location.href);
           var linkPath = url.pathname || '';
           // Show stars for all pages with numeric questions (removed path restriction)
-          if (encodeURIComponent(url.pathname) === pid) {
+          if (pagePathMatches(linkPath, pid)) {
             var existing = link.querySelector('.page-stars');
             if (!attempted) {
               // remove any existing stars if page not yet attempted
