@@ -74,6 +74,52 @@
       .catch(function () { });
   }
 
+  // Der lokale Punktestand gehört genau einem OPAL-Account. Meldet sich in
+  // diesem Browser jemand anderes an, wird der lokale Stand geleert, damit
+  // keine fremden Punkte auf den neuen Account hochgeladen werden.
+  function wipeLocalState() {
+    try {
+      var prefixes = ['answer_', 'page_claimed', 'player_level'];
+      var doomed = [];
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (!k) continue;
+        for (var p = 0; p < prefixes.length; p++) {
+          if (k.indexOf(prefixes[p]) === 0) { doomed.push(k); break; }
+        }
+      }
+      doomed.forEach(function (k) { localStorage.removeItem(k); });
+      sessionStorage.removeItem('ac_merged_reload');
+    } catch (e) { }
+  }
+
+  function checkOwnerThenSync() {
+    fetch(BACKEND + '/api/me', { headers: { 'Authorization': 'Bearer ' + token } })
+      .then(function (r) {
+        if (r.status === 401) {
+          try { localStorage.removeItem(TOKEN_KEY); } catch (e) { }
+          return null;
+        }
+        return r.ok ? r.json() : null;
+      })
+      .then(function (me) {
+        if (!me) return;
+        var owner = null;
+        try { owner = localStorage.getItem('ac_owner'); } catch (e) { }
+        if (owner && owner !== me.pseudonym) {
+          wipeLocalState();
+          try { localStorage.setItem('ac_owner', me.pseudonym); } catch (e) { }
+          location.reload();
+          return;
+        }
+        try { localStorage.setItem('ac_owner', me.pseudonym); } catch (e) { }
+        showBadge(me);
+        pullAndMerge();
+        setTimeout(push, 800);
+      })
+      .catch(function () { });
+  }
+
   function push() {
     var results = collectResults();
     if (Object.keys(results).length === 0) return;
@@ -137,8 +183,9 @@
       .catch(function () { });
   }
 
-  // initial sync (covers results collected while logged out or offline) + badge
-  function init() { refreshBadge(); pullAndMerge(); setTimeout(push, 1000); }
+  // initial sync (covers results collected while logged out or offline) + badge.
+  // Erst der Besitzer-Check, dann mergen/pushen — nie fremde Punkte hochladen.
+  function init() { checkOwnerThenSync(); }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

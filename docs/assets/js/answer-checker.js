@@ -17,6 +17,7 @@
     return fetch(base + '/api/check', { method: 'POST', headers: headers, body: JSON.stringify(payload) })
       .then(function (r) { if (!r.ok) throw new Error('check-failed-' + r.status); return r.json(); });
   }
+  function markDone(qid) { try { localStorage.setItem('answer_done_' + qid, '1'); } catch (e) { } }
   function cacheSolution(qid, sol) { try { localStorage.setItem('answer_solution_' + qid, JSON.stringify(sol)); } catch (e) { } }
   function cachedSolution(qid) { return safeJSONParse(localStorage.getItem('answer_solution_' + qid)); }
   var CHECK_OFFLINE_MSG = 'Antwortprüfung nicht erreichbar — dafür ist das HTWK-Netz oder VPN nötig.';
@@ -613,8 +614,10 @@
       var attemptsAllowed = parseInt(q.dataset.attempts || q.dataset.attemptsAllowed || ATTEMPTS_ALLOWED, 10) || ATTEMPTS_ALLOWED;
       var attempts = parseInt(localStorage.getItem('answer_attempts_' + qid) || '0', 10) || 0;
       var bestRec = safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0, updated: null };
-      // Question is finished if: either got points OR used all attempts
-      if (!(bestRec.points > 0 || attempts >= attemptsAllowed)) {
+      // Question is finished if: got points OR used all attempts OR was
+      // answered correctly without points (Gast-Modus setzt answer_done_)
+      var done = localStorage.getItem('answer_done_' + qid) === '1';
+      if (!(bestRec.points > 0 || attempts >= attemptsAllowed || done)) {
         return false; // at least one question not finished yet
       }
     }
@@ -864,6 +867,7 @@
           attempts = res.attempts || (attempts + 1);
           saveAttempts();
           if (res.solution !== undefined) cacheSolution(qid, res.solution);
+          if (res.correct || attempts >= (res.attemptsAllowed || attemptsAllowed)) markDone(qid);
           if (res.correct) {
             if (res.authed) {
               var prev = (safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0 }).points || 0;
@@ -906,6 +910,7 @@
         // Mastery-Prinzip: Lösen zählt voll — +1 Bonus für den ersten Versuch
         var earned = Math.round(points) + (attempts === 1 ? 1 : 0);
         if (!isFinite(earned) || earned < 0) earned = 0;
+        markDone(qid);
         var prevRec = safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0, updated: null };
         var prev = prevRec.points || 0;
         var didSave = false;
@@ -1089,6 +1094,7 @@
           attempts = res.attempts || (attempts + 1);
           saveAttempts();
           if (res.solution !== undefined) cacheSolution(qid, res.solution);
+          if (res.correct || attempts >= (res.attemptsAllowed || attemptsAllowed)) markDone(qid);
           if (res.correct) {
             if (res.authed) {
               var prev = (safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0 }).points || 0;
@@ -1149,6 +1155,7 @@
         var earned = Math.round(points) + (attempts === 1 ? 1 : 0);
         if (!isFinite(earned) || earned < 0) earned = 0;
 
+        markDone(qid);
         var prevRec = safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0, updated: null };
         var prev = prevRec.points || 0;
         if (earned > prev) {
