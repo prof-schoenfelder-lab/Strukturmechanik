@@ -135,14 +135,9 @@
   }
   function getPlayerLevel() { return computePlayerLevel().level; }
   function maybeCelebrateLevelUp(stars) {
-    try {
-      var info = computePlayerLevel();
-      var seen = parseInt(localStorage.getItem('player_level_seen') || '0', 10) || 0;
-      if (info.level > seen) {
-        localStorage.setItem('player_level_seen', String(info.level));
-        showLevelUp(info.level, stars);
-      }
-    } catch (e) { }
+    // Level steigen still (Info im Tooltip/Fortschritt) — gefeiert werden Abzeichen.
+    try { localStorage.setItem('player_level_seen', String(computePlayerLevel().level)); } catch (e) { }
+    try { evaluateBadges(true); } catch (e) { }
   }
   function incrementPlayerLevel(stars, pid) {
     try { updatePlayerBadge(); maybeCelebrateLevelUp(stars); } catch (e) { }
@@ -205,6 +200,15 @@
   }
 
   function showLevelUp(level, stars) {
+    var name = getLevelName(level);
+    showCelebration('Level ' + (parseInt(level, 10) || '') + ' – ' + name + ' erreicht!', 'Gut gemacht — weiter so!', stars);
+  }
+
+  function showBadgeUp(badge) {
+    showCelebration('Abzeichen verdient: ' + badge.icon + ' ' + badge.name, badge.desc, 4);
+  }
+
+  function showCelebration(titleHtml, descHtml, stars) {
     try {
       ensureLevelUpStyles();
       // try to use canvas-confetti for a nicer burst; load it dynamically if missing
@@ -248,9 +252,8 @@
       });
 
       // toast
-      var levelName = getLevelName(level);
       var toast = document.createElement('div'); toast.className = 'ac-toast';
-      toast.innerHTML = '<span class="title">Level ' + (parseInt(level, 10) || '') + ' – ' + levelName + ' erreicht!</span><span class="desc">Gut gemacht — weiter so!</span>';
+      toast.innerHTML = '<span class="title">' + titleHtml + '</span><span class="desc">' + descHtml + '</span>';
       document.body.appendChild(toast);
       // show
       setTimeout(function () { try { toast.classList.add('show'); } catch (e) { } }, 20);
@@ -295,30 +298,95 @@
     } catch (e) { }
   }
 
-  // Gesamtzahl der Aufgaben (aus /api/questions), 6h im localStorage gecacht
-  function questionTotal() {
+  // Fragenkatalog (aus /api/questions, ohne Antworten), 6h im localStorage gecacht
+  function cachedCatalog() {
     try {
-      var rec = safeJSONParse(localStorage.getItem('ac_qtotal'));
-      if (rec && rec.n) return rec.n;
+      var rec = safeJSONParse(localStorage.getItem('ac_qcatalog'));
+      if (rec && rec.data) return rec.data;
     } catch (e) { }
     return null;
+  }
+  function questionTotal() {
+    var cat = cachedCatalog();
+    return cat ? Object.keys(cat).length : null;
   }
   function refreshQuestionTotal() {
     try {
       var base = (window.AC_BACKEND_URL || '').replace(/\/$/, '');
       if (!base || !window.fetch) return;
-      var rec = safeJSONParse(localStorage.getItem('ac_qtotal'));
+      var rec = safeJSONParse(localStorage.getItem('ac_qcatalog'));
       if (rec && rec.t && (Date.now() - rec.t) < 21600000) return;
       fetch(base + '/api/questions')
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (cat) {
           if (!cat) return;
-          localStorage.setItem('ac_qtotal', JSON.stringify({ n: Object.keys(cat).length, t: Date.now() }));
+          localStorage.setItem('ac_qcatalog', JSON.stringify({ t: Date.now(), data: cat }));
           updatePlayerBadge();
+          evaluateBadges(false); // Baseline ohne Feuerwerk
         })
         .catch(function () { });
     } catch (e) { }
   }
+
+  // --- Abzeichen: zentral ausgewertet, gefeiert im Moment des Verdienens ----
+  var BADGE_PRAKTIKA = [
+    ['/P1_Einfuehrung/', 'Einführungs-Profi', '📥', 'Praktikum 1 komplett gelöst'],
+    ['/P2_Geometrie_Randbedingungen/', 'Geometrie-Meister', '📐', 'Praktikum 2 komplett gelöst'],
+    ['/P3_Vernetzung/', 'Singularitäten-Jäger', '🔍', 'Praktikum 3 komplett gelöst'],
+    ['/P4_Abstraktionen/', 'Abstraktions-Künstler', '🧩', 'Praktikum 4 komplett gelöst']
+  ];
+  function evaluateBadges(celebrate, catOverride) {
+    var cat = catOverride || cachedCatalog();
+    if (!cat) return null;
+    var totalQ = 0, totalSolved = 0, firstTry = 0, comeback = false;
+    var per = {};
+    BADGE_PRAKTIKA.forEach(function (p) { per[p[0]] = { s: 0, t: 0 }; });
+    Object.keys(cat).forEach(function (qid) {
+      totalQ++;
+      var best = 0;
+      var r = safeJSONParse(localStorage.getItem('answer_best_' + qid));
+      if (r && r.points > 0) best = r.points;
+      BADGE_PRAKTIKA.forEach(function (p) {
+        if (qid.indexOf(p[0]) !== -1) { per[p[0]].t++; if (best > 0) per[p[0]].s++; }
+      });
+      if (best > 0) {
+        totalSolved++;
+        if (best > (cat[qid].points || 0)) firstTry++;
+        if ((parseInt(localStorage.getItem('answer_attempts_' + qid), 10) || 0) >= 4) comeback = true;
+      }
+    });
+    var defs = [
+      { icon: '🚀', name: 'Erste Schritte', desc: 'Die erste Aufgabe gelöst', got: totalSolved >= 1 },
+      { icon: '💪', name: 'Comeback', desc: 'Eine Aufgabe nach drei oder mehr Fehlversuchen doch noch geknackt', got: comeback },
+      { icon: '🎯', name: 'Scharfschütze', desc: 'Fünf Aufgaben im ersten Versuch gelöst', got: firstTry >= 5 },
+      { icon: '⏫', name: 'Halbzeit', desc: 'Die Hälfte aller Aufgaben gelöst', got: totalQ > 0 && totalSolved >= totalQ / 2 }
+    ];
+    BADGE_PRAKTIKA.forEach(function (p) {
+      var x = per[p[0]];
+      defs.push({ icon: p[2], name: p[1], desc: p[3], got: x.t > 0 && x.s >= x.t });
+    });
+    defs.push({ icon: '🏆', name: 'FEM-Vollprofi', desc: 'Alle Aufgaben des Kurses gelöst', got: totalQ > 0 && totalSolved >= totalQ });
+
+    // Einmal verdient bleibt verdient; neue werden (gestaffelt) gefeiert
+    var fresh = [];
+    defs.forEach(function (b) {
+      var key = 'answer_badge_' + b.name;
+      var had = null;
+      try { had = localStorage.getItem(key) === '1'; } catch (e) { }
+      if (b.got && !had) {
+        try { localStorage.setItem(key, '1'); } catch (e) { }
+        fresh.push(b);
+      }
+      if (had) b.got = true;
+    });
+    if (celebrate) {
+      fresh.forEach(function (b, idx) {
+        setTimeout(function () { try { showBadgeUp(b); } catch (e) { } }, idx * 1500);
+      });
+    }
+    return defs;
+  }
+  try { window.acEvaluateBadges = function (cat) { return evaluateBadges(false, cat); }; } catch (e) { }
 
   // --- Per-page reset button (hidden by default) ---
   function createPerPageResetIfAllowed() {
@@ -1320,6 +1388,7 @@
     // remove old entries on load (24h default)
     cleanupOldEntries();
     try { refreshQuestionTotal(); } catch (e) { }
+    try { evaluateBadges(false); } catch (e) { }
     // initialize nav icons according to localStorage (claimed vs not)
     try { initializeNavIcons(); } catch (e) { }
 

@@ -58,27 +58,7 @@
         '</a>';
     });
 
-    function pDone(prefix) { var x = perP[prefix]; return x && x.total > 0 && x.solved >= x.total; }
-    var badges = [
-      { icon: '🚀', name: 'Erste Schritte', desc: 'Die erste Aufgabe gelöst', got: totalSolved >= 1 },
-      { icon: '💪', name: 'Comeback', desc: 'Eine Aufgabe nach drei oder mehr Fehlversuchen doch noch geknackt', got: comeback },
-      { icon: '🎯', name: 'Scharfschütze', desc: 'Fünf Aufgaben im ersten Versuch gelöst', got: firstTry >= 5 },
-      { icon: '⏫', name: 'Halbzeit', desc: 'Die Hälfte aller Aufgaben gelöst', got: totalQ > 0 && totalSolved >= totalQ / 2 },
-      { icon: '📥', name: 'Einführungs-Profi', desc: 'Praktikum 1 komplett gelöst', got: pDone('/P1_Einfuehrung/') },
-      { icon: '📐', name: 'Geometrie-Meister', desc: 'Praktikum 2 komplett gelöst', got: pDone('/P2_Geometrie_Randbedingungen/') },
-      { icon: '🔍', name: 'Singularitäten-Jäger', desc: 'Praktikum 3 komplett gelöst', got: pDone('/P3_Vernetzung/') },
-      { icon: '🧩', name: 'Abstraktions-Künstler', desc: 'Praktikum 4 komplett gelöst', got: pDone('/P4_Abstraktionen/') },
-      { icon: '🏆', name: 'FEM-Vollprofi', desc: 'Alle Aufgaben des Kurses gelöst', got: totalQ > 0 && totalSolved >= totalQ }
-    ];
-    // Einmal verdiente Abzeichen bleiben verdient — auch wenn im Semester
-    // neue Aufgaben dazukommen und die Quote dadurch rechnerisch sinkt.
-    badges.forEach(function (b) {
-      var key = 'answer_badge_' + b.name;
-      try {
-        if (b.got) localStorage.setItem(key, '1');
-        else if (localStorage.getItem(key) === '1') b.got = true;
-      } catch (e) { }
-    });
+    var badges = (window.acEvaluateBadges && window.acEvaluateBadges(catalog)) || [];
     var earned = badges.filter(function (b) { return b.got; }).length;
     var badgeHtml = badges.map(function (b) {
       return '<div class="ph-medal' + (b.got ? ' ph-earned' : '') + '" title="' + b.desc + '">' +
