@@ -259,22 +259,26 @@
     if (!header) return;
     var id = 'player-badge';
     var el = document.getElementById(id);
-    var level = getPlayerLevel();
     if (!el) {
-      el = document.createElement('div'); el.id = id; el.className = 'player-badge';
-      // insert at the beginning of header title area if present
+      // Link zur Fortschritt-Seite mit Donut-Icon (statt Level-Zahl im Header)
+      el = document.createElement('a');
+      el.id = id;
+      el.className = 'player-badge';
+      el.innerHTML = '<svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path fill="currentColor" d="M13,2.05C17.94,2.55 21.5,6.53 21.95,11H16.9C16.44,9.28 15.03,7.86 13,7.55V2.05M11,2.05V7.55C8.97,7.86 7.56,9.28 7.1,11H2.05C2.5,6.53 6.06,2.55 11,2.05M2.05,13H7.1C7.56,14.72 8.97,16.14 11,16.45V21.95C6.06,21.45 2.5,17.47 2.05,13M13,21.95V16.45C15.03,16.14 16.44,14.72 16.9,13H21.95C21.5,17.47 17.94,21.45 13,21.95Z"/></svg>';
       var logo = document.querySelector('.md-header__button.md-logo');
       if (logo && logo.parentNode) logo.parentNode.insertBefore(el, logo.nextSibling);
       else header.insertBefore(el, header.firstChild);
     }
-    // allow a stored/custom icon (svg or emoji) under player_icon key or data attribute on body
-    var custom = localStorage.getItem('player_icon') || document.body && document.body.dataset.playerIcon;
-    var iconHtml = custom ? '<span class="player-icon">' + custom + '</span>' : '<span class="player-icon">🛡️</span>';
-    el.innerHTML = iconHtml + '<span class="player-level">' + level + '</span>';
+    try {
+      var target = document.querySelector('.md-tabs__link[href*="Fortschritt"]') ||
+        document.querySelector('.md-nav__link[href*="Fortschritt"]');
+      if (target) el.href = target.getAttribute('href');
+    } catch (e) { }
     try {
       var info = computePlayerLevel();
-      el.title = 'Level ' + info.level + ' · ' + getLevelName(Math.max(1, info.level)) +
-        (info.next !== null ? ' — noch ' + (info.next - info.solved) + ' Aufgabe(n) bis Level ' + (info.level + 1) : ' — Maximallevel!');
+      el.setAttribute('aria-label', 'Mein Fortschritt');
+      el.title = 'Mein Fortschritt — Level ' + info.level + ' · ' + getLevelName(Math.max(1, info.level)) +
+        (info.next !== null ? ', noch ' + (info.next - info.solved) + ' Aufgabe(n) bis Level ' + (info.level + 1) : ', Maximallevel!');
     } catch (e) { }
   }
 

@@ -606,3 +606,13 @@ html:not([data-md-color-scheme="slate"]) .page-stars .star:not(.filled),
   color: var(--md-default-fg-color--light);
   margin-left: .35rem;
 }
+
+/* Header-Badge ist jetzt ein Link zur Fortschritt-Seite (Donut-Icon) */
+a.player-badge {
+  padding: 0.3rem 0.4rem;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 0;
+  transition: transform .15s;
+}
+a.player-badge:hover { transform: scale(1.12); color: var(--player-badge-fg, #111); }
