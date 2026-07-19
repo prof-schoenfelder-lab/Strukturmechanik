@@ -19,10 +19,13 @@ cp data/results.db "backups/results-vor-reset-$ts.db"
 .venv/bin/python - <<'PY'
 import sqlite3
 db = sqlite3.connect('data/results.db')
+import secrets
 db.execute('DELETE FROM results')
 db.execute('DELETE FROM users')
+db.execute("INSERT OR REPLACE INTO meta (key, value) VALUES ('generation', ?)", (secrets.token_urlsafe(8),))
 db.commit()
 db.execute('VACUUM')
-print('Datenbank geleert.')
+print('Datenbank geleert, neue Kurs-Generation gesetzt.')
+print('Browser mit alten Daten raeumen sich beim naechsten Besuch selbst auf.')
 PY
 echo "Kurs zurückgesetzt. Backup: backups/results-vor-reset-$ts.db"

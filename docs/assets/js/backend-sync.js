@@ -104,6 +104,19 @@
       })
       .then(function (me) {
         if (!me) return;
+        // Semester-Reset erkannt? Dann lokalen Altbestand räumen statt ihn
+        // wieder auf den Server zu laden.
+        try {
+          var gen = localStorage.getItem('ac_generation');
+          if (me.generation && gen && gen !== me.generation) {
+            wipeLocalState();
+            localStorage.setItem('ac_generation', me.generation);
+            localStorage.setItem('ac_owner', me.pseudonym);
+            location.reload();
+            return;
+          }
+          if (me.generation) localStorage.setItem('ac_generation', me.generation);
+        } catch (e) { }
         var owner = null;
         try { owner = localStorage.getItem('ac_owner'); } catch (e) { }
         if (owner && owner !== me.pseudonym) {

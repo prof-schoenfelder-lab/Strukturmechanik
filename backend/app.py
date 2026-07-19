@@ -91,6 +91,10 @@ def init_db():
             sub_enc TEXT,
             created_at REAL
         );
+        CREATE TABLE IF NOT EXISTS meta (
+            key TEXT PRIMARY KEY,
+            value TEXT
+        );
         CREATE TABLE IF NOT EXISTS results (
             pseudonym TEXT NOT NULL,
             qid TEXT NOT NULL,
@@ -103,6 +107,12 @@ def init_db():
         """
     )
     db.commit()
+    # Kurs-Generation: ändert sich beim Semester-Reset; Browser mit alter
+    # Generation leeren ihren localStorage automatisch statt Altdaten hochzuladen
+    if not db.execute("SELECT value FROM meta WHERE key='generation'").fetchone():
+        db.execute("INSERT INTO meta (key, value) VALUES ('generation', ?)",
+                   (secrets.token_urlsafe(8),))
+        db.commit()
     # Migration für Bestandsdatenbanken
     try:
         db.execute("ALTER TABLE users ADD COLUMN sub_enc TEXT")
@@ -540,6 +550,11 @@ def get_results():
                                            "attempts": r["attempts"]} for r in rows}})
 
 
+def course_generation():
+    row = get_db().execute("SELECT value FROM meta WHERE key='generation'").fetchone()
+    return row["value"] if row else "0"
+
+
 @app.get("/api/me")
 def me():
     pseudonym = current_pseudonym()
@@ -552,6 +567,7 @@ def me():
     ).fetchone()
     return jsonify({
         "pseudonym": pseudonym,
+        "generation": course_generation(),
         "total_points": row["total"],
         "max_points": row["max"],
         "questions": row["n"],
