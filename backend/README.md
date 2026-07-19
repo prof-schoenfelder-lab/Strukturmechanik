@@ -86,6 +86,12 @@ scp answers.json fing-spool.htwk-leipzig.de:~/fem-backend/
 ```
 
 Kein Neustart nötig — die Datei wird bei Änderung automatisch neu geladen.
+
+**Neue Übungsaufgaben im laufenden Semester** sind unproblematisch: Nach dem
+Deploy passen sich Fortschrittsringe, Navigations-Zähler, Kurs-Statistik und
+AGS-Maximum automatisch an. Bereits verdiente Abzeichen (z.B. „Halbzeit")
+bleiben erhalten, auch wenn die Quote durch neue Aufgaben rechnerisch sinkt;
+Level können nur steigen, nie fallen.
 `POST /api/check` prüft die Antworten: mit Login werden Versuche und Punkte
 serverseitig geführt, Gäste bekommen nur richtig/falsch-Feedback.
 (Die Antworten stehen weiterhin in den Markdown-Quellen im öffentlichen Repo —

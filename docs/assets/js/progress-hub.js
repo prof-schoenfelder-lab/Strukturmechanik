@@ -70,6 +70,15 @@
       { icon: '🧩', name: 'Abstraktions-Künstler', desc: 'Praktikum 4 komplett gelöst', got: pDone('/P4_Abstraktionen/') },
       { icon: '🏆', name: 'FEM-Vollprofi', desc: 'Alle Aufgaben des Kurses gelöst', got: totalQ > 0 && totalSolved >= totalQ }
     ];
+    // Einmal verdiente Abzeichen bleiben verdient — auch wenn im Semester
+    // neue Aufgaben dazukommen und die Quote dadurch rechnerisch sinkt.
+    badges.forEach(function (b) {
+      var key = 'answer_badge_' + b.name;
+      try {
+        if (b.got) localStorage.setItem(key, '1');
+        else if (localStorage.getItem(key) === '1') b.got = true;
+      } catch (e) { }
+    });
     var earned = badges.filter(function (b) { return b.got; }).length;
     var badgeHtml = badges.map(function (b) {
       return '<div class="ph-medal' + (b.got ? ' ph-earned' : '') + '" title="' + b.desc + '">' +
