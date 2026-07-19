@@ -113,6 +113,9 @@ Belastung:
 
 Hier ist die korrekte Lösung für diese Übung:
 
+<!-- TODO: Screenshots fehlen noch im Repo (docs/P1_Einfuehrung/03_Selbsttests/images/).
+     Sobald Uebung-01_Loesung_Kraft/Durchbiegung/Spannung.png vorhanden sind,
+     diesen Kommentar entfernen.
 <figure style="text-align:center;">
   <img src="../images/Uebung-01_Loesung_Kraft.png" alt="Kraft auf Kante" width="700">
   <figcaption>Schritt 1: Kraft korrekt auf der Kante appliziert (-5000N in z-Richtung)</figcaption>
@@ -127,6 +130,7 @@ Hier ist die korrekte Lösung für diese Übung:
   <img src="../images/Uebung-01_Loesung_Spannung.png" alt="Spannung Ergebnis" width="700">
   <figcaption>Schritt 3: Maximale Spannung in y-Richtung σ_y,max = 275.03 MPa (Normal Stress Y)</figcaption>
 </figure>
+-->
 
 **Wichtige Punkte:**
 - Einheit auf mm umstellen (nicht vergessen!)
