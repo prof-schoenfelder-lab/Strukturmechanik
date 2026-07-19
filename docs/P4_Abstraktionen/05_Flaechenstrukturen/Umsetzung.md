@@ -9,14 +9,14 @@ hide:
 Analog wie bei BEAM-Elementen können wir hier wieder über zwei Wege die Geometrie erstellen: 
 
 1. Fläche direkt erstellen (Dicke wird in Mechanical eingestellt)
-2. Vorhandene Geometrie in eine Flächentruktur umwandeln (Dicke wird automatisch bestimmt)
+2. Vorhandene Geometrie in eine Flächenstruktur umwandeln (Dicke wird automatisch bestimmt)
 
 ## Variante 1: Fläche erstellen (SpaceClaim)
 
 <!-- --8<-- [start:Flaechen_erstellen] -->
 In SpaceClaim Flächen in einer beliebigen Ebene erstellen
 
-!!! warning "Im Workbench Projektmenü Analyse Typ **NICHT** ummstellen!"
+!!! warning "Im Workbench Projektmenü Analyse Typ **NICHT** umstellen!"
 
 <!-- --8<-- [end:Flaechen_erstellen] -->
 
@@ -44,7 +44,7 @@ Diese Option ist besonders praktisch wenn man bereits viele Flächenstrukturen h
   </div>
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Im Stukturbaum <code>Volumenkörper</code> auswählen (ggf. mehrere) und im Grafikfenster mit <code>OK</code> bestätigen</p>
+    <p class="step-title" role="heading" aria-level="2">Im Strukturbaum <code>Volumenkörper</code> auswählen (ggf. mehrere) und im Grafikfenster mit <code>OK</code> bestätigen</p>
   </div>
 
 </div>

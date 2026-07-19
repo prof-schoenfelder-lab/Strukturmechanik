@@ -5,7 +5,7 @@ hide:
 
 # Übung 3 - Kurbelarm
 
-Im dritten Beispiel wenden wir nun das gelernte bezüglich der Vernetzung an einem Kurbelarm an.
+Im dritten Beispiel wenden wir nun das Gelernte bezüglich der Vernetzung an einem Kurbelarm an.
 
 <figure style="text-align:center;">
   <img src="../images/Kurbelarm.png" alt="Kurbelarm" width="500" class="no-lightbox">
@@ -28,7 +28,7 @@ Es ist die Geometrie gegeben:
 
 ### Vernetzung
 
-- Verwenden Sie ein konvergierte Netzgröße im Bereich maximalen Spannung
+- Verwenden Sie eine konvergierte Netzgröße im Bereich der maximalen Spannung
 
 ### Randbedingungen
 
@@ -65,7 +65,7 @@ Berechnen Sie die folgenden Größen:
 
 <br>
 
-Netz: global 3mm , im Bereich des Spannungsmaximums: 0,1mmm
+Netz: global 3mm , im Bereich des Spannungsmaximums: 0,1 mm
 
 <figure style="text-align:center;">
   <img src="../images/Loesung-Uebung03-FixedSupport.png" alt="Lagerung Spannung Fixed Support" width="900">

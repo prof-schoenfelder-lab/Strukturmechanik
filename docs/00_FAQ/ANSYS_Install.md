@@ -8,7 +8,7 @@ hide:
 
 !!! warning "Studentenversion"
 
-    Es gibt neben der Version die im PC Pool installiert ist auch eine kostenlos Studentenversion. Die ist zum einen immer die aktuellste Version, hat aber den Nachteil, dass die Anzahl an Knoten limitiert sind. Dadurch sind manche Praktika vielleicht möglich. Die Empfehlung für das Praktikum ist deshalb die Nicht-Studenten Version zu installieren (Anleitung unten)
+    Es gibt neben der Version die im PC Pool installiert ist auch eine kostenlose Studentenversion. Die ist zum einen immer die aktuellste Version, hat aber den Nachteil, dass die Anzahl an Knoten limitiert ist. Dadurch sind manche Praktika eventuell nicht möglich. Die Empfehlung für das Praktikum ist deshalb die Nicht-Studenten Version zu installieren (Anleitung unten)
 
 
 
@@ -22,7 +22,7 @@ hide:
   </div>
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2">ANSYS2042R2 runterladen</p>
+    <p class="step-title" role="heading" aria-level="2">ANSYS2024R2 runterladen</p>
     <p>ANSYS Downloadlink im OPAL: <a href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/18448121873/CourseNode/102618893872254" target="_blank">HTWK OPAL LINK</a></p>
   </div>
 

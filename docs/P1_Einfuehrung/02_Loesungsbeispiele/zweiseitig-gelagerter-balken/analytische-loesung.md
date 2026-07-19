@@ -40,7 +40,7 @@ $$
 Kann die maximale Biegespannung berechnet werden:
 
 $$
-\sigma_{max}=M_{Max}\frac{\frac{h}{2}}{I}=125000\,\mathrm{mm}\frac{(30\,\mathrm{mm})/2}{67500\,\mathrm{mm}^4}=27{,}78\,\mathrm{MPa}
+\sigma_{max}=M_{Max}\frac{\frac{h}{2}}{I}=125000\,\mathrm{Nmm}\frac{(30\,\mathrm{mm})/2}{67500\,\mathrm{mm}^4}=27{,}78\,\mathrm{MPa}
 $$
 
 !!! success

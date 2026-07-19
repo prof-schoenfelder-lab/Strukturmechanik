@@ -16,7 +16,7 @@ hide:
 
 ## Umsetzung
 
-Die angegebene Flächenlast hat die Einheit N (Newton). Es ist also eine Kraft die sich auf eine Fläche verteilen soll. Dafür verwenden wir die Randbedingung `Force`.
+Die angegebene Kraft hat die Einheit N (Newton) und soll sich gleichmäßig auf eine Fläche verteilen. Dafür verwenden wir die Randbedingung `Force`.
 
 <div class="tutorial-embed"
    data-tutorial="/assets/tutorials/Flaechenlast_anbringen"

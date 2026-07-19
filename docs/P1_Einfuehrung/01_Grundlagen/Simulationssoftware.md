@@ -8,7 +8,7 @@ hide:
 
 # Simulationssoftware
 
-Die Software die wir zur Finite-Elemente Simulation benutzen lautet **ANSYS Workbench 2024R2.** Diese beinhaltet eine vielzahl verschiedener Simulation (z.B. Strömung, Temperatur, Magnetismus). Wir befassen uns in diesem Modul nur mit der **Strukturmechanischen Simulation** (**Structural Analysis**).
+Die Software die wir zur Finite-Elemente Simulation benutzen lautet **ANSYS Workbench 2024R2.** Diese beinhaltet eine Vielzahl verschiedener Simulationen (z.B. Strömung, Temperatur, Magnetismus). Wir befassen uns in diesem Modul nur mit der **Strukturmechanischen Simulation** (**Structural Analysis**).
 
 <figure style="text-align:center;">
     <img src="../images/ANSYS.png" alt="ANSYS" width="300">
@@ -18,9 +18,9 @@ Die Software die wir zur Finite-Elemente Simulation benutzen lautet **ANSYS Work
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Start von ANSYS Workbench</p>
-    <p>Im Windows Start Menü unter Lehre auf <code>ANSYS Worbench 2024R2</code> drücken</p>
+    <p>Im Windows Start Menü unter Lehre auf <code>ANSYS Workbench 2024R2</code> drücken</p>
   </div>
 
 </div>
 
-Weitere Ablauf folgt mit dem nachfolgendem Lösungsbeispiel.
+Der weitere Ablauf folgt mit dem nachfolgendem Lösungsbeispiel.

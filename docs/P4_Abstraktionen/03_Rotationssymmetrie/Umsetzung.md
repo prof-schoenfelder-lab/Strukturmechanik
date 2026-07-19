@@ -7,7 +7,7 @@ hide:
 # Umsetzung von Rotationssymmetrie in ANSYS
 
 Die Umsetzung ist im Prinzip analog zum `ebenen Spannungszustand`.  
-Der Unterschied: In Mechanical muss das `2D Behavior` auf `Axissymmetric` gestellt werden und es wird **keine Dicke** eingetragen.
+Der Unterschied: In Mechanical muss das `2D Behavior` auf `Axisymmetric` gestellt werden und es wird **keine Dicke** eingetragen.
 
 ## Geometrie (SpaceClaim)
 
@@ -45,7 +45,7 @@ Im Workbench-Projektmenü per Rechtsklick auf `Geometry` im Properties-Fenster `
 ## ANSYS Mechanical
 
 <!-- --8<-- [start:Mechanical] -->
-In Mechanical die `Geometry` auswählen und im Detailfenster `2D Behavior = Axissymmetric` einstellen:
+In Mechanical die `Geometry` auswählen und im Detailfenster `2D Behavior = Axisymmetric` einstellen:
 
 <figure style="text-align:left;">
     <img src="../images/axissymmetric.png" alt="Einstellung Mechanical" width="400">

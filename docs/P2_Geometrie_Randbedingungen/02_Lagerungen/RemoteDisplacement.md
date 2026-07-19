@@ -16,7 +16,7 @@ Jetzt schauen wir uns die Funktionsweise dahinter noch einmal genauer an:
     <img src="../images/FixedSupport_vs_RemoteDisplacement.excalidraw.png" alt="Fixed Suppor vs. Remote Displacement" width="700">
 </figure>
 
-Beim Fixed Support wird die Verschiebung von jedem Knoten gleich Null gesetzt, die Geometrie kann sich also nicht verformen. Beim Remote Displacemen kann sich die Geometrie hingegen verformen, weil nur die Summe der Knotenverschiebungen gleich Null sein muss. 
+Beim Fixed Support wird die Verschiebung von jedem Knoten gleich Null gesetzt, die Geometrie kann sich also nicht verformen. Beim Remote Displacement kann sich die Geometrie hingegen verformen, weil nur die Summe der Knotenverschiebungen gleich Null sein muss. 
 
 !!! danger "Rechenzeit kann sich stark vergrößern"
 
@@ -28,7 +28,7 @@ Die Knoten auf der gewählten Geometrie werden über die Freiheitsgrade (`Versch
 
 !!! Info inline end
 
-    Durch Remote Displacement können Lagerungsbedingungen angebracht werden ohne das die notwendige Geometrie mit erstellt werden muss (hier am Beispiel also keine Fahrradgabel und kein Reifen).
+    Durch Remote Displacement können Lagerungsbedingungen angebracht werden ohne dass die notwendige Geometrie mit erstellt werden muss (hier am Beispiel also keine Fahrradgabel und kein Reifen).
 
 <figure style="text-align:center;">
     <img src="../images/RemoteDisplacement_Fahrradbeispiel.excalidraw.png" alt="Remote Displacement am Fahrradrahmen" width="600">
@@ -53,7 +53,7 @@ Der beste Weg die Entfernung des Punktes einzustellen ist über die Einführung 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Koordinatensystem einfügen</p>
     <p>Im Strukturbaum: <code>Rechtsklick</code> auf <code>Coordinate Systems</code> > <code>Insert</code> > <code>New Coordinate System</code> </p>
-    <p>Neues Koordinatensystem mit <code>Rechtsklick</code> > <code>Rename</code> umbennen.
+    <p>Neues Koordinatensystem mit <code>Rechtsklick</code> > <code>Rename</code> umbenennen.
   </div>
 
   <div class="step">

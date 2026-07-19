@@ -44,6 +44,7 @@ hooks:
 
 plugins:
       - macros
+      - glightbox
       - search
       - git-revision-date-localized:
               type: timeago
@@ -87,6 +88,7 @@ extra_javascript:
       - "assets/js/answer-checker.js"
       - "assets/js/backend-config.js"
       - "assets/js/backend-sync.js"
+      - "assets/js/home-scroll.js"
 
 extra_css:
       - "assets/tutorials/player.css"
@@ -122,7 +124,7 @@ nav:
                       - Übung 2: P1_Einfuehrung/03_Selbsttests/Uebung-2.md
                       - Übung 3: P1_Einfuehrung/03_Selbsttests/Uebung-3.md
                       - Übung 4: P1_Einfuehrung/03_Selbsttests/Uebung-4.md
-              - ZUSAMMENNFASSUNG:
+              - ZUSAMMENFASSUNG:
                       - P1_Einfuehrung/abspeichern.md
                       - P1_Einfuehrung/Zusammenfassung.md
       - GEOMETRIE & RANDBEDINGUNGEN:
@@ -162,7 +164,7 @@ nav:
                       - Globale Netzverfeinerung: P3_Vernetzung/02_ANSYS_Umsetzung/Globale_Netzverfeinerung.md
                       - Lokale Netzverfeinerung: P3_Vernetzung/02_ANSYS_Umsetzung/Lokale_Netzverfeinerung.md
                       - Diskussion: P3_Vernetzung/02_ANSYS_Umsetzung/Diskussion.md
-                      - Ergebnis-Tracking: P3_Vernetzung/02_ANSYS_Umsetzung/Ergenis_Tracking.md
+                      - Ergebnis-Tracking: P3_Vernetzung/02_ANSYS_Umsetzung/Ergebnis_Tracking.md
                       - Übung 3: P3_Vernetzung/02_ANSYS_Umsetzung/Uebung-3.md
                       - Übung 4: P3_Vernetzung/02_ANSYS_Umsetzung/Uebung-4.md
                       - Übung 5: P3_Vernetzung/02_ANSYS_Umsetzung/Uebung-5.md

@@ -7,7 +7,7 @@ hide:
 
 # Grundprinzipien der Finiten-Elemente-Methode
 
-Im folgenden ist die Vorgehensweise der Finiten-Elemente-Methode an Hand des Workflows in grob skizziert.
+Im folgenden ist die Vorgehensweise der Finiten-Elemente-Methode an Hand des Workflows grob skizziert.
 
 <div class="steps">
 
@@ -58,6 +58,6 @@ Im folgenden ist die Vorgehensweise der Finiten-Elemente-Methode an Hand des Wor
 
 </div>
 
-Im folgenden Video wird dies noch mal etwas detallierter erklärt:
+Im folgenden Video wird dies noch mal etwas detaillierter erklärt:
 
 <iframe width="900" height="506" src="https://www.youtube.com/embed/GHjopp47vvQ?si=Nn-hbm2-wN2xcWhx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

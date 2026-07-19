@@ -106,7 +106,7 @@ Fixed Support: 1,9867 mm
 RemoteDisp (Fläche): 2,1309 mm
 -->
 
-### Die maximale Spannung in von-Mises Spannung 
+### Die maximale von-Mises-Spannung in MPa
 
 <div class="numeric-question" data-answer="353.11" data-tolerance="3" data-points="5" data-attempts="5"  data-hints="Haben Sie die von-Mises Spannung ausgewertet? Fixierte Lagerung mit Remote Displacement?">
 </div>

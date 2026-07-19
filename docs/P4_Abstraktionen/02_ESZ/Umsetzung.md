@@ -17,7 +17,7 @@ In `SpaceClaim` eine Skizze immer in der `x-y` Ebene zeichnen:
 
 Und darauf achten dass die Skizze beendet wird und im Strukturbaum der Eintrag `Surface` steht.
 
-<figure style="text-align:left;">^
+<figure style="text-align:left;">
     <img src="../images/SpaceClaim2.png" alt="Auf Eintrag im Strukturbaum achten" width="200">
 </figure>
 <!-- --8<-- [end:Geometrie] -->

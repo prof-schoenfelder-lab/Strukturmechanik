@@ -25,7 +25,7 @@ Balken mit rechteckigem Querschnitt
 
 - Länge $L=1000 \mathrm{mm}$
 - Breite $b=30 \mathrm{mm}$
-- Breite $h=30 \mathrm{mm}$
+- Höhe $h=30 \mathrm{mm}$
 
 ### Vernetzung
 
@@ -56,7 +56,7 @@ Belastung:
   </div>
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Analyse umbennen und Geometrie in SpaceClaim öffnen</p>
+    <p class="step-title" role="heading" aria-level="2">Analyse umbenennen und Geometrie in SpaceClaim öffnen</p>
     <p>Analyse durch Doppelklick auf Namen ändern und mit <code>Rechtsklick</code> auf <code>Geometry</code> und <code>Edit Geometry in SpaceClaim...</code> auswählen</p>
     <figure style="text-align:center;">
     <img src="../images/Analyse_duplizieren2.png" alt="Aufgabenstellung" width="300" class="no-lightbox">

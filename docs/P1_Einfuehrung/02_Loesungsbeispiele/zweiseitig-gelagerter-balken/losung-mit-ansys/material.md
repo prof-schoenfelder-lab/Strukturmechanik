@@ -12,7 +12,7 @@ hide:
 
 ## Umsetzung
 
-Die Materialdefintion erfolgt im ANSYS Projektmenü.
+Die Materialdefinition erfolgt im ANSYS Projektmenü.
 
 <div class="tutorial-embed"
    data-tutorial="/assets/tutorials/Material_hinzufuegen"

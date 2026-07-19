@@ -8,7 +8,7 @@ hide:
 
 ## Beta Optionen aktivieren
 
-Folgende Einstellung der `Beta Optionen` im Workbench Projektmenü ermöglicht uns die Dartellung des Netzes und der Ergebnisse als Vollmodell. Diese einmal durchführen und ANSYS neustarten:
+Folgende Einstellung der `Beta Optionen` im Workbench Projektmenü ermöglicht uns die Darstellung des Netzes und der Ergebnisse als Vollmodell. Diese einmal durchführen und ANSYS neustarten:
 
 <div class="steps" markdown="1">
 
@@ -35,7 +35,7 @@ Folgende Einstellung der `Beta Optionen` im Workbench Projektmenü ermöglicht u
 ## Geometrie
 
 <!-- --8<-- [start:Geometrie] -->
-Wenn man bereits eine volle Geometrie hat kann man diese mit dem `Split Body` über Ebenen teilen ([Link zur Methodik](../../../../P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/SplitBody)).
+Wenn man bereits eine volle Geometrie hat kann man diese mit dem `Split Body` über Ebenen teilen ([Link zur Methodik](../../P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/SplitBody.md)).
 
 Wenn die Geometrie neu erstellt wird kann man natürlich gleich nur die Halb-/Viertel-/Achtelgeometrie erstellen.
 <!-- --8<-- [end:Geometrie] -->

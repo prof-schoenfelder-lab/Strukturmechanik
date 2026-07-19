@@ -12,4 +12,4 @@ Zylindrische Lagerung werden benutzt um Rotationen zu ermöglichen. Die Bewegung
     <img src="../images/Radial_Axial_Tangential.excalidraw.png" alt="Richtungen beim Cylindrical Support" width="300">
 </figure>
 
-Ein klassisches drehbares Lager weißt dabei oft eine fixierung in `radialer` Richtung und freie Bewegung in `tangentialer` Richtung. Die `axiale` Richtung wird oft gesperrt um Starrkörperbewegung zu verhindern.
+Ein klassisches drehbares Lager weist dabei oft eine Fixierung in `radialer` Richtung und freie Bewegung in `tangentialer` Richtung auf. Die `axiale` Richtung wird oft gesperrt um Starrkörperbewegung zu verhindern.

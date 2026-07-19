@@ -5,7 +5,7 @@ hide:
 
 # Durchbiegung von Photovoltaikwafern im Carrier
 
-In der Herstellung von Solarzellen werden die Rohling (sogenannte Wafer) in Carrieren gelagert:
+In der Herstellung von Solarzellen werden die Rohlinge (sogenannte Wafer) in Carriern gelagert:
 
 <figure style="text-align:center;">
   <img src="../images/Wafer_Carrier.jpg" alt="Wafer Carrier" width="400" class="no-lightbox">
@@ -25,7 +25,7 @@ multikristallines Silizium
 
 - Elastizitätsmodul: \(E = 163\,\mathrm{GPa}\)
 - Querkontraktionszahl: \(\nu = 0{,}22\)
-- Dichte: \(\nu = 2329 \frac{kg}{m^3}\)
+- Dichte: \(\rho = 2329 \frac{kg}{m^3}\)
 
 ## Symmetrie
 
@@ -53,7 +53,7 @@ multikristallines Silizium
 
 ## Aufgabenstellung
 
-!!! abstract "Lösen Sie die Aufgabe mit der 2D-Abstraktion mit SHELL-Elementen und voller Ausnutzunger jeglicher Symmetrien"
+!!! abstract "Lösen Sie die Aufgabe mit der 2D-Abstraktion mit SHELL-Elementen und voller Ausnutzung jeglicher Symmetrien"
 
 ## Hinweise
 

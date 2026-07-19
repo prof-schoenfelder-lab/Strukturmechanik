@@ -11,7 +11,7 @@ hide:
 Zum Abspeichern gibt es zwei Möglichkeiten. Die erste sollten Sie immer zu Beginn machen um Fortschritt nicht zu verlieren.
 !!! danger "Keine Umlaute im Dateipfad !!"
 
-    Verwenden Sie keine Umlaut (ä,ö,ü) im Dateipfad (also nicht in einem Ordner oder Dateinamen). Also nicht Übung sondern Uebung! Ansonsten kann beim lösen vom Gleichungssystem zu Fehlern kommen.
+    Verwenden Sie keine Umlaut (ä,ö,ü) im Dateipfad (also nicht in einem Ordner oder Dateinamen). Also nicht Übung sondern Uebung! Ansonsten kann es beim Lösen des Gleichungssystems zu Fehlern kommen.
 
 # Als Projekt speichern
 
@@ -41,12 +41,12 @@ Empfehlung um den Fortschritt während des Praktikums nicht zu verlieren.
 
 # Als Archiv speichern
 
-Empfehlung zur Mitnahme (erste am Ende!).
+Empfehlung zur Mitnahme (erst am Ende!).
 
 <div class="steps" markdown="1">
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Falls nocht nicht geschen, als Projektdatei speichern (Anleitung oben)</p>
+    <p class="step-title" role="heading" aria-level="2">Falls noch nicht geschehen, als Projektdatei speichern (Anleitung oben)</p>
   </div>
 
   <div class="step">

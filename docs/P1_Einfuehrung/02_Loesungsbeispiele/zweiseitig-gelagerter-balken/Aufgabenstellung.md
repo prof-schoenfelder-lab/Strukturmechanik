@@ -35,7 +35,7 @@ Balken mit rechteckigem Querschnitt
 
 - Länge $L=1000 \mathrm{~mm}$
 - Breite $b=30 \mathrm{~mm}$
-- Breite $h=30 \mathrm{~mm}$
+- Höhe $h=30 \mathrm{~mm}$
 <!-- --8<-- [end:Geometrie] -->
 
 ### Vernetzung
@@ -57,5 +57,5 @@ Lagerung:
 Belastung:
 
 <!-- --8<-- [start:Belastung] -->
-- Flächenlast $q_0=1000 \mathrm{~N}$
+- gleichmäßig verteilte Kraft $F=1000 \mathrm{~N}$ (entspricht einer Streckenlast $q_0 = 1 \mathrm{~N/mm}$)
 <!-- --8<-- [end:Belastung] -->

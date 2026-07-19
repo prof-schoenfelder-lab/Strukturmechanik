@@ -81,7 +81,7 @@ Um Rechenzeit zu sparen, sollte immer versucht werden, das Modell so weit wie m√
 
 <div class="grid cards" markdown>
 
--   <a class="card-link" href="/03_Rotationssymmetrie/Rotationssymmetrie/">:material-horizontal-rotate-clockwise: __2D Rotationssymmetrie__{ .xxxl .middle .center }
+-   <a class="card-link" href="03_Rotationssymmetrie/Rotationssymmetrie/">:material-horizontal-rotate-clockwise: __2D Rotationssymmetrie__{ .xxxl .middle .center }
        <figure style="text-align:center;">
           <img src="03_Rotationssymmetrie/images/rotationssymmetrie.excalidraw.png" alt="Rotationssymmetrie" width="400" class="no-lightbox">
       </figure>
@@ -105,13 +105,13 @@ Um Rechenzeit zu sparen, sollte immer versucht werden, das Modell so weit wie m√
 
 <div class="grid cards" markdown>
 
--   <a class="card-link" href="/04_Linienstrukturen/Linienstrukturen/">:material-chart-timeline-variant: __1D Linienstrukturen (BEAM)__{ .xxxl .middle .center }
+-   <a class="card-link" href="04_Linienstrukturen/Linienstrukturen/">:material-chart-timeline-variant: __1D Linienstrukturen (BEAM)__{ .xxxl .middle .center }
        <figure style="text-align:center;">
           <img src="04_Linienstrukturen/images/Linienstrukur.excalidraw.png" alt="Linienstrukur" width="400" class="no-lightbox">
       </figure>
     </a>
 
--   <a class="card-link" href="/04_Linienstrukturen/Umsetzung/">:material-alpha-a-box: __Umsetzung__{ .xxxl .middle .center }
+-   <a class="card-link" href="04_Linienstrukturen/Umsetzung/">:material-alpha-a-box: __Umsetzung__{ .xxxl .middle .center }
        <figure style="text-align:center;">
           <img src="04_Linienstrukturen/images/SpaceClaim1.png" alt="Umsetzung" width="400" class="no-lightbox">
       </figure>
@@ -129,13 +129,13 @@ Um Rechenzeit zu sparen, sollte immer versucht werden, das Modell so weit wie m√
 
 <div class="grid cards" markdown>
 
--   <a class="card-link" href="/05_Flaechenstrukturen/Flaechenstrukturen/">:material-chart-timeline-variant: __2D Fl√§chenstrukturen (SHELL)__{ .xxxl .middle .center }
+-   <a class="card-link" href="05_Flaechenstrukturen/Flaechenstrukturen/">:material-chart-timeline-variant: __2D Fl√§chenstrukturen (SHELL)__{ .xxxl .middle .center }
        <figure style="text-align:center;">
           <img src="05_Flaechenstrukturen/images/SHELL.excalidraw.png" alt="Fl√§chenstrukturen" width="400" class="no-lightbox">
       </figure>
     </a>
 
--   <a class="card-link" href="/05_Flaechenstrukturen/Umsetzung/">:material-alpha-a-box: __Umsetzung__{ .xxxl .middle .center }
+-   <a class="card-link" href="05_Flaechenstrukturen/Umsetzung/">:material-alpha-a-box: __Umsetzung__{ .xxxl .middle .center }
        <figure style="text-align:center;">
           <img src="05_Flaechenstrukturen/images/SpaceClaim.png" alt="Umsetzung" width="400" class="no-lightbox">
       </figure>

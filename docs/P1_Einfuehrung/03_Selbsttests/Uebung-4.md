@@ -80,7 +80,7 @@ Fixed Support: 17.361mm
 RemoteDisp+Frictionless Support (Fläche): 18.24mm
 -->
 
-### Die maximale Spannung in von-Mises Spannung 
+### Die maximale von-Mises-Spannung in MPa
 
 <div class="numeric-question" data-answer="271.05" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Spannung an Singularität? (Oben Tab Result > Maximum) ggf. Randbedingung für fixierte Lagerung überdenken">
 </div>

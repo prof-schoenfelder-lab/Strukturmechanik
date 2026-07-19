@@ -41,7 +41,7 @@ Feste Einspannungen können außerdem durch andere Lagerungsbedingungen (z. B. E
         <figcaption>Beispiel: Randbedingungen in Übung&nbsp;2 (Übung&nbsp;6)</figcaption>
     </figure>
 
-    [Zu Übung6 vom Praktikum 2](../../../P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-6/){ .md-button .md-button--primary }
+    [Zu Übung6 vom Praktikum 2](../../P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-6.md){ .md-button .md-button--primary }
 
 
 # Vorgehen zur Bestimmung der geeigneten Netzgröße

@@ -7,7 +7,7 @@ hide:
 
 # :material-head-snowflake: Zusammenfassung
 
-In diesem Praktikum haben Sie ihre ersten stukturmechanischen Analysen mit ANSYS Workbench durchgeführt. Sie haben mit SpaceClaim einfache Geometrien erstellt und bearbeitet. D
+In diesem Praktikum haben Sie ihre ersten strukturmechanischen Analysen mit ANSYS Workbench durchgeführt. Sie haben mit SpaceClaim einfache Geometrien erstellt und bearbeitet.
 
 Hier noch mal die wichtigsten Kernaussagen des ersten Praktikums:
 

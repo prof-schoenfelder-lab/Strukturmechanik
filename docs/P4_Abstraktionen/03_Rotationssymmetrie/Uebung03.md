@@ -5,7 +5,7 @@ hide:
 
 # Kugel-Ring Versuch
 
-Das Beispiel für die Rotationssymmetrie ist ein klassischer Werksttoffversuch für spröde Materialien, der Kugel-Ring Versuch. Dabei liegt eine Scheibe auf einem Auflagerring auf und wird in der Mitte mit einer Kugel belastet (hier als Einzelkraft abstrahiert):
+Das Beispiel für die Rotationssymmetrie ist ein klassischer Werkstoffversuch für spröde Materialien, der Kugel-Ring Versuch. Dabei liegt eine Scheibe auf einem Auflagerring auf und wird in der Mitte mit einer Kugel belastet (hier als Einzelkraft abstrahiert):
 
 <figure style="text-align:center;">
   <img src="../images/KugelRing.excalidraw.png" alt="Kugel-Ring Versuch" width="400" class="no-lightbox">
@@ -22,7 +22,7 @@ Glas
 
 ### Geometrie
 
-Balken mit rechteckigem Querschnitt
+Kreisförmige Scheibe
 
 - Auflagerradius \(r = 30\,\mathrm{mm}\)
 - Probenradius \(R = 40\,\mathrm{mm}\)

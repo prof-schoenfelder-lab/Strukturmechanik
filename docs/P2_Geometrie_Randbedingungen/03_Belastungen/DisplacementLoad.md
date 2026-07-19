@@ -9,7 +9,7 @@ hide:
 Neben den klassischen Lasten wie Kräfte und Drücke kann ein Bauteil auch durch eine Verschiebung (`Displacement`) und einem Wert $\ne0$ beaufschlagt werden. 
 
 
-Wichtig ist dabei auch zu verstehen, dass Kraft und Verschiebung gleichwertige Belastungen sein können und zum gleichen Ergebnis kommen. Eine Kraft liefert eine Verschiebung und eine mit Verschiebung mit dem gleihen Wert liefert die gleiche Reaktionskraft. Hier wird dies mal am Beispiel der Übung 2 des ersten Praktikums gezeigt:
+Wichtig ist dabei auch zu verstehen, dass Kraft und Verschiebung gleichwertige Belastungen sein können und zum gleichen Ergebnis kommen. Eine Kraft liefert eine Verschiebung und eine Verschiebung mit dem gleichen Wert liefert die gleiche Reaktionskraft. Hier wird dies mal am Beispiel der Übung 2 des ersten Praktikums gezeigt:
 
 
 <figure style="text-align:center;">

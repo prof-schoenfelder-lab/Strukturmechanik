@@ -1,5 +1,4 @@
 ---
----
 title: Einleitung in die Selbsttests
 icon: material/information-variant-box
 hide:

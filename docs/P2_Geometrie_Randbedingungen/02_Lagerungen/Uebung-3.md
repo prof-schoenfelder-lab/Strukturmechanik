@@ -21,7 +21,7 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung)
 
 Nach dem Import der Archivdatei öffnen Sie die Geometrie mit SpaceClaim und ändern die Geometrie wie folgt:
 
-- [ ] Fügen Sie die Lagerung analog des gegebenen Bildes ein nur mit der Randbedingung `Displacement` ein
+- [ ] Fügen Sie die Lagerung analog des gegebenen Bildes nur mit der Randbedingung `Displacement` ein
 
 ## Gesucht
 

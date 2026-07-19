@@ -26,7 +26,7 @@ Balken mit rechteckigem Querschnitt
 
 - Länge $L=500 \mathrm{mm}$
 - Breite $b=30 \mathrm{mm}$
-- Breite $h=60 \mathrm{mm}$
+- Höhe $h=60 \mathrm{mm}$
 
 ### Vernetzung
 

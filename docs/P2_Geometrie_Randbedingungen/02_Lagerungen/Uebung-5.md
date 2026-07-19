@@ -3,13 +3,13 @@ hide:
  - toc
 ---
 
-# vereinfachte Fahrradbremse (v-Break)
+# vereinfachte Fahrradbremse (V-Brake)
 
-Im fünften Beispiel schauen wir uns ein Teil einer stark vereinfachten Fahrradbremse an die drehbar gelagert wird und an der Stelle wo normalerweise die Bremsbelege sind gehalten werden soll und mit einer Zugkraft beaufschlagt wird.
+Im fünften Beispiel schauen wir uns ein Teil einer stark vereinfachten Fahrradbremse an die drehbar gelagert wird und an der Stelle wo normalerweise die Bremsbeläge sind gehalten werden soll und mit einer Zugkraft beaufschlagt wird.
 
 
 <figure style="text-align:center;">
-  <img src="../images/Uebung-05.png" alt="vereinfachte v-Break" width="700" class="no-lightbox">
+  <img src="../images/Uebung-05.png" alt="vereinfachte V-Brake" width="700" class="no-lightbox">
 </figure>
 
 ## Gegeben
@@ -23,7 +23,7 @@ Stahl
 
 ### Geometrie
 
-stark vereinfachte v-Break: 
+stark vereinfachte V-Brake: 
 
 [:material-paperclip: v_Break_vereinfacht.scdoc](assets/v_Break_vereinfacht.scdoc)
 
@@ -36,7 +36,7 @@ stark vereinfachte v-Break:
 Lagerung:
 
 - Drehbar gelagert 
-- Elastische Bettung m Bereich des Bremsklotz mit Fundamentsteifigkeit $k=30\,\mathrm{N/mm^3}$ 
+- Elastische Bettung im Bereich des Bremsklotzes mit Fundamentsteifigkeit $k=30\,\mathrm{N/mm^3}$ 
 
 Belastung:
 
@@ -48,7 +48,7 @@ Berechnen Sie anschließend die folgenden Größen:
 
 ### Die maximale Durchbiegung $u_{\max }$ in mm
 
-<div class="numeric-question" data-answer="1.666" data-tolerance="0.1" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Beim cylindrical Suppprt die tangentiale Richtung freigegeben?">
+<div class="numeric-question" data-answer="1.666" data-tolerance="0.1" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Beim cylindrical Support die tangentiale Richtung freigegeben?">
 </div>
 
 ### Betrag der mittleren Verschiebung der elastischen Bettung in z-Richtung $u_{z,}$ in mm

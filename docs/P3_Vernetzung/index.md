@@ -10,7 +10,7 @@ hide:
 ### :material-bullseye-arrow: LERNZIELE
 
 - [ ] Wie bestimmte ich die richtige Netzgröße?
-- [ ] Wie gehe ich mit Singularitäten? (Spannung steigt bei stetiger Netzverfeinerung ins unendliche) 
+- [ ] Wie gehe ich mit Singularitäten um? (Spannung steigt bei stetiger Netzverfeinerung ins unendliche) 
 
 ### :material-table-of-contents: GRUNDLAGEN
 

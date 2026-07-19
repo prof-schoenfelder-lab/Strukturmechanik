@@ -9,7 +9,7 @@ Für die nachfolgenden Randbedingungen ist ein kurzer Einschub zur Navigation in
 <div class="steps" markdown="1">
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Vorraussetzung: PAN-Mode Aktiv</p>
+    <p class="step-title" role="heading" aria-level="2">Voraussetzung: PAN-Mode Aktiv</p>
     <p>Für alle drei nachfolgenden Navigationen ist es notwendig, dass der <code>PAN-Mode</code> in der Leiste über dem Grafikfenster <strong>aktiviert</strong> ist (was er standardmäßig ist)</p>
     <figure style="text-align:center;">
     <img src="../../images/pan_mode.png" alt="Rotation" width="700" class="no-lightbox">

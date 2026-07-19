@@ -28,7 +28,7 @@ Es ist die Geometrie gegeben:
 
 ### Vernetzung
 
-- Verwenden Sie ein konvergierte Netzgröße im Bereich der Schweißnähte vom Steuerrohr zum Ober- und Unterohr
+- Verwenden Sie ein konvergierte Netzgröße im Bereich der Schweißnähte vom Steuerrohr zum Ober- und Unterrohr
 
 ### Randbedingungen
 
@@ -48,7 +48,7 @@ Belastung:
 
 ## Aufgabenstellung
 
-Berechnen Sie die Spannung in den Schweißnähten vom Steuerrohr zum Ober und Unterrohr. Vernetzen Sie diese Schweißnähte entsprechend
+Berechnen Sie die Spannung in den Schweißnähten vom Steuerrohr zum Ober- und Unterrohr. Vernetzen Sie diese Schweißnähte entsprechend
 
 ## Hinweise
 
@@ -74,7 +74,7 @@ Berechnen Sie die folgenden Größen:
 
 <br>
 
-Netz: global 5mm , im Bereich des Spannungsmaximums: 0,25mmm
+Netz: global 5mm , im Bereich des Spannungsmaximums: 0,25 mm
 <br>
 5mm: 62,635MPa
 <br>

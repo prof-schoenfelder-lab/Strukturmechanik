@@ -12,7 +12,7 @@ hide:
 
 ## Umsetzung
 
-Nun starten wir das eigentliche FEM-Programm `Mechanical` und ordner unserer Geometrie das Material zu.
+Nun starten wir das eigentliche FEM-Programm `Mechanical` und ordnen unserer Geometrie das Material zu.
 
 <div class="tutorial-embed"
    data-tutorial="/assets/tutorials/Material_zuordnen"

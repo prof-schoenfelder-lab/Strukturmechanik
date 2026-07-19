@@ -4,7 +4,7 @@ hide:
 
 # Kragarm mit Einzelkraft
 
-Die zweite Übung ist auch ein klassisches Beispiel der Technischen Mechanik: ein Kragarm mit Einzelkraft. Diesmal mit andererem Material (Alu), leicht anderer Geometrie, kleinerem Netz und anderer Lagerung (feste Einspannung).
+Die zweite Übung ist auch ein klassisches Beispiel der Technischen Mechanik: ein Kragarm mit Einzelkraft. Diesmal mit anderem Material (Alu), leicht anderer Geometrie, kleinerem Netz und anderer Lagerung (feste Einspannung).
 
 <figure style="text-align:center;">
   <img src="../images/Uebung-02.png" alt="Kragarm mit Einzelkraft" width="400" class="no-lightbox">
@@ -25,7 +25,7 @@ Balken mit rechteckigem Querschnitt
 
 - Länge $L=500 \mathrm{mm}$
 - Breite $b=30 \mathrm{mm}$
-- Breite $h=60 \mathrm{mm}$
+- Höhe $h=60 \mathrm{mm}$
 
 ### Vernetzung
 
@@ -47,12 +47,12 @@ Belastung:
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Neue Analyse anlegen</p>
-    <p>Im Workbench Projektmenü <code>Doppelklick</code> auf <code>Static Structural</code> und anschließend in <code>Übung 2</code> umbennen.</p>
+    <p>Im Workbench Projektmenü <code>Doppelklick</code> auf <code>Static Structural</code> und anschließend in <code>Übung 2</code> umbenennen.</p>
   </div>
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Lagerung: Feste Einspannung</p>
-    <p>Bei einer festen Einspannung werden alle Freiheitsgrade auf der Stirnseite (Fläche) links untedrückt.</p>
+    <p>Bei einer festen Einspannung werden alle Freiheitsgrade auf der Stirnseite (Fläche) links unterdrückt.</p>
   </div>
 </div>
 
@@ -114,7 +114,7 @@ Um den Unterschied zur `Fixed Support` zu sehen fügen wir eine weitere Analyse 
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Neue Analyse anlegen</p>
-    <p>Im Workbench Projektmenü: <code>Static Structural</code> per <code>Drag&Drop</code> auf  <code>Übung 2</code> umbennen.</p>
+    <p>Im Workbench Projektmenü: <code>Static Structural</code> per <code>Drag&Drop</code> auf  <code>Übung 2</code> umbenennen.</p>
   <figure style="text-align:center;">
   <img src="../images/Analyse_auf_Model.png" alt="Analyse auf Model" width="400" class="no-lightbox">
   </figure>
@@ -123,7 +123,7 @@ Um den Unterschied zur `Fixed Support` zu sehen fügen wir eine weitere Analyse 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Kraft-Randbedingung kopieren</p>
     <p>Im Mechanical: Im Strukturbaum erscheint jetzt eine zweite Analyse, die sich mit der ersten die Geometrie, das Material und das Netz teilt. Randbedingungen und Lösungen sind jedoch separat</p>
-    <p>Um die Kraft nicht neu einzugeben kann die Randbedingung <code>Force</code> kann per <code>Drag&Drop</code> auf die Static Stuctural gezogen werden</p>
+    <p>Um die Kraft nicht neu einzugeben kann die Randbedingung <code>Force</code> per <code>Drag&Drop</code> auf die Static Structural gezogen werden</p>
   <figure style="text-align:center;">
   <img src="../images/RB_drag_n_drop.png" alt="Analyse auf Model" width="300" class="no-lightbox">
   </figure>
@@ -148,7 +148,7 @@ Um den Unterschied zur `Fixed Support` zu sehen fügen wir eine weitere Analyse 
     <figure style="text-align:center;">
     <img src="../images/Remote_Displacement_Details.png" alt="Remote Displacement Details" width="300" class="no-lightbox">
     </figure>
-    <p>Dadurch wird dauch die Bewegung des gesamten Querschnitts in der x-y Ebene unterdrückt, jedoch kann sich der Balken im Querschnitt trotzdem verformen.</p>
+    <p>Dadurch wird auch die Bewegung des gesamten Querschnitts in der x-y Ebene unterdrückt, jedoch kann sich der Balken im Querschnitt trotzdem verformen.</p>
   </div>
 </div>
 

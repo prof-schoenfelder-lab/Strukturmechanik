@@ -8,7 +8,7 @@ Zur globalen Netzverfeinerung verwenden wir unser bekanntes Beispiel mit dem Inb
 
 Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung):
 
-[:material-paperclip: Übung-01–Inbus.wbpz](assets/Ubeung-01-Inbus.wbpz)
+[:material-paperclip: Übung-01–Inbus.wbpz](assets/Uebung-01-Inbus.wbpz)
 
 <figure style="text-align:center;">
   <img src="../images/Uebung01-Inbus.png" alt="Inbus" width="400" class="no-lightbox">
