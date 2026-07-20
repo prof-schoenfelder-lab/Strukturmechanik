@@ -13,6 +13,8 @@ Environment variables (see .env.example):
   SITE_URL                                where to redirect after launch
   ALLOWED_ORIGINS                         comma-separated CORS origins
   DB_PATH                                 SQLite file (default: results.db)
+  PCNAMES_PATH                            JSON {ip: "Pool-PC 07"} fürs Dashboard
+                                          (default: pc-names.json, auto-reload)
 """
 
 import base64
@@ -399,10 +401,35 @@ def client_ip():
     return (fwd.split(",")[0].strip() if fwd else request.remote_addr) or ""
 
 
+# Optionale feste Zuordnung IP -> Anzeigename (z.B. "Pool-PC 07 / Platz 7").
+# Datei wird bei Änderung automatisch neu geladen — kein Restart nötig.
+PCNAMES_PATH = os.environ.get(
+    "PCNAMES_PATH", os.path.join(os.path.dirname(__file__), "pc-names.json"))
+_pcnames_cache = {"mtime": None, "data": {}}
+
+
+def load_pcnames():
+    try:
+        mtime = os.path.getmtime(PCNAMES_PATH)
+    except OSError:
+        return {}
+    if _pcnames_cache["mtime"] != mtime:
+        try:
+            with open(PCNAMES_PATH) as f:
+                _pcnames_cache["data"] = json.load(f)
+            _pcnames_cache["mtime"] = mtime
+        except (OSError, ValueError):
+            pass
+    return _pcnames_cache["data"]
+
+
 def host_label(ip):
-    """Reverse-DNS mit Cache: Pool-PCs haben i.d.R. sprechende Namen."""
+    """Anzeigename eines Pool-PCs: erst pc-names.json, dann Reverse-DNS."""
     if not ip:
         return ""
+    name = load_pcnames().get(ip)
+    if name:
+        return str(name)
     if ip not in _HOST_CACHE:
         label = ip
         try:
