@@ -167,6 +167,21 @@ def pseudonymize(user_id):
 fernet = Fernet(base64.urlsafe_b64encode(hashlib.sha256((SECRET_KEY + ":sub-enc").encode()).digest()))
 
 
+# Akademische Grade/Anreden, die OPAL vor den Namen setzt (Fallback-Pfad,
+# wenn nur der zusammengesetzte "name"-Claim kommt)
+_TITLES = {"master", "bachelor", "dr.", "dr", "prof.", "prof", "dipl.-ing.",
+           "m.eng.", "b.eng.", "m.sc.", "b.sc.", "herr", "frau"}
+
+
+def strip_titles(name):
+    if not name:
+        return None
+    words = name.split()
+    while words and words[0].lower().rstrip(",") in _TITLES:
+        words = words[1:]
+    return " ".join(words) or None
+
+
 def finish_launch(user_id, context_id, outcome_url=None, result_sourcedid=None,
                   display_name=None):
     """Upsert the pseudonymized user and redirect to the site with a session token."""
@@ -366,8 +381,11 @@ def lti13_launch():
     context = claims.get("https://purl.imsglobal.org/spec/lti/claim/context") or {}
     # Assignment&Grade-Service-Endpunkt für späteren Noten-Rückkanal aufheben
     ags = claims.get("https://purl.imsglobal.org/spec/lti-ags/claim/endpoint") or {}
-    name = claims.get("name") or " ".join(
-        s for s in (claims.get("given_name"), claims.get("family_name")) if s) or None
+    # given/family bevorzugen — OPALs "name"-Claim enthält den akademischen
+    # Grad ("Master Felix Kaule"), der im Sitzplan stören würde
+    name = " ".join(
+        s for s in (claims.get("given_name"), claims.get("family_name")) if s) \
+        or strip_titles(claims.get("name")) or None
     return finish_launch(
         user_id=claims["sub"],
         context_id=context.get("id"),
@@ -392,9 +410,10 @@ def lti_launch():
     user_id = request.form.get("user_id")
     if not user_id:
         return "LTI-Launch ohne user_id.", 400
-    name = request.form.get("lis_person_name_full") or " ".join(
+    name = " ".join(
         s for s in (request.form.get("lis_person_name_given"),
-                    request.form.get("lis_person_name_family")) if s) or None
+                    request.form.get("lis_person_name_family")) if s) \
+        or strip_titles(request.form.get("lis_person_name_full")) or None
     return finish_launch(
         user_id=user_id,
         context_id=request.form.get("context_id"),
