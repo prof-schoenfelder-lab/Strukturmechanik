@@ -109,7 +109,7 @@ Kursbaustein „LTI-Seite" → Tab „Konfiguration":
 | Dienst neu starten | `sudo systemctl restart fem-backend` |
 | Logs | `journalctl -u fem-backend -n 50` |
 | Dashboard (aggregierte Kursübersicht) | `https://fing-spool.htwk-leipzig.de/fem/dashboard?key=<TOKEN>` — Token: `grep DASHBOARD_TOKEN ~/fem-backend/.env` |
-| Dashboard im Praktikum | Seite einfach offen lassen: aktualisiert sich alle 30 s selbst; die Live-Sektion oben zeigt, wer (anonym gezählt) in den letzten 15 Minuten an welcher Aufgabe gearbeitet hat |
+| Dashboard im Praktikum | Seite einfach offen lassen (aktualisiert sich alle 30 s). Die Praktikums-Ansicht oben zeigt pro heute aktiver Person: Pool-PC-Name (Reverse-DNS, sonst Pseudonym-Kürzel), Fortschritt im Praktikum, aktuelle Aufgabe, Status (arbeitet / hängt ab 3 Fehlversuchen / Aufgabe aufgegeben / pausiert / fertig) — sortiert von der Spitze zum Schlusslicht, plus Spannweite (Spitze/Median/Schlusslicht). **Nicht am Beamer zeigen** (PC-Namen = Sitzplätze). |
 | Backup | automatisch täglich 3:17 Uhr nach `~/fem-backend/backups/` (14 Stände) |
 | Komplett-Backup von Hand | `data/results.db`, `data/lti_private.pem`, `.env` sichern |
 | **Kurs-Reset (Semesterende)** | `~/fem-backend/reset-course.sh` |
@@ -126,6 +126,9 @@ Browser-Speicher löschen.
   (`users.sub_enc`); abschaltbar mit `AGS_ENABLED=0` in der `.env`.
 - Statistik/Dashboard sind aggregiert bzw. pseudonym; namentliche Zuordnung
   passiert ausschließlich in OPAL selbst.
+- Die Pool-PC-Namen der Praktikums-Ansicht liegen **nur im RAM** des Dienstes
+  (nach Restart leer, nichts davon in der Datenbank) und sind nur über das
+  Dashboard-Token sichtbar.
 - Backend ist nur im HTWK-Netz/VPN erreichbar (gewollt — Studierende brauchen
   VPN ohnehin für die ANSYS-Lizenz).
 

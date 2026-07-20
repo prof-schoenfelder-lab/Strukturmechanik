@@ -17,6 +17,7 @@ Environment variables (see .env.example):
 
 import base64
 import datetime
+import socket
 import hashlib
 import json
 import os
@@ -386,13 +387,45 @@ def lti_launch():
 
 # --- API for the static site -------------------------------------------------
 
+# Zuletzt gesehene Client-Adresse je Pseudonym — bewusst NUR im RAM
+# (nach Restart leer, nichts wird gespeichert). Grundlage für die
+# Pool-PC-Spalte in der Praktikums-Ansicht des Dashboards.
+LAST_SEEN = {}
+_HOST_CACHE = {}
+
+
+def client_ip():
+    fwd = request.headers.get("X-Forwarded-For", "")
+    return (fwd.split(",")[0].strip() if fwd else request.remote_addr) or ""
+
+
+def host_label(ip):
+    """Reverse-DNS mit Cache: Pool-PCs haben i.d.R. sprechende Namen."""
+    if not ip:
+        return ""
+    if ip not in _HOST_CACHE:
+        label = ip
+        try:
+            label = socket.gethostbyaddr(ip)[0].split(".")[0]
+        except OSError:
+            pass
+        _HOST_CACHE[ip] = label
+    return _HOST_CACHE[ip]
+
+
 def current_pseudonym():
     auth = request.headers.get("Authorization", "")
     if not auth.startswith("Bearer "):
         return None
     try:
         data = serializer.loads(auth[7:], max_age=TOKEN_MAX_AGE)
-        return data.get("sub")
+        pseu = data.get("sub")
+        if pseu:
+            try:
+                LAST_SEEN[pseu] = {"ip": client_ip(), "t": time.time()}
+            except Exception:
+                pass
+        return pseu
     except BadSignature:
         return None
 
@@ -605,40 +638,6 @@ def dashboard():
                 ("P3_Vernetzung", "Praktikum 3"), ("P4_Abstraktionen", "Praktikum 4")]
     q_per_p = {key: sum(1 for qid in answers if "/" + key + "/" in qid) or 1 for key, _ in praktika}
 
-    # Live-Ansicht fürs laufende Praktikum: pro Person zählt die zuletzt
-    # bearbeitete Aufgabe innerhalb des Zeitfensters als "ist gerade hier".
-    LIVE_WINDOW = 15 * 60
-    now_ts = time.time()
-    midnight = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).timestamp()
-    active_today = db.execute(
-        "SELECT COUNT(DISTINCT pseudonym) c FROM results WHERE updated_at > ?",
-        (midnight,)).fetchone()["c"]
-    live_raw = db.execute(
-        "SELECT pseudonym, qid, best, updated_at FROM results WHERE updated_at > ?",
-        (now_ts - LIVE_WINDOW,)).fetchall()
-    latest = {}
-    for r in live_raw:
-        prev = latest.get(r["pseudonym"])
-        if prev is None or r["updated_at"] > prev["updated_at"]:
-            latest[r["pseudonym"]] = r
-    live_per_q = {}
-    for r in latest.values():
-        d = live_per_q.setdefault(r["qid"], {"active": 0, "solved": 0})
-        d["active"] += 1
-        if r["best"] > 0:
-            d["solved"] += 1
-    live_rows = "".join(
-        "<tr><td>%s</td><td>%d</td><td>%d</td></tr>"
-        % (qid.replace("/Strukturmechanik/", ""), d["active"], d["solved"])
-        for qid, d in sorted(live_per_q.items(), key=lambda kv: -kv[1]["active"]))
-    live_html = (
-        "<h2>Live — wo sind die Leute gerade? (letzte 15 Minuten)</h2>"
-        "<p><strong>%d</strong> gerade aktiv · <strong>%d</strong> heute aktiv</p>"
-        % (len(latest), active_today)
-        + ("<table><tr><th>Aufgabe (zuletzt bearbeitet)</th><th>Personen</th>"
-           "<th>davon gelöst</th></tr>%s</table>" % live_rows
-           if live_rows else "<p><em>Gerade arbeitet niemand an den Aufgaben.</em></p>"))
-
     rows = db.execute("SELECT pseudonym, qid, best, attempts FROM results").fetchall()
     per_user = {}
     for r in rows:
@@ -649,6 +648,76 @@ def dashboard():
             for key, _ in praktika:
                 if "/" + key + "/" in r["qid"]:
                     u["per_p"][key] = u["per_p"].get(key, 0) + 1
+
+    # --- Praktikums-Ansicht: heute Aktive einzeln, mit Pool-PC statt Name ---
+    # Pro Person zählt die zuletzt bearbeitete Aufgabe als "ist gerade hier".
+    now_ts = time.time()
+    midnight = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).timestamp()
+    today_raw = db.execute(
+        "SELECT pseudonym, qid, best, attempts, updated_at FROM results WHERE updated_at > ?",
+        (midnight,)).fetchall()
+    latest = {}
+    for r in today_raw:
+        prev = latest.get(r["pseudonym"])
+        if prev is None or r["updated_at"] > prev["updated_at"]:
+            latest[r["pseudonym"]] = r
+    active_now = sum(1 for r in latest.values() if now_ts - r["updated_at"] < 15 * 60)
+
+    entries = []
+    for pseu, r in latest.items():
+        pk = next((k for k, _ in praktika if "/" + k + "/" in r["qid"]), None)
+        psolved = per_user.get(pseu, {"per_p": {}})["per_p"].get(pk, 0)
+        ptotal = q_per_p.get(pk, 0)
+        allowed = int(answers.get(r["qid"], {}).get("attempts", 5))
+        idle = now_ts - r["updated_at"]
+        if pk and ptotal and psolved >= ptotal:
+            status = '<b class="ok">✓ Praktikum fertig</b>'
+        elif r["best"] <= 0 and r["attempts"] >= allowed:
+            status = '<b class="alarm">Aufgabe aufgegeben — Hilfe anbieten?</b>'
+        elif r["best"] <= 0 and r["attempts"] >= 3:
+            status = '<b class="warn">hängt (%d. Versuch)</b>' % r["attempts"]
+        elif idle > 15 * 60:
+            status = '<b class="idle">pausiert</b>'
+        else:
+            status = '<b class="ok">arbeitet</b>'
+        seen = LAST_SEEN.get(pseu) or {}
+        pc = host_label(seen.get("ip", "")) or ("&hellip;" + pseu[:6])
+        pname = next((nm for k, nm in praktika if k == pk), "—")
+        entries.append({"pc": pc, "pname": pname, "pk": pk, "solved": psolved,
+                        "total": ptotal, "qid": r["qid"], "attempts": r["attempts"],
+                        "idle": idle, "status": status})
+    entries.sort(key=lambda e: (-e["solved"], e["idle"]))
+
+    # Spannweite im dominanten Praktikum (typisch läuft eins pro Veranstaltung)
+    span_html = ""
+    by_pk = {}
+    for e in entries:
+        if e["pk"]:
+            by_pk.setdefault(e["pk"], []).append(e["solved"])
+    if by_pk:
+        dom = max(by_pk, key=lambda k: len(by_pk[k]))
+        vals = sorted(by_pk[dom])
+        dom_name = next(nm for k, nm in praktika if k == dom)
+        span_html = ("<p>%s heute: Spitze <strong>%d/%d</strong> Aufgaben · Median "
+                     "<strong>%d</strong> · Schlusslicht <strong>%d</strong> (%d Aktive)</p>"
+                     % (dom_name, vals[-1], q_per_p.get(dom, 0),
+                        vals[len(vals) // 2], vals[0], len(vals)))
+
+    person_rows = "".join(
+        "<tr><td>%s</td><td>%s</td><td>%d/%d</td><td>%s</td><td>%d</td>"
+        "<td>vor %d min</td><td>%s</td></tr>"
+        % (e["pc"], e["pname"], e["solved"], e["total"],
+           e["qid"].replace("/Strukturmechanik/", ""), e["attempts"],
+           max(0, round(e["idle"] / 60)), e["status"])
+        for e in entries[:60])
+    live_html = (
+        "<h2>Praktikums-Ansicht — wer ist heute wie weit?</h2>"
+        "<p><strong>%d</strong> gerade aktiv (letzte 15 min) · <strong>%d</strong> heute aktiv"
+        " · PC-Namen nur im RAM, nichts wird gespeichert</p>" % (active_now, len(latest))
+        + span_html
+        + ("<table><tr><th>PC</th><th>Praktikum</th><th>gelöst</th><th>zuletzt an</th>"
+           "<th>Versuche</th><th>zuletzt aktiv</th><th>Status</th></tr>%s</table>" % person_rows
+           if person_rows else "<p><em>Heute war noch niemand aktiv.</em></p>"))
 
     n = len(per_user)
     buckets = [("noch nichts gelöst", 0, 0), ("bis 25 %", 0.0001, 0.25), ("bis 50 %", 0.25, 0.5),
@@ -686,7 +755,9 @@ h1{font-size:1.4rem} h2{font-size:1.05rem;margin-top:2rem} table{border-collapse
 td,th{padding:.35rem .6rem;border-bottom:1px solid #ddd;text-align:left;font-size:.9rem;vertical-align:middle}
 .bar{display:inline-block;width:12rem;height:.7rem;background:#eee;border-radius:.35rem;vertical-align:middle;margin-right:.5rem}
 .bar span{display:block;height:100%%;background:#3f51b5;border-radius:.35rem}
-em{font-style:normal;color:#555;font-size:.85rem}</style>
+em{font-style:normal;color:#555;font-size:.85rem}
+b.ok{color:#2e7d32} b.warn{color:#e65100} b.alarm{color:#c62828} b.idle{color:#888}
+b{font-weight:600}</style>
 <h1>FEM-Kurs — Fortschritts-Dashboard</h1>
 <p><strong>%d</strong> Teilnehmende mit Login · <strong>%d</strong> Aufgaben im Katalog · Stand: %s
 · <em>aktualisiert sich alle 30 s selbst</em></p>
