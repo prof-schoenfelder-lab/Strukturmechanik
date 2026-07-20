@@ -67,17 +67,6 @@
         '<span class="ph-medal-desc">' + b.desc + '</span></div>';
     }).join('');
 
-    var levelHtml = '';
-    try {
-      if (window.acLevelInfo) {
-        var li = window.acLevelInfo();
-        levelHtml = '<div class="ph-level"><strong>Level ' + li.level + ' · ' + li.name + '</strong>' +
-          (li.next !== null
-            ? ' — noch ' + (li.next - li.solved) + ' Aufgabe(n) bis Level ' + (li.level + 1)
-            : ' — Maximallevel erreicht!') + '</div>';
-      }
-    } catch (e) { }
-
     var token = null;
     try { token = localStorage.getItem('ac_backend_token'); } catch (e) { }
     hub.innerHTML =
@@ -87,7 +76,7 @@
              : ' · <span class="ph-sync ph-sync-off">nur lokal in diesem Browser' +
                (window.AC_OPAL_URL ? ' — <a href="' + window.AC_OPAL_URL + '" target="_blank" rel="noopener">über OPAL anmelden</a>' : '') +
                '</span>') +
-      '</div>' + levelHtml +
+      '</div>' +
       '<div class="ph-grid">' + cards.join('') + '</div>' +
       '<h2>Abzeichen <small>(' + earned + '/' + badges.length + ')</small></h2>' +
       '<div class="ph-medals">' + badgeHtml + '</div>';

@@ -7,7 +7,7 @@
   // notify optional listeners (e.g. backend-sync.js) that stored results changed
   function emitChanged() {
     try { document.dispatchEvent(new CustomEvent('answer-checker:changed')); } catch (e) { }
-    try { updatePlayerBadge(); maybeCelebrateLevelUp(); } catch (e) { }
+    try { updatePlayerBadge(); evaluateBadges(true); } catch (e) { }
   }
 
   // Server-side answer check (data-answer/-correct sind im Build entfernt).
@@ -109,7 +109,6 @@
   }
   // Level werden aus der Zahl gelöster Aufgaben berechnet (Meilensteine) —
   // deterministisch und dank Server-Sync auf jedem Gerät identisch.
-  var LEVEL_THRESHOLDS = [1, 3, 6, 10, 15, 21, 28, 36];
   function countSolvedQuestions() {
     var n = 0;
     try {
@@ -122,35 +121,6 @@
     } catch (e) { }
     return n;
   }
-  function computePlayerLevel() {
-    var solved = countSolvedQuestions();
-    var level = 0;
-    for (var i = 0; i < LEVEL_THRESHOLDS.length; i++) {
-      if (solved >= LEVEL_THRESHOLDS[i]) level = i + 1;
-    }
-    return {
-      level: level, solved: solved,
-      next: level < LEVEL_THRESHOLDS.length ? LEVEL_THRESHOLDS[level] : null
-    };
-  }
-  function getPlayerLevel() { return computePlayerLevel().level; }
-  function maybeCelebrateLevelUp(stars) {
-    // Level steigen still (Info im Tooltip/Fortschritt) — gefeiert werden Abzeichen.
-    try { localStorage.setItem('player_level_seen', String(computePlayerLevel().level)); } catch (e) { }
-    try { evaluateBadges(true); } catch (e) { }
-  }
-  function incrementPlayerLevel(stars, pid) {
-    try { updatePlayerBadge(); maybeCelebrateLevelUp(stars); } catch (e) { }
-  }
-  // für die Fortschritt-Seite
-  try {
-    window.acLevelInfo = function () {
-      var i = computePlayerLevel();
-      i.name = getLevelName(Math.max(1, i.level));
-      return i;
-    };
-  } catch (e) { }
-
   // ensure styles for level-up notification/animation exist
   function ensureLevelUpStyles() {
     try {
@@ -184,26 +154,6 @@
   }
 
   // show a small firework-like particle burst and a toast notification for level up
-  var LEVEL_NAMES = [
-    'FEM-Frischling',
-    'Netz-Neuling',
-    'Element-Einsteiger',
-    'Auflager-Azubi',
-    'Balken-Bieger',
-    'Material-Macher',
-    'FEM-Fuchs',
-    'Kurs-Kapitän'
-  ];
-
-  function getLevelName(level) {
-    try { var idx = (parseInt(level, 10) || 1) - 1; if (idx < 0) idx = 0; if (idx >= LEVEL_NAMES.length) idx = LEVEL_NAMES.length - 1; return LEVEL_NAMES[idx]; } catch (e) { return ''; }
-  }
-
-  function showLevelUp(level, stars) {
-    var name = getLevelName(level);
-    showCelebration('Level ' + (parseInt(level, 10) || '') + ' – ' + name + ' erreicht!', 'Gut gemacht — weiter so!', stars);
-  }
-
   function showBadgeUp(badge) {
     showCelebration('Abzeichen verdient: ' + badge.icon + ' ' + badge.name, badge.desc, 4);
   }
@@ -282,19 +232,17 @@
       if (target) el.href = target.getAttribute('href');
     } catch (e) { }
     try {
-      var info = computePlayerLevel();
       // Mini-Fortschrittsring: füllt sich mit dem persönlichen Gesamtfortschritt
+      var solved = countSolvedQuestions();
       var total = questionTotal();
-      var pct = total ? Math.max(0, Math.min(1, info.solved / total)) : 0;
+      var pct = total ? Math.max(0, Math.min(1, solved / total)) : 0;
       var C = 56.55; // 2*pi*9
       el.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">' +
         '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-opacity=".25" stroke-width="3"/>' +
         '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"' +
         ' stroke-dasharray="' + C + '" stroke-dashoffset="' + (C * (1 - pct)).toFixed(2) + '" transform="rotate(-90 12 12)"/></svg>';
       el.setAttribute('aria-label', 'Mein Fortschritt');
-      el.title = 'Mein Fortschritt — ' + (total ? info.solved + ' von ' + total + ' Aufgaben gelöst, ' : '') +
-        'Level ' + info.level + ' · ' + getLevelName(Math.max(1, info.level)) +
-        (info.next !== null ? ', noch ' + (info.next - info.solved) + ' Aufgabe(n) bis Level ' + (info.level + 1) : ', Maximallevel!');
+      el.title = 'Mein Fortschritt' + (total ? ' — ' + solved + ' von ' + total + ' Aufgaben gelöst' : '');
     } catch (e) { }
   }
 
@@ -1380,11 +1328,7 @@
   function onReady(fn) { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
 
   onReady(function () {
-    try {
-      if (!localStorage.getItem('player_level_seen')) {
-        localStorage.setItem('player_level_seen', String(getPlayerLevel()));
-      }
-    } catch (e) { }
+    try { localStorage.removeItem('player_level'); localStorage.removeItem('player_level_seen'); } catch (e) { }
     // remove old entries on load (24h default)
     cleanupOldEntries();
     try { refreshQuestionTotal(); } catch (e) { }
@@ -1421,7 +1365,6 @@
   // expose a tiny test helper so authors can trigger the level-up animation from the console
   try {
     if (typeof window !== 'undefined') {
-      window.__ac_test_levelup = function (level, stars) { try { showLevelUp(level || getPlayerLevel() || 1, typeof stars === 'number' ? stars : undefined); } catch (e) { console.warn('Level-up helper failed', e); } };
       window.__ac_debug_state = function () {
         try {
           var out = { keys: [], pageClaims: [], answerBests: [], qidsOnPage: [] };

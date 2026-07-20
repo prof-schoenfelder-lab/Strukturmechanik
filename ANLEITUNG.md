@@ -42,18 +42,16 @@ wie der Alltag läuft und was bei Problemen zu tun ist.
 
 ## 3. Gamification
 
-- **Level** (FEM-Frischling → Kurs-Kapitän) berechnen sich aus der Zahl
-  gelöster Aufgaben (Schwellen 1/3/6/10/15/21/28/36) — auf jedem Gerät gleich.
-  Level steigen still; Info im Tooltip des Header-Rings.
 - **Header-Ring** (neben dem Logo): füllt sich mit dem persönlichen
-  Gesamtfortschritt, verlinkt auf „Mein Fortschritt".
+  Gesamtfortschritt („x von y Aufgaben gelöst" im Tooltip), verlinkt auf
+  „Mein Fortschritt". Ein separates Level-System gibt es bewusst nicht —
+  Fortschritt zeigen die Ringe, Meilensteine feiern die Abzeichen.
 - **Abzeichen** (9 Stück, z.B. 🚀 Erste Schritte, 💪 Comeback, 🏆 FEM-Vollprofi):
   werden im Moment des Verdienens mit Konfetti gefeiert. Einmal verdient
   bleibt verdient — auch wenn später neue Aufgaben dazukommen.
 - **Navigation links**: grüner Haken = Seite komplett gelöst, sonst Zähler
   („1/2"). 0 Punkte ergeben nie einen Haken.
-- **„Mein Fortschritt"**: Ringe pro Praktikum, Punkte, Level, Abzeichen,
-  Sync-Status.
+- **„Mein Fortschritt"**: Ringe pro Praktikum, Punkte, Abzeichen, Sync-Status.
 - **Kurs-Statistik** unter jeder Frage („73 % des Kurses haben diese Aufgabe
   gelöst") — anonym, erscheint ab 5 Teilnehmenden.
 - Account-Wechsel im selben Browser wird erkannt (kein Punkte-Übertrag);
@@ -77,7 +75,7 @@ git add ... && git commit && git push   # deployt die Seite via GitHub Actions
 
 Kein Server-Restart nötig (answers.json wird automatisch neu geladen).
 Neue Aufgaben im laufenden Semester sind unkritisch: alles passt sich an,
-verdiente Abzeichen bleiben, Level können nur steigen.
+verdiente Abzeichen bleiben erhalten.
 
 **Ein Server-Restart ist NUR nötig, wenn sich `backend/app.py` ändert:**
 
