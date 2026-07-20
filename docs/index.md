@@ -14,6 +14,11 @@ hide:
   ![Header](assets/images/Header.png){ .no-lightbox data-glightbox="disabled" width="100%" loading=lazy }
 </div>
 
+<a class="fem-scroll-hint" id="fem-scroll-hint" href="#fem-scrolly">
+  <span>So läuft eine FEM-Simulation ab — einfach weiterscrollen</span>
+  <span class="fem-scroll-chevron" aria-hidden="true"></span>
+</a>
+
 <section class="fem-scrolly" id="fem-scrolly" data-phase="0" markdown>
   <div class="fem-sticky">
     <svg id="fem-svg" role="img" aria-label="Animation: Ein Balken wird vernetzt, gelagert, belastet und gelöst"></svg>
