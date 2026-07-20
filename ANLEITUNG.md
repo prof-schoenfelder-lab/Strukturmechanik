@@ -96,6 +96,7 @@ Kursbaustein „LTI-Seite" → Tab „Konfiguration":
 | Schlüsseltyp | „Schlüssel" — PEM-Text von `https://fing-spool.htwk-leipzig.de/fem/lti/pubkey` einfügen |
 | ClientID | `strukturmechanik-fem` (muss zu `LTI13_CLIENT_ID` in der `.env` passen) |
 | Anzeige | **„Neues Fenster öffnen"** (sonst klemmt die Seite im OPAL-iFrame) |
+| Datenschutz-Optionen | **Übertragung von Vor-/Nachname aktivieren**, damit das Dashboard Klarnamen zeigen kann (optional — ohne bleibt alles pseudonym) |
 
 - Tab **„Bewertung" aktivieren** → die Punktestände laufen per AGS in OPAL ein
   und sind dort **pro Person mit Namen** im Bewertungswerkzeug sichtbar.
@@ -121,7 +122,11 @@ Browser-Speicher löschen.
 
 ## 7. Datenschutz
 
-- Gespeichert werden nur **Pseudonyme** (salted Hash der OPAL-ID) und Punktzahlen.
+- Gespeichert werden **Pseudonyme** (salted Hash der OPAL-ID) und Punktzahlen.
+  Überträgt der OPAL-Baustein zusätzlich den Namen, wird dieser **verschlüsselt**
+  abgelegt (`users.name_enc`) und ausschließlich im Dashboard (hinter dem Token)
+  angezeigt — Zweck: persönliche Ansprache im Praktikum. Der Semester-Reset
+  löscht die Namen mit; die OPAL-Option abschalten beendet die Erhebung.
 - Für den AGS-Noten-Rückkanal liegt die OPAL-ID **verschlüsselt** vor
   (`users.sub_enc`); abschaltbar mit `AGS_ENABLED=0` in der `.env`.
 - Statistik/Dashboard sind aggregiert bzw. pseudonym; namentliche Zuordnung

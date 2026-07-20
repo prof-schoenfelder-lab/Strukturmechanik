@@ -118,11 +118,13 @@ def init_db():
                    (secrets.token_urlsafe(8),))
         db.commit()
     # Migration für Bestandsdatenbanken
-    try:
-        db.execute("ALTER TABLE users ADD COLUMN sub_enc TEXT")
-        db.commit()
-    except sqlite3.OperationalError:
-        pass
+    for stmt in ("ALTER TABLE users ADD COLUMN sub_enc TEXT",
+                 "ALTER TABLE users ADD COLUMN name_enc TEXT"):
+        try:
+            db.execute(stmt)
+            db.commit()
+        except sqlite3.OperationalError:
+            pass
     db.close()
 
 
@@ -165,20 +167,27 @@ def pseudonymize(user_id):
 fernet = Fernet(base64.urlsafe_b64encode(hashlib.sha256((SECRET_KEY + ":sub-enc").encode()).digest()))
 
 
-def finish_launch(user_id, context_id, outcome_url=None, result_sourcedid=None):
+def finish_launch(user_id, context_id, outcome_url=None, result_sourcedid=None,
+                  display_name=None):
     """Upsert the pseudonymized user and redirect to the site with a session token."""
     pseudonym = pseudonymize(user_id)
     sub_enc = fernet.encrypt(user_id.encode()).decode() if AGS_ENABLED else None
+    # Klarname (falls der OPAL-Baustein ihn überträgt): verschlüsselt abgelegt,
+    # entschlüsselt nur fürs Dashboard — hilft beim Namenlernen im Praktikum.
+    name_enc = fernet.encrypt(display_name.encode()).decode() if display_name else None
     db = get_db()
     db.execute(
-        """INSERT INTO users (pseudonym, context_id, outcome_url, result_sourcedid, sub_enc, created_at)
-           VALUES (?, ?, ?, ?, ?, ?)
+        """INSERT INTO users (pseudonym, context_id, outcome_url, result_sourcedid,
+                              sub_enc, name_enc, created_at)
+           VALUES (?, ?, ?, ?, ?, ?, ?)
            ON CONFLICT(pseudonym) DO UPDATE SET
              context_id=excluded.context_id,
              outcome_url=COALESCE(excluded.outcome_url, users.outcome_url),
              result_sourcedid=COALESCE(excluded.result_sourcedid, users.result_sourcedid),
-             sub_enc=COALESCE(excluded.sub_enc, users.sub_enc)""",
-        (pseudonym, context_id, outcome_url, result_sourcedid, sub_enc, time.time()),
+             sub_enc=COALESCE(excluded.sub_enc, users.sub_enc),
+             name_enc=COALESCE(excluded.name_enc, users.name_enc)""",
+        (pseudonym, context_id, outcome_url, result_sourcedid, sub_enc, name_enc,
+         time.time()),
     )
     db.commit()
     token = serializer.dumps({"sub": pseudonym})
@@ -357,10 +366,13 @@ def lti13_launch():
     context = claims.get("https://purl.imsglobal.org/spec/lti/claim/context") or {}
     # Assignment&Grade-Service-Endpunkt für späteren Noten-Rückkanal aufheben
     ags = claims.get("https://purl.imsglobal.org/spec/lti-ags/claim/endpoint") or {}
+    name = claims.get("name") or " ".join(
+        s for s in (claims.get("given_name"), claims.get("family_name")) if s) or None
     return finish_launch(
         user_id=claims["sub"],
         context_id=context.get("id"),
         outcome_url=ags.get("lineitem") or ags.get("lineitems"),
+        display_name=name,
     )
 
 
@@ -380,11 +392,15 @@ def lti_launch():
     user_id = request.form.get("user_id")
     if not user_id:
         return "LTI-Launch ohne user_id.", 400
+    name = request.form.get("lis_person_name_full") or " ".join(
+        s for s in (request.form.get("lis_person_name_given"),
+                    request.form.get("lis_person_name_family")) if s) or None
     return finish_launch(
         user_id=user_id,
         context_id=request.form.get("context_id"),
         outcome_url=request.form.get("lis_outcome_service_url"),
         result_sourcedid=request.form.get("lis_result_sourcedid"),
+        display_name=name,
     )
 
 
@@ -691,6 +707,14 @@ def dashboard():
             latest[r["pseudonym"]] = r
     active_now = sum(1 for r in latest.values() if now_ts - r["updated_at"] < 15 * 60)
 
+    # Klarnamen (nur vorhanden, wenn der OPAL-Baustein sie überträgt)
+    names = {}
+    for u in db.execute("SELECT pseudonym, name_enc FROM users WHERE name_enc IS NOT NULL"):
+        try:
+            names[u["pseudonym"]] = fernet.decrypt(u["name_enc"].encode()).decode()
+        except Exception:
+            pass
+
     entries = []
     for pseu, r in latest.items():
         pk = next((k for k, _ in praktika if "/" + k + "/" in r["qid"]), None)
@@ -713,7 +737,8 @@ def dashboard():
         pname = next((nm for k, nm in praktika if k == pk), "—")
         entries.append({"pc": pc, "pname": pname, "pk": pk, "solved": psolved,
                         "total": ptotal, "qid": r["qid"], "attempts": r["attempts"],
-                        "idle": idle, "status": status, "skey": skey})
+                        "idle": idle, "status": status, "skey": skey,
+                        "name": names.get(pseu, "")})
     entries.sort(key=lambda e: (-e["solved"], e["idle"]))
 
     # KPI-Kacheln: die Zahlen, die man im Praktikum ständig braucht.
@@ -741,8 +766,10 @@ def dashboard():
     help_html = ""
     if need_help:
         help_html = ('<p class="helpline">🚨 Hilfe empfohlen: %s</p>'
-                     % " · ".join("<strong>%s</strong> (%s)"
-                                  % (e["pc"], "aufgegeben" if e["skey"] == "alarm"
+                     % " · ".join("<strong>%s</strong>%s (%s)"
+                                  % (e["pc"],
+                                     " — " + e["name"] if e["name"] else "",
+                                     "aufgegeben" if e["skey"] == "alarm"
                                      else "%d. Versuch" % e["attempts"])
                                   for e in need_help[:10]))
 
@@ -793,12 +820,16 @@ def dashboard():
                     continue
                 e = seat_of.get((room, seat))
                 if e:
-                    cells += ('<span class="seat s-%s" title="%s · zuletzt: %s · vor %d min">'
-                              '<b>%d</b>%d/%d</span>'
-                              % (e["skey"], e["pname"],
+                    first = e["name"].split(" ")[0][:11] if e["name"] else ""
+                    cells += ('<span class="seat s-%s" title="%s%s · zuletzt: %s · vor %d min">'
+                              '<b>%d</b>%s%d/%d</span>'
+                              % (e["skey"],
+                                 e["name"] + " · " if e["name"] else "", e["pname"],
                                  e["qid"].replace("/Strukturmechanik/", ""),
                                  max(0, round(e["idle"] / 60)),
-                                 seat, e["solved"], e["total"]))
+                                 seat,
+                                 '<u>%s</u>' % first if first else "",
+                                 e["solved"], e["total"]))
                 else:
                     cells += '<span class="seat"><b>%d</b></span>' % seat
         map_html += ('<h3>Raum %s</h3><div class="roommap">%s</div>'
@@ -809,9 +840,9 @@ def dashboard():
                      'aufgegeben · grau/gestrichelt pausiert bzw. leer</em></p>')
 
     person_rows = "".join(
-        "<tr><td>%s</td><td>%s</td><td>%d/%d</td><td>%s</td><td>%d</td>"
+        "<tr><td>%s</td><td>%s</td><td>%s</td><td>%d/%d</td><td>%s</td><td>%d</td>"
         "<td>vor %d min</td><td>%s</td></tr>"
-        % (e["pc"], e["pname"], e["solved"], e["total"],
+        % (e["pc"], e["name"] or "—", e["pname"], e["solved"], e["total"],
            e["qid"].replace("/Strukturmechanik/", ""), e["attempts"],
            max(0, round(e["idle"] / 60)), e["status"])
         for e in entries[:60])
@@ -822,7 +853,7 @@ def dashboard():
         + map_html
         + hot_html
         + ("<h3>Alle heute Aktiven</h3><div class=\"tablewrap\"><table>"
-           "<tr><th>PC</th><th>Praktikum</th><th>gelöst</th><th>zuletzt an</th>"
+           "<tr><th>PC</th><th>Name</th><th>Praktikum</th><th>gelöst</th><th>zuletzt an</th>"
            "<th>Versuche</th><th>zuletzt aktiv</th><th>Status</th></tr>%s</table></div>"
            % person_rows
            if person_rows else "<p><em>Heute war noch niemand aktiv.</em></p>"))
@@ -891,6 +922,8 @@ p.helpline{background:#fff3f3;border:1px solid #ffcdd2;border-radius:.5rem;paddi
 .seat{border:1px solid #ccc;border-radius:.3rem;padding:.2rem .3rem;font-size:.72rem;
   min-height:2.1rem;background:#fafafa;color:#999}
 .seat b{display:block;font-size:.8rem;color:inherit}
+.seat u{display:block;text-decoration:none;font-weight:600;font-size:.66rem;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .seat.s-ok{background:#c8e6c9;border-color:#66bb6a;color:#1b5e20}
 .seat.s-done{background:#2e7d32;border-color:#2e7d32;color:#fff}
 .seat.s-warn{background:#ffe0b2;border-color:#ffa726;color:#e65100}
