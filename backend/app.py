@@ -839,7 +839,7 @@ def dashboard():
                     continue
                 e = seat_of.get((room, seat))
                 if e:
-                    first = e["name"].split(" ")[0][:11] if e["name"] else ""
+                    first = e["name"] or ""
                     cells += ('<span class="seat s-%s" title="%s%s · zuletzt: %s · vor %d min">'
                               '<b>%d</b>%s%d/%d</span>'
                               % (e["skey"],
@@ -937,7 +937,7 @@ b{font-weight:600}
 .kpi span{font-size:.72rem;color:#666}
 .kpi .alarmnum{color:#c62828} .kpi .oknum{color:#2e7d32}
 p.helpline{background:#fff3f3;border:1px solid #ffcdd2;border-radius:.5rem;padding:.5rem .7rem;font-size:.9rem}
-.roommap{display:grid;grid-template-columns:repeat(2,4.6rem) 1.4rem repeat(2,4.6rem);gap:.3rem;margin:.4rem 0}
+.roommap{display:grid;grid-template-columns:repeat(2,5.6rem) 1.4rem repeat(2,5.6rem);gap:.3rem;margin:.4rem 0}
 .seat{border:1px solid #ccc;border-radius:.3rem;padding:.2rem .3rem;font-size:.72rem;
   min-height:2.1rem;background:#fafafa;color:#999}
 .seat b{display:block;font-size:.8rem;color:inherit}
