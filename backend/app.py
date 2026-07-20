@@ -433,7 +433,9 @@ def post_results():
             attempts = int(rec.get("attempts", 0) or 0)
         except (TypeError, ValueError):
             continue
-        # never lower an already stored best score
+        # never lower an already stored best score; updated_at nur bei echter
+        # Änderung bewegen — sonst würde jeder Sammel-Sync alle Zeilen als
+        # "gerade bearbeitet" stempeln (Live-Ansicht im Dashboard!)
         db.execute(
             """INSERT INTO results (pseudonym, qid, best, max, attempts, updated_at)
                VALUES (?, ?, ?, ?, ?, ?)
@@ -441,7 +443,10 @@ def post_results():
                  best=MAX(results.best, excluded.best),
                  max=excluded.max,
                  attempts=MAX(results.attempts, excluded.attempts),
-                 updated_at=excluded.updated_at""",
+                 updated_at=CASE
+                   WHEN excluded.best > results.best
+                     OR excluded.attempts > results.attempts
+                   THEN excluded.updated_at ELSE results.updated_at END""",
             (pseudonym, str(qid)[:200], best, qmax, attempts, now),
         )
     db.commit()
@@ -600,6 +605,40 @@ def dashboard():
                 ("P3_Vernetzung", "Praktikum 3"), ("P4_Abstraktionen", "Praktikum 4")]
     q_per_p = {key: sum(1 for qid in answers if "/" + key + "/" in qid) or 1 for key, _ in praktika}
 
+    # Live-Ansicht fürs laufende Praktikum: pro Person zählt die zuletzt
+    # bearbeitete Aufgabe innerhalb des Zeitfensters als "ist gerade hier".
+    LIVE_WINDOW = 15 * 60
+    now_ts = time.time()
+    midnight = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).timestamp()
+    active_today = db.execute(
+        "SELECT COUNT(DISTINCT pseudonym) c FROM results WHERE updated_at > ?",
+        (midnight,)).fetchone()["c"]
+    live_raw = db.execute(
+        "SELECT pseudonym, qid, best, updated_at FROM results WHERE updated_at > ?",
+        (now_ts - LIVE_WINDOW,)).fetchall()
+    latest = {}
+    for r in live_raw:
+        prev = latest.get(r["pseudonym"])
+        if prev is None or r["updated_at"] > prev["updated_at"]:
+            latest[r["pseudonym"]] = r
+    live_per_q = {}
+    for r in latest.values():
+        d = live_per_q.setdefault(r["qid"], {"active": 0, "solved": 0})
+        d["active"] += 1
+        if r["best"] > 0:
+            d["solved"] += 1
+    live_rows = "".join(
+        "<tr><td>%s</td><td>%d</td><td>%d</td></tr>"
+        % (qid.replace("/Strukturmechanik/", ""), d["active"], d["solved"])
+        for qid, d in sorted(live_per_q.items(), key=lambda kv: -kv[1]["active"]))
+    live_html = (
+        "<h2>Live — wo sind die Leute gerade? (letzte 15 Minuten)</h2>"
+        "<p><strong>%d</strong> gerade aktiv · <strong>%d</strong> heute aktiv</p>"
+        % (len(latest), active_today)
+        + ("<table><tr><th>Aufgabe (zuletzt bearbeitet)</th><th>Personen</th>"
+           "<th>davon gelöst</th></tr>%s</table>" % live_rows
+           if live_rows else "<p><em>Gerade arbeitet niemand an den Aufgaben.</em></p>"))
+
     rows = db.execute("SELECT pseudonym, qid, best, attempts FROM results").fetchall()
     per_user = {}
     for r in rows:
@@ -640,6 +679,7 @@ def dashboard():
 
     dist_rows = "".join("<tr><td>%s</td><td>%s</td></tr>" % (label, bar(c)) for label, c in dist)
     html = """<!doctype html><html lang="de"><meta charset="utf-8">
+<meta http-equiv="refresh" content="30">
 <title>FEM-Kurs Dashboard</title>
 <style>body{font-family:system-ui,sans-serif;max-width:60rem;margin:2rem auto;padding:0 1rem;color:#222}
 h1{font-size:1.4rem} h2{font-size:1.05rem;margin-top:2rem} table{border-collapse:collapse;width:100%%}
@@ -648,7 +688,9 @@ td,th{padding:.35rem .6rem;border-bottom:1px solid #ddd;text-align:left;font-siz
 .bar span{display:block;height:100%%;background:#3f51b5;border-radius:.35rem}
 em{font-style:normal;color:#555;font-size:.85rem}</style>
 <h1>FEM-Kurs — Fortschritts-Dashboard</h1>
-<p><strong>%d</strong> Teilnehmende mit Login · <strong>%d</strong> Aufgaben im Katalog · Stand: %s</p>
+<p><strong>%d</strong> Teilnehmende mit Login · <strong>%d</strong> Aufgaben im Katalog · Stand: %s
+· <em>aktualisiert sich alle 30 s selbst</em></p>
+%s
 <h2>Wie weit ist der Kurs? (Anteil gelöster Aufgaben pro Person)</h2>
 <table>%s</table>
 <h2>Pro Praktikum</h2>
@@ -656,7 +698,7 @@ em{font-style:normal;color:#555;font-size:.85rem}</style>
 <h2>Pro Aufgabe (gelöst / begonnen · ø Versuche)</h2>
 <table><tr><th>Aufgabe</th><th>gelöst</th><th>ø Versuche</th></tr>%s</table>
 </html>""" % (n, len(answers), datetime.datetime.now().strftime("%d.%m.%Y %H:%M"),
-              dist_rows, p_rows, q_rows)
+              live_html, dist_rows, p_rows, q_rows)
     return html
 
 

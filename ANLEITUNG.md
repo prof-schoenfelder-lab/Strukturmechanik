@@ -109,6 +109,7 @@ Kursbaustein „LTI-Seite" → Tab „Konfiguration":
 | Dienst neu starten | `sudo systemctl restart fem-backend` |
 | Logs | `journalctl -u fem-backend -n 50` |
 | Dashboard (aggregierte Kursübersicht) | `https://fing-spool.htwk-leipzig.de/fem/dashboard?key=<TOKEN>` — Token: `grep DASHBOARD_TOKEN ~/fem-backend/.env` |
+| Dashboard im Praktikum | Seite einfach offen lassen: aktualisiert sich alle 30 s selbst; die Live-Sektion oben zeigt, wer (anonym gezählt) in den letzten 15 Minuten an welcher Aufgabe gearbeitet hat |
 | Backup | automatisch täglich 3:17 Uhr nach `~/fem-backend/backups/` (14 Stände) |
 | Komplett-Backup von Hand | `data/results.db`, `data/lti_private.pem`, `.env` sichern |
 | **Kurs-Reset (Semesterende)** | `~/fem-backend/reset-course.sh` |
