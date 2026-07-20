@@ -716,20 +716,54 @@ def dashboard():
                         "idle": idle, "status": status, "skey": skey})
     entries.sort(key=lambda e: (-e["solved"], e["idle"]))
 
-    # Spannweite im dominanten Praktikum (typisch läuft eins pro Veranstaltung)
-    span_html = ""
+    # KPI-Kacheln: die Zahlen, die man im Praktikum ständig braucht.
+    # Spannweite bezieht sich aufs dominante Praktikum (typisch läuft eins).
     by_pk = {}
     for e in entries:
         if e["pk"]:
             by_pk.setdefault(e["pk"], []).append(e["solved"])
+    kpis = [("%d" % active_now, "gerade aktiv"), ("%d" % len(latest), "heute aktiv")]
+    dom_name = ""
     if by_pk:
         dom = max(by_pk, key=lambda k: len(by_pk[k]))
         vals = sorted(by_pk[dom])
         dom_name = next(nm for k, nm in praktika if k == dom)
-        span_html = ("<p>%s heute: Spitze <strong>%d/%d</strong> Aufgaben · Median "
-                     "<strong>%d</strong> · Schlusslicht <strong>%d</strong> (%d Aktive)</p>"
-                     % (dom_name, vals[-1], q_per_p.get(dom, 0),
-                        vals[len(vals) // 2], vals[0], len(vals)))
+        kpis += [("%d/%d" % (vals[-1], q_per_p.get(dom, 0)), "Spitze (%s)" % dom_name),
+                 ("%d" % vals[len(vals) // 2], "Median"),
+                 ("%d" % vals[0], "Schlusslicht")]
+    need_help = [e for e in entries if e["skey"] in ("warn", "alarm")]
+    kpis.append(('<span class="%s">%d</span>' % ("alarmnum" if need_help else "oknum",
+                                                 len(need_help)), "Hilfe empfohlen"))
+    kpi_html = '<div class="kpis">%s</div>' % "".join(
+        '<div class="kpi"><b>%s</b><span>%s</span></div>' % (v, l) for v, l in kpis)
+
+    # Direkt handlungsleitend: wo hingehen?
+    help_html = ""
+    if need_help:
+        help_html = ('<p class="helpline">🚨 Hilfe empfohlen: %s</p>'
+                     % " · ".join("<strong>%s</strong> (%s)"
+                                  % (e["pc"], "aufgegeben" if e["skey"] == "alarm"
+                                     else "%d. Versuch" % e["attempts"])
+                                  for e in need_help[:10]))
+
+    # Brennpunkt heute: an welcher Aufgabe arbeiten/hingen heute die meisten?
+    # Lohnt sich für eine Ansage an alle statt zehn Einzelerklärungen.
+    hot = {}
+    for r in today_raw:
+        d = hot.setdefault(r["qid"], {"n": 0, "solved": 0, "att": 0})
+        d["n"] += 1
+        d["att"] += r["attempts"]
+        if r["best"] > 0:
+            d["solved"] += 1
+    hot_rows = "".join(
+        "<tr><td>%s</td><td>%d</td><td>%d</td><td>%.1f</td></tr>"
+        % (qid.replace("/Strukturmechanik/", ""), d["n"], d["solved"], d["att"] / d["n"])
+        for qid, d in sorted(hot.items(), key=lambda kv: -kv[1]["n"])[:8])
+    hot_html = ""
+    if hot_rows:
+        hot_html = ('<h3>Brennpunkt heute — meistbearbeitete Aufgaben</h3>'
+                    '<div class="tablewrap"><table><tr><th>Aufgabe</th><th>Personen heute</th>'
+                    '<th>davon gelöst</th><th>ø Versuche</th></tr>%s</table></div>' % hot_rows)
 
     # Raumkarte: Plätze örtlich wie im Pool (vorn unten; pro Reihe zwei
     # Zweiergruppen mit Mittelgang; Platz 1 vorne rechts, dann 2/3/4 nach
@@ -783,12 +817,14 @@ def dashboard():
         for e in entries[:60])
     live_html = (
         "<h2>Praktikums-Ansicht — wer ist heute wie weit?</h2>"
-        "<p><strong>%d</strong> gerade aktiv (letzte 15 min) · <strong>%d</strong> heute aktiv"
-        " · PC-Namen nur im RAM, nichts wird gespeichert</p>" % (active_now, len(latest))
-        + span_html
+        + kpi_html
+        + help_html
         + map_html
-        + ("<table><tr><th>PC</th><th>Praktikum</th><th>gelöst</th><th>zuletzt an</th>"
-           "<th>Versuche</th><th>zuletzt aktiv</th><th>Status</th></tr>%s</table>" % person_rows
+        + hot_html
+        + ("<h3>Alle heute Aktiven</h3><div class=\"tablewrap\"><table>"
+           "<tr><th>PC</th><th>Praktikum</th><th>gelöst</th><th>zuletzt an</th>"
+           "<th>Versuche</th><th>zuletzt aktiv</th><th>Status</th></tr>%s</table></div>"
+           % person_rows
            if person_rows else "<p><em>Heute war noch niemand aktiv.</em></p>"))
 
     n = len(per_user)
@@ -810,26 +846,47 @@ def dashboard():
         done = sum(1 for u in per_user.values() if u["per_p"].get(key, 0) >= q_per_p[key])
         p_rows += "<tr><td>%s</td><td>%s</td><td>%s</td></tr>" % (name, bar(started), bar(done))
 
-    stats_rows = db.execute(
-        "SELECT qid, COUNT(*) participants, SUM(CASE WHEN best>0 THEN 1 ELSE 0 END) solved, "
-        "AVG(attempts) att FROM results GROUP BY qid ORDER BY qid").fetchall()
-    q_rows = "".join(
-        "<tr><td>%s</td><td>%d/%d</td><td>%.1f</td></tr>"
-        % (r["qid"].replace("/Strukturmechanik/", ""), r["solved"], r["participants"], r["att"] or 0)
-        for r in stats_rows)
+    # Pro Aufgabe: Lösequote und Volltreffer-Quote (= im 1. Versuch gelöst,
+    # erkennbar am Bonuspunkt) zeigen, welche Aufgaben zu schwer/leicht sind.
+    qagg = {}
+    for r in rows:
+        d = qagg.setdefault(r["qid"], {"n": 0, "solved": 0, "att": 0, "first": 0})
+        d["n"] += 1
+        d["att"] += r["attempts"]
+        if r["best"] > 0:
+            d["solved"] += 1
+            if r["best"] > answers.get(r["qid"], {}).get("points", 1):
+                d["first"] += 1
+    q_rows = ""
+    for qid in sorted(qagg):
+        d = qagg[qid]
+        quote = 100 * d["solved"] / d["n"] if d["n"] else 0
+        cls = ' class="lowq"' if d["n"] >= 5 and quote < 40 else ""
+        q_rows += ("<tr%s><td>%s</td><td>%d/%d</td><td>%d %%</td><td>%.1f</td><td>%s</td></tr>"
+                   % (cls, qid.replace("/Strukturmechanik/", ""), d["solved"], d["n"],
+                      quote, d["att"] / d["n"] if d["n"] else 0,
+                      "%d %%" % (100 * d["first"] / d["solved"]) if d["solved"] else "—"))
 
     dist_rows = "".join("<tr><td>%s</td><td>%s</td></tr>" % (label, bar(c)) for label, c in dist)
     html = """<!doctype html><html lang="de"><meta charset="utf-8">
 <meta http-equiv="refresh" content="30">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FEM-Kurs Dashboard</title>
 <style>body{font-family:system-ui,sans-serif;max-width:60rem;margin:2rem auto;padding:0 1rem;color:#222;background:#fff}
-h1{font-size:1.4rem} h2{font-size:1.05rem;margin-top:2rem} table{border-collapse:collapse;width:100%%}
+h1{font-size:1.4rem} h2{font-size:1.05rem;margin-top:2rem} table{border-collapse:collapse;width:100%%;min-width:32rem}
 td,th{padding:.35rem .6rem;border-bottom:1px solid #ddd;text-align:left;font-size:.9rem;vertical-align:middle}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .bar{display:inline-block;width:12rem;height:.7rem;background:#eee;border-radius:.35rem;vertical-align:middle;margin-right:.5rem}
 .bar span{display:block;height:100%%;background:#3f51b5;border-radius:.35rem}
 em{font-style:normal;color:#555;font-size:.85rem}
 b.ok{color:#2e7d32} b.warn{color:#e65100} b.alarm{color:#c62828} b.idle{color:#888}
 b{font-weight:600}
+.kpis{display:flex;flex-wrap:wrap;gap:.5rem;margin:.7rem 0}
+.kpi{background:#f4f5fa;border-radius:.55rem;padding:.5rem .85rem;min-width:5rem;flex:0 1 auto}
+.kpi b{display:block;font-size:1.3rem;line-height:1.2}
+.kpi span{font-size:.72rem;color:#666}
+.kpi .alarmnum{color:#c62828} .kpi .oknum{color:#2e7d32}
+p.helpline{background:#fff3f3;border:1px solid #ffcdd2;border-radius:.5rem;padding:.5rem .7rem;font-size:.9rem}
 .roommap{display:grid;grid-template-columns:repeat(2,4.6rem) 1.4rem repeat(2,4.6rem);gap:.3rem;margin:.4rem 0}
 .seat{border:1px solid #ccc;border-radius:.3rem;padding:.2rem .3rem;font-size:.72rem;
   min-height:2.1rem;background:#fafafa;color:#999}
@@ -840,17 +897,34 @@ b{font-weight:600}
 .seat.s-alarm{background:#ffcdd2;border-color:#e53935;color:#b71c1c}
 .seat.s-idle{background:#eee;border-style:dashed;color:#888}
 p.front{font-size:.75rem;color:#888;margin:.1rem 0 1rem}
-h3{font-size:.95rem;margin:1.2rem 0 .2rem}</style>
+h3{font-size:.95rem;margin:1.2rem 0 .2rem}
+tr.lowq td{background:#fff8e1}
+details{margin:.6rem 0}
+details summary{cursor:pointer;font-weight:600;font-size:1rem;padding:.3rem 0}
+@media (max-width:640px){
+  body{margin:.8rem auto}
+  h1{font-size:1.1rem}
+  td,th{padding:.28rem .4rem;font-size:.78rem}
+  table{min-width:26rem}
+  .bar{width:6rem}
+  .kpi{padding:.4rem .6rem;min-width:4.1rem}
+  .kpi b{font-size:1.1rem}
+  .roommap{grid-template-columns:repeat(2,minmax(2.9rem,1fr)) .8rem repeat(2,minmax(2.9rem,1fr));max-width:22rem}
+  .seat{font-size:.6rem;min-height:1.8rem;padding:.15rem .2rem}
+  .seat b{font-size:.72rem}
+}</style>
 <h1>FEM-Kurs — Fortschritts-Dashboard</h1>
 <p><strong>%d</strong> Teilnehmende mit Login · <strong>%d</strong> Aufgaben im Katalog · Stand: %s
-· <em>aktualisiert sich alle 30 s selbst</em></p>
+· <em>aktualisiert sich alle 30 s selbst · PC-Namen nur im RAM</em></p>
 %s
-<h2>Wie weit ist der Kurs? (Anteil gelöster Aufgaben pro Person)</h2>
-<table>%s</table>
-<h2>Pro Praktikum</h2>
-<table><tr><th></th><th>mind. 1 Aufgabe gelöst</th><th>komplett gelöst</th></tr>%s</table>
-<h2>Pro Aufgabe (gelöst / begonnen · ø Versuche)</h2>
-<table><tr><th>Aufgabe</th><th>gelöst</th><th>ø Versuche</th></tr>%s</table>
+<h2>Kurs gesamt</h2>
+<details open><summary>Wie weit ist der Kurs? (Anteil gelöster Aufgaben pro Person)</summary>
+<div class="tablewrap"><table>%s</table></div></details>
+<details><summary>Pro Praktikum (begonnen / komplett)</summary>
+<div class="tablewrap"><table><tr><th></th><th>mind. 1 Aufgabe gelöst</th><th>komplett gelöst</th></tr>%s</table></div></details>
+<details><summary>Pro Aufgabe (Lösequote · ø Versuche · Volltreffer im 1. Versuch)</summary>
+<div class="tablewrap"><table><tr><th>Aufgabe</th><th>gelöst</th><th>Lösequote</th><th>ø Versuche</th><th>Volltreffer</th></tr>%s</table></div>
+<p><em>Gelb hinterlegt: Lösequote unter 40 %% (ab 5 Personen) — Kandidaten zum Nachschärfen.</em></p></details>
 </html>""" % (n, len(answers), datetime.datetime.now().strftime("%d.%m.%Y %H:%M"),
               live_html, dist_rows, p_rows, q_rows)
     return html
