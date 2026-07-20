@@ -757,7 +757,8 @@ def dashboard():
         entries.append({"pc": pc, "pname": pname, "pk": pk, "solved": psolved,
                         "total": ptotal, "qid": r["qid"], "attempts": r["attempts"],
                         "idle": idle, "status": status, "skey": skey,
-                        "name": names.get(pseu, "")})
+                        "name": names.get(pseu, ""),
+                        "pshort": pk.split("_")[0] if pk else ""})
     entries.sort(key=lambda e: (-e["solved"], e["idle"]))
 
     # KPI-Kacheln: die Zahlen, die man im Praktikum ständig braucht.
@@ -791,6 +792,24 @@ def dashboard():
                                      "aufgegeben" if e["skey"] == "alarm"
                                      else "%d. Versuch" % e["attempts"])
                                   for e in need_help[:10]))
+
+    # Arbeiten Leute in unterschiedlichen Praktika (Vorzieher/Nachzügler),
+    # bekommt jedes aktive Praktikum seine eigene Spannweiten-Zeile.
+    multi_html = ""
+    if len(by_pk) > 1:
+        parts = []
+        for k in sorted(by_pk, key=lambda k: -len(by_pk[k])):
+            v = sorted(by_pk[k])
+            nm = next(nm for kk, nm in praktika if kk == k)
+            if len(v) == 1:
+                parts.append("%s: <strong>%d/%d</strong> (1 Person)"
+                             % (nm, v[0], q_per_p.get(k, 0)))
+            else:
+                parts.append("%s: Spitze <strong>%d/%d</strong> · Median <strong>%d</strong>"
+                             " · Schlusslicht <strong>%d</strong> (%d Personen)"
+                             % (nm, v[-1], q_per_p.get(k, 0), v[len(v) // 2], v[0], len(v)))
+        multi_html = ('<p class="spans">Parallel aktiv: ' + " &nbsp;·&nbsp; ".join(parts)
+                      + "</p>")
 
     # Brennpunkt heute: an welcher Aufgabe arbeiten/hingen heute die meisten?
     # Lohnt sich für eine Ansage an alle statt zehn Einzelerklärungen.
@@ -841,13 +860,14 @@ def dashboard():
                 if e:
                     first = e["name"] or ""
                     cells += ('<span class="seat s-%s" title="%s%s · zuletzt: %s · vor %d min">'
-                              '<b>%d</b>%s%d/%d</span>'
+                              '<b>%d</b>%s%s%d/%d</span>'
                               % (e["skey"],
                                  e["name"] + " · " if e["name"] else "", e["pname"],
                                  e["qid"].replace("/Strukturmechanik/", ""),
                                  max(0, round(e["idle"] / 60)),
                                  seat,
                                  '<u>%s</u>' % first if first else "",
+                                 ("%s " % e["pshort"]) if e["pshort"] else "",
                                  e["solved"], e["total"]))
                 else:
                     cells += '<span class="seat"><b>%d</b></span>' % seat
@@ -869,6 +889,7 @@ def dashboard():
         "<h2>Praktikums-Ansicht — wer ist heute wie weit?</h2>"
         + kpi_html
         + help_html
+        + multi_html
         + map_html
         + hot_html
         + ("<h3>Alle heute Aktiven</h3><div class=\"tablewrap\"><table>"
@@ -937,6 +958,7 @@ b{font-weight:600}
 .kpi span{font-size:.72rem;color:#666}
 .kpi .alarmnum{color:#c62828} .kpi .oknum{color:#2e7d32}
 p.helpline{background:#fff3f3;border:1px solid #ffcdd2;border-radius:.5rem;padding:.5rem .7rem;font-size:.9rem}
+p.spans{font-size:.85rem;color:#444}
 .roommap{display:grid;grid-template-columns:repeat(2,5.6rem) 1.4rem repeat(2,5.6rem);gap:.3rem;margin:.4rem 0}
 .seat{border:1px solid #ccc;border-radius:.3rem;padding:.2rem .3rem;font-size:.72rem;
   min-height:2.1rem;background:#fafafa;color:#999}
