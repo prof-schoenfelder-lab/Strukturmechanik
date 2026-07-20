@@ -19,6 +19,7 @@ Environment variables (see .env.example):
 
 import base64
 import datetime
+import re
 import socket
 import hashlib
 import json
@@ -698,21 +699,21 @@ def dashboard():
         allowed = int(answers.get(r["qid"], {}).get("attempts", 5))
         idle = now_ts - r["updated_at"]
         if pk and ptotal and psolved >= ptotal:
-            status = '<b class="ok">✓ Praktikum fertig</b>'
+            skey, status = "done", '<b class="ok">✓ Praktikum fertig</b>'
         elif r["best"] <= 0 and r["attempts"] >= allowed:
-            status = '<b class="alarm">Aufgabe aufgegeben — Hilfe anbieten?</b>'
+            skey, status = "alarm", '<b class="alarm">Aufgabe aufgegeben — Hilfe anbieten?</b>'
         elif r["best"] <= 0 and r["attempts"] >= 3:
-            status = '<b class="warn">hängt (%d. Versuch)</b>' % r["attempts"]
+            skey, status = "warn", '<b class="warn">hängt (%d. Versuch)</b>' % r["attempts"]
         elif idle > 15 * 60:
-            status = '<b class="idle">pausiert</b>'
+            skey, status = "idle", '<b class="idle">pausiert</b>'
         else:
-            status = '<b class="ok">arbeitet</b>'
+            skey, status = "ok", '<b class="ok">arbeitet</b>'
         seen = LAST_SEEN.get(pseu) or {}
         pc = host_label(seen.get("ip", "")) or ("&hellip;" + pseu[:6])
         pname = next((nm for k, nm in praktika if k == pk), "—")
         entries.append({"pc": pc, "pname": pname, "pk": pk, "solved": psolved,
                         "total": ptotal, "qid": r["qid"], "attempts": r["attempts"],
-                        "idle": idle, "status": status})
+                        "idle": idle, "status": status, "skey": skey})
     entries.sort(key=lambda e: (-e["solved"], e["idle"]))
 
     # Spannweite im dominanten Praktikum (typisch läuft eins pro Veranstaltung)
@@ -730,6 +731,49 @@ def dashboard():
                      % (dom_name, vals[-1], q_per_p.get(dom, 0),
                         vals[len(vals) // 2], vals[0], len(vals)))
 
+    # Raumkarte: Plätze örtlich wie im Pool (vorn unten; pro Reihe zwei
+    # Zweiergruppen mit Mittelgang; Platz 1 vorne rechts, dann 2/3/4 nach
+    # links, nächste Reihe dahinter zählt weiter).
+    ROOMS = {"N102": 32, "N103": 20, "N104": 16}
+    seat_of = {}
+    for e in entries:
+        m = re.match(r"^(N\d{3}) Platz (\d+)$", e["pc"])
+        if m and m.group(1) in ROOMS:
+            seat_of[(m.group(1), int(m.group(2)))] = e
+    map_html = ""
+    for room in sorted(ROOMS):
+        if not any(k[0] == room for k in seat_of):
+            continue
+        total_seats = ROOMS[room]
+        n_rows = (total_seats + 3) // 4
+        cells = ""
+        for row in range(n_rows, 0, -1):          # hinterste Reihe zuerst
+            base = (row - 1) * 4
+            for offset in (4, 3, 0, 2, 1):        # links: 4,3 · Gang · rechts: 2,1
+                if offset == 0:
+                    cells += '<i class="aisle"></i>'
+                    continue
+                seat = base + offset
+                if seat > total_seats:
+                    cells += '<i class="aisle"></i>'
+                    continue
+                e = seat_of.get((room, seat))
+                if e:
+                    cells += ('<span class="seat s-%s" title="%s · zuletzt: %s · vor %d min">'
+                              '<b>%d</b>%d/%d</span>'
+                              % (e["skey"], e["pname"],
+                                 e["qid"].replace("/Strukturmechanik/", ""),
+                                 max(0, round(e["idle"] / 60)),
+                                 seat, e["solved"], e["total"]))
+                else:
+                    cells += '<span class="seat"><b>%d</b></span>' % seat
+        map_html += ('<h3>Raum %s</h3><div class="roommap">%s</div>'
+                     '<p class="front">▲ vorne (Tafel)</p>' % (room, cells))
+    if map_html:
+        map_html += ('<p><em>Legende: <b class="ok">gr&uuml;n</b> arbeitet/fertig · '
+                     '<b class="warn">orange</b> h&auml;ngt · <b class="alarm">rot</b> '
+                     'aufgegeben · grau/gestrichelt pausiert bzw. leer</em></p>')
+
     person_rows = "".join(
         "<tr><td>%s</td><td>%s</td><td>%d/%d</td><td>%s</td><td>%d</td>"
         "<td>vor %d min</td><td>%s</td></tr>"
@@ -742,6 +786,7 @@ def dashboard():
         "<p><strong>%d</strong> gerade aktiv (letzte 15 min) · <strong>%d</strong> heute aktiv"
         " · PC-Namen nur im RAM, nichts wird gespeichert</p>" % (active_now, len(latest))
         + span_html
+        + map_html
         + ("<table><tr><th>PC</th><th>Praktikum</th><th>gelöst</th><th>zuletzt an</th>"
            "<th>Versuche</th><th>zuletzt aktiv</th><th>Status</th></tr>%s</table>" % person_rows
            if person_rows else "<p><em>Heute war noch niemand aktiv.</em></p>"))
@@ -777,14 +822,25 @@ def dashboard():
     html = """<!doctype html><html lang="de"><meta charset="utf-8">
 <meta http-equiv="refresh" content="30">
 <title>FEM-Kurs Dashboard</title>
-<style>body{font-family:system-ui,sans-serif;max-width:60rem;margin:2rem auto;padding:0 1rem;color:#222}
+<style>body{font-family:system-ui,sans-serif;max-width:60rem;margin:2rem auto;padding:0 1rem;color:#222;background:#fff}
 h1{font-size:1.4rem} h2{font-size:1.05rem;margin-top:2rem} table{border-collapse:collapse;width:100%%}
 td,th{padding:.35rem .6rem;border-bottom:1px solid #ddd;text-align:left;font-size:.9rem;vertical-align:middle}
 .bar{display:inline-block;width:12rem;height:.7rem;background:#eee;border-radius:.35rem;vertical-align:middle;margin-right:.5rem}
 .bar span{display:block;height:100%%;background:#3f51b5;border-radius:.35rem}
 em{font-style:normal;color:#555;font-size:.85rem}
 b.ok{color:#2e7d32} b.warn{color:#e65100} b.alarm{color:#c62828} b.idle{color:#888}
-b{font-weight:600}</style>
+b{font-weight:600}
+.roommap{display:grid;grid-template-columns:repeat(2,4.6rem) 1.4rem repeat(2,4.6rem);gap:.3rem;margin:.4rem 0}
+.seat{border:1px solid #ccc;border-radius:.3rem;padding:.2rem .3rem;font-size:.72rem;
+  min-height:2.1rem;background:#fafafa;color:#999}
+.seat b{display:block;font-size:.8rem;color:inherit}
+.seat.s-ok{background:#c8e6c9;border-color:#66bb6a;color:#1b5e20}
+.seat.s-done{background:#2e7d32;border-color:#2e7d32;color:#fff}
+.seat.s-warn{background:#ffe0b2;border-color:#ffa726;color:#e65100}
+.seat.s-alarm{background:#ffcdd2;border-color:#e53935;color:#b71c1c}
+.seat.s-idle{background:#eee;border-style:dashed;color:#888}
+p.front{font-size:.75rem;color:#888;margin:.1rem 0 1rem}
+h3{font-size:.95rem;margin:1.2rem 0 .2rem}</style>
 <h1>FEM-Kurs — Fortschritts-Dashboard</h1>
 <p><strong>%d</strong> Teilnehmende mit Login · <strong>%d</strong> Aufgaben im Katalog · Stand: %s
 · <em>aktualisiert sich alle 30 s selbst</em></p>
