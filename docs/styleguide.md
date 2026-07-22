@@ -81,3 +81,47 @@ feine Regel-Linie links, eingerückter Text — keine Farbflächen.
 
 [Primäre Aktion →](#){ .md-button .md-button--primary }
 [KLICK-TUTORIAL: Sekundär](#){ .md-button }
+
+## FollowMe-Konvertierung (Beispiel)
+
+Mit `scripts/followme2md.py` aus einem FollowMe-Remote-Export erzeugt
+(Schnelltest vom 22.07.2026 — die Schritt-Texte sind die Original-Hinweise
+der Aufnahme, hier überall „Click here"):
+
+??? tip "Kurzanleitung: Beispiel aus FollowMe Remote"
+
+    1. Click here
+
+        ![](../assets/tutorials/Beispiel_Remote/img/step-0.png)
+
+    2. Click here
+
+        ![](../assets/tutorials/Beispiel_Remote/img/step-1.png)
+
+    3. Click here
+
+        ![](../assets/tutorials/Beispiel_Remote/img/step-2.png)
+
+    4. Click here
+
+        ![](../assets/tutorials/Beispiel_Remote/img/step-3.png)
+
+    5. Click here
+
+        ![](../assets/tutorials/Beispiel_Remote/img/step-4.png)
+
+    6. Click here
+
+        ![](../assets/tutorials/Beispiel_Remote/img/step-5.png)
+
+    7. Click here
+
+        ![](../assets/tutorials/Beispiel_Remote/img/step-6.png)
+
+    8. Click here
+
+        ![](../assets/tutorials/Beispiel_Remote/img/step-7.png)
+
+    9. Click here
+
+        ![](../assets/tutorials/Beispiel_Remote/img/step-8.png)
