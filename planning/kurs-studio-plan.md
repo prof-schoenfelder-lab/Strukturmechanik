@@ -1,8 +1,8 @@
 # Plan: Kurs-Studio — grafische Weboberfläche für den gesamten Kursinhalt
 
-Stand: 22.07.2026 · Status: **Phase 0, 1a/1b, 2a umgesetzt & verifiziert** ·
+Stand: 22.07.2026 · Status: **Phase 0, 1a/1b, 2a/2b umgesetzt & verifiziert** ·
 Umsetzung in mehreren fokussierten Sessions. Offen: Phase 1c (GitHub-
-Veröffentlichung, braucht Token), Phase 2b (Übungs-Editor-Oberfläche).
+Veröffentlichung, braucht Token), globale Suche (§5a.1), Phase 3/4/5.
 
 ## 1. Ziel
 
@@ -286,9 +286,15 @@ schon im Tutorial-Studio.
     Prüfsumme, numeric-/multiple-choice-question-Markup) + `handEdited`.
     Ende-zu-Ende verifiziert (Demo-Übung rendert nativ inkl. Answer-Checker,
     Chips, Box, Tutorial-Embed); Node-Selbsttest.
-  - **2b ⬜ offen:** Editor-Oberfläche im Studio (Block-Editor für gegeben/
-    gesucht/hinweise/loesung + Fragen-Liste, Medien per Drag&Drop, Live-
-    Vorschau, Vollvorschau) + **globale Suche mit Direktsprung** (§5a.1).
+  - **2b ✅** Editor-Oberfläche in `tools/kurs-studio.html`: Übungs-Knoten im
+    Baum (+ Übung, Klick öffnet Editor), Block-Listen je Bereich (Einleitung/
+    Gegeben/Gesucht/Hinweise/Lösung) mit Text/Bild/Box/Tutorial/Trenner,
+    Live-Chip-Vorschau je Textblock (geteiltes `tools/studio/inline.js`),
+    Bilder per Drag&Drop → docs/<slug>/images/, Fragen-Editor (numerisch+MC),
+    Live-Markdown-Vorschau. Speichern schreibt content-JSON + generierte
+    docs/<pfad>.md + Nav. Verifiziert (injizierte Daten).
+  - **2c ⬜ offen:** globale Suche mit Direktsprung (§5a.1); Tabellen-Block-
+    Editor; tiefere Box-Verschachtelung; Slash-Menü im Editor (optional).
 - **Phase 3 — Theorie-Editor:** Block-Editor + Tutorial-Embed-Block
   (+ Absprung ins Tutorial-Studio zum Neu-Erstellen).
 - **Phase 4 — Vorzeigebeispiel-Editor:** Schritte/Tabs/Banner/Stepper-Konfig.
