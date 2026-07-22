@@ -1,0 +1,1180 @@
+/* ===========================================================================
+   Modernes Kurs-Design ("Lehre zuerst"):
+   - Inter als Schrift, ruhige Farbwelt (tiefes Blau + Wärme-Orange als Akzent)
+   - Admonitions als weiche Karten mit klarer didaktischer Farbsprache
+   - Screenshots gerahmt (wichtig im Dark Mode), Menüpfad-Chips,
+     Workflow-Stepper und Mitmach-Modus (Styles; Logik in modern-ui.js)
+   =========================================================================== */
+
+/* ---- Schrift (lokal gevendort, kein CDN) -------------------------------- */
+@font-face { font-family: "Inter"; font-weight: 400; font-style: normal; font-display: swap;
+  src: url("../assets/fonts/inter-400.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 500; font-style: normal; font-display: swap;
+  src: url("../assets/fonts/inter-500.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 600; font-style: normal; font-display: swap;
+  src: url("../assets/fonts/inter-600.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 700; font-style: normal; font-display: swap;
+  src: url("../assets/fonts/inter-700.woff2") format("woff2"); }
+
+:root {
+  --md-text-font: "Inter", -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* Kursfarben */
+  --kurs-primary: #17345e;        /* tiefes Blau */
+  --kurs-primary-dark: #102544;
+  --kurs-accent: #f2620f;         /* Wärme-Orange */
+  --kurs-accent-soft: #fff1e7;
+}
+
+/* ---- Header & Navigation ------------------------------------------------- */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: var(--kurs-primary);
+  --md-primary-fg-color--dark: var(--kurs-primary-dark);
+  --md-accent-fg-color: var(--kurs-accent);
+  --md-typeset-a-color: #1d5db1;
+}
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: var(--kurs-primary-dark);
+  --md-accent-fg-color: #ff8a3d;
+  --md-typeset-a-color: #6ea8e8;
+}
+.md-header, .md-tabs {
+  background: linear-gradient(90deg, var(--kurs-primary-dark) 0%, var(--kurs-primary) 70%, #1d4477 100%);
+}
+.md-header { box-shadow: 0 1px 8px rgba(9, 20, 38, .25); }
+.md-tabs__link--active, .md-tabs__link:hover { color: #ffd9bd; }
+
+/* Aktiver Navigationspunkt als Pill */
+.md-nav__link--active {
+  background: color-mix(in srgb, var(--kurs-accent) 12%, transparent);
+  border-radius: .45rem;
+  padding-left: .35rem !important;
+  font-weight: 600;
+}
+
+/* ---- Typografie ---------------------------------------------------------- */
+.md-typeset { font-size: .78rem; line-height: 1.65; }
+.md-typeset h1 { font-weight: 700; letter-spacing: -.015em; color: var(--md-default-fg-color); }
+.md-typeset h2 { font-weight: 700; letter-spacing: -.01em; margin-top: 2.2em; }
+.md-typeset h3 { font-weight: 600; }
+
+/* ---- Screenshots: gerahmt, gerundet, klick-zoom bleibt (glightbox) ------- */
+.md-typeset .md-content__inner img:not(.no-lightbox):not(.twemoji) {
+  border-radius: .55rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  box-shadow: 0 2px 10px rgba(15, 30, 60, .08);
+  background: #fff;
+}
+[data-md-color-scheme="slate"] .md-typeset .md-content__inner img:not(.no-lightbox):not(.twemoji) {
+  border-color: rgba(255, 255, 255, .18);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .5);
+}
+
+/* ---- Admonitions: weiche Karten mit didaktischer Farbsprache -------------
+   abstract = Lernziele · question = Aufgabe · tip = Kurzanleitung
+   success  = Lösung/Merke · warning = Achtung · check = Checkpoint          */
+.md-typeset .admonition, .md-typeset details {
+  border: 0;
+  border-left: .22rem solid var(--md-default-fg-color--lighter);
+  border-radius: .6rem;
+  box-shadow: 0 1px 6px rgba(15, 30, 60, .07);
+  font-size: .74rem;
+}
+.md-typeset .admonition-title, .md-typeset summary {
+  border-radius: .45rem .45rem 0 0;
+  font-weight: 600;
+}
+.md-typeset details summary { cursor: pointer; }
+
+/* Checkpoint: "So sollte es aussehen" — eigener Typ */
+.md-typeset .admonition.check, .md-typeset details.check {
+  border-left-color: #2e7d32;
+}
+.md-typeset .check > .admonition-title, .md-typeset .check > summary {
+  background-color: rgba(46, 125, 50, .08);
+}
+.md-typeset .check > .admonition-title::before,
+.md-typeset .check > summary::before {
+  background-color: #2e7d32;
+  -webkit-mask-image: var(--md-admonition-icon--success);
+          mask-image: var(--md-admonition-icon--success);
+}
+
+/* ---- Menüpfad-Chips (aus `Code → mit → Pfeilen`, siehe modern-ui.js) ----- */
+.menu-path {
+  display: inline-flex; flex-wrap: wrap; align-items: center; gap: .18rem;
+  vertical-align: baseline;
+}
+.menu-path .mp-seg {
+  background: color-mix(in srgb, var(--kurs-primary) 8%, var(--md-default-bg-color));
+  border: 1px solid color-mix(in srgb, var(--kurs-primary) 22%, transparent);
+  color: var(--md-default-fg-color);
+  border-radius: .4rem;
+  padding: .05rem .42rem;
+  font-size: .68rem;
+  font-family: var(--md-text-font);
+  font-weight: 550;
+  white-space: nowrap;
+}
+.menu-path .mp-arrow { color: var(--kurs-accent); font-weight: 700; font-size: .7rem; }
+[data-md-color-scheme="slate"] .menu-path .mp-seg {
+  background: rgba(110, 168, 232, .12);
+  border-color: rgba(110, 168, 232, .35);
+}
+
+/* ---- Workflow-Stepper (7 Schritte, aus **N. Titel** generiert) ----------- */
+.wf-head { margin: 2.2rem 0 .9rem; }
+.wf-track { display: flex; gap: .25rem; margin-bottom: .5rem; }
+.wf-dot {
+  flex: 1 1 0; height: .3rem; border-radius: .2rem;
+  background: var(--md-default-fg-color--lightest);
+  position: relative;
+}
+.wf-dot.done { background: color-mix(in srgb, var(--kurs-accent) 45%, var(--md-default-fg-color--lightest)); }
+.wf-dot.active { background: var(--kurs-accent); }
+.wf-title {
+  display: flex; align-items: baseline; gap: .55rem;
+  font-weight: 700; font-size: .92rem; letter-spacing: -.01em;
+}
+.wf-num {
+  flex: none; display: inline-grid; place-items: center;
+  width: 1.55rem; height: 1.55rem; border-radius: 50%;
+  background: var(--kurs-accent); color: #fff;
+  font-size: .78rem; font-weight: 700;
+  align-self: center;
+}
+.wf-tool { color: var(--md-default-fg-color--light); font-weight: 500; font-size: .74rem; }
+.wf-label { color: var(--md-default-fg-color--light); font-size: .62rem; margin-top: .15rem; }
+
+/* ---- Mitmach-Modus ------------------------------------------------------- */
+.fa-btn {
+  display: inline-flex; align-items: center; gap: .35rem;
+  margin: .35rem 0 .1rem;
+  border: 0; cursor: pointer;
+  background: var(--kurs-accent); color: #fff;
+  border-radius: 2rem; padding: .34rem .85rem;
+  font-family: var(--md-text-font); font-size: .7rem; font-weight: 600;
+  box-shadow: 0 2px 8px rgba(220, 90, 20, .35);
+}
+.fa-btn:hover { filter: brightness(1.08); }
+#fa-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(10, 18, 32, .55);
+  backdrop-filter: blur(3px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1rem;
+}
+#fa-card {
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  width: min(60rem, 96vw); max-height: 92vh;
+  border-radius: .9rem; box-shadow: 0 12px 50px rgba(0, 0, 0, .45);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+#fa-top {
+  display: flex; align-items: center; gap: .8rem;
+  padding: .7rem 1rem .55rem;
+}
+#fa-top h4 { margin: 0; font-size: .8rem; font-weight: 700; flex: 1;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#fa-count { font-size: .72rem; color: var(--md-default-fg-color--light); white-space: nowrap; }
+#fa-close { border: 0; background: none; cursor: pointer; font-size: 1.05rem;
+  color: var(--md-default-fg-color--light); padding: .2rem .4rem; }
+#fa-progress { height: .22rem; background: var(--md-default-fg-color--lightest); }
+#fa-progress span { display: block; height: 100%; background: var(--kurs-accent);
+  transition: width .25s; }
+#fa-body {
+  padding: 1rem 1.3rem; overflow: auto; flex: 1;
+  font-size: .8rem; line-height: 1.6;
+}
+#fa-body img { max-width: 100%; max-height: 58vh; display: block; margin: .6rem auto;
+  border-radius: .55rem; border: 1px solid var(--md-default-fg-color--lightest);
+  box-shadow: 0 2px 10px rgba(15, 30, 60, .1); }
+#fa-nav {
+  display: flex; gap: .6rem; padding: .7rem 1rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  align-items: center;
+}
+#fa-nav .fa-hint { flex: 1; font-size: .66rem; color: var(--md-default-fg-color--light); }
+.fa-nav-btn {
+  border: 0; cursor: pointer; border-radius: .5rem;
+  padding: .45rem 1rem; font-family: var(--md-text-font);
+  font-size: .74rem; font-weight: 600;
+}
+.fa-nav-btn.prev { background: var(--md-default-fg-color--lightest); color: var(--md-default-fg-color); }
+.fa-nav-btn.next { background: var(--kurs-accent); color: #fff; }
+.fa-nav-btn:disabled { opacity: .4; cursor: default; }
+
+/* ---- Karten-Grid (Startseite) etwas mehr Leben --------------------------- */
+.md-typeset .grid.cards > ul > li, .md-typeset .grid.cards > :is(a, div) {
+  border-radius: .8rem;
+  transition: transform .15s, box-shadow .15s;
+}
+.md-typeset .grid.cards > ul > li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(15, 30, 60, .13);
+  border-color: color-mix(in srgb, var(--kurs-accent) 45%, transparent);
+}
+
+/* ---- Schmale Fenster (Split-Screen neben ANSYS) -------------------------- */
+@media (max-width: 76.24em) {
+  .md-typeset { font-size: .76rem; }
+}
+
+/* ---- Aufgaben-Banner: das Ziel bleibt auf jeder Schritt-Seite sichtbar --- */
+.md-typeset .task-banner {
+  background: var(--kurs-accent-soft);
+  border-left: .22rem solid var(--kurs-accent);
+  border-radius: .55rem;
+  padding: .5rem .8rem;
+  margin: .8rem 0 1.1rem;
+  font-size: .72rem;
+}
+.md-typeset .task-banner p { margin: 0; }
+[data-md-color-scheme="slate"] .md-typeset .task-banner {
+  background: rgba(242, 98, 15, .12);
+}
+
+/* ---- Klickbare Stepper-Navigation auf Schritt-Seiten --------------------- */
+.wf-pagenav {
+  display: flex; align-items: flex-start;
+  margin: 1rem 0 1.4rem;
+  overflow-x: auto; padding-bottom: .3rem;
+}
+.wf-pstep {
+  display: flex; flex-direction: column; align-items: center; gap: .22rem;
+  min-width: 3.2rem; text-decoration: none;
+}
+.wf-pnum {
+  display: grid; place-items: center;
+  width: 1.7rem; height: 1.7rem; border-radius: 50%;
+  background: var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color--light);
+  font-size: .74rem; font-weight: 700;
+  transition: transform .12s;
+}
+.wf-pstep:hover .wf-pnum { transform: scale(1.12); }
+.wf-pstep.done .wf-pnum { background: #d7ecd9; color: #2e7d32; }
+.wf-pstep.active .wf-pnum {
+  background: var(--kurs-accent); color: #fff;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--kurs-accent) 22%, transparent);
+}
+.wf-plabel { font-size: .58rem; color: var(--md-default-fg-color--light); white-space: nowrap; }
+.wf-pstep.active .wf-plabel { color: var(--kurs-accent); font-weight: 700; }
+.wf-pline {
+  flex: 1 1 1.2rem; height: 2px; margin-top: .85rem; min-width: .5rem;
+  background: var(--md-default-fg-color--lightest);
+}
+.wf-pline.done { background: #a5d6a7; }
+
+/* ---- Titel-Feinschliff --------------------------------------------------- */
+.md-typeset h1 small { font-size: .55em; font-weight: 500; color: var(--md-default-fg-color--light); }
+.md-typeset .md-button { border-radius: .55rem; }
+
+/* ===========================================================================
+   V2 — cleaner: App-Canvas, flache Karten, ruhigere Chrome
+   =========================================================================== */
+
+/* Seiten-Canvas: Inhalt liegt als Karte auf leicht grauem Grund */
+[data-md-color-scheme="default"] {
+  --kurs-canvas: #f2f4f7;
+  --kurs-card: #ffffff;
+}
+[data-md-color-scheme="slate"] {
+  --kurs-canvas: #10151d;
+  --kurs-card: #1a2029;
+}
+body, .md-container, .md-main { background: var(--kurs-canvas); }
+.md-content { background: transparent; }
+.md-content__inner {
+  background: var(--kurs-card);
+  border-radius: 1rem;
+  padding: 1.4rem 2.2rem 2.2rem;
+  box-shadow: 0 1px 3px rgba(15, 30, 60, .06), 0 8px 30px rgba(15, 30, 60, .05);
+  margin-bottom: 1.2rem;
+}
+.md-content__inner::before { display: none; }
+[data-md-color-scheme="slate"] .md-content__inner {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 8px 30px rgba(0, 0, 0, .3);
+}
+@media (max-width: 48em) {
+  .md-content__inner { padding: 1rem 1rem 1.6rem; border-radius: .7rem; }
+}
+/* Admonition-Karten liegen auf der Karte: Schatten zurücknehmen */
+.md-typeset .admonition, .md-typeset details {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--md-default-fg-color) 7%, transparent);
+}
+
+/* Sidebar & TOC: leiser */
+.md-sidebar .md-nav__title { font-size: .62rem; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--md-default-fg-color--light); background: transparent; box-shadow: none; }
+.md-nav__item .md-nav__link { border-radius: .45rem; padding: .1rem .35rem; margin: 0 -.35rem; }
+.md-nav__link:hover { background: color-mix(in srgb, var(--md-default-fg-color) 6%, transparent); }
+.md-sidebar__scrollwrap { scrollbar-width: thin; }
+
+/* Buttons: gefüllt, rund, ruhig */
+.md-typeset .md-button {
+  border: 0;
+  background: color-mix(in srgb, var(--kurs-primary) 9%, var(--kurs-card));
+  color: var(--md-default-fg-color);
+  font-weight: 600;
+  border-radius: .6rem;
+  padding: .5em 1.1em;
+  transition: transform .12s, box-shadow .12s, background .12s;
+}
+.md-typeset .md-button:hover {
+  transform: translateY(-1px);
+  background: color-mix(in srgb, var(--kurs-primary) 15%, var(--kurs-card));
+  color: var(--md-default-fg-color);
+  border: 0;
+}
+.md-typeset .md-button--primary {
+  background: var(--kurs-accent); color: #fff;
+  box-shadow: 0 2px 10px rgba(220, 90, 20, .3);
+}
+.md-typeset .md-button--primary:hover { background: var(--kurs-accent); color: #fff; filter: brightness(1.07); }
+
+/* Tabellen: rahmenlos mit Zeilentrennern */
+.md-typeset table:not([class]) {
+  border: 0; border-radius: .6rem;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--md-default-fg-color) 9%, transparent);
+  font-size: .72rem;
+}
+.md-typeset table:not([class]) th {
+  background: color-mix(in srgb, var(--md-default-fg-color) 4%, transparent);
+  border: 0; font-weight: 650;
+}
+.md-typeset table:not([class]) td {
+  border-top: 1px solid color-mix(in srgb, var(--md-default-fg-color) 8%, transparent);
+}
+
+/* Fußnavigation (Zurück/Weiter) als Karten */
+.md-footer__link {
+  background: rgba(255, 255, 255, .06);
+  border-radius: .7rem;
+  margin: .6rem 0;
+}
+
+/* Überschrift: etwas größer, klare Hierarchie */
+.md-typeset h1 { font-size: 1.85em; margin-bottom: .8em; }
+.md-typeset h1 + .wf-pagenav { margin-top: .2rem; }
+
+/* Inline-Code ruhiger */
+.md-typeset code {
+  border-radius: .35rem;
+  background: color-mix(in srgb, var(--md-default-fg-color) 6%, transparent);
+  padding: .1em .4em;
+}
+
+/* Sidebar-Titel ohne weißen Kasten (liegt jetzt auf dem Canvas) */
+.md-sidebar .md-nav__title,
+.md-nav--primary .md-nav__title,
+.md-nav--lifted > .md-nav__list > .md-nav__item--active > .md-nav__link {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+/* Breadcrumb-Zeile: Scrollbar ausblenden */
+.md-path { scrollbar-width: none; }
+.md-path::-webkit-scrollbar { display: none; }
+nav.md-path { overflow-x: auto; }
+
+/* Breadcrumbs: eingedampft statt scrollend (Rest via modern-ui.js) */
+.md-path { overflow: visible; }
+.md-path__list { flex-wrap: wrap; }
+.md-path__list .md-path__item--collapsed { display: none !important; }
+.md-path__item--dots button {
+  border: 0; cursor: pointer;
+  background: color-mix(in srgb, var(--md-default-fg-color) 8%, transparent);
+  color: var(--md-default-fg-color--light);
+  border-radius: .4rem; padding: 0 .45rem;
+  font: inherit; line-height: 1.4;
+}
+.md-path__item--dots button:hover { background: color-mix(in srgb, var(--md-default-fg-color) 14%, transparent); }
+
+/* Varianten-Tabs (Aufgabe · a · b · c · Vergleich) über dem Stepper */
+.task-tabs {
+  display: inline-flex; flex-wrap: wrap; gap: .15rem;
+  background: color-mix(in srgb, var(--md-default-fg-color) 6%, transparent);
+  border-radius: .65rem; padding: .18rem;
+  margin: .7rem 0 .2rem;
+}
+.task-tab {
+  font-size: .66rem; font-weight: 600;
+  padding: .28rem .7rem; border-radius: .5rem;
+  color: var(--md-default-fg-color--light) !important;
+  text-decoration: none; white-space: nowrap;
+}
+.task-tab:hover { color: var(--md-default-fg-color) !important; }
+.task-tab.active {
+  background: var(--kurs-card);
+  color: var(--kurs-accent) !important;
+  box-shadow: 0 1px 4px rgba(15, 30, 60, .18);
+}
+.task-tabs + .wf-pagenav { margin-top: .5rem; }
+
+/* Breadcrumbs schweben über der Karte auf dem Canvas */
+.md-content > .md-path { margin: 0 0 .65rem .35rem; font-size: .68rem; }
+
+/* ===========================================================================
+   V3 — flache Boxen: Hairline statt Farbfläche, Farbe nur am Icon
+   =========================================================================== */
+.md-typeset .admonition, .md-typeset details {
+  background: var(--kurs-card);
+  border: 1px solid color-mix(in srgb, var(--md-default-fg-color) 11%, transparent);
+  border-left-width: 1px;
+  border-radius: .75rem;
+  box-shadow: none;
+}
+.md-typeset .admonition-title, .md-typeset summary {
+  background: transparent !important;
+  color: var(--md-default-fg-color) !important;
+  font-weight: 650;
+  padding-top: .7rem;
+  border-radius: .75rem .75rem 0 0;
+}
+/* Icon behält die Typ-Farbe (Material setzt ::before per Typ) — nur etwas
+   größer und mit rundem Chip-Hintergrund */
+.md-typeset .admonition-title::before, .md-typeset summary::before {
+  top: .68rem;
+}
+/* Typ-Akzent dezent als 3px-Strich links neben dem Titel statt Vollrahmen */
+.md-typeset .admonition, .md-typeset details { border-left: 1px solid color-mix(in srgb, var(--md-default-fg-color) 11%, transparent); }
+
+/* Aufgaben-Banner im gleichen flachen Stil */
+.md-typeset .task-banner {
+  background: var(--kurs-card);
+  border: 1px solid color-mix(in srgb, var(--kurs-accent) 35%, transparent);
+  border-left: 3px solid var(--kurs-accent);
+  border-radius: .75rem;
+}
+[data-md-color-scheme="slate"] .md-typeset .task-banner { background: var(--kurs-card); }
+
+/* Kurzanleitungs-Details: Chevron dezenter */
+.md-typeset details > summary::after { color: var(--md-default-fg-color--light); }
+
+/* ===========================================================================
+   V4 — rahmenlos: eine Geometrie für alle Boxen, Ton statt Rahmen
+   =========================================================================== */
+.md-typeset .admonition, .md-typeset details, .md-typeset .task-banner {
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: .75rem;
+  background: color-mix(in srgb, var(--md-default-fg-color) 4.5%, var(--kurs-card));
+}
+/* dezente Ton-Unterscheidung nur wo sie didaktisch trägt */
+.md-typeset .admonition.question, .md-typeset details.question {
+  background: color-mix(in srgb, var(--kurs-primary) 6%, var(--kurs-card));
+}
+.md-typeset .admonition.check, .md-typeset details.check,
+.md-typeset .admonition.success, .md-typeset details.success {
+  background: color-mix(in srgb, #2e7d32 7%, var(--kurs-card));
+}
+.md-typeset .admonition.warning, .md-typeset details.warning {
+  background: color-mix(in srgb, #e65100 8%, var(--kurs-card));
+}
+.md-typeset .task-banner {
+  background: color-mix(in srgb, var(--kurs-accent) 9%, var(--kurs-card));
+}
+/* Verschachtelte Boxen (z.B. Hinweis in einer Anleitung): gleiche Optik,
+   auf der Tonfläche leicht abgesetzt über die Kartenfarbe */
+.md-typeset details .admonition, .md-typeset .admonition .admonition {
+  background: var(--kurs-card);
+}
+
+/* Schritte in Kurzanleitungen: Nummern-Kreise im Stepper-Stil */
+.md-typeset details > ol { margin-left: 0; counter-reset: anl; }
+.md-typeset details > ol > li {
+  list-style: none;
+  counter-increment: anl;
+  position: relative;
+  padding-left: 2.15rem;
+  margin: 0 0 .9rem 0;
+}
+.md-typeset details > ol > li::before {
+  content: counter(anl);
+  position: absolute; left: 0; top: -.05rem;
+  width: 1.5rem; height: 1.5rem; border-radius: 50%;
+  display: grid; place-items: center;
+  background: color-mix(in srgb, var(--kurs-accent) 14%, var(--kurs-card));
+  color: var(--kurs-accent);
+  font-weight: 700; font-size: .68rem;
+}
+/* Gleiche Nummern-Kreise im Mitmach-Overlay gibt es über die Kopfzeile —
+   dort zeigt "Schritt x/y" die Position, Bilder sind identisch gerahmt */
+
+/* V4-Ton im Dark Mode kräftiger, sonst verschwinden die Flächen */
+[data-md-color-scheme="slate"] .md-typeset .admonition,
+[data-md-color-scheme="slate"] .md-typeset details {
+  background: color-mix(in srgb, #ffffff 6%, var(--kurs-card));
+}
+[data-md-color-scheme="slate"] .md-typeset .admonition.question,
+[data-md-color-scheme="slate"] .md-typeset details.question {
+  background: color-mix(in srgb, #6ea8e8 13%, var(--kurs-card));
+}
+[data-md-color-scheme="slate"] .md-typeset .admonition.check,
+[data-md-color-scheme="slate"] .md-typeset details.check,
+[data-md-color-scheme="slate"] .md-typeset .admonition.success,
+[data-md-color-scheme="slate"] .md-typeset details.success {
+  background: color-mix(in srgb, #66bb6a 13%, var(--kurs-card));
+}
+[data-md-color-scheme="slate"] .md-typeset .admonition.warning,
+[data-md-color-scheme="slate"] .md-typeset details.warning {
+  background: color-mix(in srgb, #ffa726 14%, var(--kurs-card));
+}
+[data-md-color-scheme="slate"] .md-typeset .task-banner {
+  background: color-mix(in srgb, var(--kurs-accent) 18%, var(--kurs-card));
+}
+[data-md-color-scheme="slate"] .md-typeset details .admonition,
+[data-md-color-scheme="slate"] .md-typeset .admonition .admonition {
+  background: var(--kurs-card);
+}
+
+/* ---- Schmal-Modus (Fenster neben ANSYS) ---------------------------------- */
+/* Stepper: scrollbar ohne sichtbare Schiene, aktiver Schritt wird per JS
+   in die Mitte gerückt */
+.wf-pagenav { scrollbar-width: none; }
+.wf-pagenav::-webkit-scrollbar { display: none; }
+.task-tabs { max-width: 100%; }
+/* Reset-Knopf im Header braucht auf schmalen Fenstern zu viel Platz */
+@media (max-width: 44em) {
+  .md-header .answer-reset-page { display: none !important; }
+}
+/* Overlay-Fußzeile: Tastatur-Hinweis weglassen, wenn es eng wird */
+@media (max-width: 40em) {
+  #fa-nav .fa-hint { display: none; }
+  #fa-card { width: 100vw; max-height: 96vh; border-radius: .7rem; }
+  #fa-body { padding: .8rem .9rem; }
+}
+
+/* ===========================================================================
+   V5 — vertikaler Rhythmus: eine Abstands-Skala für alle Blöcke
+   =========================================================================== */
+:root { --space-block: 1.5rem; }
+
+/* Blöcke atmen: Boxen, Bilder, Tabellen, Buttons auf einer Skala */
+.md-typeset .admonition, .md-typeset details, .md-typeset .task-banner {
+  margin-top: var(--space-block);
+  margin-bottom: var(--space-block);
+}
+.md-typeset .md-content__inner > p > img,
+.md-typeset .md-content__inner p > img:only-child {
+  margin: .4rem 0;
+}
+.md-typeset p { margin-block: .9em; }
+.md-typeset table:not([class]) { margin-block: var(--space-block); }
+.md-typeset .md-button { margin: .35rem .35rem 1rem 0; }
+
+/* Listen: Punkte nicht stapeln */
+.md-typeset ul > li, .md-typeset ol > li { margin-bottom: .45em; }
+.md-typeset li > p { margin-block: .4em; }
+
+/* Überschriften: klare Absätze zwischen Sektionen */
+.md-typeset h2 { margin-top: 2.8em; margin-bottom: .7em; }
+.md-typeset h3 { margin-top: 2.1em; margin-bottom: .55em; }
+.md-typeset h1 { margin-bottom: .5em; }
+
+/* Aufgaben-Kopfzeile: Tabs / Stepper / Banner mit Luft dazwischen */
+.task-tabs { margin: 1rem 0 .6rem; }
+.wf-pagenav { margin: 1.1rem 0 1.7rem; }
+.md-typeset .task-banner { margin-top: 0; margin-bottom: 1.7rem; padding: .6rem .95rem; }
+.wf-head { margin: 2.6rem 0 1.1rem; }
+
+/* Innenleben der Boxen: Titel und Inhalt nicht quetschen */
+.md-typeset .admonition-title, .md-typeset summary { margin-bottom: .35rem; }
+.md-typeset .admonition > :last-child, .md-typeset details > :last-child { margin-bottom: .9rem; }
+.md-typeset details > ol { margin-top: .6rem; }
+.md-typeset details > ol > li { margin-bottom: 1.1rem; }
+.fa-btn { margin: .5rem 0 .6rem; }
+
+/* Karte: etwas großzügigeres Innenpolster */
+.md-content__inner { padding: 1.7rem 2.4rem 2.6rem; }
+@media (max-width: 48em) {
+  .md-content__inner { padding: 1.1rem 1.1rem 1.8rem; }
+}
+
+/* Fußzeile (Weiter-Button) vom Inhalt absetzen */
+.md-typeset .md-button--primary:last-child { margin-top: 1.2rem; }
+
+/* Orts-Icons in Menüpfad-Chips (Reiter/Strukturbaum/Detailfenster/…) */
+.menu-path .mp-ic {
+  display: inline-block; width: .82rem; height: .82rem;
+  vertical-align: -.13rem; margin-right: .28rem;
+  color: var(--kurs-accent);
+}
+.menu-path .mp-ic svg { display: block; width: 100%; height: 100%; }
+
+/* Mitmach-Modus: Schrittfläche ist Klickziel zum Blättern */
+#fa-body { cursor: e-resize; }
+#fa-body a { cursor: pointer; }
+
+/* Aktions-Chip (Rechtsklick/Doppelklick): abgesetzt vom Ziel-Chip */
+.menu-path .mp-seg.mp-action {
+  background: color-mix(in srgb, var(--kurs-accent) 14%, var(--kurs-card));
+  border-color: color-mix(in srgb, var(--kurs-accent) 45%, transparent);
+  color: color-mix(in srgb, var(--kurs-accent) 75%, var(--md-default-fg-color));
+  font-weight: 650;
+  margin-right: .1rem;
+}
+
+/* ===========================================================================
+   V6 — Editorial: Serifen-Display für Überschriften, warme Textfarbe,
+   ruhigerer vertikaler Rhythmus.
+   Vorbild: lorenabarba.com (Merriweather-Überschriften 40/28/22 px auf
+   ~736 px Spalte, warmes Fast-Schwarz #181712, Sans nur für UI).
+   Hier: Source Serif 4 (variabel, lokal gevendort) für H1–H3,
+   Inter bleibt Lese- und UI-Schrift.
+   =========================================================================== */
+@font-face { font-family: "Source Serif 4"; font-style: normal; font-weight: 400 700;
+  font-display: swap;
+  src: url("../assets/fonts/source-serif-4-var.woff2") format("woff2"); }
+@font-face { font-family: "Source Serif 4"; font-style: italic; font-weight: 400 700;
+  font-display: swap;
+  src: url("../assets/fonts/source-serif-4-italic-var.woff2") format("woff2"); }
+
+:root { --kurs-serif: "Source Serif 4", Georgia, "Times New Roman", serif; }
+
+/* Warmes Fast-Schwarz statt neutralem Grau — wirkt gedruckter, weicher */
+[data-md-color-scheme="default"] {
+  --md-default-fg-color: rgba(29, 27, 22, .92);
+  --md-default-fg-color--light: rgba(29, 27, 22, .58);
+  --md-default-fg-color--lighter: rgba(29, 27, 22, .36);
+  --md-default-fg-color--lightest: rgba(29, 27, 22, .09);
+}
+
+/* Überschriften: Serifen-Display mit klarer Größentreppe */
+.md-typeset h1, .md-typeset h2, .md-typeset h3 {
+  font-family: var(--kurs-serif);
+  letter-spacing: 0;
+  color: var(--md-default-fg-color);
+}
+.md-typeset h1 {
+  font-size: 2.5em; font-weight: 640; line-height: 1.16;
+  margin: .35em 0 .5em;
+}
+.md-typeset h2 {
+  font-size: 1.6em; font-weight: 620; line-height: 1.25;
+  margin-top: 3em; margin-bottom: .6em;
+}
+.md-typeset h3 {
+  font-size: 1.18em; font-weight: 650; line-height: 1.35;
+  margin-top: 2.3em; margin-bottom: .55em;
+}
+.md-typeset h1 small { font-family: var(--md-text-font); font-size: .42em; }
+
+/* Lauftext: einen Hauch mehr Zeilenluft — liest sich ruhiger */
+.md-typeset { line-height: 1.7; }
+
+/* Lead-Absatz: der erste Absatz direkt nach der H1 als Einleitung */
+.md-typeset h1 + p {
+  font-size: .88rem; line-height: 1.65;
+  color: var(--md-default-fg-color--light);
+  margin-bottom: 1.6em;
+}
+
+/* Karte: großzügigeres Polster, Inhalt bekommt Rand zum Atmen */
+.md-content__inner { padding: 2.1rem 2.8rem 3rem; }
+@media (max-width: 48em) {
+  .md-content__inner { padding: 1.2rem 1.15rem 2rem; }
+  .md-typeset h1 { font-size: 2em; }
+}
+
+/* Trennlinien: Hairline mit viel Abstand (bewusste Pause) */
+.md-typeset hr {
+  border: 0; border-top: 1px solid var(--md-default-fg-color--lightest);
+  margin: 2.6rem 0;
+}
+
+/* Blockskala minimal weiter aufziehen */
+:root { --space-block: 1.6rem; }
+
+/* ===========================================================================
+   V7 — typografische Boxen & ruhige Navigation.
+   Statt gefüllter Karten: markantes Kapitälchen-Label + eingerückter Text
+   an einer feinen Regel-Linie. Weniger konkurrierende Element-Optiken,
+   der Inhalt fließt wieder. Sidebar ohne Icons, ohne Pill-Hintergründe.
+   =========================================================================== */
+
+/* -- Boxen: Label + Einzug statt Tonfläche -------------------------------- */
+.md-typeset .admonition, .md-typeset details {
+  background: transparent !important;
+  border-radius: 0;
+  border-left: 2px solid var(--md-default-fg-color--lightest) !important;
+  padding: .1rem 0 .1rem 1.1rem;
+}
+[data-md-color-scheme="slate"] .md-typeset .admonition,
+[data-md-color-scheme="slate"] .md-typeset details,
+[data-md-color-scheme="slate"] .md-typeset .admonition.question,
+[data-md-color-scheme="slate"] .md-typeset details.question,
+[data-md-color-scheme="slate"] .md-typeset .admonition.check,
+[data-md-color-scheme="slate"] .md-typeset details.check,
+[data-md-color-scheme="slate"] .md-typeset .admonition.success,
+[data-md-color-scheme="slate"] .md-typeset details.success,
+[data-md-color-scheme="slate"] .md-typeset .admonition.warning,
+[data-md-color-scheme="slate"] .md-typeset details.warning,
+[data-md-color-scheme="slate"] .md-typeset details .admonition,
+[data-md-color-scheme="slate"] .md-typeset .admonition .admonition {
+  background: transparent !important;
+}
+
+/* Titel wird zum Kapitälchen-Label — Icon fällt weg */
+.md-typeset .admonition-title, .md-typeset summary {
+  margin: 0 0 .5rem 0;
+  padding: 0 1.6rem 0 0 !important;
+  background: transparent !important;
+  font-family: var(--md-text-font);
+  font-size: .6rem;
+  font-weight: 750;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--md-default-fg-color--light) !important;
+  position: relative;
+}
+.md-typeset .admonition-title::before, .md-typeset summary::before {
+  display: none;
+}
+.md-typeset details > summary::after { top: -.1rem; right: 0; }
+
+/* Didaktische Farbe nur noch in Label + Regel-Linie */
+.md-typeset .admonition.question, .md-typeset details.question {
+  border-left-color: color-mix(in srgb, var(--kurs-primary) 40%, transparent) !important;
+}
+.md-typeset .question > .admonition-title, .md-typeset .question > summary {
+  color: var(--kurs-primary) !important;
+}
+.md-typeset .admonition.check, .md-typeset details.check,
+.md-typeset .admonition.success, .md-typeset details.success {
+  border-left-color: rgba(46, 125, 50, .45) !important;
+}
+.md-typeset :is(.check, .success) > .admonition-title,
+.md-typeset :is(.check, .success) > summary {
+  color: #2e7d32 !important;
+}
+.md-typeset .admonition.warning, .md-typeset details.warning {
+  border-left-color: rgba(230, 81, 0, .5) !important;
+}
+.md-typeset .warning > .admonition-title, .md-typeset .warning > summary {
+  color: #b45309 !important;
+}
+[data-md-color-scheme="slate"] .md-typeset .question > .admonition-title,
+[data-md-color-scheme="slate"] .md-typeset .question > summary { color: #8ab4e8 !important; }
+[data-md-color-scheme="slate"] .md-typeset :is(.check, .success) > .admonition-title,
+[data-md-color-scheme="slate"] .md-typeset :is(.check, .success) > summary { color: #81c784 !important; }
+[data-md-color-scheme="slate"] .md-typeset .warning > .admonition-title,
+[data-md-color-scheme="slate"] .md-typeset .warning > summary { color: #ffb74d !important; }
+
+/* Innenraum: normale Absatzruhe statt Karten-Polster */
+.md-typeset .admonition > :last-child, .md-typeset details > :last-child {
+  margin-bottom: .3rem;
+}
+.md-typeset details > ol { margin-top: .4rem; }
+
+/* Aufgaben-Banner folgt derselben Sprache: orange Regel, kein Ton */
+.md-typeset .task-banner {
+  background: transparent !important;
+  border-left: 2px solid var(--kurs-accent) !important;
+  border-radius: 0;
+  padding: .15rem 0 .15rem 1.1rem;
+}
+[data-md-color-scheme="slate"] .md-typeset .task-banner { background: transparent !important; }
+
+/* Tabellen: offene Hairline-Tabelle statt Kasten */
+.md-typeset table:not([class]) {
+  box-shadow: none;
+  border-radius: 0;
+  border-top: 1.5px solid color-mix(in srgb, var(--md-default-fg-color) 35%, transparent);
+  border-bottom: 1.5px solid color-mix(in srgb, var(--md-default-fg-color) 35%, transparent);
+}
+.md-typeset table:not([class]) th {
+  background: transparent;
+  font-size: .62rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--md-default-fg-color--light);
+}
+
+/* Sekundär-Buttons als Ghost — nur der primäre Weiter-Button bleibt gefüllt */
+.md-typeset .md-button:not(.md-button--primary) {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--md-default-fg-color) 22%, transparent);
+}
+.md-typeset .md-button:not(.md-button--primary):hover {
+  background: color-mix(in srgb, var(--md-default-fg-color) 5%, transparent);
+  transform: none;
+}
+
+/* -- Sidebar: Icons raus, Pills raus, Typo-Ordnung rein -------------------- */
+.md-sidebar--primary .md-nav__link > svg { display: none; }
+.md-nav__link--active {
+  background: transparent;
+  font-weight: 650;
+  color: var(--kurs-accent);
+}
+.md-sidebar--primary { font-size: .68rem; }
+.md-sidebar--primary .md-nav__link { padding: .16rem .35rem; }
+/* Kontext-Kopf der Sektion (lifted): gleiches Kapitälchen-Label wie Rest */
+.md-nav--lifted > .md-nav__list > .md-nav__item--active > .md-nav__link {
+  font-size: .6rem;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  font-weight: 750;
+  color: var(--md-default-fg-color--light);
+}
+.md-sidebar--primary .md-nav__item--section { margin-top: .9rem; }
+/* Der Sektions-Kopf ist bei Material sticky — er braucht deckenden Grund,
+   sonst schieben sich die Einträge beim Scrollen sichtbar darunter durch */
+.md-nav--lifted > .md-nav__list > .md-nav__item--active > .md-nav__link {
+  background: var(--kurs-canvas) !important;
+  z-index: 2;
+}
+.md-nav__item .md-nav__link--active,
+.md-nav__item .md-nav__link--active code {
+  color: var(--kurs-accent);
+}
+/* Sektions-Labels (ABSTRAKTIONEN, VERNETZUNG, …) gleich leise wie der Kopf */
+.md-sidebar--primary .md-nav__item--section > .md-nav__link {
+  font-size: .6rem;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  font-weight: 750;
+  color: var(--md-default-fg-color--light);
+}
+
+/* Details-Chevron erbt die Labelfarbe */
+.md-typeset details > summary::after { background-color: currentColor !important; }
+
+/* ===========================================================================
+   V7.1 — Aufgaben-Navigation in derselben typografischen Logik
+   =========================================================================== */
+
+/* Schritt-Stepper: nummerierte Textzeile statt Kreis-Kette.
+   erledigt = normal, aktiv = Akzent, offen = ausgegraut */
+.wf-pagenav {
+  align-items: baseline;
+  gap: .7rem;
+  margin: .55rem 0 2rem;
+  /* Ebene 2: Schritte sind Kinder der aktiven Variante darüber —
+     gleicher Einzug an Regel-Linie wie bei den Boxen */
+  padding-left: 1rem;
+  border-left: 2px solid var(--md-default-fg-color--lightest);
+}
+.wf-pstep {
+  flex-direction: row;
+  align-items: baseline;
+  gap: .28rem;
+  min-width: 0;
+}
+.wf-pnum {
+  display: inline;
+  width: auto; height: auto;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--md-default-fg-color--lighter);
+  font-size: .58rem;
+  font-weight: 650;
+  transition: none;
+}
+.wf-pstep:hover .wf-pnum { transform: none; }
+.wf-plabel { font-size: .63rem; color: var(--md-default-fg-color--lighter); }
+.wf-pstep.done .wf-pnum, .wf-pstep.done .wf-plabel { color: var(--md-default-fg-color--light); }
+.wf-pstep:hover .wf-plabel, .wf-pstep:hover .wf-pnum { color: var(--md-default-fg-color); }
+.wf-pstep.active .wf-pnum,
+.wf-pstep.active .wf-plabel { color: var(--kurs-accent); font-weight: 650; }
+.wf-pline { display: none; }
+
+/* Schritt-Kopf in Anleitungen (Fortschrittsbalken + Nummer + Titel):
+   Serifen-Titel, Akzent-Nummer ohne Kreis, Balken als 2px-Linie */
+.wf-track { gap: .3rem; margin-bottom: .65rem; }
+.wf-dot { height: 2px; border-radius: 1px; }
+.wf-num {
+  width: auto; height: auto;
+  background: transparent;
+  color: var(--kurs-accent);
+  font-family: var(--kurs-serif);
+  font-size: 1.05rem;
+  font-weight: 650;
+}
+.wf-title {
+  font-family: var(--kurs-serif);
+  font-size: 1.05rem;
+  font-weight: 650;
+  letter-spacing: 0;
+}
+.wf-tool { font-family: var(--md-text-font); }
+
+/* Varianten-Tabs: Text mit Akzent-Unterstrich statt grauem Pill-Container */
+.task-tabs {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  gap: 1.1rem;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  display: flex;
+  margin: 1.2rem 0 .8rem;
+}
+.task-tab {
+  padding: .3rem 0 .45rem;
+  border-radius: 0;
+  font-size: .7rem;
+  margin-bottom: -1px;
+  border-bottom: 2px solid transparent;
+}
+.task-tab.active {
+  background: transparent;
+  box-shadow: none;
+  border-bottom-color: var(--kurs-accent);
+}
+
+/* ===========================================================================
+   V7.2 — Sidebar: reine Textnavigation
+   Grundzustand leise, Hover dunkel, aktiv Akzent — keine Kästen, Chevrons klein
+   =========================================================================== */
+.md-sidebar--primary .md-nav__link {
+  color: var(--md-default-fg-color--light);
+}
+.md-sidebar--primary .md-nav__link:hover {
+  color: var(--md-default-fg-color);
+  background: transparent;
+}
+.md-sidebar--primary .md-nav__item .md-nav__link--active,
+.md-sidebar--primary .md-nav__item .md-nav__link--active:hover {
+  color: var(--kurs-accent);
+}
+.md-sidebar--primary .md-nav__icon { opacity: .4; }
+.md-sidebar--primary .md-nav__link:hover .md-nav__icon { opacity: .8; }
+.md-sidebar--primary .md-nav__item { line-height: 1.45; }
+/* TOC rechts gleich behandeln */
+.md-sidebar--secondary .md-nav__link { color: var(--md-default-fg-color--light); }
+.md-sidebar--secondary .md-nav__link:hover { color: var(--md-default-fg-color); background: transparent; }
+.md-sidebar--secondary .md-nav__link--active { color: var(--kurs-accent); }
+
+/* ===========================================================================
+   V7.3 — Weiter-Buttons leiser: Akzent-Tonfläche statt Vollorange
+   =========================================================================== */
+.md-typeset .md-button--primary {
+  background: color-mix(in srgb, var(--kurs-accent) 11%, var(--kurs-card));
+  color: color-mix(in srgb, var(--kurs-accent) 82%, var(--md-default-fg-color));
+  box-shadow: none;
+}
+.md-typeset .md-button--primary:hover {
+  background: color-mix(in srgb, var(--kurs-accent) 19%, var(--kurs-card));
+  color: color-mix(in srgb, var(--kurs-accent) 82%, var(--md-default-fg-color));
+  filter: none;
+}
+[data-md-color-scheme="slate"] .md-typeset .md-button--primary {
+  background: color-mix(in srgb, var(--kurs-accent) 22%, var(--kurs-card));
+  color: #ffb27d;
+}
+[data-md-color-scheme="slate"] .md-typeset .md-button--primary:hover {
+  background: color-mix(in srgb, var(--kurs-accent) 30%, var(--kurs-card));
+  color: #ffc79e;
+}
+/* Mitmach-Knopf in derselben leisen Tonlage */
+.fa-btn {
+  background: color-mix(in srgb, var(--kurs-accent) 11%, var(--kurs-card));
+  color: color-mix(in srgb, var(--kurs-accent) 82%, var(--md-default-fg-color));
+  box-shadow: none;
+}
+.fa-btn:hover {
+  filter: none;
+  background: color-mix(in srgb, var(--kurs-accent) 19%, var(--kurs-card));
+}
+[data-md-color-scheme="slate"] .fa-btn {
+  background: color-mix(in srgb, var(--kurs-accent) 22%, var(--kurs-card));
+  color: #ffb27d;
+}
+
+/* ===========================================================================
+   V7.4 — Inhaltsverzeichnis rechts global aus (Seiten sind kurz),
+   der Inhalt bekommt die freie Breite
+   =========================================================================== */
+.md-sidebar--secondary { display: none !important; }
+@media (min-width: 76.25em) {
+  .md-content { max-width: 52rem; margin-left: auto; margin-right: auto; }
+}
+
+/* ===========================================================================
+   V7.5 — Klick-Aktion + Ziel als eine zusammengesetzte Pille
+   [🖱 Rechtsklick | Geometry] — der Klick "umschließt" sein Ziel, statt nur
+   davor zu stehen. Zwei Kammern in einem gemeinsamen Akzent-Rahmen.
+   =========================================================================== */
+.menu-path .mp-click {
+  display: inline-flex;
+  align-items: stretch;
+  vertical-align: baseline;
+}
+/* Aktions-Kammer: links, angeschlossen (rechts eckig), rechte Kante = Naht */
+.menu-path .mp-click .mp-action {
+  margin-right: 0;
+  border-radius: .4rem 0 0 .4rem;
+  border-right: 1px solid color-mix(in srgb, var(--kurs-accent) 45%, transparent);
+}
+/* Ziel-Kammer: rechts, angeschlossen (links eckig, keine Doppelkante),
+   Rahmen in Akzentfarbe, damit die ganze Pille als Einheit wirkt */
+.menu-path .mp-click .mp-seg:last-child {
+  border-radius: 0 .4rem .4rem 0;
+  border-left: 0;
+  border-color: color-mix(in srgb, var(--kurs-accent) 45%, transparent);
+}
+[data-md-color-scheme="slate"] .menu-path .mp-click .mp-action {
+  border-right-color: rgba(255, 138, 61, .5);
+}
+[data-md-color-scheme="slate"] .menu-path .mp-click .mp-seg:last-child {
+  border-color: rgba(255, 138, 61, .5);
+}
+
+/* ===========================================================================
+   V8 — Startseite: Praktika als editoriale Zeilen-Liste
+   Serifen-Nummer · Kapitälchen-Label · Serifen-Titel · Kurzbeschreibung ·
+   Mini-Vorschau — getrennt durch Hairlines, Hover in Akzentfarbe
+   =========================================================================== */
+.md-typeset .prakt-list { margin: .8rem 0 2rem; }
+.md-typeset a.prakt-row {
+  display: flex; align-items: center; gap: 1.15rem;
+  padding: 1rem .25rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+}
+.md-typeset .prakt-list a.prakt-row:last-of-type {
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+.prakt-num {
+  flex: none; width: 2.3rem; text-align: center;
+  font-family: var(--kurs-serif);
+  font-size: 1.9rem; font-weight: 620; line-height: 1;
+  color: var(--md-default-fg-color--lighter);
+  transition: color .15s;
+}
+.prakt-body { flex: 1; min-width: 0; display: block; }
+.prakt-label {
+  display: block;
+  font-size: .58rem; font-weight: 750;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--md-default-fg-color--light);
+  margin-bottom: .12rem;
+}
+.prakt-title {
+  display: block;
+  font-family: var(--kurs-serif);
+  font-size: 1.05rem; font-weight: 650; line-height: 1.3;
+  transition: color .15s;
+}
+.prakt-desc {
+  display: block;
+  font-size: .68rem; line-height: 1.5;
+  color: var(--md-default-fg-color--light);
+  margin-top: .18rem;
+}
+.md-typeset img.prakt-thumb {
+  flex: none; width: 5.6rem; height: 3.7rem;
+  object-fit: cover; object-position: center;
+  border-radius: .45rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  margin: 0;
+}
+.prakt-arrow {
+  flex: none;
+  color: var(--md-default-fg-color--lighter);
+  font-weight: 700;
+  transition: color .15s, transform .15s;
+}
+.md-typeset a.prakt-row:hover .prakt-title,
+.md-typeset a.prakt-row:hover .prakt-num { color: var(--kurs-accent); }
+.md-typeset a.prakt-row:hover .prakt-arrow {
+  color: var(--kurs-accent);
+  transform: translateX(4px);
+}
+@media (max-width: 40em) {
+  .md-typeset img.prakt-thumb { display: none; }
+  .prakt-num { width: 1.6rem; font-size: 1.5rem; }
+}
+
+/* FAQ: leise Textzeile statt Karte */
+.md-typeset a.home-faq {
+  display: block;
+  margin: 0 0 1.6rem;
+  padding: .55rem .25rem;
+  font-size: .72rem;
+  color: var(--md-default-fg-color--light);
+  text-decoration: none;
+}
+.md-typeset a.home-faq:hover { color: var(--kurs-accent); }
+
+/* Dozenten: kompakte Porträt-Zeilen statt Karten */
+.md-typeset .doz-list {
+  display: flex; flex-wrap: wrap; gap: .8rem 2.6rem;
+  margin: 1rem 0 1.4rem;
+}
+.md-typeset a.doz-item {
+  display: flex; align-items: center; gap: .75rem;
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+}
+.md-typeset a.doz-item img {
+  width: 4.2rem; height: 4.2rem;
+  object-fit: cover; object-position: center top;
+  border-radius: 50%;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  margin: 0;
+  box-shadow: none;
+}
+.doz-body { display: block; }
+.doz-name { display: block; font-size: .74rem; font-weight: 650; }
+.doz-mail {
+  display: block;
+  font-size: .64rem;
+  color: var(--md-default-fg-color--light);
+  margin-top: .1rem;
+}
+.md-typeset a.doz-item:hover .doz-name { color: var(--kurs-accent); }
+
+/* ===========================================================================
+   V9 — Schritt-für-Schritt-Anleitungen: klar erkennbar aufklappbar,
+   Schritte als Timeline (Nummern-Kreise bleiben), Bilder sauber gesetzt
+   =========================================================================== */
+
+/* Aufklapp-Signal: Akzent-Chevron direkt hinter dem Label (dreht beim
+   Öffnen), Hover hebt die Zeile leicht an — statt des unsichtbaren Pfeils
+   irgendwo rechts */
+.md-typeset details > summary {
+  padding-right: 0 !important;
+}
+.md-typeset details > summary::after {
+  position: static !important;
+  display: inline-block;
+  width: .9rem; height: .9rem;
+  margin-left: .25rem;
+  vertical-align: -.22rem;
+  background-color: var(--kurs-accent) !important;
+  transform: rotate(0deg);
+  transition: transform .2s;
+}
+.md-typeset details[open] > summary::after { transform: rotate(90deg); }
+.md-typeset details > summary:hover {
+  background: color-mix(in srgb, var(--md-default-fg-color) 4%, transparent) !important;
+  border-radius: .3rem;
+}
+
+/* Timeline: feine Linie verbindet die Nummern-Kreise der Schritte */
+.md-typeset details > ol > li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: .72rem;
+  top: 1.65rem;
+  bottom: -1rem;
+  width: 1px;
+  background: color-mix(in srgb, var(--kurs-accent) 28%, transparent);
+}
+
+/* Bilder in Schritten: eigene Zeile, bündig zum Text, begrenzt hoch */
+.md-typeset details > ol > li img {
+  display: block;
+  margin: .55rem 0 .3rem;
+  max-width: 100%;
+  max-height: 22rem;
+  width: auto;
+  border-radius: .5rem;
+}
+/* Text in Schritten nicht stapeln */
+.md-typeset details > ol > li > p { margin-block: .35em; }
+

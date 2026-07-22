@@ -26,64 +26,75 @@ hide:
   </div>
 </section>
 
-<div class="grid cards" markdown>
+## Die Praktika
 
--   <a class="card-link" href="P1_Einfuehrung/">
-        __Praktikum 1<br>:material-rocket-launch: Einführung in ANSYS Workbench__{ .xxxl .middle .center }
-        <figure style="text-align:center;">
-          <img src="P1_Einfuehrung/01_Grundlagen/images/Uebersicht.png" alt="Einführung" width="400" class="no-lightbox">
-        </figure>
-    </a>
-
--   <a class="card-link" href="P2_Geometrie_Randbedingungen/">
-        __Praktikum 2<br>:material-cube: Geometrieaufbereitung, Lagerung und Lasten__{ .xxxl .middle .center }
-        <figure style="text-align:center;">
-          <img src="P2_Geometrie_Randbedingungen/02_Lagerungen/images/Lager.png" alt="Lager" width="400" class="no-lightbox">
-        </figure>
-    </a>
-
--   <a class="card-link" href="P3_Vernetzung/">
-        __Praktikum 3<br>:material-cube-unfolded: Vernetzung__{ .xxxl .middle .center }
-        <figure style="text-align:center;">
-          <img src="P3_Vernetzung/01_Grundlagen/images/Netzverfeinerung.excalidraw.png" alt="Netzverfeinerung" width="400" class="no-lightbox">
-        </figure>
-    </a>
-
--   <a class="card-link" href="P4_Abstraktionen/">
-        __Praktikum 4<br>:material-video-2d: Abstraktionen__{ .xxxl .middle .center }
-        <figure style="text-align:center;">
-          <img src="P4_Abstraktionen/Praktikum04.excalidraw.png" alt="Abstraktionen" width="400" class="no-lightbox">
-        </figure>
-    </a>
-    
--   <a class="card-link" href="00_FAQ/">
-    __:material-frequently-asked-questions: FAQ__
-    <br><br>Antworten auf häufig gestellte Fragen
-    </a>
+<div class="prakt-list">
+  <a class="prakt-row" href="P1_Einfuehrung/">
+    <span class="prakt-num">1</span>
+    <span class="prakt-body">
+      <span class="prakt-label">Praktikum 1</span>
+      <span class="prakt-title">Einführung in ANSYS Workbench</span>
+      <span class="prakt-desc">Oberfläche, Projektaufbau und die erste eigene Simulation.</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="P1_Einfuehrung/01_Grundlagen/images/Uebersicht.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="P2_Geometrie_Randbedingungen/">
+    <span class="prakt-num">2</span>
+    <span class="prakt-body">
+      <span class="prakt-label">Praktikum 2</span>
+      <span class="prakt-title">Geometrieaufbereitung, Lagerung und Lasten</span>
+      <span class="prakt-desc">Geometrie vorbereiten, Lagerungen und Lasten richtig anbringen.</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="P2_Geometrie_Randbedingungen/02_Lagerungen/images/Lager.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="P3_Vernetzung/">
+    <span class="prakt-num">3</span>
+    <span class="prakt-body">
+      <span class="prakt-label">Praktikum 3</span>
+      <span class="prakt-title">Vernetzung</span>
+      <span class="prakt-desc">Netze erstellen, verfeinern und ihre Qualität beurteilen.</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="P3_Vernetzung/01_Grundlagen/images/Netzverfeinerung.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="P4_Abstraktionen/">
+    <span class="prakt-num">4</span>
+    <span class="prakt-body">
+      <span class="prakt-label">Praktikum 4</span>
+      <span class="prakt-title">Abstraktionen</span>
+      <span class="prakt-desc">Vollmodell, Symmetrie, 2D und Balken — das passende Modell wählen.</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="P4_Abstraktionen/Praktikum04.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
 </div>
 
-
-
+<a class="home-faq" href="00_FAQ/">Fragen? Antworten auf die häufigsten gibt es im <strong>FAQ</strong> →</a>
 
 ## Dozenten
 
-<div class="grid cards" markdown>
-
--  <a class="card-link" href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/18448121873/CourseNode/1633401058120725004" target="_blank" rel="noopener noreferrer">
- <img src="assets/people/Felix_Kaule.jpg" alt="Felix Kaule" class="no-lightbox" />
-  **M.Eng. Felix Kaule**  
-  Felix(dot)Kaule(at)htwk-leipzig.de
+<div class="doz-list">
+  <a class="doz-item" href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/18448121873/CourseNode/1633401058120725004" target="_blank" rel="noopener noreferrer">
+    <img src="assets/people/Felix_Kaule.jpg" alt="Felix Kaule" class="no-lightbox">
+    <span class="doz-body">
+      <span class="doz-name">M.Eng. Felix Kaule</span>
+      <span class="doz-mail">Felix(dot)Kaule(at)htwk-leipzig.de</span>
+    </span>
   </a>
-
-- <a class="card-link" href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/18448121873/CourseNode/1760236690964595011" target="_blank" rel="noopener noreferrer"> 
-<img src="assets/people/Klaus_Schneller.jpeg" alt="Klaus Schneller" class="no-lightbox" />
-  **M.Eng. Klaus Schneller**  
-  Klaus(dot)Schneller(at)htwk-leipzig(.)de
+  <a class="doz-item" href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/18448121873/CourseNode/1760236690964595011" target="_blank" rel="noopener noreferrer">
+    <img src="assets/people/Klaus_Schneller.jpeg" alt="Klaus Schneller" class="no-lightbox">
+    <span class="doz-body">
+      <span class="doz-name">M.Eng. Klaus Schneller</span>
+      <span class="doz-mail">Klaus(dot)Schneller(at)htwk-leipzig(.)de</span>
+    </span>
   </a>
-
-- <a class="card-link" href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/18448121873/CourseNode/98344428551217" target="_blank" rel="noopener noreferrer"> 
-<img src="assets/people/Stephan_Schoenfelder.png" alt="Prof. Dr.-Ing. Stephan Schönfelder" class="no-lightbox" />
-  **Prof. Dr.-Ing. Stephan Schönfelder**  
-  Stephan(dot)Schoenfelder(at)htwk-leipzig.de
+  <a class="doz-item" href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/18448121873/CourseNode/98344428551217" target="_blank" rel="noopener noreferrer">
+    <img src="assets/people/Stephan_Schoenfelder.png" alt="Prof. Dr.-Ing. Stephan Schönfelder" class="no-lightbox">
+    <span class="doz-body">
+      <span class="doz-name">Prof. Dr.-Ing. Stephan Schönfelder</span>
+      <span class="doz-mail">Stephan(dot)Schoenfelder(at)htwk-leipzig.de</span>
+    </span>
   </a>
 </div>
