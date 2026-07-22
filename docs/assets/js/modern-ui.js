@@ -26,9 +26,12 @@
     reiter: '<svg viewBox="0 0 24 24"><path d="M3 7h6l2-2.5h10V19H3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
     baum: '<svg viewBox="0 0 24 24"><path d="M6 4v13a2 2 0 0 0 2 2h4M6 9h6M10 14h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="6" cy="4" r="2" fill="currentColor"/></svg>',
     detail: '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 4v16" stroke="currentColor" stroke-width="2"/><path d="M12 9h6M12 13h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
-    maus: '<svg viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3v6" stroke="currentColor" stroke-width="2"/><path d="M12 3h5a5 5 0 0 1 0 6h-5z" fill="currentColor"/></svg>',
-    mausL: '<svg viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3v6" stroke="currentColor" stroke-width="2"/><path d="M12 3H7a5 5 0 0 0 0 6h5z" fill="currentColor"/></svg>',
-    mausD: '<svg viewBox="0 0 24 24"><rect x="8" y="4" width="10" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13 4v6" stroke="currentColor" stroke-width="2"/><path d="M13 4H8a5 5 0 0 0 0 6h5z" fill="currentColor"/><path d="M5.2 5.8A5.5 5.5 0 0 1 6.9 2.9M2.5 4.6A8.6 8.6 0 0 1 5 1.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+    // Rechtsklick: Maus mit voll gefüllter rechter Taste
+    maus: '<svg viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="5.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 3v6.3" stroke="currentColor" stroke-width="1.4"/><path d="M12 3.4h4.1a4.7 4.7 0 0 1 1.4 5.9H12z" fill="currentColor"/></svg>',
+    // Linksklick: Maus mit voll gefüllter linker Taste
+    mausL: '<svg viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="5.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 3v6.3" stroke="currentColor" stroke-width="1.4"/><path d="M12 3.4H7.9a4.7 4.7 0 0 0-1.4 5.9H12z" fill="currentColor"/></svg>',
+    // Doppelklick: linke Taste gefüllt + „2"-Badge — unmissverständlich
+    mausD: '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="10" height="16.5" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 5.5v5.6" stroke="currentColor" stroke-width="1.4"/><path d="M8 5.9H4.6a4.3 4.3 0 0 0-1.3 5.2H8z" fill="currentColor"/><circle cx="18" cy="6" r="5.4" fill="currentColor"/><text x="18" y="9.15" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="8.4" font-weight="700" fill="var(--kurs-card)">2</text></svg>',
     grafik: '<svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 21h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M5 14l4-4 3 3 4-5 3 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>'
   };
 
@@ -44,8 +47,49 @@
     return null;
   }
 
+  // Vorsatz-Wörter, die sich mit dem folgenden Ziel zu EINER Pille verbinden:
+  // Klick-Aktionen (orange) und Orte (blau). cls='act'|'loc' steuert die Optik,
+  // merge=true zieht bei alleinstehendem Ort das nächste Pfad-Segment als Ziel
+  // heran (z.B. `Strukturbaum → Mesh` → [Strukturbaum | Mesh]).
+  var MP_PREFIX = [
+    { kw: 'Rechtsklick',  icon: 'maus',   cls: 'act', merge: false },
+    { kw: 'Doppelklick',  icon: 'mausD',  cls: 'act', merge: false },
+    { kw: 'Linksklick',   icon: 'mausL',  cls: 'act', merge: false },
+    { kw: 'Reiter',       icon: 'reiter', cls: 'loc', merge: true },
+    { kw: 'Strukturbaum', icon: 'baum',   cls: 'loc', merge: true },
+    { kw: 'Detailfenster',icon: 'detail', cls: 'loc', merge: true },
+    { kw: 'Grafikfenster',icon: 'grafik', cls: 'loc', merge: true }
+  ];
+
+  // Liefert {def, rest} wenn label mit einem Vorsatz-Wort beginnt; rest ist das
+  // Ziel im selben Segment (Leerzeichen-Form) bzw. '' wenn nur das Wort dasteht.
+  function prefixFor(label) {
+    for (var k = 0; k < MP_PREFIX.length; k++) {
+      var kw = MP_PREFIX[k].kw;
+      if (label === kw) return { def: MP_PREFIX[k], rest: '' };
+      if (label.indexOf(kw + ' ') === 0)
+        return { def: MP_PREFIX[k], rest: label.slice(kw.length + 1).trim() };
+    }
+    return null;
+  }
+
   // Einzelbegriffe ohne Pfeil, die trotzdem als Ort-Chip erscheinen sollen
   var MP_SOLO = /^(Reiter |Rechtsklick|Doppelklick|Linksklick|Strukturbaum|Detailfenster|Grafikfenster)/;
+
+  // Ein einfaches Ziel-Chip rendern (mit Ort-Icon, falls es selbst ein Ort ist)
+  function renderPlain(label) {
+    var seg = document.createElement('span');
+    seg.className = 'mp-seg';
+    var kind = mpKind(label);
+    if (kind) {
+      seg.classList.add('mp-' + kind);
+      seg.innerHTML = '<i class="mp-ic">' + MP_ICONS[kind] + '</i>';
+      seg.appendChild(document.createTextNode(label));
+    } else {
+      seg.textContent = label;
+    }
+    return seg;
+  }
 
   function menuPathChips(root) {
     var codes = root.querySelectorAll('p > code, li > code, td > code, summary > code');
@@ -57,44 +101,43 @@
       var parts = t.split('→');
       var span = document.createElement('span');
       span.className = 'menu-path';
+      var first = true;
       for (var p = 0; p < parts.length; p++) {
-        if (p > 0) {
+        var label = parts[p].trim();
+        var pf = prefixFor(label);
+        var node;
+        if (pf) {
+          var rest = pf.rest;
+          // alleinstehender Ort (Pfeil-Form): nächstes Segment als Ziel ziehen
+          if (!rest && pf.def.merge && p + 1 < parts.length) {
+            rest = parts[p + 1].trim();
+            p++;
+          }
+          if (rest) {
+            // zusammengesetzte Pille: [Icon Wort | Ziel]
+            node = document.createElement('span');
+            node.className = 'mp-click mp-click--' + pf.def.cls;
+            var pre = document.createElement('span');
+            pre.className = 'mp-seg mp-' + (pf.def.cls === 'act' ? 'action' : 'loc');
+            pre.innerHTML = '<i class="mp-ic">' + MP_ICONS[pf.def.icon] + '</i>';
+            pre.appendChild(document.createTextNode(pf.def.kw));
+            node.appendChild(pre);
+            node.appendChild(renderPlain(rest));
+          } else {
+            // nur das Wort (z.B. `Detailfenster` allein) → Ort-Chip mit Icon
+            node = renderPlain(pf.def.kw);
+          }
+        } else {
+          node = renderPlain(label);
+        }
+        if (!first) {
           var ar = document.createElement('span');
           ar.className = 'mp-arrow';
           ar.textContent = '→';
           span.appendChild(ar);
         }
-        var label = parts[p].trim();
-        // "Rechtsklick X": Aktion und Ziel werden zu EINER zusammengesetzten
-        // Pille verbunden — [🖱 Rechtsklick | X] — damit sichtbar ist, worauf
-        // sich der Klick bezieht. Eigenes Maus-Icon je Klick-Art.
-        var target = span;
-        var m = label.match(/^(Rechtsklick|Doppelklick|Linksklick)\s+(.+)$/);
-        if (m) {
-          var actIcon = m[1] === 'Rechtsklick' ? 'maus' :
-                        m[1] === 'Doppelklick' ? 'mausD' : 'mausL';
-          var group = document.createElement('span');
-          group.className = 'mp-click';
-          var act = document.createElement('span');
-          act.className = 'mp-seg mp-action';
-          act.innerHTML = '<i class="mp-ic">' + MP_ICONS[actIcon] + '</i>';
-          act.appendChild(document.createTextNode(m[1]));
-          group.appendChild(act);
-          span.appendChild(group);
-          target = group;
-          label = m[2];
-        }
-        var seg = document.createElement('span');
-        seg.className = 'mp-seg';
-        var kind = mpKind(label);
-        if (kind) {
-          seg.classList.add('mp-' + kind);
-          seg.innerHTML = '<i class="mp-ic">' + MP_ICONS[kind] + '</i>';
-          seg.appendChild(document.createTextNode(label));
-        } else {
-          seg.textContent = label;
-        }
-        target.appendChild(seg);
+        first = false;
+        span.appendChild(node);
       }
       c.parentNode.replaceChild(span, c);
     }
