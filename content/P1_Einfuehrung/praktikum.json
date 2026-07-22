@@ -1,0 +1,115 @@
+{
+  "slug": "P1_Einfuehrung",
+  "nav": "EINFÜHRUNG",
+  "kinder": [
+    {
+      "extern": "P1_Einfuehrung/index.md"
+    },
+    {
+      "gruppe": "GRUNDLAGEN",
+      "kinder": [
+        {
+          "titel": "Grundprinzipien der Finite-Elemente-Methode",
+          "extern": "P1_Einfuehrung/01_Grundlagen/Grundprinzipien-FEM.md"
+        },
+        {
+          "titel": "Simulationssoftware",
+          "extern": "P1_Einfuehrung/01_Grundlagen/Simulationssoftware.md"
+        }
+      ]
+    },
+    {
+      "gruppe": "LÖSUNGSBEISPIEL",
+      "kinder": [
+        {
+          "titel": "Aufgabenstellung",
+          "extern": "P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/Aufgabenstellung.md"
+        },
+        {
+          "gruppe": "Lösung mit ANSYS",
+          "kinder": [
+            {
+              "extern": "P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/README.md"
+            },
+            {
+              "titel": "Material",
+              "extern": "P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/material.md"
+            },
+            {
+              "titel": "Geometrie",
+              "extern": "P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/geometrie.md"
+            },
+            {
+              "titel": "Materialzuordnung",
+              "extern": "P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/materialzuordnung.md"
+            },
+            {
+              "titel": "Vernetzung",
+              "extern": "P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/vernetzung.md"
+            },
+            {
+              "titel": "Navigation",
+              "extern": "P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/navigation.md"
+            },
+            {
+              "titel": "Lagerung",
+              "extern": "P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/lagerung.md"
+            },
+            {
+              "titel": "Belastung",
+              "extern": "P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/belastung.md"
+            },
+            {
+              "titel": "Gleichungssystem lösen",
+              "extern": "P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/gleichungssystem-losen.md"
+            },
+            {
+              "titel": "Gesuchte Werte bestimmen",
+              "extern": "P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/losung-mit-ansys/gesuchte-werte-bestimmen.md"
+            }
+          ]
+        },
+        {
+          "titel": "Analytische Lösung",
+          "extern": "P1_Einfuehrung/02_Loesungsbeispiele/zweiseitig-gelagerter-balken/analytische-loesung.md"
+        }
+      ]
+    },
+    {
+      "gruppe": "SELBSTTESTS",
+      "kinder": [
+        {
+          "titel": "Einleitung",
+          "extern": "P1_Einfuehrung/03_Selbsttests/Einleitung.md"
+        },
+        {
+          "titel": "Übung 1",
+          "extern": "P1_Einfuehrung/03_Selbsttests/Uebung-1.md"
+        },
+        {
+          "titel": "Übung 2",
+          "extern": "P1_Einfuehrung/03_Selbsttests/Uebung-2.md"
+        },
+        {
+          "titel": "Übung 3",
+          "extern": "P1_Einfuehrung/03_Selbsttests/Uebung-3.md"
+        },
+        {
+          "titel": "Übung 4",
+          "extern": "P1_Einfuehrung/03_Selbsttests/Uebung-4.md"
+        }
+      ]
+    },
+    {
+      "gruppe": "ZUSAMMENFASSUNG",
+      "kinder": [
+        {
+          "extern": "P1_Einfuehrung/abspeichern.md"
+        },
+        {
+          "extern": "P1_Einfuehrung/Zusammenfassung.md"
+        }
+      ]
+    }
+  ]
+}

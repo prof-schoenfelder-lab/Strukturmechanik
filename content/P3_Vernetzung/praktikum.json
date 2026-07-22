@@ -1,0 +1,63 @@
+{
+  "slug": "P3_Vernetzung",
+  "nav": "VERNETZUNG",
+  "kinder": [
+    {
+      "extern": "P3_Vernetzung/index.md"
+    },
+    {
+      "gruppe": "Grundlagen",
+      "kinder": [
+        {
+          "titel": "Elementtypen",
+          "extern": "P3_Vernetzung/01_Grundlagen/Elementtypen.md"
+        },
+        {
+          "titel": "Sensitivitaetsanalyse",
+          "extern": "P3_Vernetzung/01_Grundlagen/Sensitivitaetsanalyse.md"
+        }
+      ]
+    },
+    {
+      "gruppe": "Umsetzung in ANSYS",
+      "kinder": [
+        {
+          "titel": "Globale Netzverfeinerung",
+          "extern": "P3_Vernetzung/02_ANSYS_Umsetzung/Globale_Netzverfeinerung.md"
+        },
+        {
+          "titel": "Lokale Netzverfeinerung",
+          "extern": "P3_Vernetzung/02_ANSYS_Umsetzung/Lokale_Netzverfeinerung.md"
+        },
+        {
+          "titel": "Kantenverrundung",
+          "extern": "P3_Vernetzung/02_ANSYS_Umsetzung/Kantenverrundung.md"
+        },
+        {
+          "titel": "Diskussion",
+          "extern": "P3_Vernetzung/02_ANSYS_Umsetzung/Diskussion.md"
+        },
+        {
+          "titel": "Ergebnis-Tracking",
+          "extern": "P3_Vernetzung/02_ANSYS_Umsetzung/Ergebnis_Tracking.md"
+        },
+        {
+          "titel": "Übung 3",
+          "extern": "P3_Vernetzung/02_ANSYS_Umsetzung/Uebung-3.md"
+        },
+        {
+          "titel": "Übung 4",
+          "extern": "P3_Vernetzung/02_ANSYS_Umsetzung/Uebung-4.md"
+        },
+        {
+          "titel": "Übung 5",
+          "extern": "P3_Vernetzung/02_ANSYS_Umsetzung/Uebung-5.md"
+        }
+      ]
+    },
+    {
+      "titel": "Zusammenfassung",
+      "extern": "P3_Vernetzung/02_ANSYS_Umsetzung/Zusammenfassung.md"
+    }
+  ]
+}

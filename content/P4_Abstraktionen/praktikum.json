@@ -1,0 +1,106 @@
+{
+  "slug": "P4_Abstraktionen",
+  "nav": "ABSTRAKTIONEN",
+  "kinder": [
+    {
+      "extern": "P4_Abstraktionen/index.md"
+    },
+    {
+      "gruppe": "Symmetrie",
+      "kinder": [
+        {
+          "titel": "Theorie",
+          "extern": "P4_Abstraktionen/01_Symmetrie/Symmetrie.md"
+        },
+        {
+          "titel": "Umsetzung ANSYS",
+          "extern": "P4_Abstraktionen/01_Symmetrie/Umsetzung.md"
+        },
+        {
+          "titel": "Grafikeinstellungen",
+          "extern": "P4_Abstraktionen/01_Symmetrie/Grafikeinstellungen.md"
+        },
+        {
+          "titel": "Übung 1",
+          "extern": "P4_Abstraktionen/01_Symmetrie/Uebung01.md"
+        },
+        {
+          "titel": "Übung 2",
+          "extern": "P4_Abstraktionen/01_Symmetrie/Uebung02.md"
+        }
+      ]
+    },
+    {
+      "gruppe": "2D Ebener Spannungzustand",
+      "kinder": [
+        {
+          "titel": "Theorie",
+          "extern": "P4_Abstraktionen/02_ESZ/EbenerSpannungszustand.md"
+        },
+        {
+          "titel": "Umsetzung ANSYS",
+          "extern": "P4_Abstraktionen/02_ESZ/Umsetzung.md"
+        },
+        {
+          "titel": "Übung 1-2D",
+          "extern": "P4_Abstraktionen/02_ESZ/Uebung01-2D.md"
+        },
+        {
+          "titel": "Übung 2-2D",
+          "extern": "P4_Abstraktionen/02_ESZ/Uebung02-2D.md"
+        }
+      ]
+    },
+    {
+      "gruppe": "2D Rotationssymmetrie",
+      "kinder": [
+        {
+          "titel": "Theorie",
+          "extern": "P4_Abstraktionen/03_Rotationssymmetrie/Rotationssymmetrie.md"
+        },
+        {
+          "titel": "Umsetzung ANSYS",
+          "extern": "P4_Abstraktionen/03_Rotationssymmetrie/Umsetzung.md"
+        },
+        {
+          "titel": "Übung 3",
+          "extern": "P4_Abstraktionen/03_Rotationssymmetrie/Uebung03.md"
+        }
+      ]
+    },
+    {
+      "gruppe": "Linienstrukturen",
+      "kinder": [
+        {
+          "titel": "Theorie",
+          "extern": "P4_Abstraktionen/04_Linienstrukturen/Linienstrukturen.md"
+        },
+        {
+          "titel": "Umsetzung ANSYS",
+          "extern": "P4_Abstraktionen/04_Linienstrukturen/Umsetzung.md"
+        },
+        {
+          "titel": "Übung 1-Beam",
+          "extern": "P4_Abstraktionen/04_Linienstrukturen/Uebung01-BEAM.md"
+        }
+      ]
+    },
+    {
+      "gruppe": "Flaechenstrukturen",
+      "kinder": [
+        {
+          "titel": "Theorie",
+          "extern": "P4_Abstraktionen/05_Flaechenstrukturen/Flaechenstrukturen.md"
+        },
+        {
+          "titel": "Umsetzung ANSYS",
+          "extern": "P4_Abstraktionen/05_Flaechenstrukturen/Umsetzung.md"
+        },
+        {
+          "titel": "Übung 4",
+          "extern": "P4_Abstraktionen/05_Flaechenstrukturen/Uebung04.md"
+        }
+      ]
+    }
+  ]
+}

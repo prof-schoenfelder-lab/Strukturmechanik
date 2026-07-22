@@ -1,0 +1,120 @@
+{
+  "slug": "P2_Geometrie_Randbedingungen",
+  "nav": "GEOMETRIE & RANDBEDINGUNGEN",
+  "kinder": [
+    {
+      "extern": "P2_Geometrie_Randbedingungen/index.md"
+    },
+    {
+      "gruppe": "GEOMETRIEANPASSUNGEN",
+      "kinder": [
+        {
+          "titel": "Längen & Positionen",
+          "extern": "P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Move.md"
+        },
+        {
+          "titel": "Radius & Verrundungen",
+          "extern": "P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Pull.md"
+        },
+        {
+          "titel": "Übung 1",
+          "extern": "P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Uebung-1.md"
+        },
+        {
+          "titel": "Flächen teilen",
+          "extern": "P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Split.md"
+        },
+        {
+          "titel": "Körper teilen",
+          "extern": "P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/SplitBody.md"
+        },
+        {
+          "titel": "Übergänge erstellen",
+          "extern": "P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Blend.md"
+        },
+        {
+          "titel": "Übung 2",
+          "extern": "P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Uebung-2.md"
+        },
+        {
+          "titel": "Vereinfachungen",
+          "extern": "P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Vereinfachungen.md"
+        },
+        {
+          "titel": "Körper zusammenfügen",
+          "extern": "P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Combine.md"
+        }
+      ]
+    },
+    {
+      "gruppe": "LAGERUNGEN",
+      "kinder": [
+        {
+          "titel": "Einführung",
+          "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/Einfuehrung.md"
+        },
+        {
+          "titel": "Lager",
+          "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/Displacement.md"
+        },
+        {
+          "titel": "Übung 3",
+          "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-3.md"
+        },
+        {
+          "titel": "Externe Lager",
+          "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/RemoteDisplacement.md"
+        },
+        {
+          "titel": "Übung 4",
+          "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-4.md"
+        },
+        {
+          "titel": "Zylindrische Lager",
+          "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/Cylindrical.md"
+        },
+        {
+          "titel": "elastische Lagerung",
+          "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/Elastic.md"
+        },
+        {
+          "titel": "Übung 5",
+          "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-5.md"
+        },
+        {
+          "titel": "Übung 6",
+          "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-6.md"
+        }
+      ]
+    },
+    {
+      "gruppe": "BELASTUNGEN",
+      "kinder": [
+        {
+          "titel": "Verschiebungen",
+          "extern": "P2_Geometrie_Randbedingungen/03_Belastungen/DisplacementLoad.md"
+        },
+        {
+          "titel": "Kräfte",
+          "extern": "P2_Geometrie_Randbedingungen/03_Belastungen/Force.md"
+        },
+        {
+          "titel": "Externe Kräfte",
+          "extern": "P2_Geometrie_Randbedingungen/03_Belastungen/RemoteForce.md"
+        },
+        {
+          "titel": "Übung 7",
+          "extern": "P2_Geometrie_Randbedingungen/03_Belastungen/Uebung-7.md"
+        },
+        {
+          "titel": "Druck",
+          "extern": "P2_Geometrie_Randbedingungen/03_Belastungen/Pressure.md"
+        },
+        {
+          "titel": "Beschleunigungen",
+          "extern": "P2_Geometrie_Randbedingungen/03_Belastungen/Beschleunigungen.md"
+        }
+      ]
+    }
+  ]
+}
