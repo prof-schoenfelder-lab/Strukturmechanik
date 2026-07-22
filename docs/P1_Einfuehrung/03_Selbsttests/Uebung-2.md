@@ -47,7 +47,7 @@ Belastung:
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Neue Analyse anlegen</p>
-    <p>Im Workbench Projektmenü <code>Doppelklick</code> auf <code>Static Structural</code> und anschließend in <code>Übung 2</code> umbenennen.</p>
+    <p>Im Workbench Projektmenü <code>Doppelklick Static Structural</code> und anschließend in <code>Übung 2</code> umbenennen.</p>
   </div>
 
   <div class="step">

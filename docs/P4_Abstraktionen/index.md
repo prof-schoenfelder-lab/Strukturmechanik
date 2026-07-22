@@ -13,138 +13,164 @@ Um Rechenzeit zu sparen, sollte immer versucht werden, das Modell so weit wie m�
 2. Welche Symmetrien kann ich ausnutzen?
 3. Kann ich das Modell durch Reduzierung einer Dimension abstrahieren?
 
-### :material-bullseye-arrow: LERNZIELE
 
-- [ ] Möglichkeiten kennenlernen, Simulationsmodelle so aufzubauen, dass sie deutlich Rechenzeit sparen
+!!! abstract "Lernziele"
 
-### :material-table-of-contents: SYMMETRIEN
 
-<div class="grid cards" markdown>
+    - [ ] Möglichkeiten kennenlernen, Simulationsmodelle so aufzubauen, dass sie deutlich Rechenzeit sparen
 
--   <a class="card-link" href="01_Symmetrie/Symmetrie/">:material-math-norm: __Symmetrie__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="01_Symmetrie/images/SymmetrieBsp-Symmetrie-Lagerung.excalidraw.png" alt="Symmetrie Lagerung" width="400" class="no-lightbox">
-      </figure>
-    </a>
 
--   <a class="card-link" href="01_Symmetrie/Umsetzung/">:material-alpha-a-box: __Umsetzung__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="01_Symmetrie/images/ANSYS_Symmetrie1.png" alt="Umsetzung" width="400" class="no-lightbox">
-      </figure>
-    </a>
+## Symmetrien
 
--   <a class="card-link" href="01_Symmetrie/Uebung01/">:material-star: __Übung 1__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="01_Symmetrie/images/Uebung01.excalidraw.png" alt="Übung 1" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="01_Symmetrie/Uebung02/">:material-star: __Übung 2__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="01_Symmetrie/images/Uebung02.excalidraw.png" alt="Übung 2" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
+<div class="prakt-list">
+  <a class="prakt-row" href="01_Symmetrie/Symmetrie/">
+    <span class="prakt-body">
+      <span class="prakt-title">Symmetrie</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="01_Symmetrie/images/SymmetrieBsp-Symmetrie-Lagerung.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="01_Symmetrie/Umsetzung/">
+    <span class="prakt-body">
+      <span class="prakt-title">Umsetzung</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="01_Symmetrie/images/ANSYS_Symmetrie1.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="01_Symmetrie/Uebung01/">
+    <span class="prakt-body">
+      <span class="prakt-title">Übung 1</span>
+      <span class="prakt-desc">Zweiseitig gelagerter Balken mit Flächenlast</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="01_Symmetrie/images/Uebung01.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="01_Symmetrie/Uebung02/">
+    <span class="prakt-body">
+      <span class="prakt-title">Übung 2</span>
+      <span class="prakt-desc">Kragarm mit Einzelkraft</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="01_Symmetrie/images/Uebung02.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
 </div>
 
-### :material-table-of-contents: 2D - EBENER SPANNUNGSZUSTAND (PLANE STRESS)
 
-<div class="grid cards" markdown>
+## 2D — Ebener Spannungszustand (Plane Stress)
 
--   <a class="card-link" href="02_ESZ/EbenerSpannungszustand/">:material-texture-box: __2D Ebener Spannungszustand__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="02_ESZ/images/2D_ebener_Spannungszustand.excalidraw.png" alt="ESZ" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="02_ESZ/Umsetzung/">:material-alpha-a-box: __Umsetzung__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="02_ESZ/images/SpaceClaim1.png" alt="Umsetzung" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="02_ESZ/Uebung01-2D/">:material-star: __Übung 1__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="01_Symmetrie/images/Uebung01.excalidraw.png" alt="Übung 1 2D" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="02_ESZ/Uebung02-2D/">:material-star: __Übung 2__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="01_Symmetrie/images/Uebung02.excalidraw.png" alt="Übung 2 2D" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
+<div class="prakt-list">
+  <a class="prakt-row" href="02_ESZ/EbenerSpannungszustand/">
+    <span class="prakt-body">
+      <span class="prakt-title">2D Ebener Spannungszustand</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="02_ESZ/images/2D_ebener_Spannungszustand.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="02_ESZ/Umsetzung/">
+    <span class="prakt-body">
+      <span class="prakt-title">Umsetzung</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="02_ESZ/images/SpaceClaim1.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="02_ESZ/Uebung01-2D/">
+    <span class="prakt-body">
+      <span class="prakt-title">Übung 1</span>
+      <span class="prakt-desc">Zweiseitig gelagerter Balken mit Flächenlast</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="01_Symmetrie/images/Uebung01.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="02_ESZ/Uebung02-2D/">
+    <span class="prakt-body">
+      <span class="prakt-title">Übung 2</span>
+      <span class="prakt-desc">Kragarm mit Einzelkraft</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="01_Symmetrie/images/Uebung02.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
 </div>
 
-### :material-table-of-contents: 2D - ROTATIONSSYMMETRIE
 
-<div class="grid cards" markdown>
+## 2D — Rotationssymmetrie
 
--   <a class="card-link" href="03_Rotationssymmetrie/Rotationssymmetrie/">:material-horizontal-rotate-clockwise: __2D Rotationssymmetrie__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="03_Rotationssymmetrie/images/rotationssymmetrie.excalidraw.png" alt="Rotationssymmetrie" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="03_Rotationssymmetrie/Umsetzung/">:material-alpha-a-box: __Umsetzung__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="02_ESZ/images/SpaceClaim1.png" alt="Umsetzung" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="03_Rotationssymmetrie/Uebung03/">:material-star: __Übung 3__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="03_Rotationssymmetrie/images/KugelRing.excalidraw.png" alt="Übung 3" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
+<div class="prakt-list">
+  <a class="prakt-row" href="03_Rotationssymmetrie/Rotationssymmetrie/">
+    <span class="prakt-body">
+      <span class="prakt-title">2D Rotationssymmetrie</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="03_Rotationssymmetrie/images/rotationssymmetrie.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="03_Rotationssymmetrie/Umsetzung/">
+    <span class="prakt-body">
+      <span class="prakt-title">Umsetzung</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="02_ESZ/images/SpaceClaim1.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="03_Rotationssymmetrie/Uebung03/">
+    <span class="prakt-body">
+      <span class="prakt-title">Übung 3</span>
+      <span class="prakt-desc">Kugel-Ring Versuch</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="03_Rotationssymmetrie/images/KugelRing.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
 </div>
 
-### :material-table-of-contents: LINIENSTRUKTUREN (BEAM-ELEMENTE)
 
-<div class="grid cards" markdown>
+## Linienstrukturen (BEAM-Elemente)
 
--   <a class="card-link" href="04_Linienstrukturen/Linienstrukturen/">:material-chart-timeline-variant: __1D Linienstrukturen (BEAM)__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="04_Linienstrukturen/images/Linienstrukur.excalidraw.png" alt="Linienstrukur" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="04_Linienstrukturen/Umsetzung/">:material-alpha-a-box: __Umsetzung__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="04_Linienstrukturen/images/SpaceClaim1.png" alt="Umsetzung" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="04_Linienstrukturen/Uebung01-BEAM/">:material-star: __Übung 1-BEAM__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="02_ESZ/images/Uebung01-2D.excalidraw.png" alt="Übung 1" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
+<div class="prakt-list">
+  <a class="prakt-row" href="04_Linienstrukturen/Linienstrukturen/">
+    <span class="prakt-body">
+      <span class="prakt-title">1D Linienstrukturen (BEAM)</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="04_Linienstrukturen/images/Linienstrukur.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="04_Linienstrukturen/Umsetzung/">
+    <span class="prakt-body">
+      <span class="prakt-title">Umsetzung</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="04_Linienstrukturen/images/SpaceClaim1.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="04_Linienstrukturen/Uebung01-BEAM/">
+    <span class="prakt-body">
+      <span class="prakt-title">Übung 1-BEAM</span>
+      <span class="prakt-desc">Zweiseitig gelagerter Balken mit Flächenlast</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="02_ESZ/images/Uebung01-2D.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
 </div>
 
-### :material-table-of-contents: FLÄCHENSTRUKTUREN (SHELL-ELEMENTE)
 
-<div class="grid cards" markdown>
+## Flächenstrukturen (SHELL-Elemente)
 
--   <a class="card-link" href="05_Flaechenstrukturen/Flaechenstrukturen/">:material-chart-timeline-variant: __2D Flächenstrukturen (SHELL)__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="05_Flaechenstrukturen/images/SHELL.excalidraw.png" alt="Flächenstrukturen" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="05_Flaechenstrukturen/Umsetzung/">:material-alpha-a-box: __Umsetzung__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="05_Flaechenstrukturen/images/SpaceClaim.png" alt="Umsetzung" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="05_Flaechenstrukturen/Uebung04/">:material-star: __Übung 4__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="05_Flaechenstrukturen/images/Uebung04.excalidraw.png" alt="Übung 4" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
+<div class="prakt-list">
+  <a class="prakt-row" href="05_Flaechenstrukturen/Flaechenstrukturen/">
+    <span class="prakt-body">
+      <span class="prakt-title">2D Flächenstrukturen (SHELL)</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="05_Flaechenstrukturen/images/SHELL.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="05_Flaechenstrukturen/Umsetzung/">
+    <span class="prakt-body">
+      <span class="prakt-title">Umsetzung</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="05_Flaechenstrukturen/images/SpaceClaim.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="05_Flaechenstrukturen/Uebung04/">
+    <span class="prakt-body">
+      <span class="prakt-title">Übung 4</span>
+      <span class="prakt-desc">Durchbiegung von Photovoltaikwafern im Carrier</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="05_Flaechenstrukturen/images/Uebung04.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
 </div>

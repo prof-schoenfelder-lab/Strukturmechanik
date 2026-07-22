@@ -16,7 +16,7 @@ Wir lösen jetzt das Gleichungssystem (Bestimmung der restlichen Verschiebungsfr
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Gleichungssystem lösen</p>
-    <p>Im Strukturbaum <code>Rechtsklick</code> auf <code>Static Structural</code> und anschließend <code>Solve</code> auswählen</p>
+    <p>Im Strukturbaum <code>Rechtsklick Static Structural → Solve</code> auswählen</p>
   </div>
 
 </div>

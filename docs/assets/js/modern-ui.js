@@ -251,25 +251,33 @@
       tabs: null
     },
     { // P1 Vorzeigebeispiel: zweiseitig gelagerter Balken (Lösung mit ANSYS)
-      slugs: ['material', 'geometrie', 'materialzuordnung', 'vernetzung',
+      // '' = die Übersichtsseite (README, Workbench öffnen) als Schritt 1
+      slugs: ['', 'material', 'geometrie', 'materialzuordnung', 'vernetzung',
               'navigation', 'lagerung', 'belastung', 'gleichungssystem-losen',
               'gesuchte-werte-bestimmen'],
-      labels: ['Material', 'Geometrie', 'Zuweisung', 'Netz', 'Navigation',
+      labels: ['Start', 'Material', 'Geometrie', 'Zuweisung', 'Netz', 'Navigation',
                'Lagerung', 'Belastung', 'Lösen', 'Auswertung'],
       base: 'losung-mit-ansys',
-      tabs: 'Aufgabe=../../Aufgabenstellung/|Lösung mit ANSYS=../|Analytische Lösung=../../analytische-loesung/'
+      tabs: 'Aufgabe=../../Aufgabenstellung/|Lösung mit ANSYS=../|Analytische Lösung=../../analytische-loesung/',
+      tabsIndex: 'Aufgabe=../Aufgabenstellung/|Lösung mit ANSYS=./|Analytische Lösung=../analytische-loesung/'
     }
   ];
 
-  // Liefert {grp, idx} wenn der Pfad eine Schrittseite einer Gruppe ist
+  // Liefert {grp, idx, isIndex} wenn der Pfad eine Schrittseite einer Gruppe
+  // ist. isIndex: die Seite ist die Basis-Übersicht (Slug '') selbst.
   function wfGroupFor(path) {
     var parts = path.split('/');
     var seg = parts.pop();
     var parent = parts[parts.length - 1];
     for (var g = 0; g < WF_GROUPS.length; g++) {
-      var idx = WF_GROUPS[g].slugs.indexOf(seg);
-      if (idx !== -1 && (!WF_GROUPS[g].base || parent === WF_GROUPS[g].base)) {
-        return { grp: WF_GROUPS[g], idx: idx };
+      var grp = WF_GROUPS[g];
+      var idx = grp.slugs.indexOf(seg);
+      if (idx !== -1 && seg !== '' && (!grp.base || parent === grp.base)) {
+        return { grp: grp, idx: idx, isIndex: false };
+      }
+      // Basis-Übersicht als eigener Schritt (Slug '')
+      if (grp.base && seg === grp.base && grp.slugs[0] === '') {
+        return { grp: grp, idx: 0, isIndex: true };
       }
     }
     return null;
@@ -285,9 +293,14 @@
     var nav = document.createElement('nav');
     nav.className = 'wf-pagenav';
     var html = '';
+    // Links relativ zur Basis: von der Übersicht aus 'slug/', von einer
+    // Schrittseite aus '../slug/'; die Übersicht selbst ist './' bzw. '../'
+    var up = hit.isIndex ? '' : '../';
     for (var i = 0; i < grp.slugs.length; i++) {
       var cls = i < idx ? 'done' : i === idx ? 'active' : '';
-      html += '<a class="wf-pstep ' + cls + '" href="../' + grp.slugs[i] + '/">' +
+      var href = grp.slugs[i] === '' ? (hit.isIndex ? './' : '../')
+                                     : up + grp.slugs[i] + '/';
+      html += '<a class="wf-pstep ' + cls + '" href="' + href + '">' +
         '<span class="wf-pnum">' + (i < idx ? '✓' : (i + 1)) + '</span>' +
         '<span class="wf-plabel">' + grp.labels[i] + '</span></a>';
       if (i < grp.slugs.length - 1) html += '<span class="wf-pline' + (i < idx ? ' done' : '') + '"></span>';
@@ -314,7 +327,7 @@
     var hit = wfGroupFor(cur);
     var banner = document.querySelector('.task-banner[data-tabs], .task-tabs-src[data-tabs]');
     var tabsStr = banner ? banner.getAttribute('data-tabs')
-                         : (hit && hit.grp.tabs ? hit.grp.tabs : null);
+                         : (hit ? (hit.isIndex ? hit.grp.tabsIndex : hit.grp.tabs) : null);
     if (!tabsStr) return;
     var h1 = document.querySelector('.md-content article h1, .md-content__inner h1');
     if (!h1) return;

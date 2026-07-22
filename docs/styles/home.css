@@ -1,5 +1,5 @@
 /* HERO oben */
-.hero { text-align:center; margin:0 0 1.5rem; }
+.hero { text-align:center; margin:0 0 .8rem; }
 .hero img {
   display:block; margin-inline:auto; max-width:min(100%, 1200px);
   border-radius:.5rem; box-shadow:var(--md-shadow-z2);
@@ -22,7 +22,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* oben ausrichten statt mittig — weniger Leerraum unter dem Hero */
+  justify-content: flex-start;
+  padding-top: 1.2rem;
   gap: .8rem;
 }
 .fem-sticky svg {
@@ -121,7 +123,7 @@
 /* Scroll-Hinweis zwischen Hero und Animation */
 .fem-scroll-hint {
   display: flex; flex-direction: column; align-items: center; gap: .25rem;
-  margin: .2rem auto 1rem; text-align: center;
+  margin: .1rem auto .4rem; text-align: center;
   font-size: .78rem; letter-spacing: .02em; opacity: .75;
   color: var(--md-default-fg-color) !important;
 }

@@ -7,164 +7,192 @@ hide:
 
 # Geometrieaufbereitung und Randbedingungen
 
-### :material-bullseye-arrow: LERNZIELE
 
-- [ ] Kennenlernen der grundlegenden Methoden zur Veränderung und Vereinfachung von CAD Geometrien mit SpaceClaim 
-- [ ] Kennenlernen der möglichen Lagerungs- und Belastungsmethoden in ANSYS Mechanical
+!!! abstract "Lernziele"
 
-### :material-table-of-contents: GEOMETRIEANPASSUNGEN
 
-<div class="grid cards" markdown>
+    - [ ] Kennenlernen der grundlegenden Methoden zur Veränderung und Vereinfachung von CAD Geometrien mit SpaceClaim 
+    - [ ] Kennenlernen der möglichen Lagerungs- und Belastungsmethoden in ANSYS Mechanical
 
--   <a class="card-link" href="01_Geometrie_anpassen/Move/">:material-cube-scan: __Längen & Positionen ändern__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="01_Geometrie_anpassen/images/Laenge_aendern.gif" alt="Längen ändern" width="400" class="no-lightbox">
-      </figure>
-    </a>
 
--   <a class="card-link" href="01_Geometrie_anpassen/Pull/">:material-diameter-variant: __Radius ändern__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="01_Geometrie_anpassen/images/Radius_aendern.gif" alt="Radius ändern" width="400" class="no-lightbox">
-      </figure>
-    </a>
+## Geometrieanpassungen
 
--   <a class="card-link" href="01_Geometrie_anpassen/Uebung-1/">:material-star: __Übung 1__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="01_Geometrie_anpassen/images/Uebung-01.png" alt="Übung 1" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="01_Geometrie_anpassen/Split/">:material-arrow-split-vertical: __Flächen teilen für Randbedingungen__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="01_Geometrie_anpassen/images/Flaeche_erstellen.gif" alt="Radius ändern" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="01_Geometrie_anpassen/SplitBody/">:material-rhombus-split: __Körper teilen__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="01_Geometrie_anpassen/images/Koerper_teilen.gif" alt="Radius ändern" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="01_Geometrie_anpassen/Blend/">:material-arrow-expand-horizontal: __Übergänge erstellen__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="01_Geometrie_anpassen/images/Blend.gif" alt="Radius ändern" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="01_Geometrie_anpassen/Uebung-2/">:material-star: __Übung 2__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-      <img src="01_Geometrie_anpassen/images/Uebung-02.png" alt="Übung 2" width="400" class="no-lightbox">
-       </figure>
-    </a>
-
--   <a class="card-link" href="01_Geometrie_anpassen/Vereinfachungen/">:material-close-circle: __Vereinfachungen__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="01_Geometrie_anpassen/images/Select_same_volume_and_Delete.gif" alt="Körper zusammenfügen" width="400" class="no-lightbox">
-      </figure>
-    </a>
-    
--   <a class="card-link" href="01_Geometrie_anpassen/Combine/">:material-plus-circle: __Körper zusammenfügen__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="01_Geometrie_anpassen/images/Koerper_zusammenfuegen.gif" alt="Körper zusammenfügen" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
+<div class="prakt-list">
+  <a class="prakt-row" href="01_Geometrie_anpassen/Move/">
+    <span class="prakt-body">
+      <span class="prakt-title">Längen & Positionen ändern</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="01_Geometrie_anpassen/images/Laenge_aendern.gif" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="01_Geometrie_anpassen/Pull/">
+    <span class="prakt-body">
+      <span class="prakt-title">Radius ändern</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="01_Geometrie_anpassen/images/Radius_aendern.gif" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="01_Geometrie_anpassen/Uebung-1/">
+    <span class="prakt-body">
+      <span class="prakt-title">Übung 1</span>
+      <span class="prakt-desc">L-Profil verlängern und verrunden</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="01_Geometrie_anpassen/images/Uebung-01.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="01_Geometrie_anpassen/Split/">
+    <span class="prakt-body">
+      <span class="prakt-title">Flächen teilen für Randbedingungen</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="01_Geometrie_anpassen/images/Flaeche_erstellen.gif" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="01_Geometrie_anpassen/SplitBody/">
+    <span class="prakt-body">
+      <span class="prakt-title">Körper teilen</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="01_Geometrie_anpassen/images/Koerper_teilen.gif" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="01_Geometrie_anpassen/Blend/">
+    <span class="prakt-body">
+      <span class="prakt-title">Übergänge erstellen</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="01_Geometrie_anpassen/images/Blend.gif" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="01_Geometrie_anpassen/Uebung-2/">
+    <span class="prakt-body">
+      <span class="prakt-title">Übung 2</span>
+      <span class="prakt-desc">Wanddicke am Lenker erhöhen</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="01_Geometrie_anpassen/images/Uebung-02.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="01_Geometrie_anpassen/Vereinfachungen/">
+    <span class="prakt-body">
+      <span class="prakt-title">Vereinfachungen</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="01_Geometrie_anpassen/images/Select_same_volume_and_Delete.gif" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="01_Geometrie_anpassen/Combine/">
+    <span class="prakt-body">
+      <span class="prakt-title">Körper zusammenfügen</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="01_Geometrie_anpassen/images/Koerper_zusammenfuegen.gif" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
 </div>
 
-### :material-table-of-contents: LAGERUNGEN
 
-<div class="grid cards" markdown>
+## Lagerungen
 
--   <a class="card-link" href="02_Lagerungen/Einfuehrung/">:material-information-variant-box: __Einführung__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="02_Lagerungen/images/Starrkoerperbewegungen.png" alt="Starrkörperbewegungen" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="02_Lagerungen/Displacement/">:material-triangle: __Lager__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="02_Lagerungen/images/Lager.png" alt="Lager" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="02_Lagerungen/Uebung-3/">:material-star: __Übung 3__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="02_Lagerungen/images/Lagerungsbeispiel_Lineal.png" alt="Übung 3" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="02_Lagerungen/RemoteDisplacement/">:material-triangle-outline: __externe Lager__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="02_Lagerungen/images/FixedSupport_vs_RemoteDisplacement.excalidraw.png" alt="externe Lager" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
-
--   <a class="card-link" href="02_Lagerungen/Uebung-4/">:material-star: __Übung 4__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="02_Lagerungen/images/Uebung-04.excalidraw.png" alt="Übung 4" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="02_Lagerungen/Cylindrical/">:material-circle: __zylindrische Lager__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="02_Lagerungen/images/Radial_Axial_Tangential.excalidraw.png" alt="zylindrische Lager" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="02_Lagerungen/Elastic/">:material-car-brake-worn-linings: __elastische Lager__{ .xxxl .middle .center }
-      $$
-      k_{\mathrm{f}} \approx \frac{E}{h}
-      $$
-    </a>
-
--   <a class="card-link" href="02_Lagerungen/Uebung-5/">:material-star: __Übung 5__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="02_Lagerungen/images/Uebung-05.png" alt="Übung 5" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="02_Lagerungen/Uebung-6/">:material-star: __Übung 6__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="02_Lagerungen/images/Uebung-06.png" alt="Übung 6" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
+<div class="prakt-list">
+  <a class="prakt-row" href="02_Lagerungen/Einfuehrung/">
+    <span class="prakt-body">
+      <span class="prakt-title">Einführung</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="02_Lagerungen/images/Starrkoerperbewegungen.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="02_Lagerungen/Displacement/">
+    <span class="prakt-body">
+      <span class="prakt-title">Lager</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="02_Lagerungen/images/Lager.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="02_Lagerungen/Uebung-3/">
+    <span class="prakt-body">
+      <span class="prakt-title">Übung 3</span>
+      <span class="prakt-desc">Lagerungsbeispiel Lineal über Kante belastet</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="02_Lagerungen/images/Lagerungsbeispiel_Lineal.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="02_Lagerungen/RemoteDisplacement/">
+    <span class="prakt-body">
+      <span class="prakt-title">externe Lager</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="02_Lagerungen/images/FixedSupport_vs_RemoteDisplacement.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="02_Lagerungen/Uebung-4/">
+    <span class="prakt-body">
+      <span class="prakt-title">Übung 4</span>
+      <span class="prakt-desc">Externe Lagerung am Fahrradrahmen</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="02_Lagerungen/images/Uebung-04.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="02_Lagerungen/Cylindrical/">
+    <span class="prakt-body">
+      <span class="prakt-title">zylindrische Lager</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="02_Lagerungen/images/Radial_Axial_Tangential.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="02_Lagerungen/Elastic/">
+    <span class="prakt-body">
+      <span class="prakt-title">elastische Lager</span>
+    </span>
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="02_Lagerungen/Uebung-5/">
+    <span class="prakt-body">
+      <span class="prakt-title">Übung 5</span>
+      <span class="prakt-desc">vereinfachte Fahrradbremse (V-Brake)</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="02_Lagerungen/images/Uebung-05.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="02_Lagerungen/Uebung-6/">
+    <span class="prakt-body">
+      <span class="prakt-title">Übung 6</span>
+      <span class="prakt-desc">Vergleich verschiedener Lagerungsbedingungen am Beispiel des Inbus</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="02_Lagerungen/images/Uebung-06.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
 </div>
 
-### :material-table-of-contents: BELASTUNGEN
 
-<div class="grid cards" markdown>
+## Belastungen
 
--   <a class="card-link" href="03_Belastungen/DisplacementLoad/">:material-arrow-all: __Verschiebungen als Last__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="03_Belastungen/images/Verschiebung_Kraft.excalidraw.png" alt="Verschiebung als Last" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="03_Belastungen/Force/">:material-arrow-all: __Kräfte__{ .xxxl .middle .center }
-      $$
-      F
-      $$
-    </a>
-
--   <a class="card-link" href="03_Belastungen/RemoteForce/">:material-arrow-down-bold-outline: __externe Kräfte__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="03_Belastungen/images/RemoteForce_Fahrradbeispiel.excalidraw.png" alt="Verschiebung als Last" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="03_Belastungen/Uebung-7/">:material-star: __Übung 7__{ .xxxl .middle .center }
-       <figure style="text-align:center;">
-          <img src="03_Belastungen/images/Uebung-07.excalidraw.png" alt="Übung 7" width="400" class="no-lightbox">
-      </figure>
-    </a>
-
--   <a class="card-link" href="03_Belastungen/Pressure/">:material-arrow-collapse-down: __Druck__{ .xxxl .middle .center }
-      $$
-      p
-      $$
-    </a>
-
+<div class="prakt-list">
+  <a class="prakt-row" href="03_Belastungen/DisplacementLoad/">
+    <span class="prakt-body">
+      <span class="prakt-title">Verschiebungen als Last</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="03_Belastungen/images/Verschiebung_Kraft.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="03_Belastungen/Force/">
+    <span class="prakt-body">
+      <span class="prakt-title">Kräfte</span>
+    </span>
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="03_Belastungen/RemoteForce/">
+    <span class="prakt-body">
+      <span class="prakt-title">externe Kräfte</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="03_Belastungen/images/RemoteForce_Fahrradbeispiel.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="03_Belastungen/Uebung-7/">
+    <span class="prakt-body">
+      <span class="prakt-title">Übung 7</span>
+      <span class="prakt-desc">Lenkkopfsteifigkeit Fahrradrahmen</span>
+    </span>
+    <img class="prakt-thumb no-lightbox" src="03_Belastungen/images/Uebung-07.excalidraw.png" alt="">
+    <span class="prakt-arrow">→</span>
+  </a>
+  <a class="prakt-row" href="03_Belastungen/Pressure/">
+    <span class="prakt-body">
+      <span class="prakt-title">Druck</span>
+    </span>
+    <span class="prakt-arrow">→</span>
+  </a>
 </div>

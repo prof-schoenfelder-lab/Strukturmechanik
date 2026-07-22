@@ -968,6 +968,19 @@ nav.md-path { overflow-x: auto; }
   background: color-mix(in srgb, var(--kurs-accent) 30%, var(--kurs-card));
   color: #ffc79e;
 }
+/* Tutorial-Player: Titel-Pille in derselben leisen Tonlage statt Vollfläche */
+.player__title h1 {
+  background: color-mix(in srgb, var(--kurs-accent) 11%, var(--kurs-card));
+  color: color-mix(in srgb, var(--kurs-accent) 82%, var(--md-default-fg-color));
+  font-family: var(--md-text-font);
+  font-size: 1rem;
+  font-weight: 650;
+}
+[data-md-color-scheme="slate"] .player__title h1 {
+  background: color-mix(in srgb, var(--kurs-accent) 22%, var(--kurs-card));
+  color: #ffb27d;
+}
+
 /* Mitmach-Knopf in derselben leisen Tonlage */
 .fa-btn {
   background: color-mix(in srgb, var(--kurs-accent) 11%, var(--kurs-card));
