@@ -1,8 +1,8 @@
 # Plan: Kurs-Studio — grafische Weboberfläche für den gesamten Kursinhalt
 
-Stand: 22.07.2026 · Status: **Phase 0 + Phase 1a/1b umgesetzt & verifiziert** ·
-Umsetzung in mehreren fokussierten Sessions. Dieses Dokument ist die
-Arbeitsgrundlage. Offen in Phase 1: GitHub-Veröffentlichung + SHA-Konfliktschutz.
+Stand: 22.07.2026 · Status: **Phase 0, 1a/1b, 2a umgesetzt & verifiziert** ·
+Umsetzung in mehreren fokussierten Sessions. Offen: Phase 1c (GitHub-
+Veröffentlichung, braucht Token), Phase 2b (Übungs-Editor-Oberfläche).
 
 ## 1. Ziel
 
@@ -279,11 +279,16 @@ schon im Tutorial-Studio.
   - *Noch nicht in Phase 1 gebaut:* Generator für die Übersichtsseiten (kommt,
     wenn Einheiten typisiert sind — Phase 2+; Übersichten sind aktuell die
     handgebauten prakt-cards und laufen als extern weiter).
-- **Phase 2 — Übungs-Editor + Schnellkorrektur:** kompletter Übungs-Typ inkl.
-  Fragen (numerisch/MC), Medien-Handling, Vollvorschau, **globale Suche mit
-  Direktsprung** (§5a.1). Ergebnis: neue Übungen entstehen vollständig im
-  Studio; Fehler in bestehenden (migrierten) Inhalten sind in Minuten live
-  gefixt.
+- **Phase 2 — Übungs-Editor + Schnellkorrektur:** *teilweise erledigt.*
+  - **2a ✅** deterministischer Kern: `tools/studio/gen-content.js` — Block-
+    Renderer (text/bild/box/tutorial/tabelle/trenner → Markdown) +
+    `generateUebung` (→ vollständige .md mit Frontmatter, Generiert-Marker +
+    Prüfsumme, numeric-/multiple-choice-question-Markup) + `handEdited`.
+    Ende-zu-Ende verifiziert (Demo-Übung rendert nativ inkl. Answer-Checker,
+    Chips, Box, Tutorial-Embed); Node-Selbsttest.
+  - **2b ⬜ offen:** Editor-Oberfläche im Studio (Block-Editor für gegeben/
+    gesucht/hinweise/loesung + Fragen-Liste, Medien per Drag&Drop, Live-
+    Vorschau, Vollvorschau) + **globale Suche mit Direktsprung** (§5a.1).
 - **Phase 3 — Theorie-Editor:** Block-Editor + Tutorial-Embed-Block
   (+ Absprung ins Tutorial-Studio zum Neu-Erstellen).
 - **Phase 4 — Vorzeigebeispiel-Editor:** Schritte/Tabs/Banner/Stepper-Konfig.
