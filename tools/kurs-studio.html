@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kurs-Studio</title>
+<style>
+  :root{--bg:#f2f4f7;--card:#fff;--ink:#1d1b16;--mut:#6b6b6b;--line:#e3e3e6;
+    --accent:#f2620f;--accent-soft:#fff1e7;--primary:#17345e}
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.5 -apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+  header{position:sticky;top:0;z-index:10;background:linear-gradient(90deg,#102544,#17345e 70%,#1d4477);color:#fff;
+    padding:.7rem 1.1rem;display:flex;align-items:center;gap:1rem;box-shadow:0 1px 8px rgba(9,20,38,.25)}
+  header h1{font-size:1rem;margin:0;font-weight:700}
+  header .grow{flex:1}
+  button{font:inherit;cursor:pointer;border:0;border-radius:.5rem;padding:.5rem .9rem;font-weight:600}
+  .btn-primary{background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(220,90,20,.35)}
+  .btn-primary:hover{filter:brightness(1.07)}
+  .btn-primary:disabled{opacity:.5;cursor:default;box-shadow:none}
+  .btn-ghost{background:rgba(255,255,255,.14);color:#fff}
+  .btn-ghost:hover{background:rgba(255,255,255,.24)}
+  .wrap{max-width:60rem;margin:1.2rem auto;padding:0 1.1rem 4rem}
+  .panel{background:var(--card);border-radius:.9rem;padding:1.1rem 1.3rem;margin-bottom:1.1rem;
+    box-shadow:0 1px 3px rgba(15,30,60,.06),0 8px 30px rgba(15,30,60,.05)}
+  .panel h2{font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);margin:.1rem 0 .8rem}
+  .empty{color:var(--mut);text-align:center;padding:2rem}
+  .banner{background:var(--accent-soft);color:#8a3d0a;border-radius:.6rem;padding:.6rem .8rem;font-size:.72rem;margin-bottom:1rem}
+
+  .prak{border:1px solid var(--line);border-radius:.7rem;margin-bottom:.8rem;overflow:hidden}
+  .prak-head{display:flex;align-items:center;gap:.5rem;padding:.5rem .7rem;background:#fafbfc;border-bottom:1px solid var(--line)}
+  .prak-nav{font-weight:700;color:var(--primary);flex:1;font-size:.9rem}
+  .prak-slug{font-size:.62rem;color:var(--mut);text-transform:none;font-weight:400}
+  .nodes{padding:.4rem .5rem .5rem}
+  .node{border-left:2px solid transparent}
+  .node-row{display:flex;align-items:center;gap:.4rem;padding:.2rem .3rem;border-radius:.35rem}
+  .node-row:hover{background:#f6f7f9}
+  .node-tw{width:1.1rem;text-align:center;color:var(--mut);cursor:pointer;user-select:none;flex:none}
+  .node-lbl{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .node-lbl.grp{font-weight:650;letter-spacing:.03em;text-transform:uppercase;font-size:.72rem;color:var(--mut)}
+  .node-lbl .pth{color:var(--mut);font-size:.66rem;margin-left:.4rem}
+  .node-lbl.bare{font-style:italic;color:var(--mut)}
+  .node-ops{display:flex;gap:.15rem;opacity:0;transition:opacity .1s}
+  .node-row:hover .node-ops{opacity:1}
+  .node-ops button{padding:.15rem .4rem;font-size:.8rem;background:#eef0f3;color:#444;border-radius:.35rem}
+  .node-ops button:hover{background:#e2e5ea}
+  .node-kids{margin-left:1.1rem;border-left:1px dashed var(--line);padding-left:.3rem}
+  .addbar{display:flex;gap:.4rem;padding:.3rem .4rem;margin-left:1.1rem}
+  .addbar button{font-size:.7rem;background:transparent;color:var(--accent);padding:.2rem .4rem}
+  .addbar button:hover{background:var(--accent-soft)}
+
+  pre.nav{background:#0f1b2d;color:#cfe0f5;border-radius:.6rem;padding:.9rem 1rem;font:12px/1.5 ui-monospace,Menlo,monospace;
+    overflow:auto;max-height:22rem;white-space:pre}
+  .diff-ok{color:#7bd88f;font-weight:700}
+  .diff-warn{color:#ffb27d;font-weight:700}
+  .toast{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:#17345e;color:#fff;
+    padding:.6rem 1rem;border-radius:.5rem;font-size:.8rem;box-shadow:0 6px 20px rgba(0,0,0,.3);z-index:50;opacity:0;transition:opacity .2s}
+  .toast.show{opacity:1}.toast.err{background:#b03030}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎓 Kurs-Studio</h1>
+  <span class="grow"></span>
+  <button class="btn-ghost" id="btnOpen">Repo öffnen…</button>
+  <button class="btn-ghost" id="btnNavPreview" disabled>Nav-Vorschau</button>
+  <button class="btn-primary" id="btnSave" disabled>Speichern</button>
+</header>
+
+<div class="wrap">
+  <div class="banner" id="fsBanner"></div>
+  <div class="panel" id="treePanel">
+    <h2>Kurs-Struktur</h2>
+    <div id="tree"><div class="empty">Noch kein Repo geöffnet. Oben „Repo öffnen…“ klicken und den
+      Repo-Ordner (mit <code>content/</code> und <code>mkdocs.yml</code>) wählen.</div></div>
+  </div>
+  <div class="panel" id="navPanel" hidden>
+    <h2>Generierte Navigation <span id="navDiff"></span></h2>
+    <pre class="nav" id="navOut"></pre>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="studio/generator.js"></script>
+<script>
+"use strict";
+var G = window.KursGen;
+var hasFS = typeof window.showDirectoryPicker === "function";
+var state = { root: null, course: null, praktika: {}, mkdocs: "", dirty: false, dirtyPraktika: {} };
+var $ = function(id){ return document.getElementById(id); };
+
+function toast(m,err){var t=$("toast");t.textContent=m;t.className="toast show"+(err?" err":"");setTimeout(function(){t.className="toast";},2600);}
+function markDirty(slug){state.dirty=true;if(slug)state.dirtyPraktika[slug]=true;$("btnSave").disabled=false;}
+
+$("fsBanner").innerHTML = hasFS
+  ? "Speichern schreibt <b>content/</b> und den AUTO-NAV-Block in <b>mkdocs.yml</b> direkt ins Repo. Danach committen/pushen (Git-Veröffentlichung folgt in Phase 1b)."
+  : "Dieser Browser unterstützt keinen direkten Ordnerzugriff — bitte <b>Chrome</b> oder <b>Edge</b> verwenden.";
+
+// ---- Repo laden ----------------------------------------------------------
+async function readJSON(dir, name){ var fh=await dir.getFileHandle(name); return JSON.parse(await (await fh.getFile()).text()); }
+async function readText(dir, name){ var fh=await dir.getFileHandle(name); return await (await fh.getFile()).text(); }
+
+async function openRepo(){
+  var root = await window.showDirectoryPicker({ id:"kurs-repo", mode:"readwrite" });
+  var content = await root.getDirectoryHandle("content");
+  var course = await readJSON(content, "course.json");
+  var praktika = {};
+  for (var i=0;i<course.praktika.length;i++){
+    var slug = course.praktika[i];
+    var pdir = await content.getDirectoryHandle(slug);
+    praktika[slug] = await readJSON(pdir, "praktikum.json");
+  }
+  var mkdocs = await readText(root, "mkdocs.yml");
+  if (mkdocs.indexOf("# >>> AUTO-NAV")===-1) throw new Error("mkdocs.yml hat keine AUTO-NAV-Marker");
+  state = { root:root, content:content, course:course, praktika:praktika, mkdocs:mkdocs, dirty:false, dirtyPraktika:{} };
+  $("btnNavPreview").disabled=false; $("btnSave").disabled=true;
+  render(); renderNav();
+  toast("Geladen: "+course.praktika.length+" Praktika");
+}
+
+// ---- Baum rendern --------------------------------------------------------
+function render(){
+  var host=$("tree"); host.innerHTML="";
+  if(!state.course){return;}
+  state.course.praktika.forEach(function(slug, pi){
+    var p=state.praktika[slug];
+    var card=document.createElement("div"); card.className="prak";
+    var head=document.createElement("div"); head.className="prak-head";
+    head.innerHTML='<span class="node-tw">▾</span>'+
+      '<span class="prak-nav" contenteditable="false">'+esc(p.nav)+' <span class="prak-slug">'+esc(slug)+'</span></span>';
+    var ops=opsBar([
+      ["↑", pi>0, function(){ move(state.course.praktika, pi, -1); markDirty(); render(); renderNav(); }],
+      ["↓", pi<state.course.praktika.length-1, function(){ move(state.course.praktika, pi, 1); markDirty(); render(); renderNav(); }],
+      ["✎ Titel", true, function(){ var v=prompt("Nav-Titel des Praktikums:", p.nav); if(v){ p.nav=v.trim(); markDirty(slug); render(); renderNav(); } }]
+    ]);
+    head.appendChild(ops);
+    card.appendChild(head);
+    var kids=document.createElement("div"); kids.className="nodes";
+    renderNodes(p.kinder, kids, slug);
+    card.appendChild(kids);
+    host.appendChild(card);
+  });
+}
+
+function renderNodes(arr, container, slug){
+  arr.forEach(function(node, idx){
+    var el=document.createElement("div"); el.className="node";
+    var row=document.createElement("div"); row.className="node-row";
+    var isGrp = node.gruppe!==undefined;
+    var tw=document.createElement("span"); tw.className="node-tw"; tw.textContent = isGrp ? "▾" : "·";
+    var lbl=document.createElement("span"); lbl.className="node-lbl"+(isGrp?" grp":(node.titel?"":" bare"));
+    if(isGrp) lbl.textContent=node.gruppe;
+    else lbl.innerHTML = (node.titel?esc(node.titel):"(Index/ohne Titel)")+'<span class="pth">'+esc(node.extern||"")+'</span>';
+    row.appendChild(tw); row.appendChild(lbl);
+    var ops=[
+      ["↑", idx>0, function(){ move(arr, idx, -1); markDirty(slug); render(); renderNav(); }],
+      ["↓", idx<arr.length-1, function(){ move(arr, idx, 1); markDirty(slug); render(); renderNav(); }],
+      ["✎", true, function(){ renameNode(node, slug); }],
+      ["✕", true, function(){ if(confirm("Diesen Eintrag entfernen?")){ arr.splice(idx,1); markDirty(slug); render(); renderNav(); } }]
+    ];
+    row.appendChild(opsBar(ops));
+    el.appendChild(row);
+    if(isGrp){
+      var kc=document.createElement("div"); kc.className="node-kids";
+      renderNodes(node.kinder, kc, slug);
+      // Add-Leiste für Gruppen
+      var add=document.createElement("div"); add.className="addbar";
+      add.appendChild(mkBtn("+ Seite", function(){ addExtern(node.kinder, slug); }));
+      add.appendChild(mkBtn("+ Untergruppe", function(){ addGroup(node.kinder, slug); }));
+      kc.appendChild(add);
+      el.appendChild(kc);
+    }
+    var twClick=function(){ if(isGrp){ var k=el.querySelector(".node-kids"); k.style.display=k.style.display==="none"?"":"none"; tw.textContent=k.style.display==="none"?"▸":"▾"; } };
+    tw.addEventListener("click", twClick);
+    container.appendChild(el);
+  });
+  // Add-Leiste auf oberster Ebene je Praktikum
+  if(container.classList.contains("nodes")){
+    var add=document.createElement("div"); add.className="addbar";
+    add.appendChild(mkBtn("+ Sektion", function(){ addGroup(arr, slug); }));
+    add.appendChild(mkBtn("+ Seite", function(){ addExtern(arr, slug); }));
+    container.appendChild(add);
+  }
+}
+
+function renameNode(node, slug){
+  if(node.gruppe!==undefined){ var v=prompt("Sektions-/Gruppentitel:", node.gruppe); if(v){ node.gruppe=v.trim(); markDirty(slug); render(); renderNav(); } }
+  else { var t=prompt("Titel der Seite (leer = Index ohne Titel):", node.titel||""); if(t!==null){ if(t.trim()) node.titel=t.trim(); else delete node.titel; markDirty(slug); render(); renderNav(); } }
+}
+function addExtern(arr, slug){ var pth=prompt("Pfad zur bestehenden Seite (docs-relativ, z.B. P2_…/Foo.md):"); if(!pth)return; var t=prompt("Titel (leer = ohne):",""); var n={extern:pth.trim()}; if(t&&t.trim())n.titel=t.trim(); arr.push(n); markDirty(slug); render(); renderNav(); }
+function addGroup(arr, slug){ var g=prompt("Titel der Sektion/Gruppe:"); if(!g)return; arr.push({gruppe:g.trim(),kinder:[]}); markDirty(slug); render(); renderNav(); }
+
+function opsBar(list){ var d=document.createElement("span"); d.className="node-ops"; list.forEach(function(o){ if(o[1]===false)return; var b=document.createElement("button"); b.textContent=o[0]; b.addEventListener("click",o[2]); d.appendChild(b); }); return d; }
+function mkBtn(t,fn){ var b=document.createElement("button"); b.textContent=t; b.addEventListener("click",fn); return b; }
+function move(arr,idx,d){ var t=arr[idx]; arr.splice(idx,1); arr.splice(idx+d,0,t); }
+function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+// ---- Nav generieren + Diff -----------------------------------------------
+function currentNavLines(){
+  var lines=state.mkdocs.split("\n");
+  var a=lines.findIndex(function(l){return l.indexOf("# >>> AUTO-NAV")!==-1;});
+  var b=lines.findIndex(function(l){return l.indexOf("# <<< AUTO-NAV")!==-1;});
+  return {a:a,b:b,lines:lines,block:lines.slice(a+1,b)};
+}
+function renderNav(){
+  if(!state.course)return;
+  var gen=G.generateNav(state.course, state.praktika);
+  $("navOut").textContent=gen;
+  $("navPanel").hidden=false;
+  var cur=currentNavLines();
+  var same=G.treeEqual(G.parseNavBlock(cur.block), G.parseNavBlock(gen.split("\n")));
+  $("navDiff").innerHTML = same
+    ? '<span class="diff-ok">— identisch zum Ist-Stand</span>'
+    : '<span class="diff-warn">— weicht vom Ist-Stand ab (Speichern schreibt die neue Nav)</span>';
+}
+
+// ---- Speichern -----------------------------------------------------------
+async function writeFile(dir, name, text){ var fh=await dir.getFileHandle(name,{create:true}); var w=await fh.createWritable(); await w.write(text); await w.close(); }
+
+async function save(){
+  if(!state.root){ return; }
+  // 1) geänderte praktikum.json schreiben
+  for (var slug in state.dirtyPraktika){
+    var pdir=await state.content.getDirectoryHandle(slug);
+    await writeFile(pdir, "praktikum.json", JSON.stringify(state.praktika[slug], null, 2)+"\n");
+  }
+  // 2) course.json (Reihenfolge)
+  await writeFile(state.content, "course.json", JSON.stringify({praktika:state.course.praktika}, null, 2)+"\n");
+  // 3) AUTO-NAV-Block in mkdocs.yml ersetzen
+  var gen=G.generateNav(state.course, state.praktika);
+  var cur=currentNavLines();
+  var newLines=cur.lines.slice(0,cur.a+1).concat(gen.split("\n"), cur.lines.slice(cur.b));
+  var newMk=newLines.join("\n");
+  await writeFile(state.root, "mkdocs.yml", newMk);
+  state.mkdocs=newMk; state.dirty=false; state.dirtyPraktika={}; $("btnSave").disabled=true;
+  renderNav();
+  toast("Gespeichert: content/ + mkdocs.yml. Jetzt committen & pushen.");
+}
+
+$("btnOpen").addEventListener("click", function(){ if(!hasFS){toast("Bitte Chrome/Edge verwenden",true);return;} openRepo().catch(function(e){toast(e.message||"Fehler beim Öffnen",true);}); });
+$("btnSave").addEventListener("click", function(){ $("btnSave").disabled=true; save().catch(function(e){toast(e.message||"Fehler beim Speichern",true);$("btnSave").disabled=false;}); });
+$("btnNavPreview").addEventListener("click", function(){ $("navPanel").hidden=false; renderNav(); $("navPanel").scrollIntoView({behavior:"smooth"}); });
+</script>
+</body>
+</html>
