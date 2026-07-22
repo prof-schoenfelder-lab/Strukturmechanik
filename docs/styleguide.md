@@ -48,6 +48,14 @@ Orte mit Erkennungs-Icon:
 
 Einzelbegriffe als Chip: `Reiter Home` · `Detailfenster` · `Strukturbaum`
 
+Kette aus Aktion, Ort und Ziel:
+
+`Rechtsklick Strukturbaum Mesh`
+
+`Rechtsklick Solution → Insert → Deformation`
+
+`Doppelklick Strukturbaum Geometry`
+
 ## Aufgaben-Kopfzeile
 
 <div class="task-banner" markdown>
