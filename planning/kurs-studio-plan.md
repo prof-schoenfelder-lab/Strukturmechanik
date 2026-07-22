@@ -1,7 +1,8 @@
 # Plan: Kurs-Studio — grafische Weboberfläche für den gesamten Kursinhalt
 
-Stand: 22.07.2026 · Status: **Plan, noch nicht umgesetzt** · Umsetzung geplant in
-mehreren fokussierten Sessions (Opus). Dieses Dokument ist die Arbeitsgrundlage.
+Stand: 22.07.2026 · Status: **Phase 0 umgesetzt & verifiziert** (beide Kurse) ·
+Umsetzung in mehreren fokussierten Sessions. Dieses Dokument ist die
+Arbeitsgrundlage. Nächster Schritt: Phase 1.
 
 ## 1. Ziel
 
@@ -258,10 +259,11 @@ schon im Tutorial-Studio.
 
 ## 9. Phasenplan (je Phase eine fokussierte Session)
 
-- **Phase 0 — Fundament (klein):** WF_GROUPS + Tabs-Konfig nach
-  `docs/assets/wf-groups.json` auslagern (modern-ui.js lädt sie);
-  AUTO-NAV-Marker in mkdocs.yml einziehen; content/-Schemas final festlegen
-  (dieses Dokument als Basis). *Risikoarm, sofort mergebar.*
+- **Phase 0 — Fundament (klein): ✅ ERLEDIGT (Commit Kurs-Studio Phase 0).**
+  WF_GROUPS nach `docs/assets/wf-groups.json` ausgelagert (modern-ui.js lädt
+  sie async, Fallback bei fehlender Datei); AUTO-NAV-Marker in mkdocs.yml
+  (beide Kurse); `content/SCHEMA.md` als finales Datenmodell. Stepper/Tabs in
+  Struktur (Balken) und Thermo (Rohr) verifiziert.
 - **Phase 1 — Studio-Shell + Struktur:** Repo öffnen, course.json anlegen/lesen,
   Kurs-Baum-UI (anlegen/sortieren, extern-Einheiten), Generator für
   Übersichtsseiten + Nav-Block, **„Speichern & Veröffentlichen" via
