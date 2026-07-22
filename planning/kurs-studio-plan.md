@@ -158,7 +158,37 @@ auslagern; modern-ui.js lädt die Datei — kleiner, risikoarmer Refactor).
   - *Übersichtsseite:* nur Lernziele editieren — Inhaltsliste ist automatisch.
 - **Vollvorschau** wie im Tutorial-Studio (Overlay im Kurs-Look).
 - **Speichern** = content/-JSON + generierte docs/-Dateien + Nav-Block in einem
-  Schritt; danach normal `git commit/push` (optional später ein Git-Helfer).
+  Schritt.
+
+### 5a. Schnellkorrekturen im Live-Betrieb (Kernanforderung!)
+
+Anwendungsfall: Im Praktikum fällt ein Fehler in Aufgabenstellung/Lösung auf —
+der Fix muss in wenigen Minuten live sein. Der Flaschenhals ist der
+GitHub-Actions-Build (~1–3 min); das Studio darf keine zusätzliche Reibung
+einführen. Daraus folgen zwei Pflicht-Features (nicht optional):
+
+1. **Globale Suche / Schnellkorrektur-Modus**: Volltextsuche über den ganzen
+   Kursinhalt (content/ + extern-Seiten), Direktsprung in die Einheit,
+   Speichern regeneriert nur die betroffenen Dateien. Ziel: Fehler finden und
+   fixen in < 30 s Interaktion.
+2. **„Speichern & Veröffentlichen"**: Commit + Push direkt aus dem Studio über
+   die **GitHub-REST-API** (Git Data API für Multi-Datei-Commits; feingranulares
+   Personal Access Token, nur dieses Repo, lokal im Browser gespeichert).
+   Ein Klick → Commit → Actions baut → live. Kein Terminal nötig.
+   Gesamtzeit Fix→live damit wie heute: ~2–3 Minuten.
+
+**Bewusster Trade-off**: Der „Bearbeiten"-Stift (GitHub-Web-Edit) ist für
+GENERIERTE Seiten kein gültiger Weg mehr (würde überschrieben; Checksummen-
+Warnung schlägt an). Fixes an migrierten Inhalten laufen über das Studio oder
+über Claude (editiert content/-JSON + regeneriert). Nicht migrierte
+extern-Seiten bleiben wie bisher hand-/GitHub-editierbar.
+
+**Absicherungs-Option (empfohlen ab Phase 5)**: GitHub-Action, die bei Pushes
+mit content/-Änderungen den Generator headless (Node) ausführt und die
+docs/-Seiten selbst regeneriert. Damit wird auch ein direkter JSON-Edit auf
+github.com (z.B. vom iPad im Praktikum) zum gültigen Notfall-Weg, und
+Studio-Vergessen („nur JSON committet") kann keinen inkonsistenten Zustand
+erzeugen.
 
 ## 6. Umgang mit dem Bestand / Migration
 
@@ -181,6 +211,11 @@ auslagern; modern-ui.js lädt die Datei — kleiner, risikoarmer Refactor).
   Editor klein und die Ausgabe deterministisch.
 - **mkdocs.yml** wird als Text (Marker-Block) manipuliert, nicht als YAML
   geparst — robust gegen Formatierung, erfordert die zwei Markerzeilen.
+- **Antwort-Korrekturen** (falscher Sollwert einer Frage): answers.json wird
+  beim Build erzeugt, muss aber aufs Backend (fing-spool). Ein Textfix ist in
+  ~3 min live, ein Antwortwert-Fix erst nach answers.json-Update auf dem
+  Server — heute schon so; im Plan als bekannter Zusatzschritt dokumentieren
+  (evtl. später kleiner Deploy-Helfer).
 
 ## 8. Erwogene Alternative
 
@@ -199,11 +234,14 @@ schon im Tutorial-Studio.
   (dieses Dokument als Basis). *Risikoarm, sofort mergebar.*
 - **Phase 1 — Studio-Shell + Struktur:** Repo öffnen, course.json anlegen/lesen,
   Kurs-Baum-UI (anlegen/sortieren, extern-Einheiten), Generator für
-  Übersichtsseiten + Nav-Block. Ergebnis: Struktur & Navigation komplett
-  grafisch pflegbar, Inhalte noch extern.
-- **Phase 2 — Übungs-Editor:** kompletter Übungs-Typ inkl. Fragen
-  (numerisch/MC), Medien-Handling, Vollvorschau. Ergebnis: neue Übungen
-  entstehen vollständig im Studio.
+  Übersichtsseiten + Nav-Block, **„Speichern & Veröffentlichen" via
+  GitHub-API** (§5a.2). Ergebnis: Struktur & Navigation komplett grafisch
+  pflegbar und ohne Terminal veröffentlichbar.
+- **Phase 2 — Übungs-Editor + Schnellkorrektur:** kompletter Übungs-Typ inkl.
+  Fragen (numerisch/MC), Medien-Handling, Vollvorschau, **globale Suche mit
+  Direktsprung** (§5a.1). Ergebnis: neue Übungen entstehen vollständig im
+  Studio; Fehler in bestehenden (migrierten) Inhalten sind in Minuten live
+  gefixt.
 - **Phase 3 — Theorie-Editor:** Block-Editor + Tutorial-Embed-Block
   (+ Absprung ins Tutorial-Studio zum Neu-Erstellen).
 - **Phase 4 — Vorzeigebeispiel-Editor:** Schritte/Tabs/Banner/Stepper-Konfig.
