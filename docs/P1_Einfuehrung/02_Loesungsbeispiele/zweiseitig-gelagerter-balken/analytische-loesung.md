@@ -4,6 +4,8 @@ icon: material/calculator-variant
 
 # Analytische Lösung
 
+<div class="task-tabs-src" data-tabs="Aufgabe=../Aufgabenstellung/|Lösung mit ANSYS=../losung-mit-ansys/|Analytische Lösung=../analytische-loesung/" hidden></div>
+
 Prüfen wir nun also die Ergebnisse mit Hilfe der analytischen Gleichungen für die bekannten Biegefälle.
 
 Das Flächenträgheitsmoment ergibt sich zu

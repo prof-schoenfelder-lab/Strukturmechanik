@@ -26,7 +26,8 @@
   /* default halo color for light theme */
   --gap: 6px;
   /* zusätzlicher Abstand zwischen Kreis und Text */
-  --blue: #2f6af6;
+  --blue: #f2620f;
+  /* an die Kurs-Akzentfarbe angepasst (modernes Designsystem, 07/2026) */
   /* Kreis- & Titel-Farbe */
   --line: rgba(47, 106, 246, .20);
   /* Linienfarbe */
@@ -260,7 +261,7 @@
   :root {
     /* slightly lighter, desaturated blue for badges on dark backgrounds */
     /* Prefer Material theme variables where available, fall back to our sensible defaults */
-    --blue: var(--md-typeset-a-color, #6ea3ff);
+    --blue: #ff8a3d;
     --line: var(--md-typeset-table-color--light, rgba(110, 163, 255, .12));
     --code-bg: var(--md-code-bg-color, rgba(47, 106, 246, .14));
     --code-border: var(--md-code-hl-color--light, rgba(126, 168, 255, .20));

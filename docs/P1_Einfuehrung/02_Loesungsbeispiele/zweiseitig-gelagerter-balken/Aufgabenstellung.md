@@ -4,6 +4,8 @@ icon: material/help-box
 
 # zweiseitig gelagerter Balken mit Flächenlast
 
+<div class="task-tabs-src" data-tabs="Aufgabe=../Aufgabenstellung/|Lösung mit ANSYS=../losung-mit-ansys/|Analytische Lösung=../analytische-loesung/" hidden></div>
+
 Als einfaches Beispiel starten wir mit einem zweiseitig gelagerten Balken mit Flächenlast. Dieser ist in der Geometrie leicht zu erstellen und wir können die Lösungen leicht mit analytischen Gleichungen überprüfen.
 
 <figure style="text-align:center;">

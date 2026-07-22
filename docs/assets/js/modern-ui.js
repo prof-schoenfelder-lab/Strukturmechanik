@@ -237,28 +237,60 @@
   }
 
   // --- 4) Klickbarer Workflow-Stepper auf geteilten Schritt-Seiten ---------
-  // Aufgaben, die pro Workflow-Schritt eine eigene Seite haben (01-material/
-  // … 07-auswertung/), bekommen unter der Überschrift eine Stepper-Navigation
-  // zum Springen zwischen den Schritten.
+  // Aufgaben, die pro Workflow-Schritt eine eigene Seite haben, bekommen
+  // unter der Überschrift eine Stepper-Navigation zum Springen zwischen den
+  // Schritten. Jede Schritt-Gruppe beschreibt ihre Slugs (Geschwister-Seiten
+  // im selben Ordner), Kurz-Labels und optional eine Tabs-Zeile darüber.
   var WF_SLUGS = ['01-material', '02-geometrie', '03-zuweisung', '04-netz',
                   '05-randbedingungen', '06-loesen', '07-auswertung'];
+  var WF_GROUPS = [
+    { // Konvention nummerierter Schritt-Slugs (wie Thermo-Kurs, Rohr-Muster)
+      slugs: WF_SLUGS,
+      labels: ['Material', 'Geometrie', 'Zuweisung', 'Netz', 'Randbed.', 'Lösen', 'Auswertung'],
+      base: null,
+      tabs: null
+    },
+    { // P1 Vorzeigebeispiel: zweiseitig gelagerter Balken (Lösung mit ANSYS)
+      slugs: ['material', 'geometrie', 'materialzuordnung', 'vernetzung',
+              'navigation', 'lagerung', 'belastung', 'gleichungssystem-losen',
+              'gesuchte-werte-bestimmen'],
+      labels: ['Material', 'Geometrie', 'Zuweisung', 'Netz', 'Navigation',
+               'Lagerung', 'Belastung', 'Lösen', 'Auswertung'],
+      base: 'losung-mit-ansys',
+      tabs: 'Aufgabe=../../Aufgabenstellung/|Lösung mit ANSYS=../|Analytische Lösung=../../analytische-loesung/'
+    }
+  ];
+
+  // Liefert {grp, idx} wenn der Pfad eine Schrittseite einer Gruppe ist
+  function wfGroupFor(path) {
+    var parts = path.split('/');
+    var seg = parts.pop();
+    var parent = parts[parts.length - 1];
+    for (var g = 0; g < WF_GROUPS.length; g++) {
+      var idx = WF_GROUPS[g].slugs.indexOf(seg);
+      if (idx !== -1 && (!WF_GROUPS[g].base || parent === WF_GROUPS[g].base)) {
+        return { grp: WF_GROUPS[g], idx: idx };
+      }
+    }
+    return null;
+  }
 
   function wfPageNav(root) {
     var path = window.location.pathname.replace(/\/+$/, '');
-    var seg = path.split('/').pop();
-    var idx = WF_SLUGS.indexOf(seg);
-    if (idx === -1) return;
+    var hit = wfGroupFor(path);
+    if (!hit) return;
+    var grp = hit.grp, idx = hit.idx;
     var h1 = root.querySelector('article h1, .md-content__inner h1');
     if (!h1) return;
     var nav = document.createElement('nav');
     nav.className = 'wf-pagenav';
     var html = '';
-    for (var i = 0; i < WF_SLUGS.length; i++) {
+    for (var i = 0; i < grp.slugs.length; i++) {
       var cls = i < idx ? 'done' : i === idx ? 'active' : '';
-      html += '<a class="wf-pstep ' + cls + '" href="../' + WF_SLUGS[i] + '/">' +
+      html += '<a class="wf-pstep ' + cls + '" href="../' + grp.slugs[i] + '/">' +
         '<span class="wf-pnum">' + (i < idx ? '✓' : (i + 1)) + '</span>' +
-        '<span class="wf-plabel">' + WF_STEPS[i][1] + '</span></a>';
-      if (i < WF_SLUGS.length - 1) html += '<span class="wf-pline' + (i < idx ? ' done' : '') + '"></span>';
+        '<span class="wf-plabel">' + grp.labels[i] + '</span></a>';
+      if (i < grp.slugs.length - 1) html += '<span class="wf-pline' + (i < idx ? ' done' : '') + '"></span>';
     }
     nav.innerHTML = html;
     h1.parentNode.insertBefore(nav, h1.nextSibling);
@@ -276,16 +308,20 @@
   function taskTabs() {
     // data-tabs am task-banner ODER als unsichtbare Konfiguration
     // (<div class="task-tabs-src" data-tabs="…" hidden>) z.B. auf der
-    // Aufgabenstellungs-Seite selbst
+    // Aufgabenstellungs-Seite selbst — ODER automatisch aus der
+    // Schritt-Gruppe (WF_GROUPS mit tabs-Eintrag)
+    var cur = window.location.pathname.replace(/\/+$/, '');
+    var hit = wfGroupFor(cur);
     var banner = document.querySelector('.task-banner[data-tabs], .task-tabs-src[data-tabs]');
-    if (!banner) return;
+    var tabsStr = banner ? banner.getAttribute('data-tabs')
+                         : (hit && hit.grp.tabs ? hit.grp.tabs : null);
+    if (!tabsStr) return;
     var h1 = document.querySelector('.md-content article h1, .md-content__inner h1');
     if (!h1) return;
-    var cur = window.location.pathname.replace(/\/+$/, '');
-    var curSlug = cur.split('/').pop();
+    var parentDir = cur.slice(0, cur.lastIndexOf('/'));
     var wrap = document.createElement('div');
     wrap.className = 'task-tabs';
-    banner.getAttribute('data-tabs').split('|').forEach(function (part) {
+    tabsStr.split('|').forEach(function (part) {
       var i = part.indexOf('=');
       if (i === -1) return;
       var a = document.createElement('a');
@@ -293,8 +329,13 @@
       a.href = part.slice(i + 1);
       a.textContent = part.slice(0, i);
       var target = new URL(a.href, window.location.href).pathname.replace(/\/+$/, '');
+      // aktiv: Ziel = aktuelle Seite, Ziel = Schritt-Ordner der aktuellen
+      // Schrittseite, oder (alte Konvention) beide sind Schritt-Slugs
+      // derselben Gruppe
+      var tHit = wfGroupFor(target);
       var active = target === cur ||
-        (WF_SLUGS.indexOf(curSlug) !== -1 && WF_SLUGS.indexOf(target.split('/').pop()) !== -1);
+        (hit && target === parentDir) ||
+        (hit && tHit && tHit.grp === hit.grp);
       if (active) a.classList.add('active');
       wrap.appendChild(a);
     });
