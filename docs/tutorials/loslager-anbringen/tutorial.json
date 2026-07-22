@@ -1,0 +1,36 @@
+{
+  "slug": "loslager-anbringen",
+  "title": "Loslager anbringen",
+  "category": "Lagerung",
+  "software": "Mechanical",
+  "tags": [
+    "Displacement",
+    "Support"
+  ],
+  "steps": [
+    {
+      "caption": "`mittlere Maustaste` `gedrückt halten` um Ansicht zu drehen (hinterer Teil des Balkens)",
+      "media": [
+        "step-0.png"
+      ]
+    },
+    {
+      "caption": "`Klick` auf `Kantenauswahl` und anschließend die hintere Kante `auswählen`",
+      "media": [
+        "step-1.png"
+      ]
+    },
+    {
+      "caption": "Im Strukturbaum: `Rechtsklick Static Structural → Insert → Displacement`",
+      "media": [
+        "step-2.png"
+      ]
+    },
+    {
+      "caption": "Im Detailfenster `X` Component und `Z` Component eine `0` eintragen",
+      "media": [
+        "step-3.png"
+      ]
+    }
+  ]
+}

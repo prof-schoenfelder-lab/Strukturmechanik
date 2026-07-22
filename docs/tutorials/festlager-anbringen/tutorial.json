@@ -1,0 +1,41 @@
+{
+  "slug": "festlager-anbringen",
+  "title": "Festlager anbringen",
+  "category": "Lagerung",
+  "software": "Mechanical",
+  "tags": [
+    "Fixed Support"
+  ],
+  "steps": [
+    {
+      "caption": "In der Menüleiste `Display` (Tab) > `Show` (ganz rechts) > ` All Coordinate Systems`",
+      "media": [
+        "step-0.png"
+      ]
+    },
+    {
+      "caption": "`Mittlere Maustaste` gedrückt halten und Maus bewegen bis Kante so sichtbar ist wie hier",
+      "media": [
+        "step-1.png"
+      ]
+    },
+    {
+      "caption": "Zweite `Lupe` von Links `anklicken` (Box-Zoom) und mit `gedrückte Maustaste` eine `Box` um Geometrie ziehen",
+      "media": [
+        "step-2.png"
+      ]
+    },
+    {
+      "caption": "`Klick` auf `Kantenauswahl` und untere Kante `auswählen`",
+      "media": [
+        "step-3.png"
+      ]
+    },
+    {
+      "caption": "Im Strukturbaum: `Rechtsklick Static Structural → Insert → Fixed Support`",
+      "media": [
+        "step-4.png"
+      ]
+    }
+  ]
+}

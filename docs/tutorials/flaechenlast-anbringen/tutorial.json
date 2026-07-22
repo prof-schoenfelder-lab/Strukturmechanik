@@ -1,0 +1,42 @@
+{
+  "slug": "flaechenlast-anbringen",
+  "title": "Flächenlast anbringen",
+  "category": "Belastung",
+  "software": "Mechanical",
+  "tags": [
+    "Pressure",
+    "Force"
+  ],
+  "steps": [
+    {
+      "caption": "Ansicht drehen `mittlere Maustaste gedrückt` + `Flächenauswahl` + `Fläche` auswählen",
+      "media": [
+        "step-0.png"
+      ]
+    },
+    {
+      "caption": "Im Strukturbaum:  `Rechtsklick Static Strucutral → Insert → Force`",
+      "media": [
+        "step-1.png"
+      ]
+    },
+    {
+      "caption": "`Klick` auf `Pfeil` bei Vector (Definied By) und auf `Components`",
+      "media": [
+        "step-2.png"
+      ]
+    },
+    {
+      "caption": "Bei `Z Component`  den Wert `-1000` (weil Kraft in negative Richtung)",
+      "media": [
+        "step-3.png"
+      ]
+    },
+    {
+      "caption": "So muss es final aussehen",
+      "media": [
+        "step-4.png"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "slug": "material-hinzufuegen",
+  "title": "Material hinzufügen",
+  "category": "Material",
+  "software": "Workbench",
+  "tags": [
+    "Engineering Data"
+  ],
+  "steps": [
+    {
+      "caption": "`Rechtsklick Engineering Data`",
+      "media": [
+        "step-0.png"
+      ]
+    },
+    {
+      "caption": "`Klick` auf `Edit...`",
+      "media": [
+        "step-1.png"
+      ]
+    },
+    {
+      "caption": "`Klick` auf `Click here to add new Material` und den Materialnamen `Stahl` eingeben",
+      "media": [
+        "step-2.png"
+      ]
+    },
+    {
+      "caption": "`Klick` auf `Stahl`",
+      "media": [
+        "step-3.png"
+      ]
+    },
+    {
+      "caption": "`Doppelklick Isotropic Elasticity`",
+      "media": [
+        "step-4.png"
+      ]
+    },
+    {
+      "caption": "Im `Properties Fenster` die Einheit von `Young's Modulus` auf `GPa` stellen und den Wert `210` eintragen und anschließend bei `Poisson's Ratio` den Wert `0,3` eintragen",
+      "media": [
+        "step-5.png"
+      ]
+    },
+    {
+      "caption": "So müsste es aussehen",
+      "media": [
+        "step-6.png"
+      ]
+    },
+    {
+      "caption": "`Klick` auf den Tab `Project` um zurück ins Projektmenü zu kommen",
+      "media": [
+        "step-7.png"
+      ]
+    }
+  ]
+}

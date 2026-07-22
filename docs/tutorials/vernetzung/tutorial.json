@@ -1,0 +1,42 @@
+{
+  "slug": "vernetzung",
+  "title": "Vernetzung",
+  "category": "Vernetzung",
+  "software": "Mechanical",
+  "tags": [
+    "Mesh",
+    "Sizing"
+  ],
+  "steps": [
+    {
+      "caption": "In der Leiste rechts unten `Klick` auf `Metric ..` und anschließend auf `Metric (mm,t,...`",
+      "media": [
+        "step-0.png"
+      ]
+    },
+    {
+      "caption": "Im Strukturbaum: `Klick` auf `Mesh`",
+      "media": [
+        "step-1.png"
+      ]
+    },
+    {
+      "caption": "Im Detailfenster `Klick` auf `Default` (neben Element Size) und den Wert `15` eingeben und mit `Enter` bestätigen",
+      "media": [
+        "step-2.png"
+      ]
+    },
+    {
+      "caption": "Im Strukturbaum `Rechtsklick Mesh` und auf `Generate Mesh` `klicken`",
+      "media": [
+        "step-3.png"
+      ]
+    },
+    {
+      "caption": "So sollte es final aussehen",
+      "media": [
+        "step-4.png"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "slug": "material-zuordnen",
+  "title": "Material zuordnen",
+  "category": "Material",
+  "software": "Mechanical",
+  "tags": [
+    "Assignment"
+  ],
+  "steps": [
+    {
+      "caption": "`Doppelklick Model`",
+      "media": [
+        "step-0.png"
+      ]
+    },
+    {
+      "caption": "Nach dem Start das Programm `Mechanical` öffnen",
+      "media": [
+        "step-1.png"
+      ]
+    },
+    {
+      "caption": "Im Strukturbaum: `Klick` auf `+` neben `Geometry`",
+      "media": [
+        "step-2.png"
+      ]
+    },
+    {
+      "caption": "`Klick` auf `SYS\\Solid` (unsere vorher erstellte Geometrie)",
+      "media": [
+        "step-3.png"
+      ]
+    },
+    {
+      "caption": "Im Detailfenster: `Klick` auf das `Dreieck` neben Structural",
+      "media": [
+        "step-4.png"
+      ]
+    },
+    {
+      "caption": "`Klick` auf `Stahl` (unser vorher definiertes Material)",
+      "media": [
+        "step-5.png"
+      ]
+    }
+  ]
+}

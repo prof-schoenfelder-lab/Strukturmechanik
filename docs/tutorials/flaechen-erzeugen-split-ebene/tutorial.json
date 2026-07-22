@@ -1,0 +1,72 @@
+{
+  "slug": "flaechen-erzeugen-split-ebene",
+  "title": "Flächen teilen (Split)",
+  "category": "Geometrie",
+  "software": "SpaceClaim",
+  "tags": [
+    "Split",
+    "Fläche"
+  ],
+  "steps": [
+    {
+      "caption": "`Klick` auf Reiter `Design` und dann auf `Plane`",
+      "media": [
+        "step-0.png"
+      ]
+    },
+    {
+      "caption": "Stirnfläche `anklicken` (auf der Ebene erzeugt wird)",
+      "media": [
+        "step-1.png"
+      ]
+    },
+    {
+      "caption": "`Klick` auf `Move`",
+      "media": [
+        "step-2.png"
+      ]
+    },
+    {
+      "caption": "eben erzeugte `Ebene` `anklicken`",
+      "media": [
+        "step-3.png"
+      ]
+    },
+    {
+      "caption": "Achse senkrecht zur Ebene `anklicken`",
+      "media": [
+        "step-4.png"
+      ]
+    },
+    {
+      "caption": "gleiche Achse erneut `anklicken und gedrückt halten` und Mauszeiger nach links ziehen und `Leertaste` drücken und den Wert `10` eingeben und mit `Enter bestätigen`",
+      "media": [
+        "step-5.png"
+      ]
+    },
+    {
+      "caption": "`Klick` auf `Split`",
+      "media": [
+        "step-6.png"
+      ]
+    },
+    {
+      "caption": "`STRG` + `A` drücken (alle Flächen auswählen) und `Säge` `anklicken`",
+      "media": [
+        "step-7.png"
+      ]
+    },
+    {
+      "caption": "`Ebene` `anklicken` und 2x `ESC` drücken",
+      "media": [
+        "step-8.png"
+      ]
+    },
+    {
+      "caption": "Flächen wurden erzeugt!",
+      "media": [
+        "step-9.png"
+      ]
+    }
+  ]
+}

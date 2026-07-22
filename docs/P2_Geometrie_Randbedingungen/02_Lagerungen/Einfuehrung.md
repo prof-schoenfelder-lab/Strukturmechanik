@@ -73,3 +73,9 @@ Lagerungen verhindern an definierten Orten der Geometrie eine Bewegungen in eine
 <figure style="text-align:center;">
     <img src="../images/RB_Geo_remove.gif" alt="Geometrie im Grafikfenster entfernen" width="700">
 </figure>
+## Konkret: Festlager anbringen
+
+Die vollständige Klick-Anleitung — dieselbe findest du auch in der
+[Anleitungen-Übersicht](../../../tutorials/):
+
+<tutorial slug="festlager-anbringen"></tutorial>

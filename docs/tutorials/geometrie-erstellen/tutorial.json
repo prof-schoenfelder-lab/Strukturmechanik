@@ -1,0 +1,79 @@
+{
+  "slug": "geometrie-erstellen",
+  "title": "Geometrie erstellen",
+  "category": "Geometrie",
+  "software": "SpaceClaim",
+  "tags": [
+    "SpaceClaim",
+    "Skizze"
+  ],
+  "steps": [
+    {
+      "caption": "`Rechtsklick` auf Geometry`",
+      "media": [
+        "step-0.png"
+      ],
+      "note": "<pre>&nbsp;</pre>"
+    },
+    {
+      "caption": "`Klick` auf `New SpaceClaim Geometry...`",
+      "media": [
+        "step-1.png"
+      ]
+    },
+    {
+      "caption": "Links unten ein Hinweis dass `SpaceClaim` gestartet wird",
+      "media": [
+        "step-2.png"
+      ]
+    },
+    {
+      "caption": "`Klick` auf `Plane View` (oder `v` drücken)",
+      "media": [
+        "step-3.png"
+      ]
+    },
+    {
+      "caption": "`Klick` auf `Rectangle` (im Tab Sketch)",
+      "media": [
+        "step-4.png"
+      ]
+    },
+    {
+      "caption": "Fläche mit 30x30 Maßen erstellen (siehe Screenshot)",
+      "media": [
+        "step-5.png"
+      ]
+    },
+    {
+      "caption": "`Klick` auf `End Sketch Editing`",
+      "media": [
+        "step-6.png"
+      ]
+    },
+    {
+      "caption": "`Klick` auf `Trimetric` (im Tab Design)",
+      "media": [
+        "step-7.png"
+      ]
+    },
+    {
+      "caption": "`Klick` auf `Pull` (im Tab Design)",
+      "media": [
+        "step-8.png"
+      ]
+    },
+    {
+      "caption": "Fläche auf 1000mm extrudieren (siehe Screenshot)",
+      "media": [
+        "step-9.png"
+      ]
+    },
+    {
+      "caption": "2x `ESC` drücken und Fenster `schließen`",
+      "media": [
+        "step-10.png"
+      ]
+    }
+  ]
+}

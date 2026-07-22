@@ -1,0 +1,24 @@
+{
+  "slug": "analyse-hinzufuegen",
+  "title": "Neue Analyse anlegen",
+  "category": "Setup",
+  "software": "Workbench",
+  "tags": [
+    "Static Structural",
+    "Projekt"
+  ],
+  "steps": [
+    {
+      "caption": "Analyse Hinzufügen durch `Doppelklick Static Structural` (Unter Analysis Systems)",
+      "media": [
+        "step-0.png"
+      ]
+    },
+    {
+      "caption": "Analyse umbenennen durch `Doppelklick` auf den Namen `Static Structural` und entsprechenden Namen eingeben z.B. `Loesungsbeispiel` (Umlaute vermeiden!) und mit `Enter` bestätigen",
+      "media": [
+        "step-1.png"
+      ]
+    }
+  ]
+}

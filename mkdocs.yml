@@ -91,6 +91,7 @@ extra_javascript:
       - "assets/js/backend-sync.js"
       - "assets/js/help-button.js"
       - "assets/js/modern-ui.js"
+      - "assets/js/tutorials.js"
       - "assets/vendor/three-0.147.0.min.js"
       - "assets/js/course-stats.js"
       - "assets/js/progress-hub.js"
@@ -203,6 +204,7 @@ nav:
                       - Theorie: P4_Abstraktionen/05_Flaechenstrukturen/Flaechenstrukturen.md
                       - Umsetzung ANSYS: P4_Abstraktionen/05_Flaechenstrukturen/Umsetzung.md
                       - Übung 4: P4_Abstraktionen/05_Flaechenstrukturen/Uebung04.md
+      - ANLEITUNGEN: tutorials.md
       - MEIN FORTSCHRITT: Fortschritt.md
       - FAQ:
               - 00_FAQ/index.md
