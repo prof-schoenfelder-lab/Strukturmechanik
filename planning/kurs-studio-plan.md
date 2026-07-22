@@ -190,6 +190,36 @@ github.com (z.B. vom iPad im Praktikum) zum gültigen Notfall-Weg, und
 Studio-Vergessen („nur JSON committet") kann keinen inkonsistenten Zustand
 erzeugen.
 
+### 5b. Mehrbenutzer-Betrieb (zwei Personen pflegen den Kurs parallel)
+
+Anforderung: Dozent + Kollege (z.B. zweiter Betreuer) machen unabhängig
+Änderungen, auch zeitgleich. Drei Vorkehrungen machen das sicher:
+
+1. **Konfliktschutz beim Veröffentlichen (optimistisches Locking, Pflicht ab
+   Phase 1):** Das Studio merkt sich beim Laden jeder Datei ihren Git-SHA.
+   Beim Veröffentlichen prüft es gegen den aktuellen Remote-Stand: Hat jemand
+   dieselbe Datei inzwischen geändert, gibt es NIE ein stilles Überschreiben,
+   sondern eine Warnung („<Datei> wurde inzwischen von <Autor> geändert")
+   mit Neu-Laden. Geänderte fremde Dateien in ANDEREN Einheiten sind kein
+   Konflikt — das Studio committet nur die eigenen.
+2. **Konflikt-Hotspots klein schneiden:** Statt einer großen course.json ein
+   Baum-File **pro Praktikum** (content/P1/praktikum.json …). Zwei Personen
+   kollidieren dann nur noch, wenn beide die Struktur DESSELBEN Praktikums
+   umbauen. Generierte Dateien (Seiten, Übersichten, Nav-Block, Register)
+   werden nie von Hand gemerged — nach einem Quellen-Merge einfach neu
+   generieren; der Generator ist deterministisch.
+3. **Team-Modus ohne Git-Kenntnisse (Phase 5):** Das Studio kann statt eines
+   lokalen Ordners direkt GitHub als Quelle nutzen (Lesen + Schreiben über die
+   API mit eigenem Token). Der Kollege braucht dann weder Clone noch Terminal —
+   nur die Studio-HTML und ein Token mit Schreibrecht auf das Repo. Punkt 1
+   gilt dort genauso.
+
+**Grenze (bewusst):** Kein Echtzeit-Co-Editing derselben Einheit (das bräuchte
+einen Server). Wenn beide gleichzeitig an derselben Übung arbeiten, gewinnt
+der Erste; der Zweite bekommt die Konflikt-Warnung und muss seine Änderung
+auf dem neuen Stand wiederholen. Für zwei Personen mit Absprache („du P2,
+ich P3") ist das im Alltag kein Hindernis.
+
 ## 6. Umgang mit dem Bestand / Migration
 
 - Phase „Migration" ist skriptgestützt (Python, durch Claude): bestehende
@@ -235,8 +265,9 @@ schon im Tutorial-Studio.
 - **Phase 1 — Studio-Shell + Struktur:** Repo öffnen, course.json anlegen/lesen,
   Kurs-Baum-UI (anlegen/sortieren, extern-Einheiten), Generator für
   Übersichtsseiten + Nav-Block, **„Speichern & Veröffentlichen" via
-  GitHub-API** (§5a.2). Ergebnis: Struktur & Navigation komplett grafisch
-  pflegbar und ohne Terminal veröffentlichbar.
+  GitHub-API inkl. SHA-Konfliktschutz** (§5a.2, §5b.1). Ergebnis: Struktur &
+  Navigation komplett grafisch pflegbar und ohne Terminal veröffentlichbar;
+  paralleles Arbeiten von Anfang an ohne stilles Überschreiben.
 - **Phase 2 — Übungs-Editor + Schnellkorrektur:** kompletter Übungs-Typ inkl.
   Fragen (numerisch/MC), Medien-Handling, Vollvorschau, **globale Suche mit
   Direktsprung** (§5a.1). Ergebnis: neue Übungen entstehen vollständig im
@@ -245,8 +276,9 @@ schon im Tutorial-Studio.
 - **Phase 3 — Theorie-Editor:** Block-Editor + Tutorial-Embed-Block
   (+ Absprung ins Tutorial-Studio zum Neu-Erstellen).
 - **Phase 4 — Vorzeigebeispiel-Editor:** Schritte/Tabs/Banner/Stepper-Konfig.
-- **Phase 5 — Migration + Härtung:** Bestand skriptgestützt überführen,
-  Checksummen-Schutz, optional Git-Helfer / Node-Headless-Generator.
+- **Phase 5 — Migration + Härtung + Team:** Bestand skriptgestützt überführen,
+  Checksummen-Schutz, Team-Modus (GitHub als Quelle, §5b.3),
+  CI-Regenerierung (§5a), Node-Headless-Generator.
 
 Jede Phase liefert etwas eigenständig Nutzbares; Abbruch nach jeder Phase
 hinterlässt einen konsistenten Zustand.
