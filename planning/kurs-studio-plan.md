@@ -1,8 +1,8 @@
 # Plan: Kurs-Studio — grafische Weboberfläche für den gesamten Kursinhalt
 
-Stand: 22.07.2026 · Status: **Phase 0 umgesetzt & verifiziert** (beide Kurse) ·
+Stand: 22.07.2026 · Status: **Phase 0 + Phase 1a/1b umgesetzt & verifiziert** ·
 Umsetzung in mehreren fokussierten Sessions. Dieses Dokument ist die
-Arbeitsgrundlage. Nächster Schritt: Phase 1.
+Arbeitsgrundlage. Offen in Phase 1: GitHub-Veröffentlichung + SHA-Konfliktschutz.
 
 ## 1. Ziel
 
@@ -264,12 +264,21 @@ schon im Tutorial-Studio.
   sie async, Fallback bei fehlender Datei); AUTO-NAV-Marker in mkdocs.yml
   (beide Kurse); `content/SCHEMA.md` als finales Datenmodell. Stepper/Tabs in
   Struktur (Balken) und Thermo (Rohr) verifiziert.
-- **Phase 1 — Studio-Shell + Struktur:** Repo öffnen, course.json anlegen/lesen,
-  Kurs-Baum-UI (anlegen/sortieren, extern-Einheiten), Generator für
-  Übersichtsseiten + Nav-Block, **„Speichern & Veröffentlichen" via
-  GitHub-API inkl. SHA-Konfliktschutz** (§5a.2, §5b.1). Ergebnis: Struktur &
-  Navigation komplett grafisch pflegbar und ohne Terminal veröffentlichbar;
-  paralleles Arbeiten von Anfang an ohne stilles Überschreiben.
+- **Phase 1 — Studio-Shell + Struktur:** *teilweise erledigt.*
+  - **1a ✅** deterministischer Kern: `tools/studio/generator.js` (Baum→Nav +
+    Parser + Baum-Vergleich, Browser+Node), `bootstrap.js` (Ist-Nav→content/),
+    `verify.js` (No-Op-Beweis, Negativtest bestätigt). content/ gebootstrappt
+    (4 Praktika, 78 Blattseiten).
+  - **1b ✅** `tools/kurs-studio.html`: Repo öffnen (FS Access), content/ laden,
+    Kurs-Baum grafisch pflegen (umsortieren/umbenennen/hinzufügen/entfernen),
+    Live-Nav-Diff, Speichern schreibt content/ + nur den AUTO-NAV-Block in
+    mkdocs.yml (bewiesen: alles außerhalb der Marker byte-identisch).
+  - **1c ⬜ offen:** „Veröffentlichen" via GitHub-API (Git Data API,
+    Multi-Datei-Commit, fein-granulares PAT lokal) inkl. **SHA-Konfliktschutz**
+    (§5a.2, §5b.1). Braucht ein Token vom User zum Testen.
+  - *Noch nicht in Phase 1 gebaut:* Generator für die Übersichtsseiten (kommt,
+    wenn Einheiten typisiert sind — Phase 2+; Übersichten sind aktuell die
+    handgebauten prakt-cards und laufen als extern weiter).
 - **Phase 2 — Übungs-Editor + Schnellkorrektur:** kompletter Übungs-Typ inkl.
   Fragen (numerisch/MC), Medien-Handling, Vollvorschau, **globale Suche mit
   Direktsprung** (§5a.1). Ergebnis: neue Übungen entstehen vollständig im
