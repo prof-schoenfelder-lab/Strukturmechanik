@@ -27,14 +27,17 @@
   }
 
   // ---- Generieren: Baum -> Nav-Block (Textzeilen) -------------------------
+  // Pfad eines Blatt-Knotens: extern-Referenz ODER generierte Seite (pfad)
+  function leafPath(node) { return node.extern !== undefined ? node.extern : node.pfad; }
+
   function genNode(node, indent, out) {
     if (node.gruppe !== undefined) {
       out.push(pad(indent) + '- ' + q(node.gruppe) + ':');
       (node.kinder || []).forEach(function (c) { genNode(c, indent + NAV_STEP, out); });
     } else if (node.titel !== undefined && node.titel !== null && node.titel !== '') {
-      out.push(pad(indent) + '- ' + q(node.titel) + ': ' + node.extern);
+      out.push(pad(indent) + '- ' + q(node.titel) + ': ' + leafPath(node));
     } else {
-      out.push(pad(indent) + '- ' + node.extern);
+      out.push(pad(indent) + '- ' + leafPath(node));
     }
   }
 
@@ -108,7 +111,7 @@
       var label = (n.gruppe !== undefined) ? n.gruppe : n.nav;
       return { g: label, k: n.kinder.map(normNode) };
     }
-    return { t: (n.titel || null), e: n.extern };
+    return { t: (n.titel || null), e: (n.extern !== undefined ? n.extern : n.pfad) };
   }
   function treeEqual(a, b) {
     return JSON.stringify(a.map(normNode)) === JSON.stringify(b.map(normNode));
