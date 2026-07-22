@@ -107,6 +107,7 @@ extra_css:
       - "styles/modern.css"
 nav:
       - Home: index.md
+      # >>> AUTO-NAV — Praktika werden vom Kurs-Studio erzeugt, nicht von Hand ändern
       - EINFÜHRUNG:
               - P1_Einfuehrung/index.md
               - GRUNDLAGEN:
@@ -204,6 +205,7 @@ nav:
                       - Theorie: P4_Abstraktionen/05_Flaechenstrukturen/Flaechenstrukturen.md
                       - Umsetzung ANSYS: P4_Abstraktionen/05_Flaechenstrukturen/Umsetzung.md
                       - Übung 4: P4_Abstraktionen/05_Flaechenstrukturen/Uebung04.md
+      # <<< AUTO-NAV
       - ANLEITUNGEN: tutorials.md
       - MEIN FORTSCHRITT: Fortschritt.md
       - FAQ:
