@@ -2,6 +2,10 @@
 icon: material/circle
 hide:
   - toc
+sektion: Lagerungen
+title: zylindrische Lager
+order: 150
+thumb: images/Radial_Axial_Tangential.excalidraw.png
 ---
 
 # Zylindrische Lagerung mit `Cylindrical Support`

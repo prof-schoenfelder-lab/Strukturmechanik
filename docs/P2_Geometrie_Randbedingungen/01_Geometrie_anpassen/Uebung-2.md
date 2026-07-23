@@ -1,6 +1,11 @@
 ---
 hide:
  - toc
+sektion: Geometrieanpassungen
+title: Übung 2
+order: 70
+kurz: Wanddicke am Lenker erhöhen
+thumb: images/Uebung-02.png
 ---
 
 # Wanddicke am Lenker erhöhen

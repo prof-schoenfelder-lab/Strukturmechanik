@@ -1,6 +1,11 @@
 ---
 hide:
  - toc
+sektion: Lagerungen
+title: Übung 4
+order: 140
+kurz: Externe Lagerung am Fahrradrahmen
+thumb: images/Uebung-04.excalidraw.png
 ---
 
 # Externe Lagerung am Fahrradrahmen

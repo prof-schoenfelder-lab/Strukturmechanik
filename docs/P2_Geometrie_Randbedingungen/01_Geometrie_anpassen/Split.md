@@ -2,6 +2,10 @@
 icon: material/arrow-split-vertical
 hide:
   - toc
+sektion: Geometrieanpassungen
+title: Flächen teilen für Randbedingungen
+order: 40
+thumb: images/Flaeche_erstellen.gif
 ---
 
 # Flächen teilen zum Anbringen von Randbedingungen

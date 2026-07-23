@@ -2,6 +2,10 @@
 icon: material/triangle-outline
 hide:
   - toc
+sektion: Lagerungen
+title: externe Lager
+order: 130
+thumb: images/FixedSupport_vs_RemoteDisplacement.excalidraw.png
 ---
 
 # Externe Lager mit `Remote Displacement`

@@ -2,6 +2,10 @@
 icon: material/cube-scan
 hide:
   - toc
+sektion: Geometrieanpassungen
+title: Längen & Positionen ändern
+order: 10
+thumb: images/Laenge_aendern.gif
 ---
 
 # Längen ändern mit `Move`

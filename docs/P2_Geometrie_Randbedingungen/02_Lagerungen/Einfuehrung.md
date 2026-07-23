@@ -2,6 +2,10 @@
 icon: material/information-variant-box
 hide:
   - toc
+sektion: Lagerungen
+title: Einführung
+order: 100
+thumb: images/Starrkoerperbewegungen.png
 ---
 
 # Einführung in Lagerungen

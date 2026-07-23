@@ -2,6 +2,10 @@
 icon: material/triangle
 hide:
   - toc
+sektion: Lagerungen
+title: Lager
+order: 110
+thumb: images/Lager.png
 ---
 
 # Lager mit `Displacement` , `Fixed Support` und `Frictionless Support`

@@ -1,6 +1,11 @@
 ---
 hide:
  - toc
+sektion: Belastungen
+title: Übung 7
+order: 220
+kurz: Lenkkopfsteifigkeit Fahrradrahmen
+thumb: images/Uebung-07.excalidraw.png
 ---
 
 # Lenkkopfsteifigkeit Fahrradrahmen

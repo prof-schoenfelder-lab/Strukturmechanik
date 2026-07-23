@@ -2,6 +2,10 @@
 icon: material/arrow-down-bold-outline
 hide:
   - toc
+sektion: Belastungen
+title: externe Kräfte
+order: 210
+thumb: images/RemoteForce_Fahrradbeispiel.excalidraw.png
 ---
 
 # Externe Kräfte mit `Remote Force`

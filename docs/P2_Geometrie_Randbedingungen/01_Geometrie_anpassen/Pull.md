@@ -2,6 +2,10 @@
 icon: material/diameter-variant
 hide:
   - toc
+sektion: Geometrieanpassungen
+title: Radius ändern
+order: 20
+thumb: images/Radius_aendern.gif
 ---
 
 <!-- --8<-- [start:Radius_aendern_mitPull] -->

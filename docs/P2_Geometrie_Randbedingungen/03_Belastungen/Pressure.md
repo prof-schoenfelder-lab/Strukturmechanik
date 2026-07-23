@@ -2,6 +2,9 @@
 icon: material/arrow-collapse-down
 hide:
   - toc
+sektion: Belastungen
+title: Druck
+order: 230
 ---
 
 # Druck mit `Pressure`

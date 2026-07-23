@@ -2,6 +2,10 @@
 icon: material/plus-circle
 hide:
   - toc
+sektion: Geometrieanpassungen
+title: Körper zusammenfügen
+order: 90
+thumb: images/Koerper_zusammenfuegen.gif
 ---
 
 # Bauteile zusammenfügen mit `Combine`

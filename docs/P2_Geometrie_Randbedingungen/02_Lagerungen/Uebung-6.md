@@ -1,6 +1,11 @@
 ---
 hide:
     - toc
+sektion: Lagerungen
+title: Übung 6
+order: 180
+kurz: Vergleich verschiedener Lagerungsbedingungen am Beispiel des Inbus
+thumb: images/Uebung-06.png
 ---
 
 # Vergleich verschiedener Lagerungsbedingungen am Beispiel des Inbus

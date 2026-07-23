@@ -2,6 +2,10 @@
 icon: material/close-circle
 hide:
   - toc
+sektion: Geometrieanpassungen
+title: Vereinfachungen
+order: 80
+thumb: images/Select_same_volume_and_Delete.gif
 ---
 
 # Geometrien vereinfachen

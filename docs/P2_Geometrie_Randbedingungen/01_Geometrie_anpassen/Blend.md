@@ -2,6 +2,10 @@
 icon: material/arrow-expand-horizontal
 hide:
   - toc
+sektion: Geometrieanpassungen
+title: Übergänge erstellen
+order: 60
+thumb: images/Blend.gif
 ---
 
 # Übergänge erstellen mit `Blend`

@@ -1,6 +1,11 @@
 ---
 hide:
  - toc
+sektion: Lagerungen
+title: Übung 3
+order: 120
+kurz: Lagerungsbeispiel Lineal über Kante belastet
+thumb: images/Lagerungsbeispiel_Lineal.png
 ---
 
 # Lagerungsbeispiel Lineal über Kante belastet

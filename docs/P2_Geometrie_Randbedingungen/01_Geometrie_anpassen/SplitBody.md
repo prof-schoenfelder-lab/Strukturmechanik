@@ -2,6 +2,10 @@
 icon: material/rhombus-split
 hide:
   - toc
+sektion: Geometrieanpassungen
+title: Körper teilen
+order: 50
+thumb: images/Koerper_teilen.gif
 ---
 
 # Körper teilen mit `Split Body`

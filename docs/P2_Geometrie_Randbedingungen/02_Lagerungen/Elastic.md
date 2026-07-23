@@ -2,6 +2,9 @@
 icon: material/car-brake-worn-linings
 hide:
   - toc
+sektion: Lagerungen
+title: elastische Lager
+order: 160
 ---
 
 # elastische Lagerung `Elastic Support`

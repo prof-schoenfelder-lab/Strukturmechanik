@@ -1,6 +1,11 @@
 ---
 hide:
  - toc
+sektion: Lagerungen
+title: Übung 5
+order: 170
+kurz: vereinfachte Fahrradbremse (V-Brake)
+thumb: images/Uebung-05.png
 ---
 
 # vereinfachte Fahrradbremse (V-Brake)

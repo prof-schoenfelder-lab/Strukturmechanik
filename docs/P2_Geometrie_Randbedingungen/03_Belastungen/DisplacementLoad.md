@@ -2,6 +2,10 @@
 icon: material/arrow-all
 hide:
   - toc
+sektion: Belastungen
+title: Verschiebungen als Last
+order: 190
+thumb: images/Verschiebung_Kraft.excalidraw.png
 ---
 
 # Belastung durch Verschiebungen

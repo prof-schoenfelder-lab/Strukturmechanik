@@ -2,6 +2,9 @@
 icon: material/arrow-down-bold
 hide:
   - toc
+sektion: Belastungen
+title: Kräfte
+order: 200
 ---
 
 # Kräfte mit `Force`
