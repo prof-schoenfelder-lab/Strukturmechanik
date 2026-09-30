@@ -703,7 +703,7 @@
 
     // Check both numeric and multiple choice questions
     var qs = document.querySelectorAll('.numeric-question');
-    var mcqs = document.querySelectorAll('.multiple-choice-question');
+    var mcqs = document.querySelectorAll('.multiple-choice-question, .detektiv-fall');
     var allQuestions = [];
 
     for (var i = 0; i < qs.length; i++) allQuestions.push(qs[i]);
@@ -732,7 +732,7 @@
   // Check if all questions on the page are finished (either correct or attempts exhausted)
   function checkAllQuestionsFinished() {
     var qs = document.querySelectorAll('.numeric-question');
-    var mcqs = document.querySelectorAll('.multiple-choice-question');
+    var mcqs = document.querySelectorAll('.multiple-choice-question, .detektiv-fall');
     var allQuestions = [];
 
     // Collect all questions
@@ -1328,6 +1328,155 @@
     updateUI();
   }
 
+  // Modell-Detektiv: Strukturbaum wie in ANSYS, genau eine Detailzeile ist die
+  // Fehlerursache. Technisch eine MC-Frage mit einer Auswahl: der Server prüft,
+  // begründet jeden Fehlgriff (diagnosis) und liefert am Ende die Auflösung.
+  function setupDetektiv(q) {
+    var datenEl = q.querySelector('script.detektiv-daten');
+    var fall = datenEl ? safeJSONParse(datenEl.textContent) : null;
+    var qid = q.dataset.qid;
+    if (!fall || !qid) return;
+    var points = parseFloat(q.dataset.points || 5) || 5;
+    try { localStorage.setItem('answer_max_' + qid, String(points)); } catch (e) { }
+    var attemptsAllowed = parseInt(q.dataset.attempts || 3, 10) || 3;
+    var attempts = parseInt(localStorage.getItem('answer_attempts_' + qid) || '0', 10) || 0;
+
+    q.insertAdjacentHTML('beforeend',
+      '<div class="det-kopf"><span class="det-label">Modell-Detektiv</span>' +
+      '<strong class="det-titel">' + fall.titel + '</strong>' +
+      (fall.uebung ? '<span class="det-uebung">' + fall.uebung + '</span>' : '') + '</div>' +
+      '<p class="det-fall">' + fall.fall + '</p>' +
+      '<div class="det-grid"><div class="det-baum"></div><div class="det-details">' +
+      '<div class="det-details-titel">Links einen Eintrag im Strukturbaum wählen</div>' +
+      '<div class="det-zeilen"></div></div></div>' +
+      '<div class="mc-feedback det-feedback"></div><div class="mc-score det-score"></div>');
+    var baumEl = q.querySelector('.det-baum'), zeilenEl = q.querySelector('.det-zeilen');
+    var titelEl = q.querySelector('.det-details-titel');
+    var fb = q.querySelector('.det-feedback'), scoreEl = q.querySelector('.det-score');
+    var aktiv = null, fertig = false, busy = false, markiert = {};
+
+    function saveAttempts() { try { localStorage.setItem('answer_attempts_' + qid, String(attempts)); } catch (e) { } emitChanged(); }
+    function saveBest(pointsVal, auswahl) {
+      try {
+        localStorage.setItem('answer_best_' + qid, JSON.stringify({ points: pointsVal, updated: new Date().toISOString() }));
+        localStorage.setItem('answer_selection_' + qid, JSON.stringify(auswahl));
+      } catch (e) { }
+      emitChanged();
+    }
+    function knotenMitZeile(id) {
+      for (var i = 0; i < fall.baum.length; i++) {
+        for (var j = 0; j < fall.baum[i].details.length; j++) {
+          if (fall.baum[i].details[j].id === id) return fall.baum[i];
+        }
+      }
+      return null;
+    }
+
+    function zeigeBaum() {
+      baumEl.innerHTML = '';
+      fall.baum.forEach(function (k) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'det-knoten det-' + (k.art || 'ordner') + (k === aktiv ? ' aktiv' : '');
+        b.style.paddingLeft = (0.5 + 1.1 * (k.ebene || 0)) + 'rem';
+        b.textContent = k.label;
+        b.addEventListener('click', function () { aktiv = k; zeigeBaum(); zeigeDetails(); });
+        baumEl.appendChild(b);
+      });
+    }
+
+    function zeigeDetails() {
+      zeilenEl.innerHTML = '';
+      if (!aktiv) return;
+      titelEl.textContent = 'Details of "' + aktiv.label + '"';
+      aktiv.details.forEach(function (z) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'det-zeile' + (markiert[z.id] ? ' ' + markiert[z.id] : '');
+        b.innerHTML = '<span>' + z.name + '</span><span>' + z.wert + '</span>';
+        b.addEventListener('click', function () { pruefe(z); });
+        zeilenEl.appendChild(b);
+      });
+    }
+
+    // Fall abschließen: Fehlerzeile grün markieren, ihren Knoten zeigen, Auflösung anhängen
+    function aufloesen(loesung, text) {
+      var id = Array.isArray(loesung) && loesung.length ? String(loesung[0]) : null;
+      if (id) { markiert[id] = 'richtig'; aktiv = knotenMitZeile(id) || aktiv; }
+      fertig = true;
+      zeigeBaum(); zeigeDetails();
+      if (text) fb.innerHTML += '<div class="det-aufloesung">' + text + '</div>';
+    }
+
+    function pruefe(z) {
+      if (fertig || busy || markiert[z.id] || attempts >= attemptsAllowed) return;
+      busy = true;
+      serverCheck({ qid: qid, selected: [z.id], attemptsUsed: attempts }).then(function (res) {
+        busy = false;
+        attempts = res.attempts || (attempts + 1);
+        saveAttempts();
+        var aa = res.attemptsAllowed || attemptsAllowed;
+        if (res.solution !== undefined) cacheSolution(qid, res.solution);
+        if (res.aufloesung) { try { localStorage.setItem('answer_explain_' + qid, res.aufloesung); } catch (e) { } }
+        if (res.correct || attempts >= aa) markDone(qid);
+        if (res.correct) {
+          markiert[z.id] = 'richtig';
+          if (res.authed) {
+            var prev = (safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0 }).points || 0;
+            if ((res.best || 0) > prev) saveBest(res.best, [z.id]);
+            fb.innerHTML = '<span class="mc-correct">' + ((res.earned || 0) > points ? 'Volltreffer im ersten Versuch: ' + points + ' Punkte + 1 Bonus!' : 'Richtig: ' + (res.earned || 0) + ' Punkte.') + '</span>';
+            scoreEl.textContent = 'Punkte: ' + (res.best || 0) + '/' + points;
+            try { checkPageCompletion(); } catch (e) { }
+            try { updateStarsForPage(getPageId()); } catch (e) { }
+          } else {
+            fb.innerHTML = '<span class="mc-correct">Richtig! <small>(Punkte gibt es nur mit ' + opalLoginLink() + '.)</small></span>';
+            scoreEl.textContent = '';
+          }
+          aufloesen(null, res.aufloesung);
+        } else {
+          markiert[z.id] = 'falsch';
+          var s = '<span class="mc-wrong">Nicht die Ursache (' + attempts + '/' + aa + ').</span>';
+          if (res.diagnosis) s += '<div class="mc-hint">' + res.diagnosis + '</div>';
+          if (fall.tipp && attempts < aa) s += '<div class="mc-hint">Tipp: ' + fall.tipp + '</div>';
+          fb.innerHTML = s;
+          if (attempts >= aa) {
+            scoreEl.textContent = res.authed ? 'Punkte: 0/' + points : 'Versuche: ' + attempts + '/' + aa;
+            fb.innerHTML += '<div class="mc-reveal">Keine Versuche mehr, hier lag der Fehler:</div>';
+            aufloesen(res.solution, res.aufloesung);
+          } else {
+            scoreEl.textContent = 'Versuche: ' + attempts + '/' + aa;
+            zeigeDetails();
+          }
+        }
+        renderSummary();
+      }).catch(function () {
+        busy = false;
+        fb.innerHTML = '<span class="mc-wrong">' + CHECK_OFFLINE_MSG + '</span>';
+      });
+    }
+
+    // Stand nach dem Neuladen wiederherstellen
+    var best = (safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0 }).points || 0;
+    var text = null;
+    try { text = localStorage.getItem('answer_explain_' + qid); } catch (e) { }
+    var sol = cachedSolution(qid) || safeJSONParse(localStorage.getItem('answer_selection_' + qid));
+    zeigeBaum();
+    if (best > 0) {
+      fb.innerHTML = '<span class="mc-correct">Gelöst: ' + best + ' Punkte.</span>';
+      scoreEl.textContent = 'Punkte: ' + best + '/' + points;
+      aufloesen(sol, text);
+    } else if (attempts >= attemptsAllowed) {
+      fb.innerHTML = '<div class="mc-reveal">Keine Versuche mehr, hier lag der Fehler:</div>';
+      scoreEl.textContent = 'Punkte: 0/' + points;
+      aufloesen(sol, text);
+    } else if (localStorage.getItem('answer_done_' + qid) === '1') {
+      fb.innerHTML = '<span class="mc-correct">Gelöst.</span>';
+      aufloesen(sol, text);
+    } else {
+      scoreEl.textContent = 'Versuche: ' + attempts + '/' + attemptsAllowed;
+    }
+  }
+
   function onReady(fn) { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
 
   onReady(function () {
@@ -1346,6 +1495,10 @@
     // Setup multiple choice questions
     var mcQuestions = document.querySelectorAll('.multiple-choice-question');
     for (var j = 0; j < mcQuestions.length; j++) setupMultipleChoiceQuestion(mcQuestions[j], j);
+
+    // Setup Modell-Detektiv
+    var faelle = document.querySelectorAll('.detektiv-fall');
+    for (var d = 0; d < faelle.length; d++) setupDetektiv(faelle[d]);
 
     // update player badge and nav
     try { updatePlayerBadge(); checkPageCompletion(); } catch (e) { }

@@ -12,6 +12,10 @@ localStorage-Einträge gültig bleiben: <site-pfad>/<seite>:q<i> bzw. :mc<i>.
 Numerische Fragen können typische Fehlwerte mit Ursache tragen:
 data-diagnose="7,747: Text | 0,35: Text". Auch diese landen nur in answers.json;
 das Backend nennt die Ursache, wenn eine Eingabe zu einem Fehlwert passt.
+
+Modell-Detektiv: <div class="detektiv-fall" data-fall="name"> lädt den Fall aus
+content/detektiv/name.json. Strukturbaum und Details kommen als JSON in die
+Seite, Fehlerzeile, Begründungen und Auflösung nur in answers.json (qid :det<i>).
 """
 
 import json
@@ -22,8 +26,9 @@ from urllib.parse import urlsplit
 _answers = {}
 
 _TAG_RE = re.compile(
-    r'<div\b[^>]*class="[^"]*\b(numeric-question|multiple-choice-question)\b[^"]*"[^>]*>'
+    r'<div\b[^>]*class="[^"]*\b(numeric-question|multiple-choice-question|detektiv-fall)\b[^"]*"[^>]*>'
 )
+_SUFFIX = {"numeric-question": ":q", "multiple-choice-question": ":mc", "detektiv-fall": ":det"}
 _ATTR_RE = re.compile(r'\s*data-(answer|tolerance|correct|diagnose)="([^"]*)"')
 
 
@@ -47,21 +52,43 @@ def _diagnose(raw, qid):
     return out
 
 
+def _detektiv(root, name):
+    """Fall laden und teilen: (öffentlicher Teil für die Seite, Lösungsteil für answers.json)."""
+    with open(os.path.join(root, "content", "detektiv", name + ".json"), encoding="utf-8") as f:
+        fall = json.load(f)
+    explain = {}
+    for knoten in fall["baum"]:
+        for zeile in knoten["details"]:
+            if "grund" in zeile:
+                explain[zeile["id"]] = zeile.pop("grund")
+    loesung = {"correct": [fall.pop("fehler")], "explain": explain,
+               "aufloesung": fall.pop("aufloesung")}
+    return fall, loesung
+
+
 def on_page_content(html, page, config, files):
     prefix = urlsplit(config["site_url"]).path.rstrip("/")
     page_path = (prefix + "/" + page.url).rstrip("/")
-    counters = {"numeric-question": 0, "multiple-choice-question": 0}
+    counters = {cls: 0 for cls in _SUFFIX}
 
     def replace(m):
         tag, cls = m.group(0), m.group(1)
         idx = counters[cls]
         counters[cls] += 1
-        qid = page_path + (":q" if cls == "numeric-question" else ":mc") + str(idx)
+        qid = page_path + _SUFFIX[cls] + str(idx)
 
         entry = {
             "points": float(_attr(tag, "points", "1") or 1),
             "attempts": int(_attr(tag, "attempts", "5") or 5),
         }
+        if cls == "detektiv-fall":
+            root = os.path.dirname(config["config_file_path"])
+            fall, loesung = _detektiv(root, _attr(tag, "fall"))
+            entry.update(loesung)
+            _answers[qid] = entry
+            daten = json.dumps(fall, ensure_ascii=False).replace("</", "<\\/")
+            return (tag[:-1] + ' data-qid="' + qid + '">'
+                    + '<script type="application/json" class="detektiv-daten">' + daten + '</script>')
         if cls == "numeric-question":
             try:
                 entry["answer"] = float(_attr(tag, "answer").replace(",", "."))

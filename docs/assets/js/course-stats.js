@@ -12,7 +12,7 @@
   function annotate(stats) {
     var byQid = {};
     stats.forEach(function (row) { byQid[row.qid] = row; });
-    var questions = document.querySelectorAll('.numeric-question, .multiple-choice-question');
+    var questions = document.querySelectorAll('.numeric-question, .multiple-choice-question, .detektiv-fall');
     questions.forEach(function (q) {
       var row = byQid[q.dataset.qid];
       if (!row || !row.participants || row.participants < MIN_N) return;
@@ -28,7 +28,7 @@
   }
 
   function init() {
-    if (!document.querySelector('.numeric-question, .multiple-choice-question')) return;
+    if (!document.querySelector('.numeric-question, .multiple-choice-question, .detektiv-fall')) return;
     fetch(BACKEND + '/api/stats')
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (stats) { if (Array.isArray(stats)) annotate(stats); })

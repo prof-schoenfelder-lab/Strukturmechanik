@@ -101,6 +101,10 @@
           "extern": "P4_Abstraktionen/05_Flaechenstrukturen/Uebung04.md"
         }
       ]
+    },
+    {
+      "titel": "Modell-Detektiv",
+      "extern": "P4_Abstraktionen/Modell_Detektiv.md"
     }
   ]
 }

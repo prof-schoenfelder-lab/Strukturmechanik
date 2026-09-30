@@ -1,0 +1,187 @@
+{
+ "titel": "Der Balken, der sich nicht drehen durfte",
+ "uebung": "Praktikum 4, Linienstrukturen Übung 1: Balken mit BEAM-Elementen",
+ "fall": "Im Linienmodell kommen 0,1858 mm Durchbiegung und 18,52 MPa heraus. Erwartet sind 0,92055 mm und 27,778 MPa.",
+ "tipp": "Ein zweiseitig gelagerter Balken darf sich an den Lagern verdrehen. Kann er das hier?",
+ "fehler": "lager.typ",
+ "aufloesung": "Bei Linienkörpern sperrt ein Fixed Support auch die Drehungen, der Balken ist damit an beiden Enden eingespannt: Die Durchbiegung sinkt auf ein Fünftel, die Spannung auf zwei Drittel. Für die Lagerung nach Skizze nur die Verschiebungen sperren (Displacement) und mit Fixed Rotation lediglich die Drehung um die Längsachse festhalten. Checkliste Schritt 5: Randbedingungen.",
+ "baum": [
+  {
+   "id": "einheiten",
+   "label": "Units",
+   "art": "einheiten",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "einheiten.system",
+     "name": "Unit System",
+     "wert": "Metric (mm, kg, N, s, mV, mA)",
+     "grund": "Richtig: Längen in mm, Kräfte in N, Spannungen in MPa."
+    }
+   ]
+  },
+  {
+   "id": "geometrie",
+   "label": "Geometry",
+   "art": "ordner",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "geometrie.koerper",
+     "name": "Bodies",
+     "wert": "1 Line Body",
+     "grund": "Richtig: ein Linienkörper für die BEAM-Elemente."
+    }
+   ]
+  },
+  {
+   "id": "linie",
+   "label": "Linienkörper",
+   "art": "geometrie",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "linie.material",
+     "name": "Material Assignment",
+     "wert": "Stahl",
+     "grund": "Richtig: Stahl zugeordnet."
+    },
+    {
+     "id": "linie.querschnitt",
+     "name": "Cross Section",
+     "wert": "Rechteck 30 × 30 mm",
+     "grund": "Richtig: Rechteckquerschnitt 30 × 30 mm."
+    }
+   ]
+  },
+  {
+   "id": "werkstoff",
+   "label": "Stahl (Engineering Data)",
+   "art": "material",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "werkstoff.e",
+     "name": "Young's Modulus",
+     "wert": "210000 MPa",
+     "grund": "Stimmt mit der Aufgabe überein."
+    },
+    {
+     "id": "werkstoff.nu",
+     "name": "Poisson's Ratio",
+     "wert": "0,3",
+     "grund": "Stimmt mit der Aufgabe überein."
+    }
+   ]
+  },
+  {
+   "id": "netz",
+   "label": "Mesh",
+   "art": "netz",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "netz.groesse",
+     "name": "Element Size",
+     "wert": "10,0 mm",
+     "grund": "Richtig: 10 mm wie vorgegeben."
+    }
+   ]
+  },
+  {
+   "id": "analyse",
+   "label": "Static Structural",
+   "art": "ordner",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "analyse.typ",
+     "name": "Analysis Type",
+     "wert": "Static Structural",
+     "grund": "Richtig: lineare statische Analyse."
+    }
+   ]
+  },
+  {
+   "id": "lager",
+   "label": "Fixed Support",
+   "art": "lager",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "lager.typ",
+     "name": "Objekttyp",
+     "wert": "Fixed Support"
+    },
+    {
+     "id": "lager.geometrie",
+     "name": "Geometry",
+     "wert": "2 Vertices (Balkenenden)",
+     "grund": "Richtig: Die Lager sitzen an den Balkenenden."
+    }
+   ]
+  },
+  {
+   "id": "last",
+   "label": "Force",
+   "art": "last",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "last.geometrie",
+     "name": "Geometry",
+     "wert": "1 Edge (ganze Länge)",
+     "grund": "Richtig: gleichmäßig über die ganze Balkenlänge."
+    },
+    {
+     "id": "last.betrag",
+     "name": "Magnitude",
+     "wert": "1000 N",
+     "grund": "Richtig: 1000 N, also 1 N/mm auf 1000 mm Länge."
+    }
+   ]
+  },
+  {
+   "id": "loesung",
+   "label": "Solution",
+   "art": "ordner",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "loesung.status",
+     "name": "Status",
+     "wert": "Solved",
+     "grund": "Die Rechnung ist fehlerfrei durchgelaufen, das Problem liegt davor."
+    }
+   ]
+  },
+  {
+   "id": "verformung",
+   "label": "Total Deformation",
+   "art": "ergebnis",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "verformung.max",
+     "name": "Maximum",
+     "wert": "0,1858 mm",
+     "grund": "Das ist das Symptom. Gesucht ist die Einstellung, die es erzeugt."
+    }
+   ]
+  },
+  {
+   "id": "spannung",
+   "label": "Equivalent Stress",
+   "art": "ergebnis",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "spannung.max",
+     "name": "Maximum",
+     "wert": "18,52 MPa",
+     "grund": "Das ist das Symptom. Gesucht ist die Einstellung, die es erzeugt."
+    }
+   ]
+  }
+ ]
+}

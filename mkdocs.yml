@@ -134,6 +134,7 @@ nav:
                       - Übung 2: P1_Einfuehrung/03_Selbsttests/Uebung-2.md
                       - Übung 3: P1_Einfuehrung/03_Selbsttests/Uebung-3.md
                       - Übung 4: P1_Einfuehrung/03_Selbsttests/Uebung-4.md
+                      - Modell-Detektiv: P1_Einfuehrung/03_Selbsttests/Modell_Detektiv.md
               - ZUSAMMENFASSUNG:
                       - P1_Einfuehrung/abspeichern.md
                       - P1_Einfuehrung/Zusammenfassung.md
@@ -180,6 +181,7 @@ nav:
                       - Übung 3: P3_Vernetzung/02_ANSYS_Umsetzung/Uebung-3.md
                       - Übung 4: P3_Vernetzung/02_ANSYS_Umsetzung/Uebung-4.md
                       - Übung 5: P3_Vernetzung/02_ANSYS_Umsetzung/Uebung-5.md
+                      - Modell-Detektiv: P3_Vernetzung/02_ANSYS_Umsetzung/Modell_Detektiv.md
               - Zusammenfassung: P3_Vernetzung/02_ANSYS_Umsetzung/Zusammenfassung.md
       - ABSTRAKTIONEN:
               - P4_Abstraktionen/index.md
@@ -206,6 +208,7 @@ nav:
                       - Theorie: P4_Abstraktionen/05_Flaechenstrukturen/Flaechenstrukturen.md
                       - Umsetzung ANSYS: P4_Abstraktionen/05_Flaechenstrukturen/Umsetzung.md
                       - Übung 4: P4_Abstraktionen/05_Flaechenstrukturen/Uebung04.md
+              - Modell-Detektiv: P4_Abstraktionen/Modell_Detektiv.md
       # <<< AUTO-NAV
       - ANLEITUNGEN: tutorials.md
       - MEIN FORTSCHRITT: Fortschritt.md

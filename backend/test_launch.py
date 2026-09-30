@@ -110,6 +110,9 @@ def main():
             "/T/Ueb:q0": {"answer": 7.378, "tolerance": 0.1, "points": 5, "attempts": 5,
                           "diagnose": [{"value": 7.747, "hint": "Material zugeordnet?"}]},
             "/T/Ueb:mc0": {"correct": ["a", "c"], "points": 4, "attempts": 3},
+            "/T/Det:det0": {"correct": ["balken.material"], "points": 5, "attempts": 3,
+                            "explain": {"netz.groesse": "Richtig: 5 mm."},
+                            "aufloesung": "Gefunden: Material nicht zugeordnet."},
         }, f)
     env = dict(os.environ,
                ANSWERS_PATH=os.path.join(tmp, "answers.json"),
@@ -235,6 +238,23 @@ def main():
         check("diagnosis: Faktor 1000 (Einheit)", "1000-mal zu klein" in diag(0.007378))
         check("diagnosis: doppelte Last", "doppelt" in diag(14.8))
         check("diagnosis: Vorzeichen", "Vorzeichen" in diag(-7.378))
+        # Modell-Detektiv: Begründung je Klick, Auflösung erst bei Treffer
+        def det(row, used=0):
+            return requests.post(BACKEND + "/api/check", json={
+                "qid": "/T/Det:det0", "selected": [row], "attemptsUsed": used}).json()
+        r = det("netz.groesse")
+        check("detektiv: falscher Klick begründet, keine Auflösung",
+              not r["correct"] and r.get("diagnosis") == "Richtig: 5 mm."
+              and "aufloesung" not in r and "solution" not in r, str(r))
+        r = det("geometrie.koerper")
+        check("detektiv: Zeile ohne Begründung", r.get("diagnosis") == "Diese Einstellung ist in Ordnung.", str(r))
+        r = det("balken.material")
+        check("detektiv: Treffer mit Auflösung",
+              r["correct"] and r.get("aufloesung") == "Gefunden: Material nicht zugeordnet.", str(r))
+        r = det("netz.groesse", used=2)
+        check("detektiv: letzter Versuch zeigt Lösung und Auflösung",
+              r.get("solution") == ["balken.material"] and "aufloesung" in r, str(r))
+
         r = requests.get(BACKEND + "/dashboard", params={"key": "test-dashboard-key"})
         check("dashboard zeigt Fehlwerte mit Ursache",
               "Häufige Fehlwerte heute" in r.text and "Material zugeordnet?" in r.text
@@ -274,7 +294,8 @@ def main():
             last = ags_received[-1]
             check("AGS userId is original sub", last.get("userId") == "opal-user-13", str(last))
             check("AGS scoreGiven = total points", last.get("scoreGiven") == 18, str(last))
-            check("AGS scoreMaximum incl. Bonus", last.get("scoreMaximum") == 11, str(last))
+            # (5+1) q0 + (4+1) mc0 + (5+1) det0
+            check("AGS scoreMaximum incl. Bonus", last.get("scoreMaximum") == 17, str(last))
             check("AGS grading complete", last.get("gradingProgress") == "FullyGraded")
 
     finally:

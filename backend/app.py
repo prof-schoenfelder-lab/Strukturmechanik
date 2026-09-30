@@ -652,6 +652,9 @@ def check_answer():
             return jsonify({"error": "keine Auswahl"}), 400
         correct = sorted(str(s) for s in selected) == sorted(q["correct"])
         solution = q["correct"]
+        if not correct and "explain" in q and len(selected) == 1:
+            # Modell-Detektiv: warum die angeklickte Einstellung in Ordnung ist
+            diagnosis = q["explain"].get(str(selected[0]), "Diese Einstellung ist in Ordnung.")
 
     pseudonym = current_pseudonym()
     if pseudonym:
@@ -680,6 +683,8 @@ def check_answer():
                 "attempts": attempts, "attemptsAllowed": attempts_allowed}
         if correct or attempts >= attempts_allowed:
             resp["solution"] = solution
+            if "aufloesung" in q:
+                resp["aufloesung"] = q["aufloesung"]
         if diagnosis:
             resp["diagnosis"] = diagnosis
         return jsonify(resp)
@@ -690,6 +695,8 @@ def check_answer():
             "attempts": attempts, "attemptsAllowed": attempts_allowed}
     if correct or attempts >= attempts_allowed:
         resp["solution"] = solution
+        if "aufloesung" in q:
+            resp["aufloesung"] = q["aufloesung"]
     if diagnosis:
         resp["diagnosis"] = diagnosis
     return jsonify(resp)

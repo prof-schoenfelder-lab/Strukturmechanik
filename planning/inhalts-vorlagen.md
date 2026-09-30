@@ -104,6 +104,25 @@ erkennt das Backend ohnehin; hier gehören aufgabenspezifische Fehler hin (z. B.
 Material vergessen, falsche Lagerung). Kandidaten liefert das Dashboard unter
 „Häufige Fehlwerte".
 
+## Vorlage: Modell-Detektiv-Fall
+
+Ein Fall ist ein falsches Modell mit genau einer Fehlerursache. Die Seite zeigt
+Strukturbaum und Details, die Studierenden klicken die verursachende Zeile an.
+
+```markdown
+<div class="detektiv-fall" data-fall="p1-kragarm-material" data-points="5" data-attempts="3"></div>
+```
+
+Inhalt in `content/detektiv/<name>.json` (wird nicht deployt):
+
+- `titel`, `uebung`, `fall` (Situation mit falschem und erwartetem Wert), `tipp` (nach dem ersten Fehlgriff)
+- `baum`: Liste der Knoten `{id, label, art, ebene, details}`; `art` färbt den Marker (einheiten, geometrie, material, netz, lager, symmetrie, last, ergebnis, ordner)
+- `details`: Zeilen `{id, name, wert, grund}`; `grund` erklärt, warum die Zeile in Ordnung ist
+- `fehler`: id der Fehlerzeile (sie bekommt keinen `grund`), `aufloesung`: Erklärung nach Treffer
+
+Lösung und Begründungen landen beim Build nur in `answers.json`, nie im HTML.
+Zahlenwerte am besten aus bekannten Fehlwerten (Dashboard, `data-diagnose`).
+
 ## Startseite eines Praktikums
 
 ```markdown

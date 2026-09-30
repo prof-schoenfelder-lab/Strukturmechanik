@@ -108,6 +108,12 @@ Pseudonym) in `wrong_values` gespeichert. Das Dashboard zeigt daraus „Häufige
 Fehlwerte" (heute und gesamt); Einträge ohne erkannte Ursache sind Kandidaten
 für neue `data-diagnose`-Werte.
 
+**Modell-Detektiv:** Fälle (`content/detektiv/*.json`) laufen wie MC-Fragen
+(qid `:det<i>`). Der Hook legt Fehlerzeile, Begründungen (`explain`) und
+`aufloesung` nur in `answers.json` ab. `/api/check` liefert bei einem Fehlgriff
+die Begründung der angeklickten Zeile als `diagnosis`, beim Treffer oder nach
+dem letzten Versuch zusätzlich `aufloesung`.
+
 ## Noten-Rückkanal zu OPAL (AGS)
 
 Bei jeder Punkteverbesserung meldet das Backend die Gesamtpunktzahl als

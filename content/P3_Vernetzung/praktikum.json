@@ -52,6 +52,10 @@
         {
           "titel": "Übung 5",
           "extern": "P3_Vernetzung/02_ANSYS_Umsetzung/Uebung-5.md"
+        },
+        {
+          "titel": "Modell-Detektiv",
+          "extern": "P3_Vernetzung/02_ANSYS_Umsetzung/Modell_Detektiv.md"
         }
       ]
     },

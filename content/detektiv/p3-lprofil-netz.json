@@ -1,0 +1,153 @@
+{
+ "titel": "Netz nach Vorschrift?",
+ "uebung": "Praktikum 3, Lokale Netzverfeinerung: L-Profil",
+ "fall": "Gefragt ist die von-Mises-Spannung im gesamten Bauteil für eine globale Netzgröße von 1,5 mm. Im Ergebnis stehen 436,89 MPa, erwartet sind 592,32 MPa.",
+ "tipp": "436,89 MPa ist genau das Ergebnis einer anderen Teilaufgabe der lokalen Netzverfeinerung. Welche Einstellung unterscheidet die beiden?",
+ "fehler": "netz.groesse",
+ "aufloesung": "Die globale Elementgröße steht noch auf 3 mm, und 436,89 MPa ist genau der Wert für 3 mm. Mit 1,5 mm steigt die Spannung auf 592,32 MPa. Dass sie so stark steigt, liegt an der Singularität in der scharfen Kante: Dort konvergiert die Spannung nie. Checkliste Schritt 4: Netz.",
+ "baum": [
+  {
+   "id": "einheiten",
+   "label": "Units",
+   "art": "einheiten",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "einheiten.system",
+     "name": "Unit System",
+     "wert": "Metric (mm, kg, N, s, mV, mA)",
+     "grund": "Richtig: Längen in mm, Kräfte in N, Spannungen in MPa."
+    }
+   ]
+  },
+  {
+   "id": "geometrie",
+   "label": "Geometry",
+   "art": "ordner",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "geometrie.koerper",
+     "name": "Bodies",
+     "wert": "1",
+     "grund": "Passt: ein Körper, das L-Profil."
+    }
+   ]
+  },
+  {
+   "id": "profil",
+   "label": "L-Profil",
+   "art": "geometrie",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "profil.material",
+     "name": "Material Assignment",
+     "wert": "Structural Steel",
+     "grund": "Unverändert aus dem Archiv, passt."
+    },
+    {
+     "id": "profil.verhalten",
+     "name": "Stiffness Behavior",
+     "wert": "Flexible",
+     "grund": "Richtig: Das Profil soll sich verformen."
+    }
+   ]
+  },
+  {
+   "id": "netz",
+   "label": "Mesh",
+   "art": "netz",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "netz.groesse",
+     "name": "Element Size",
+     "wert": "3,0 mm"
+    },
+    {
+     "id": "netz.ordnung",
+     "name": "Element Order",
+     "wert": "Program Controlled",
+     "grund": "Passt, unverändert."
+    }
+   ]
+  },
+  {
+   "id": "analyse",
+   "label": "Static Structural",
+   "art": "ordner",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "analyse.typ",
+     "name": "Analysis Type",
+     "wert": "Static Structural",
+     "grund": "Richtig: lineare statische Analyse."
+    }
+   ]
+  },
+  {
+   "id": "lager",
+   "label": "Fixed Support",
+   "art": "lager",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "lager.typ",
+     "name": "Objekttyp",
+     "wert": "Fixed Support",
+     "grund": "Unverändert aus dem Archiv, passt."
+    }
+   ]
+  },
+  {
+   "id": "last",
+   "label": "Force",
+   "art": "last",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "last.betrag",
+     "name": "Definition",
+     "wert": "wie im Archiv",
+     "grund": "Unverändert aus dem Archiv, passt."
+    }
+   ]
+  },
+  {
+   "id": "loesung",
+   "label": "Solution",
+   "art": "ordner",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "loesung.status",
+     "name": "Status",
+     "wert": "Solved",
+     "grund": "Die Rechnung ist fehlerfrei durchgelaufen, das Problem liegt davor."
+    }
+   ]
+  },
+  {
+   "id": "spannung",
+   "label": "Equivalent Stress",
+   "art": "ergebnis",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "spannung.scope",
+     "name": "Geometry",
+     "wert": "All Bodies",
+     "grund": "Richtig: gefragt ist das gesamte Bauteil."
+    },
+    {
+     "id": "spannung.max",
+     "name": "Maximum",
+     "wert": "436,89 MPa",
+     "grund": "Das ist das Symptom. Gesucht ist die Einstellung, die es erzeugt."
+    }
+   ]
+  }
+ ]
+}

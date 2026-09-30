@@ -1,0 +1,217 @@
+{
+ "titel": "Das Viertelmodell mit voller Last",
+ "uebung": "Praktikum 4, Symmetrie Übung 1: Balken mit Flächenlast",
+ "fall": "Im Viertelmodell kommen 3,684 mm Durchbiegung und 111,1 MPa heraus. Erwartet sind 0,921 mm und 27,784 MPa.",
+ "tipp": "Beide Ergebnisse sind genau viermal zu groß. Welcher Anteil der Last gehört zu einem Viertelmodell?",
+ "fehler": "last.betrag",
+ "aufloesung": "Im Viertelmodell ist nur ein Viertel der belasteten Fläche vorhanden, also darf auch nur ein Viertel der Kraft angreifen: 1000 N / 4 = 250 N. Mit der vollen Kraft wird alles viermal so groß. Bei einem Druck in MPa wäre das nicht nötig, der ist schon flächenbezogen. Checkliste Schritt 5: Randbedingungen.",
+ "baum": [
+  {
+   "id": "einheiten",
+   "label": "Units",
+   "art": "einheiten",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "einheiten.system",
+     "name": "Unit System",
+     "wert": "Metric (mm, kg, N, s, mV, mA)",
+     "grund": "Richtig: Längen in mm, Kräfte in N, Spannungen in MPa."
+    }
+   ]
+  },
+  {
+   "id": "geometrie",
+   "label": "Geometry",
+   "art": "ordner",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "geometrie.koerper",
+     "name": "Bodies",
+     "wert": "1 (Viertel des Balkens)",
+     "grund": "Richtig: ein Viertel des Balkens, geschnitten an zwei Symmetrieebenen."
+    }
+   ]
+  },
+  {
+   "id": "balken",
+   "label": "Balken (Viertel)",
+   "art": "geometrie",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "balken.material",
+     "name": "Material Assignment",
+     "wert": "Stahl",
+     "grund": "Richtig: Stahl zugeordnet."
+    }
+   ]
+  },
+  {
+   "id": "werkstoff",
+   "label": "Stahl (Engineering Data)",
+   "art": "material",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "werkstoff.e",
+     "name": "Young's Modulus",
+     "wert": "210000 MPa",
+     "grund": "Stimmt mit der Aufgabe überein."
+    },
+    {
+     "id": "werkstoff.nu",
+     "name": "Poisson's Ratio",
+     "wert": "0,3",
+     "grund": "Stimmt mit der Aufgabe überein."
+    }
+   ]
+  },
+  {
+   "id": "symmetrie",
+   "label": "Symmetry",
+   "art": "ordner",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "symmetrie.anzahl",
+     "name": "Symmetry Regions",
+     "wert": "2",
+     "grund": "Richtig: zwei Symmetrieebenen, y-z und x-z."
+    }
+   ]
+  },
+  {
+   "id": "sym1",
+   "label": "Symmetry Region (y-z)",
+   "art": "symmetrie",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "sym1.typ",
+     "name": "Type",
+     "wert": "Symmetric",
+     "grund": "Richtig: Symmetrie an der Schnittfläche in der y-z-Ebene."
+    }
+   ]
+  },
+  {
+   "id": "sym2",
+   "label": "Symmetry Region (x-z)",
+   "art": "symmetrie",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "sym2.typ",
+     "name": "Type",
+     "wert": "Symmetric",
+     "grund": "Richtig: Symmetrie an der Schnittfläche in der x-z-Ebene."
+    }
+   ]
+  },
+  {
+   "id": "netz",
+   "label": "Mesh",
+   "art": "netz",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "netz.groesse",
+     "name": "Element Size",
+     "wert": "15,0 mm",
+     "grund": "Richtig: 15 mm wie vorgegeben."
+    }
+   ]
+  },
+  {
+   "id": "analyse",
+   "label": "Static Structural",
+   "art": "ordner",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "analyse.typ",
+     "name": "Analysis Type",
+     "wert": "Static Structural",
+     "grund": "Richtig: lineare statische Analyse."
+    }
+   ]
+  },
+  {
+   "id": "lager",
+   "label": "Displacement (Lager)",
+   "art": "lager",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "lager.geometrie",
+     "name": "Geometry",
+     "wert": "Auflagerkante",
+     "grund": "Richtig: Lagerung wie in der Skizze."
+    }
+   ]
+  },
+  {
+   "id": "last",
+   "label": "Force",
+   "art": "last",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "last.geometrie",
+     "name": "Geometry",
+     "wert": "Oberseite (Viertel)",
+     "grund": "Richtig: auf der Oberseite des Viertelmodells."
+    },
+    {
+     "id": "last.betrag",
+     "name": "Magnitude",
+     "wert": "1000 N"
+    }
+   ]
+  },
+  {
+   "id": "loesung",
+   "label": "Solution",
+   "art": "ordner",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "loesung.status",
+     "name": "Status",
+     "wert": "Solved",
+     "grund": "Die Rechnung ist fehlerfrei durchgelaufen, das Problem liegt davor."
+    }
+   ]
+  },
+  {
+   "id": "verformung",
+   "label": "Total Deformation",
+   "art": "ergebnis",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "verformung.max",
+     "name": "Maximum",
+     "wert": "3,684 mm",
+     "grund": "Das ist das Symptom. Gesucht ist die Einstellung, die es erzeugt."
+    }
+   ]
+  },
+  {
+   "id": "spannung",
+   "label": "Equivalent Stress",
+   "art": "ergebnis",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "spannung.max",
+     "name": "Maximum",
+     "wert": "111,1 MPa",
+     "grund": "Das ist das Symptom. Gesucht ist die Einstellung, die es erzeugt."
+    }
+   ]
+  }
+ ]
+}

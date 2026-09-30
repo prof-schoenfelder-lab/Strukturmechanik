@@ -1,0 +1,153 @@
+{
+ "titel": "Die Spitze an der Einspannung",
+ "uebung": "Praktikum 3, Globale Netzverfeinerung: Inbusschlüssel",
+ "fall": "Gefragt ist die von-Mises-Spannung im Bereich des Knicks bei 1 mm Netzgröße. Im Ergebnis stehen 393,35 MPa, erwartet sind 353,11 MPa.",
+ "tipp": "Wo im Bauteil liegt das angezeigte Maximum, und wo ist die Spannung gefragt?",
+ "fehler": "spannung.scope",
+ "aufloesung": "Die Spannung ist im gesamten Bauteil ausgewertet. Das Maximum von 393,35 MPa sitzt am Rand der festen Einspannung, einer Singularität, und wächst mit feinerem Netz immer weiter (bei 0,5 mm: 562,21 MPa). Für den Knick die Auswertung nur auf die Fläche im Knick legen, dann ergeben sich 353,11 MPa. Checkliste Schritt 6: Ergebnis.",
+ "baum": [
+  {
+   "id": "einheiten",
+   "label": "Units",
+   "art": "einheiten",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "einheiten.system",
+     "name": "Unit System",
+     "wert": "Metric (mm, kg, N, s, mV, mA)",
+     "grund": "Richtig: Längen in mm, Kräfte in N, Spannungen in MPa."
+    }
+   ]
+  },
+  {
+   "id": "geometrie",
+   "label": "Geometry",
+   "art": "ordner",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "geometrie.koerper",
+     "name": "Bodies",
+     "wert": "1",
+     "grund": "Passt: ein Körper, der Inbusschlüssel."
+    }
+   ]
+  },
+  {
+   "id": "inbus",
+   "label": "Inbus",
+   "art": "geometrie",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "inbus.material",
+     "name": "Material Assignment",
+     "wert": "Stahl",
+     "grund": "Richtig: Stahl mit 210 GPa, unverändert aus dem Archiv."
+    }
+   ]
+  },
+  {
+   "id": "netz",
+   "label": "Mesh",
+   "art": "netz",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "netz.groesse",
+     "name": "Element Size",
+     "wert": "1,0 mm",
+     "grund": "Richtig: 1 mm wie gefragt."
+    }
+   ]
+  },
+  {
+   "id": "analyse",
+   "label": "Static Structural",
+   "art": "ordner",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "analyse.typ",
+     "name": "Analysis Type",
+     "wert": "Static Structural",
+     "grund": "Richtig: lineare statische Analyse."
+    }
+   ]
+  },
+  {
+   "id": "lager",
+   "label": "Fixed Support",
+   "art": "lager",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "lager.typ",
+     "name": "Objekttyp",
+     "wert": "Fixed Support",
+     "grund": "Die feste Einspannung ist im Archiv vorgegeben. An ihrem Rand entsteht zwar eine Spannungsspitze, gefragt ist aber die Spannung im Knick."
+    },
+    {
+     "id": "lager.geometrie",
+     "name": "Geometry",
+     "wert": "Kopf (10 mm)",
+     "grund": "Richtig: Einspannung im Bereich des Kopfes."
+    }
+   ]
+  },
+  {
+   "id": "last",
+   "label": "Force",
+   "art": "last",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "last.geometrie",
+     "name": "Geometry",
+     "wert": "langes Ende (30 mm)",
+     "grund": "Richtig: am langen Ende."
+    },
+    {
+     "id": "last.y",
+     "name": "Y Component",
+     "wert": "-200 N",
+     "grund": "Richtig: 200 N in negativer y-Richtung."
+    }
+   ]
+  },
+  {
+   "id": "loesung",
+   "label": "Solution",
+   "art": "ordner",
+   "ebene": 0,
+   "details": [
+    {
+     "id": "loesung.status",
+     "name": "Status",
+     "wert": "Solved",
+     "grund": "Die Rechnung ist fehlerfrei durchgelaufen."
+    }
+   ]
+  },
+  {
+   "id": "spannung",
+   "label": "Equivalent Stress",
+   "art": "ergebnis",
+   "ebene": 1,
+   "details": [
+    {
+     "id": "spannung.scope",
+     "name": "Geometry",
+     "wert": "All Bodies"
+    },
+    {
+     "id": "spannung.max",
+     "name": "Maximum",
+     "wert": "393,35 MPa",
+     "grund": "Das ist das Symptom. Wo im Bauteil liegt dieses Maximum?"
+    }
+   ]
+  }
+ ]
+}
