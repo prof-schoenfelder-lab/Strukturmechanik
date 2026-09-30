@@ -250,42 +250,48 @@ def ags_access_token():
     return _ags_token["value"]
 
 
+_ags_lock = threading.Lock()
+
+
 def push_score_async(pseudonym):
     """Gesamtpunktzahl des Users als Score an OPAL melden (fire-and-forget)."""
     if not (AGS_ENABLED and LTI13_CLIENT_ID):
         return
 
     def work():
-        try:
-            db = sqlite3.connect(DB_PATH)
-            db.row_factory = sqlite3.Row
-            user = db.execute("SELECT outcome_url, sub_enc FROM users WHERE pseudonym=?",
-                              (pseudonym,)).fetchone()
-            if not user or not user["outcome_url"] or not user["sub_enc"]:
-                return
-            total = db.execute("SELECT COALESCE(SUM(best),0) t FROM results WHERE pseudonym=?",
-                               (pseudonym,)).fetchone()["t"]
-            db.close()
-            answers = load_answers()
-            # max inkl. des möglichen +1-Volltreffer-Bonus je Frage
-            score_max = sum(q.get("points", 0) + 1 for q in answers.values()) or 100
-            sub = fernet.decrypt(user["sub_enc"].encode()).decode()
-            lineitem = user["outcome_url"]
-            base, _, query = lineitem.partition("?")
-            scores_url = base.rstrip("/") + "/scores" + (("?" + query) if query else "")
-            http_requests.post(scores_url, json={
-                "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-                "scoreGiven": total,
-                "scoreMaximum": score_max,
-                "activityProgress": "Submitted",
-                "gradingProgress": "FullyGraded",
-                "userId": sub,
-            }, headers={
-                "Authorization": "Bearer " + ags_access_token(),
-                "Content-Type": "application/vnd.ims.lis.v1.score+json",
-            }, timeout=10).raise_for_status()
-        except Exception as e:
-            app.logger.warning("AGS-Score-Push fehlgeschlagen: %s", e)
+        with _ags_lock:  # nacheinander: die zuletzt gesendete Meldung trägt den aktuellen Stand
+            try:
+                db = sqlite3.connect(DB_PATH)
+                db.row_factory = sqlite3.Row
+                user = db.execute("SELECT outcome_url, sub_enc FROM users WHERE pseudonym=?",
+                                  (pseudonym,)).fetchone()
+                if not user or not user["outcome_url"] or not user["sub_enc"]:
+                    return
+                an = spiele_an(db)  # Punkte aus ausgeschalteten Spielen zählen nicht
+                total = sum(r["best"] for r in db.execute(
+                    "SELECT qid, best FROM results WHERE pseudonym=?", (pseudonym,))
+                    if an.get(spieltyp(r["qid"]), True))
+                answers = aktive_answers(db)
+                db.close()
+                # max inkl. des möglichen +1-Volltreffer-Bonus je Frage
+                score_max = sum(q.get("points", 0) + 1 for q in answers.values()) or 100
+                sub = fernet.decrypt(user["sub_enc"].encode()).decode()
+                lineitem = user["outcome_url"]
+                base, _, query = lineitem.partition("?")
+                scores_url = base.rstrip("/") + "/scores" + (("?" + query) if query else "")
+                http_requests.post(scores_url, json={
+                    "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                    "scoreGiven": total,
+                    "scoreMaximum": score_max,
+                    "activityProgress": "Submitted",
+                    "gradingProgress": "FullyGraded",
+                    "userId": sub,
+                }, headers={
+                    "Authorization": "Bearer " + ags_access_token(),
+                    "Content-Type": "application/vnd.ims.lis.v1.score+json",
+                }, timeout=10).raise_for_status()
+            except Exception as e:
+                app.logger.warning("AGS-Score-Push fehlgeschlagen: %s", e)
 
     threading.Thread(target=work, daemon=True).start()
 
@@ -630,6 +636,8 @@ def check_answer():
     q = load_answers().get(qid)
     if not q:
         return jsonify({"error": "unbekannte Frage"}), 404
+    if spieltyp(qid) and not spiele_an(get_db())[spieltyp(qid)]:
+        return jsonify({"error": "Spiel nicht freigeschaltet"}), 403
 
     attempts_allowed = int(q.get("attempts", 5))
     diagnosis = None
@@ -833,6 +841,47 @@ def help_toggle():
     return redirect("dashboard?key=" + DASHBOARD_TOKEN)
 
 
+# --- Spiele freischalten (Schalter im Dashboard) ------------------------------
+# Spieltyp = Endung der qid. Ausgeschaltete Spiele verschwinden von der Seite und
+# zählen weder im Fragenkatalog noch im Dashboard oder im OPAL-Maximum.
+SPIELE = {"det": "Modell-Detektiv", "hs": "Wo knallt's?"}
+
+
+def spieltyp(qid):
+    typ = qid.rsplit(":", 1)[-1].rstrip("0123456789")
+    return typ if typ in SPIELE else None
+
+
+def spiele_an(db):
+    an = {r[0][len("spiel_"):] for r in
+          db.execute("SELECT key FROM meta WHERE key LIKE 'spiel_%' AND value='1'")}
+    return {typ: typ in an for typ in SPIELE}
+
+
+def aktive_answers(db):
+    """Fragenkatalog ohne ausgeschaltete Spiele."""
+    an = spiele_an(db)
+    return {qid: q for qid, q in load_answers().items() if an.get(spieltyp(qid), True)}
+
+
+@app.get("/api/spiele")
+def spiele():
+    return jsonify(spiele_an(get_db()))
+
+
+@app.get("/dashboard-spiel-toggle")
+def spiel_toggle():
+    if not DASHBOARD_TOKEN or request.args.get("key") != DASHBOARD_TOKEN:
+        return "Zugriff nur mit gültigem key-Parameter.", 403
+    typ = request.args.get("spiel")
+    if typ in SPIELE:
+        db = get_db()
+        neu = "0" if spiele_an(db)[typ] else "1"
+        db.execute("INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)", ("spiel_" + typ, neu))
+        db.commit()
+    return redirect("dashboard?key=" + DASHBOARD_TOKEN)
+
+
 @app.get("/dashboard-help-done")
 def help_done():
     if not DASHBOARD_TOKEN or request.args.get("key") != DASHBOARD_TOKEN:
@@ -872,13 +921,14 @@ def dashboard():
         return "Zugriff nur mit gültigem key-Parameter (DASHBOARD_TOKEN).", 403
 
     db = get_db()
-    answers = load_answers()
+    answers = aktive_answers(db)  # ausgeschaltete Spiele zählen nicht mit
     total_q = len(answers) or 1
     praktika = [("P1_Einfuehrung", "Praktikum 1"), ("P2_Geometrie_Randbedingungen", "Praktikum 2"),
                 ("P3_Vernetzung", "Praktikum 3"), ("P4_Abstraktionen", "Praktikum 4")]
     q_per_p = {key: sum(1 for qid in answers if "/" + key + "/" in qid) or 1 for key, _ in praktika}
 
-    rows = db.execute("SELECT pseudonym, qid, best, attempts FROM results").fetchall()
+    rows = [r for r in db.execute("SELECT pseudonym, qid, best, attempts FROM results")
+            if r["qid"] in answers]
     per_user = {}
     for r in rows:
         u = per_user.setdefault(r["pseudonym"], {"solved": 0, "points": 0, "per_p": {}})
@@ -896,6 +946,7 @@ def dashboard():
     today_raw = db.execute(
         "SELECT pseudonym, qid, best, attempts, updated_at FROM results WHERE updated_at > ?",
         (midnight,)).fetchall()
+    today_raw = [r for r in today_raw if r["qid"] in answers]
     latest = {}
     for r in today_raw:
         prev = latest.get(r["pseudonym"])
@@ -967,6 +1018,12 @@ def dashboard():
         '<strong>%s</strong> · <a class="donebtn%s" href="dashboard-help-toggle?key=%s">%s</a></p>'
         % ("AN" if h_on else "AUS", "" if h_on else " onbtn", DASHBOARD_TOKEN,
            "ausschalten" if h_on else "für die Lehrveranstaltung einschalten"))
+    an = spiele_an(db)
+    toggle_html += '<p class="helptoggle">Spiele auf der Kursseite: %s</p>' % " &nbsp;·&nbsp; ".join(
+        '%s: <strong>%s</strong> <a class="donebtn%s" href="dashboard-spiel-toggle?key=%s&amp;spiel=%s">%s</a>'
+        % (name, "AN" if an[typ] else "AUS", "" if an[typ] else " onbtn", DASHBOARD_TOKEN, typ,
+           "ausschalten" if an[typ] else "freischalten")
+        for typ, name in SPIELE.items())
     queue_rows = db.execute(
         "SELECT id, who, page, created_at FROM help_requests WHERE done_at IS NULL "
         "ORDER BY created_at").fetchall()
@@ -1243,7 +1300,7 @@ def questions():
     """Public question catalog: qid -> max points/attempts (keine Antworten!).
     Grundlage für die Fortschrittsanzeige (wie viele Fragen gibt es je Praktikum)."""
     out = {}
-    for qid, q in load_answers().items():
+    for qid, q in aktive_answers(get_db()).items():
         out[qid] = {"points": q.get("points", 1), "attempts": q.get("attempts", 5)}
     return jsonify(out)
 

@@ -41,6 +41,8 @@ Belastung:
 
 - Kraft $F=3000 \mathrm{N}$ auf der Kante rechts
 
+<div class="hotspot-frage" data-fall="p1-kragarm" data-points="3" data-attempts="2"></div>
+
 ## Hinweise
 
 <div class="steps" markdown="1">

@@ -28,6 +28,8 @@ Nach dem Import der Archivdatei die Geometrie mit SpaceClaim öffnen und wie fol
 
 - [ ] Die Lagerung analog des gegebenen Bildes nur mit der Randbedingung `Displacement` einfügen
 
+<div class="hotspot-frage" data-fall="p2-lineal" data-points="3" data-attempts="2"></div>
+
 ## Gesucht
 
 Anschließend die folgenden Größen berechnen:

@@ -123,6 +123,27 @@ Inhalt in `content/detektiv/<name>.json` (wird nicht deployt):
 Lösung und Begründungen landen beim Build nur in `answers.json`, nie im HTML.
 Zahlenwerte am besten aus bekannten Fehlwerten (Dashboard, `data-diagnose`).
 
+## Vorlage: Wo knallt's? (Vorhersage vor dem Rechnen)
+
+Auf der Übungsseite vor dem Rechnen: Studierende tippen auf die vermutete
+Spannungsspitze. Aufgelöst wird nur die Stelle; der Plot mit Zahlen erscheint
+wie gehabt erst mit den Lösungsbildern.
+
+```markdown
+## Vorab: Wo knallt's?
+
+<div class="hotspot-frage" data-fall="p2-lineal" data-points="3" data-attempts="2"></div>
+```
+
+Inhalt in `content/hotspot/<name>.json`:
+
+- `titel`, `frage`, `tipp`, `bild` (docs-relativer Pfad, am besten Skizze ohne Ergebnis)
+- `zonen`: Kreise `{id, x, y, r}` in Bildanteilen (x, y von 0 bis 1, r relativ zur Bildbreite); mehrere Kreise dürfen dieselbe id haben
+- `grund` an jeder falschen Zone, `sonst` für Tipps außerhalb aller Zonen
+- `richtig`: id der richtigen Zone, `aufloesung`, optional `loesungsbild` (nur wenn es keine gefragten Zahlen verrät)
+
+Zonenmitte bestimmen: Pixel im Bild durch Bildbreite bzw. -höhe teilen.
+
 ## Startseite eines Praktikums
 
 ```markdown

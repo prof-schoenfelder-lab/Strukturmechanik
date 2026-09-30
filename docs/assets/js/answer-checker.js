@@ -703,7 +703,7 @@
 
     // Check both numeric and multiple choice questions
     var qs = document.querySelectorAll('.numeric-question');
-    var mcqs = document.querySelectorAll('.multiple-choice-question, .detektiv-fall');
+    var mcqs = document.querySelectorAll('.multiple-choice-question, .detektiv-fall, .hotspot-frage');
     var allQuestions = [];
 
     for (var i = 0; i < qs.length; i++) allQuestions.push(qs[i]);
@@ -732,7 +732,7 @@
   // Check if all questions on the page are finished (either correct or attempts exhausted)
   function checkAllQuestionsFinished() {
     var qs = document.querySelectorAll('.numeric-question');
-    var mcqs = document.querySelectorAll('.multiple-choice-question, .detektiv-fall');
+    var mcqs = document.querySelectorAll('.multiple-choice-question, .detektiv-fall, .hotspot-frage');
     var allQuestions = [];
 
     // Collect all questions
@@ -1477,6 +1477,159 @@
     }
   }
 
+  // Wo knallt's?: vorab auf die vermutete Spannungsspitze tippen. Die Seite ordnet
+  // den Tipp einer Zone zu (sonst "sonst"); der Server prüft wie bei MC,
+  // begründet Fehltipps und liefert am Ende die Auflösung.
+  function setupHotspot(q) {
+    var datenEl = q.querySelector('script.hotspot-daten');
+    var fall = datenEl ? safeJSONParse(datenEl.textContent) : null;
+    var qid = q.dataset.qid;
+    if (!fall || !qid) return;
+    var points = parseFloat(q.dataset.points || 3) || 3;
+    try { localStorage.setItem('answer_max_' + qid, String(points)); } catch (e) { }
+    var attemptsAllowed = parseInt(q.dataset.attempts || 2, 10) || 2;
+    var attempts = parseInt(localStorage.getItem('answer_attempts_' + qid) || '0', 10) || 0;
+
+    q.insertAdjacentHTML('beforeend',
+      '<div class="det-kopf"><span class="det-label">Wo knallt\'s?</span>' +
+      '<strong class="det-titel">' + fall.titel + '</strong></div>' +
+      '<p class="det-fall">' + fall.frage + '</p>' +
+      '<div class="hs-bild"><img class="no-lightbox" src="' + fall.bild + '" alt="' + fall.titel + '"></div>' +
+      '<div><button type="button" class="mc-submit hs-submit">Hier knallt\'s</button></div>' +
+      '<div class="mc-feedback hs-feedback"></div><div class="mc-score hs-score"></div>');
+    var bildEl = q.querySelector('.hs-bild'), img = bildEl.querySelector('img');
+    var btn = q.querySelector('.hs-submit');
+    var fb = q.querySelector('.hs-feedback'), scoreEl = q.querySelector('.hs-score');
+    var tipp = null, marke = null, fertig = false, busy = false;
+
+    function saveAttempts() { try { localStorage.setItem('answer_attempts_' + qid, String(attempts)); } catch (e) { } emitChanged(); }
+    function kreis(klasse, x, y, r) {
+      var el = document.createElement('span');
+      el.className = klasse;
+      el.style.left = (x * 100) + '%';
+      el.style.top = (y * 100) + '%';
+      if (r) el.style.width = (2 * r * 100) + '%';
+      bildEl.appendChild(el);
+      return el;
+    }
+    // Zone unter dem Tipp: Abstand in Pixeln, Radius relativ zur Bildbreite
+    function zoneFuer(p) {
+      var W = img.clientWidth, H = img.clientHeight;
+      for (var i = 0; i < fall.zonen.length; i++) {
+        var z = fall.zonen[i], dx = (p.x - z.x) * W, dy = (p.y - z.y) * H;
+        if (Math.sqrt(dx * dx + dy * dy) <= z.r * W) return z.id;
+      }
+      return 'sonst';
+    }
+    function aufloesen(loesung, text) {
+      var id = Array.isArray(loesung) && loesung.length ? String(loesung[0]) : null;
+      fall.zonen.forEach(function (z) { if (z.id === id) kreis('hs-ziel', z.x, z.y, z.r); });
+      fertig = true;
+      btn.style.display = 'none';
+      if (text) fb.innerHTML += '<div class="det-aufloesung">' + text + '</div>';
+    }
+
+    bildEl.addEventListener('click', function (ev) {
+      if (fertig || busy) return;
+      var r = img.getBoundingClientRect();
+      var p = { x: (ev.clientX - r.left) / r.width, y: (ev.clientY - r.top) / r.height };
+      if (p.x < 0 || p.x > 1 || p.y < 0 || p.y > 1) return;
+      tipp = p;
+      if (!marke) marke = kreis('hs-marke', p.x, p.y);
+      marke.style.left = (p.x * 100) + '%';
+      marke.style.top = (p.y * 100) + '%';
+    });
+
+    btn.addEventListener('click', function () {
+      if (fertig || busy || attempts >= attemptsAllowed) return;
+      if (!tipp) { fb.innerHTML = '<span class="mc-wrong">Bitte zuerst auf die vermutete Stelle im Bild tippen.</span>'; return; }
+      busy = true;
+      serverCheck({ qid: qid, selected: [zoneFuer(tipp)], attemptsUsed: attempts }).then(function (res) {
+        busy = false;
+        attempts = res.attempts || (attempts + 1);
+        saveAttempts();
+        var aa = res.attemptsAllowed || attemptsAllowed;
+        if (res.solution !== undefined) cacheSolution(qid, res.solution);
+        if (res.aufloesung) { try { localStorage.setItem('answer_explain_' + qid, res.aufloesung); } catch (e) { } }
+        if (res.correct || attempts >= aa) markDone(qid);
+        marke.className = 'hs-marke ' + (res.correct ? 'richtig' : 'falsch');
+        marke = null; tipp = null;
+        if (res.correct) {
+          if (res.authed) {
+            var prev = (safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0 }).points || 0;
+            if ((res.best || 0) > prev) {
+              try { localStorage.setItem('answer_best_' + qid, JSON.stringify({ points: res.best, updated: new Date().toISOString() })); } catch (e) { }
+              emitChanged();
+            }
+            fb.innerHTML = '<span class="mc-correct">' + ((res.earned || 0) > points ? 'Volltreffer im ersten Versuch: ' + points + ' Punkte + 1 Bonus!' : 'Richtig: ' + (res.earned || 0) + ' Punkte.') + '</span>';
+            scoreEl.textContent = 'Punkte: ' + (res.best || 0) + '/' + points;
+            try { checkPageCompletion(); } catch (e) { }
+            try { updateStarsForPage(getPageId()); } catch (e) { }
+          } else {
+            fb.innerHTML = '<span class="mc-correct">Richtig! <small>(Punkte gibt es nur mit ' + opalLoginLink() + '.)</small></span>';
+            scoreEl.textContent = '';
+          }
+          aufloesen(res.solution, res.aufloesung);
+        } else {
+          var s = '<span class="mc-wrong">Daneben (' + attempts + '/' + aa + ').</span>';
+          if (res.diagnosis) s += '<div class="mc-hint">' + res.diagnosis + '</div>';
+          if (fall.tipp && attempts < aa) s += '<div class="mc-hint">Tipp: ' + fall.tipp + '</div>';
+          fb.innerHTML = s;
+          if (attempts >= aa) {
+            scoreEl.textContent = res.authed ? 'Punkte: 0/' + points : 'Versuche: ' + attempts + '/' + aa;
+            fb.innerHTML += '<div class="mc-reveal">Keine Versuche mehr, hier knallt es:</div>';
+            aufloesen(res.solution, res.aufloesung);
+          } else {
+            scoreEl.textContent = 'Versuche: ' + attempts + '/' + aa;
+          }
+        }
+        try { showSolutionImages(); } catch (e) { }
+        renderSummary();
+      }).catch(function () {
+        busy = false;
+        fb.innerHTML = '<span class="mc-wrong">' + CHECK_OFFLINE_MSG + '</span>';
+      });
+    });
+
+    // Stand nach dem Neuladen wiederherstellen
+    var best = (safeJSONParse(localStorage.getItem('answer_best_' + qid)) || { points: 0 }).points || 0;
+    var text = null;
+    try { text = localStorage.getItem('answer_explain_' + qid); } catch (e) { }
+    var sol = cachedSolution(qid);
+    if (best > 0) {
+      fb.innerHTML = '<span class="mc-correct">Gelöst: ' + best + ' Punkte.</span>';
+      scoreEl.textContent = 'Punkte: ' + best + '/' + points;
+      aufloesen(sol, text);
+    } else if (attempts >= attemptsAllowed) {
+      fb.innerHTML = '<div class="mc-reveal">Keine Versuche mehr, hier knallt es:</div>';
+      scoreEl.textContent = 'Punkte: 0/' + points;
+      aufloesen(sol, text);
+    } else if (localStorage.getItem('answer_done_' + qid) === '1') {
+      fb.innerHTML = '<span class="mc-correct">Gelöst.</span>';
+      aufloesen(sol, text);
+    } else {
+      scoreEl.textContent = 'Versuche: ' + attempts + '/' + attemptsAllowed;
+    }
+  }
+
+  // Freigabe der Spiele (Schalter im Dashboard); null = Backend nicht erreichbar.
+  // Ändert sie sich, wird der Fragenkatalog für Fortschritt und Abzeichen neu geladen.
+  function spieleFreigabe() {
+    var base = (window.AC_BACKEND_URL || '').replace(/\/$/, '');
+    if (!base || !window.fetch) return Promise.resolve(null);
+    return fetch(base + '/api/spiele')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (an) {
+        var alt = null;
+        try { alt = localStorage.getItem('ac_spiele'); localStorage.setItem('ac_spiele', JSON.stringify(an)); } catch (e) { }
+        if (an && alt !== JSON.stringify(an)) {
+          try { localStorage.removeItem('ac_qcatalog'); refreshQuestionTotal(); } catch (e) { }
+        }
+        return an;
+      })
+      .catch(function () { return null; });
+  }
+
   function onReady(fn) { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
 
   onReady(function () {
@@ -1496,9 +1649,29 @@
     var mcQuestions = document.querySelectorAll('.multiple-choice-question');
     for (var j = 0; j < mcQuestions.length; j++) setupMultipleChoiceQuestion(mcQuestions[j], j);
 
-    // Setup Modell-Detektiv
-    var faelle = document.querySelectorAll('.detektiv-fall');
-    for (var d = 0; d < faelle.length; d++) setupDetektiv(faelle[d]);
+    // Spiele (Modell-Detektiv, Wo knallt's?) nur, wenn im Dashboard freigeschaltet;
+    // sonst von der Seite nehmen, damit Fortschritt und Lösungsbilder stimmen
+    var spielElemente = document.querySelectorAll('.detektiv-fall, .hotspot-frage');
+    if (spielElemente.length) spieleFreigabe().then(function (an) {
+      var hinweis = false;
+      spielElemente.forEach(function (el) {
+        var istDetektiv = el.classList.contains('detektiv-fall');
+        if (an && an[istDetektiv ? 'det' : 'hs']) {
+          el.classList.add('spiel-an');
+          if (istDetektiv) setupDetektiv(el); else setupHotspot(el);
+          return;
+        }
+        if (istDetektiv && !hinweis) {
+          hinweis = true;
+          el.insertAdjacentHTML('beforebegin', '<p class="spiel-gesperrt">' +
+            (an ? 'Der Modell-Detektiv ist noch nicht freigeschaltet.' : CHECK_OFFLINE_MSG) + '</p>');
+        }
+        el.remove();
+      });
+      try { checkPageCompletion(); } catch (e) { }
+      try { showSolutionImages(); } catch (e) { }
+      renderSummary();
+    });
 
     // update player badge and nav
     try { updatePlayerBadge(); checkPageCompletion(); } catch (e) { }

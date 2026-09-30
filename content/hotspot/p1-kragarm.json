@@ -1,0 +1,44 @@
+{
+ "titel": "Kragarm mit Einzelkraft",
+ "frage": "Bevor Sie rechnen: Wo erwarten Sie die größte Spannung im Balken? Tippen Sie auf die Stelle und bestätigen Sie.",
+ "bild": "P1_Einfuehrung/03_Selbsttests/images/Uebung-02.png",
+ "tipp": "Das Biegemoment wächst mit dem Abstand zur Kraft. Wo ist dieser Abstand am größten?",
+ "zonen": [
+  {
+   "id": "einspannung",
+   "x": 0.064,
+   "y": 0.45,
+   "r": 0.06
+  },
+  {
+   "id": "einspannung",
+   "x": 0.064,
+   "y": 0.697,
+   "r": 0.06
+  },
+  {
+   "id": "einspannung-mitte",
+   "x": 0.064,
+   "y": 0.572,
+   "r": 0.035,
+   "grund": "Der Querschnitt stimmt, aber in der Mitte liegt die neutrale Faser: Dort ist die Biegespannung null. Die größten Spannungen sitzen oben und unten."
+  },
+  {
+   "id": "lastangriff",
+   "x": 0.742,
+   "y": 0.45,
+   "r": 0.06,
+   "grund": "Hier greift die Kraft an, das Biegemoment ist am freien Ende aber null."
+  },
+  {
+   "id": "querschnitt",
+   "x": 0.873,
+   "y": 0.567,
+   "r": 0.07,
+   "grund": "Das ist nur die Skizze des Querschnitts. Tippen Sie auf die Stelle am Balken."
+  }
+ ],
+ "sonst": "Dort ist die Spannung kleiner. Das Biegemoment wächst von der Kraft bis zur Einspannung linear an.",
+ "richtig": "einspannung",
+ "aufloesung": "Die größte Spannung sitzt an der Einspannung, oben (Zug) und unten (Druck): Dort ist das Biegemoment am größten, M = F · L = 1,5·10⁶ Nmm. In ANSYS liegt das Maximum sogar genau an den Ecken der Einspannung, einer Singularität. Was es damit auf sich hat, zeigt der Abschnitt weiter unten."
+}

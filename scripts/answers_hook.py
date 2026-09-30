@@ -16,6 +16,10 @@ das Backend nennt die Ursache, wenn eine Eingabe zu einem Fehlwert passt.
 Modell-Detektiv: <div class="detektiv-fall" data-fall="name"> lädt den Fall aus
 content/detektiv/name.json. Strukturbaum und Details kommen als JSON in die
 Seite, Fehlerzeile, Begründungen und Auflösung nur in answers.json (qid :det<i>).
+
+Wo knallt's?: <div class="hotspot-frage" data-fall="name"> lädt die Runde aus
+content/hotspot/name.json. Bild und Zonen kommen in die Seite, richtige Zone,
+Begründungen und Auflösung (samt Lösungsbild) nur in answers.json (qid :hs<i>).
 """
 
 import json
@@ -26,9 +30,10 @@ from urllib.parse import urlsplit
 _answers = {}
 
 _TAG_RE = re.compile(
-    r'<div\b[^>]*class="[^"]*\b(numeric-question|multiple-choice-question|detektiv-fall)\b[^"]*"[^>]*>'
+    r'<div\b[^>]*class="[^"]*\b(numeric-question|multiple-choice-question|detektiv-fall|hotspot-frage)\b[^"]*"[^>]*>'
 )
-_SUFFIX = {"numeric-question": ":q", "multiple-choice-question": ":mc", "detektiv-fall": ":det"}
+_SUFFIX = {"numeric-question": ":q", "multiple-choice-question": ":mc",
+           "detektiv-fall": ":det", "hotspot-frage": ":hs"}
 _ATTR_RE = re.compile(r'\s*data-(answer|tolerance|correct|diagnose)="([^"]*)"')
 
 
@@ -66,6 +71,22 @@ def _detektiv(root, name):
     return fall, loesung
 
 
+def _hotspot(root, prefix, name):
+    """Runde laden und teilen wie beim Detektiv; Bildpfade werden absolut (Site-Präfix)."""
+    with open(os.path.join(root, "content", "hotspot", name + ".json"), encoding="utf-8") as f:
+        fall = json.load(f)
+    fall["bild"] = prefix + "/" + fall["bild"]
+    explain = {"sonst": fall.pop("sonst")}
+    for zone in fall["zonen"]:
+        if "grund" in zone:
+            explain[zone["id"]] = zone.pop("grund")
+    aufloesung = fall.pop("aufloesung")
+    if "loesungsbild" in fall:
+        aufloesung += ('<img class="hs-loesungsbild" src="' + prefix + "/" + fall.pop("loesungsbild")
+                       + '" alt="Lösung in ANSYS">')
+    return fall, {"correct": [fall.pop("richtig")], "explain": explain, "aufloesung": aufloesung}
+
+
 def on_page_content(html, page, config, files):
     prefix = urlsplit(config["site_url"]).path.rstrip("/")
     page_path = (prefix + "/" + page.url).rstrip("/")
@@ -81,14 +102,18 @@ def on_page_content(html, page, config, files):
             "points": float(_attr(tag, "points", "1") or 1),
             "attempts": int(_attr(tag, "attempts", "5") or 5),
         }
-        if cls == "detektiv-fall":
+        if cls in ("detektiv-fall", "hotspot-frage"):
             root = os.path.dirname(config["config_file_path"])
-            fall, loesung = _detektiv(root, _attr(tag, "fall"))
+            if cls == "detektiv-fall":
+                fall, loesung = _detektiv(root, _attr(tag, "fall"))
+            else:
+                fall, loesung = _hotspot(root, prefix, _attr(tag, "fall"))
             entry.update(loesung)
             _answers[qid] = entry
             daten = json.dumps(fall, ensure_ascii=False).replace("</", "<\\/")
+            klasse = "detektiv-daten" if cls == "detektiv-fall" else "hotspot-daten"
             return (tag[:-1] + ' data-qid="' + qid + '">'
-                    + '<script type="application/json" class="detektiv-daten">' + daten + '</script>')
+                    + '<script type="application/json" class="' + klasse + '">' + daten + '</script>')
         if cls == "numeric-question":
             try:
                 entry["answer"] = float(_attr(tag, "answer").replace(",", "."))

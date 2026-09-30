@@ -238,6 +238,19 @@ def main():
         check("diagnosis: Faktor 1000 (Einheit)", "1000-mal zu klein" in diag(0.007378))
         check("diagnosis: doppelte Last", "doppelt" in diag(14.8))
         check("diagnosis: Vorzeichen", "Vorzeichen" in diag(-7.378))
+        # Spiele sind aus, bis sie im Dashboard freigeschaltet werden
+        check("spiele standardmäßig aus",
+              requests.get(BACKEND + "/api/spiele").json() == {"det": False, "hs": False})
+        check("ausgeschaltetes Spiel fehlt im Katalog",
+              "/T/Det:det0" not in requests.get(BACKEND + "/api/questions").json())
+        check("ausgeschaltetes Spiel nicht prüfbar", requests.post(BACKEND + "/api/check", json={
+            "qid": "/T/Det:det0", "selected": ["netz.groesse"]}).status_code == 403)
+        r = requests.get(BACKEND + "/dashboard-spiel-toggle", allow_redirects=False,
+                         params={"key": "test-dashboard-key", "spiel": "det"})
+        check("dashboard schaltet Spiel frei",
+              r.status_code == 302 and requests.get(BACKEND + "/api/spiele").json()["det"]
+              and "/T/Det:det0" in requests.get(BACKEND + "/api/questions").json())
+
         # Modell-Detektiv: Begründung je Klick, Auflösung erst bei Treffer
         def det(row, used=0):
             return requests.post(BACKEND + "/api/check", json={
@@ -285,8 +298,9 @@ def main():
         check("checked points land in /api/me", me2["total_points"] == 18, str(me2))
 
         # ---- AGS: Score-Push an die Mock-Plattform -----------------------
+        # Meldungen laufen nacheinander; warten, bis die letzte den Endstand trägt
         for _ in range(40):
-            if ags_received:
+            if ags_received and ags_received[-1].get("scoreGiven") == 18:
                 break
             time.sleep(0.25)
         check("AGS score received by platform", len(ags_received) > 0, str(ags_received))

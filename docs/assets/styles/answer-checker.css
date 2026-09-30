@@ -618,7 +618,7 @@ a.player-badge {
 a.player-badge:hover { transform: scale(1.12); color: var(--player-badge-fg, #111); }
 
 /* Modell-Detektiv: Strukturbaum links, Details rechts (Material-Variablen, daher auch dunkel) */
-.detektiv-fall {
+.detektiv-fall, .hotspot-frage {
 	border: 1px solid var(--md-default-fg-color--lightest);
 	padding: 0.8rem;
 	border-radius: 8px;
@@ -653,3 +653,17 @@ a.player-badge:hover { transform: scale(1.12); color: var(--player-badge-fg, #11
 .det-zeile.falsch { background: rgba(229, 48, 9, 0.1); color: #E53009; }
 .det-zeile.richtig { background: rgba(0, 150, 78, 0.12); color: #00964E; font-weight: 600; }
 .det-aufloesung { margin-top: 0.5rem; padding: 0.6rem 0.75rem; border-left: 3px solid #00964E; border-radius: 0 4px 4px 0; background: rgba(0, 150, 78, 0.08); font-size: 0.9rem; }
+
+/* Wo knallt's?: Tipp als Kreis auf dem Bild, Zielbereich gestrichelt */
+.hs-bild { position: relative; display: inline-block; max-width: 100%; line-height: 0; margin: 0.25rem 0 0.6rem; cursor: crosshair; }
+.hs-bild img { max-width: 100%; height: auto; border-radius: 6px; }
+.hs-marke, .hs-ziel { position: absolute; border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+.hs-marke { width: 1.1rem; height: 1.1rem; border: 3px solid #009EE3; background: rgba(0, 158, 227, 0.25); }
+.hs-marke.falsch { border-color: #E53009; background: rgba(229, 48, 9, 0.25); }
+.hs-marke.richtig { border-color: #00964E; background: rgba(0, 150, 78, 0.3); }
+.hs-ziel { aspect-ratio: 1 / 1; border: 3px dashed #00964E; }
+.hs-loesungsbild { display: block; max-width: 100%; margin-top: 0.6rem; border-radius: 6px; }
+
+/* Spiele erst zeigen, wenn sie im Dashboard freigeschaltet sind */
+.detektiv-fall:not(.spiel-an), .hotspot-frage:not(.spiel-an) { display: none; }
+.spiel-gesperrt { color: var(--md-default-fg-color--light); font-style: italic; }

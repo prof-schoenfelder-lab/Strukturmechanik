@@ -1,0 +1,32 @@
+{
+ "titel": "Lineal über der Tischkante",
+ "frage": "Bevor Sie rechnen: Wo erwarten Sie die größte Spannung im Lineal? Tippen Sie auf die Stelle und bestätigen Sie.",
+ "bild": "P2_Geometrie_Randbedingungen/02_Lagerungen/images/Lagerungsbeispiel_Lineal_Skizze.png",
+ "tipp": "Verfolgen Sie das Biegemoment von der Kraft aus: Bis zur ersten Stütze wächst es an. Wo stützt sich das Lineal zuerst ab?",
+ "zonen": [
+  {
+   "id": "tischkante",
+   "x": 0.327,
+   "y": 0.593,
+   "r": 0.055
+  },
+  {
+   "id": "klemmung",
+   "x": 0.676,
+   "y": 0.593,
+   "r": 0.07,
+   "grund": "An der Klemmung ist das Biegemoment nur etwa halb so groß wie an der Tischkante und wirkt in die andere Richtung."
+  },
+  {
+   "id": "lastangriff",
+   "x": 0.054,
+   "y": 0.593,
+   "r": 0.05,
+   "grund": "Hier greift die Kraft an, das Biegemoment ist am freien Ende aber null."
+  }
+ ],
+ "sonst": "Dort ist die Spannung kleiner. Verfolgen Sie das Biegemoment von der Kraft aus: Es wächst bis zur ersten Stütze an und fällt dahinter wieder ab.",
+ "richtig": "tischkante",
+ "aufloesung": "Die größte Spannung sitzt an der Tischkante: Bis dorthin wächst das Biegemoment auf M = 10 N · 60 mm = 600 Nmm an. Dahinter fällt es ab und wechselt die Richtung, an der Klemmung ist es nur noch etwa halb so groß. So sieht es in ANSYS aus:",
+ "loesungsbild": "P2_Geometrie_Randbedingungen/02_Lagerungen/images/Uebung-03-Loesung-stress.png"
+}
