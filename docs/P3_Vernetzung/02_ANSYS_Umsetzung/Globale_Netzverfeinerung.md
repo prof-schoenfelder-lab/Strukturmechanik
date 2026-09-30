@@ -66,12 +66,12 @@ Die maximale Spannung liegt für die Netzgröße von 2&nbsp;mm im Knick und betr
 
 - [ ] Die von-Mises-Vergleichsspannung in MPa im <code>gesamten Bauteil</code> für eine Netzgröße von <code>1&nbsp;mm</code> berechnen.
 
-<div class="numeric-question" data-answer="393.35" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Einheit in mm gewechselt?">
+<div class="numeric-question" data-answer="393.35" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Einheit in mm gewechselt?" data-diagnose="353.8: Das ist nicht das Maximum im gesamten Bauteil bei 1 mm: noch 2 mm eingestellt oder nur der Knick ausgewertet? | 562.21: Das ist der Wert für 0,5 mm. Hier ist die Netzgröße 1 mm gefragt.">
 </div>
 
 - [ ] Die von-Mises-Vergleichsspannung in MPa im <code>gesamten Bauteil</code> für eine Netzgröße von <code>0,5&nbsp;mm</code> berechnen.
 
-<div class="numeric-question" data-answer="562.21" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Einheit in mm gewechselt?">
+<div class="numeric-question" data-answer="562.21" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Einheit in mm gewechselt?" data-diagnose="393.35: Das ist der Wert für 1 mm. Netzgröße auf 0,5 mm stellen. | 354.5: Das ist der Wert im Knick. Gefragt ist das Maximum im gesamten Bauteil.">
 </div>
 
 Zwischen den beiden Spannungswerten ergibt sich eine Steigerung von rund 43 %. Die Spannung nimmt also mit Netzverfeinerung stark zu – ein typischer Hinweis auf eine Singularität. Da die maximale Spannung außerdem an der festen Einspannung auftritt, können wir diesen Verdacht hier bestätigen.
@@ -86,12 +86,12 @@ Wir verwenden nun unsere erste Lösungsstrategie und werten die Spannung außerh
 
 - [ ] Die von-Mises-Vergleichsspannung in MPa im <code>Bereich des Knicks</code> für eine Netzgröße von <code>1&nbsp;mm</code> berechnen.
 
-<div class="numeric-question" data-answer="353.11" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Einheit in mm gewechselt?">
+<div class="numeric-question" data-answer="353.11" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Einheit in mm gewechselt?" data-diagnose="393.35: Das ist das Maximum im gesamten Bauteil, an der Einspannung. Nur die Fläche im Knick auswerten.">
 </div>
 
 - [ ] Die von-Mises-Vergleichsspannung in MPa im <code>Bereich des Knicks</code> für eine Netzgröße von <code>0,5&nbsp;mm</code> berechnen.
 
-<div class="numeric-question" data-answer="355.06" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Einheit in mm gewechselt?">
+<div class="numeric-question" data-answer="355.06" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Einheit in mm gewechselt?" data-diagnose="562.21: Das ist das Maximum im gesamten Bauteil, an der Einspannung. Nur die Fläche im Knick auswerten.">
 </div>
 
 Nun haben wir nur noch einen Unterschied von etwa 0,5 % zwischen den Spannungswerten. Damit können wir ab einer Netzgröße von 0,5 mm von einer ausreichenden Konvergenz ausgehen und haben ein geeignet feines Netz für die Bewertung der Spannung im Knick gefunden.

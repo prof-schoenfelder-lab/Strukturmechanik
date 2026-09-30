@@ -16,12 +16,12 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung)
 
 - [ ] Die von-Mises-Vergleichsspannung in MPa im <code>gesamten Bauteil</code> für eine globale Netzgröße von <code>3&nbsp;mm</code> berechnen.
 
-<div class="numeric-question" data-answer="436.89" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Netzgröße auf 3mm gestellt?">
+<div class="numeric-question" data-answer="436.89" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Netzgröße auf 3mm gestellt?" data-diagnose="592.32: Das ist der Wert für 1,5 mm. Hier ist die globale Netzgröße 3 mm gefragt.">
 </div>
 
 - [ ] Die von-Mises-Vergleichsspannung in MPa im <code>gesamten Bauteil</code> für eine globale Netzgröße von <code>1,5&nbsp;mm</code> berechnen.
 
-<div class="numeric-question" data-answer="592.32" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Netzgröße auf 1,5mm gestellt?">
+<div class="numeric-question" data-answer="592.32" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Netzgröße auf 1,5mm gestellt?" data-diagnose="436.89: Das ist der Wert für 3 mm. Globale Netzgröße auf 1,5 mm stellen.">
 </div>
 
 

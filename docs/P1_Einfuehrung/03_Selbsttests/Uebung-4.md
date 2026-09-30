@@ -82,7 +82,7 @@ RemoteDisp+Frictionless Support (Fläche): 18.24mm
 
 ### Die maximale von-Mises-Spannung in MPa
 
-<div class="numeric-question" data-answer="271.05" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Spannung an Singularität? (Oben Tab Result > Maximum) ggf. Randbedingung für fixierte Lagerung überdenken">
+<div class="numeric-question" data-answer="271.05" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Spannung an Singularität? (Oben Tab Result data-diagnose="288.8: Dieser Wert entsteht mit Fixed Support, das Maximum sitzt an der Singularität. Die Klemmung mit Remote Displacement und Frictionless Support umsetzen."> Maximum) ggf. Randbedingung für fixierte Lagerung überdenken">
 </div>
 
 <!---

@@ -82,12 +82,12 @@ Die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung im Bauteil \(u_\text{max}\) in mm
 
-<div class="numeric-question" data-answer="0.92055" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Anstieg (Rotation) am Lager fälschlich durch Fixed Support auf Null gesetzt?">
+<div class="numeric-question" data-answer="0.92055" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Anstieg (Rotation) am Lager fälschlich durch Fixed Support auf Null gesetzt?" data-diagnose="0.1858: Dieser Wert entsteht, wenn die Drehung an den Lagern gesperrt ist (Fixed Support). Die Lager müssen die Drehung zulassen.">
 </div>
 
 ### Die maximale von-Mises-Vergleichsspannung im Bauteil \(\sigma_\text{von Mises}\) in MPa
 
-<div class="numeric-question" data-answer="27.778" data-tolerance="0.25" data-points="5" data-attempts="5"  data-hints="Anstieg (Rotation) am Lager fälschlich durch Fixed Support auf Null gesetzt?">
+<div class="numeric-question" data-answer="27.778" data-tolerance="0.25" data-points="5" data-attempts="5"  data-hints="Anstieg (Rotation) am Lager fälschlich durch Fixed Support auf Null gesetzt?" data-diagnose="18.52: Dieser Wert entsteht, wenn die Drehung an den Lagern gesperrt ist (Fixed Support). Die Lager müssen die Drehung zulassen.">
 </div>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->
