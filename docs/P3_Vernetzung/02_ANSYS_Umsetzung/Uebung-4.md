@@ -73,7 +73,7 @@ Die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung \(u_{\max}\) in mm
 
-<div class="numeric-question" data-answer="0.35953" data-tolerance="0.05" data-points="5" data-attempts="5" data-hints="Einheit auf mm gewechselt? Kräfte mit richtigem Abstand und Richtung?">
+<div class="numeric-question" data-answer="0.35953" data-tolerance="0.05" data-points="5" data-attempts="5" data-hints="Einheit auf mm gewechselt? Kräfte mit richtigem Abstand und Richtung?" data-diagnose="0.1258: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Aluminium (E = 70 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
 </div>
 
 ### Die maximale von-Mises-Vergleichsspannung \(\sigma_\text{von Mises}\) in MPa

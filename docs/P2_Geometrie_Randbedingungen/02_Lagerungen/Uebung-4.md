@@ -95,7 +95,7 @@ Anschließend die folgenden Größen berechnen:
 </div>
 
 
-<div class="numeric-question" data-answer="0.39728" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Verschiebung in z-Richtung ausgewertet?">
+<div class="numeric-question" data-answer="0.39728" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Verschiebung in z-Richtung ausgewertet?" data-diagnose="0.1357: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Aluminium 6061-T6 (E = 68,3 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
 </div>
 
 ### Die maximale Verschiebung des Rahmens in <code>negative</code> y-Richtung (Richtung Boden) $u_{y}$ in mm
@@ -114,7 +114,7 @@ Anschließend die folgenden Größen berechnen:
 
 </div>
 
-<div class="numeric-question" data-answer="0.17581" data-tolerance="0.02" data-points="5" data-attempts="5"  data-hints="Wert in negative y-Richtung ist hier der kleinste Wert (im negativen), hier aber nur Betrag angeben!">
+<div class="numeric-question" data-answer="0.17581" data-tolerance="0.02" data-points="5" data-attempts="5"  data-hints="Wert in negative y-Richtung ist hier der kleinste Wert (im negativen), hier aber nur Betrag angeben!" data-diagnose="0.06004: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Aluminium 6061-T6 (E = 68,3 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
 </div>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->

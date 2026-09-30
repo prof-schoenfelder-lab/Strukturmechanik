@@ -107,7 +107,8 @@ def main():
     tmp = tempfile.mkdtemp()
     with open(os.path.join(tmp, "answers.json"), "w") as f:
         json.dump({
-            "/T/Ueb:q0": {"answer": 7.378, "tolerance": 0.1, "points": 5, "attempts": 5},
+            "/T/Ueb:q0": {"answer": 7.378, "tolerance": 0.1, "points": 5, "attempts": 5,
+                          "diagnose": [{"value": 7.747, "hint": "Material zugeordnet?"}]},
             "/T/Ueb:mc0": {"correct": ["a", "c"], "points": 4, "attempts": 3},
         }, f)
     env = dict(os.environ,
@@ -223,7 +224,21 @@ def main():
         check("guest numeric correct", r["correct"] and not r["authed"] and "earned" not in r, str(r))
         r = requests.post(BACKEND + "/api/check",
                           json={"qid": "/T/Ueb:q0", "value": 9.9, "attemptsUsed": 0}).json()
-        check("guest wrong, no solution yet", not r["correct"] and "solution" not in r, str(r))
+        check("guest wrong, no solution yet", not r["correct"] and "solution" not in r
+              and "diagnosis" not in r, str(r))
+
+        # Diagnose: aufgabenspezifischer Fehlwert vor den typischen Faktoren
+        def diag(value):
+            return requests.post(BACKEND + "/api/check", json={
+                "qid": "/T/Ueb:q0", "value": value, "attemptsUsed": 0}).json().get("diagnosis", "")
+        check("diagnosis: data-diagnose-Wert", diag("7,75") == "Material zugeordnet?")
+        check("diagnosis: Faktor 1000 (Einheit)", "1000-mal zu klein" in diag(0.007378))
+        check("diagnosis: doppelte Last", "doppelt" in diag(14.8))
+        check("diagnosis: Vorzeichen", "Vorzeichen" in diag(-7.378))
+        r = requests.get(BACKEND + "/dashboard", params={"key": "test-dashboard-key"})
+        check("dashboard zeigt Fehlwerte mit Ursache",
+              "Häufige Fehlwerte heute" in r.text and "Material zugeordnet?" in r.text
+              and "<em>unbekannt</em>" in r.text)
         r = requests.post(BACKEND + "/api/check",
                           json={"qid": "/T/Ueb:q0", "value": 9.9, "attemptsUsed": 4}).json()
         check("guest exhausted -> solution", not r["correct"] and r.get("solution") == 7.378, str(r))

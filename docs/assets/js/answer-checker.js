@@ -1018,7 +1018,9 @@
           } else {
             var aa = res.attemptsAllowed || attemptsAllowed;
             var s2 = '<span class="numeric-wrong">Noch nicht richtig (' + attempts + '/' + aa + ').</span>';
-            if (hints[attempts - 1]) s2 += '<div class="numeric-hint">Hinweis: ' + hints[attempts - 1] + '</div>';
+            // erkannte Fehlerursache vom Server, sonst der (letzte) Hinweis, auch ab dem 2. Fehlversuch
+            var hint2 = res.diagnosis || hints[Math.min(attempts, hints.length) - 1];
+            if (hint2) s2 += '<div class="numeric-hint">Hinweis: ' + hint2 + '</div>';
             fb.innerHTML = s2;
             if (attempts >= aa) {
               if (res.authed) scoreEl.textContent = 'Punkte: 0/' + points;
@@ -1065,7 +1067,8 @@
         try { showSolutionImages(); } catch (e) { }
       } else {
         var s = '<span class="numeric-wrong">Noch nicht richtig (' + attempts + '/' + attemptsAllowed + ').</span>';
-        if (hints[attempts - 1]) s += '<div class="numeric-hint">Hinweis: ' + hints[attempts - 1] + '</div>';
+        var hint = hints[Math.min(attempts, hints.length) - 1];
+        if (hint) s += '<div class="numeric-hint">Hinweis: ' + hint + '</div>';
         fb.innerHTML = s;
         if (attempts >= attemptsAllowed) {
           scoreEl.textContent = 'Punkte: 0/' + points;

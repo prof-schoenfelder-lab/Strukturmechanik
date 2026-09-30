@@ -8,6 +8,10 @@ das Backend (siehe backend/DEPLOY.md).
 
 Die qid entspricht dem bisherigen Client-Schema, damit vorhandene
 localStorage-Einträge gültig bleiben: <site-pfad>/<seite>:q<i> bzw. :mc<i>.
+
+Numerische Fragen können typische Fehlwerte mit Ursache tragen:
+data-diagnose="7,747: Text | 0,35: Text". Auch diese landen nur in answers.json;
+das Backend nennt die Ursache, wenn eine Eingabe zu einem Fehlwert passt.
 """
 
 import json
@@ -20,12 +24,27 @@ _answers = {}
 _TAG_RE = re.compile(
     r'<div\b[^>]*class="[^"]*\b(numeric-question|multiple-choice-question)\b[^"]*"[^>]*>'
 )
-_ATTR_RE = re.compile(r'\s*data-(answer|tolerance|correct)="([^"]*)"')
+_ATTR_RE = re.compile(r'\s*data-(answer|tolerance|correct|diagnose)="([^"]*)"')
 
 
 def _attr(tag, name, default=""):
     m = re.search(r'data-' + name + r'="([^"]*)"', tag)
     return m.group(1) if m else default
+
+
+def _diagnose(raw, qid):
+    """'7,747: Text | 0,35: Text' -> [{"value": 7.747, "hint": "Text"}, ...]"""
+    out = []
+    for part in raw.split("|"):
+        val, sep, hint = part.partition(":")
+        try:
+            if not sep:
+                raise ValueError
+            out.append({"value": float(val.strip().replace(",", ".")), "hint": hint.strip()})
+        except ValueError:
+            if part.strip():
+                print(f"answers_hook: data-diagnose in {qid} nicht lesbar: {part.strip()!r}")
+    return out
 
 
 def on_page_content(html, page, config, files):
@@ -49,6 +68,9 @@ def on_page_content(html, page, config, files):
             except ValueError:
                 return tag  # kein/kaputtes data-answer: Frage unverändert lassen
             entry["tolerance"] = float(_attr(tag, "tolerance", "0").replace(",", ".") or 0)
+            diagnose = _diagnose(_attr(tag, "diagnose"), qid)
+            if diagnose:
+                entry["diagnose"] = diagnose
         else:
             correct = [s.strip() for s in _attr(tag, "correct").split(",") if s.strip()]
             if not correct:

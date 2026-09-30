@@ -23,6 +23,7 @@ import re
 import socket
 import hashlib
 import json
+import math
 import os
 import secrets
 import sqlite3
@@ -114,6 +115,12 @@ def init_db():
             page TEXT,
             created_at REAL,
             done_at REAL
+        );
+        -- falsche Zahlenwerte, anonym (ohne Pseudonym): welche Fehler passieren?
+        CREATE TABLE IF NOT EXISTS wrong_values (
+            qid TEXT NOT NULL,
+            value REAL NOT NULL,
+            created_at REAL NOT NULL
         );
         """
     )
@@ -578,6 +585,38 @@ def load_answers():
     return _answers_cache["data"]
 
 
+DIAG_REL = 0.03  # Eingabe passt zu einem Fehlwert bis 3 % Abweichung (mind. Aufgabentoleranz)
+
+# Eingabe = Faktor × Lösung → typische Ursache (gilt für alle Zahlenfragen)
+DIAG_FACTORS = [
+    (-1, "Der Betrag stimmt, das Vorzeichen nicht: Ist nach dem Betrag gefragt, "
+         "oder zeigt die Last in die falsche Richtung?"),
+    (1e3, "Genau 1000-mal zu groß: Stimmen die Einheiten? Gefragt ist in mm, N und MPa."),
+    (1e-3, "Genau 1000-mal zu klein: Stimmen die Einheiten (mm statt m, MPa statt GPa)?"),
+    (1e6, "Genau 1 000 000-mal zu groß: Spannung in Pa statt MPa? Einheitensystem auf mm umstellen."),
+    (2, "Genau doppelt so groß wie erwartet: Wirkt die Last doppelt, "
+        "oder wurde sie im Symmetriemodell nicht halbiert?"),
+    (0.5, "Genau halb so groß wie erwartet: Wurde die Last zu oft geteilt, "
+          "oder fehlt ein Teil der Last?"),
+    (4, "Genau viermal so groß wie erwartet: Wurde die Last im Viertelmodell durch 4 geteilt?"),
+    (0.25, "Nur ein Viertel des erwarteten Werts: Wurde die Last zu oft geteilt, "
+           "oder ist das Modell steifer gelagert als vorgegeben?"),
+]
+
+
+def diagnose(q, val):
+    """Wahrscheinliche Ursache eines falschen Zahlenwerts, sonst None.
+    Zuerst die aufgabenspezifischen Fehlwerte (data-diagnose), dann die Faktoren."""
+    for d in q.get("diagnose", []):
+        if abs(val - d["value"]) <= max(q.get("tolerance", 0), DIAG_REL * abs(d["value"])):
+            return d["hint"]
+    if q["answer"]:
+        for factor, hint in DIAG_FACTORS:
+            if abs(val / (factor * q["answer"]) - 1) <= DIAG_REL:
+                return hint
+    return None
+
+
 def earned_points(points, attempt_number, attempts_allowed):
     """Mastery-Prinzip: Lösen zählt voll, egal beim wievielten Versuch.
     +1 Bonuspunkt für den Volltreffer im ersten Versuch."""
@@ -593,6 +632,7 @@ def check_answer():
         return jsonify({"error": "unbekannte Frage"}), 404
 
     attempts_allowed = int(q.get("attempts", 5))
+    diagnosis = None
     if "answer" in q:
         try:
             val = float(str(payload.get("value")).replace(",", "."))
@@ -600,6 +640,12 @@ def check_answer():
             return jsonify({"error": "keine Zahl"}), 400
         correct = abs(val - q["answer"]) <= q.get("tolerance", 0)
         solution = q["answer"]
+        if not correct and math.isfinite(val):
+            diagnosis = diagnose(q, val)
+            db = get_db()
+            db.execute("INSERT INTO wrong_values (qid, value, created_at) VALUES (?, ?, ?)",
+                       (qid, val, time.time()))
+            db.commit()
     else:
         selected = payload.get("selected")
         if not isinstance(selected, list):
@@ -634,6 +680,8 @@ def check_answer():
                 "attempts": attempts, "attemptsAllowed": attempts_allowed}
         if correct or attempts >= attempts_allowed:
             resp["solution"] = solution
+        if diagnosis:
+            resp["diagnosis"] = diagnosis
         return jsonify(resp)
 
     # Gast: keine Speicherung, Versuche zählt der Client (Selbstbetrug erlaubt)
@@ -642,6 +690,8 @@ def check_answer():
             "attempts": attempts, "attemptsAllowed": attempts_allowed}
     if correct or attempts >= attempts_allowed:
         resp["solution"] = solution
+    if diagnosis:
+        resp["diagnosis"] = diagnosis
     return jsonify(resp)
 
 
@@ -785,6 +835,26 @@ def help_done():
                (time.time(), request.args.get("id")))
     db.commit()
     return redirect("dashboard?key=" + DASHBOARD_TOKEN)
+
+
+def wrong_value_rows(db, answers, since):
+    """Häufigste falsche Eingaben seit `since`: gruppiert nach erkannter Ursache,
+    ohne Diagnose nach dem auf 2 Stellen gerundeten Wert (Kandidaten für data-diagnose)."""
+    groups = {}
+    for r in db.execute("SELECT qid, value FROM wrong_values WHERE created_at > ?", (since,)):
+        q = answers.get(r["qid"])
+        if not q or "answer" not in q:
+            continue
+        hint = diagnose(q, r["value"])
+        groups.setdefault((r["qid"], hint or "", "" if hint else "%.2g" % r["value"]),
+                          []).append(r["value"])
+    rows = ""
+    for (qid, hint, _), vals in sorted(groups.items(), key=lambda kv: -len(kv[1]))[:10]:
+        vals.sort()
+        rows += ("<tr><td>%s</td><td>%.4g</td><td>%.4g</td><td>%d</td><td>%s</td></tr>"
+                 % (qid.replace("/Strukturmechanik/", ""), vals[len(vals) // 2],
+                    answers[qid]["answer"], len(vals), hint or "<em>unbekannt</em>"))
+    return rows
 
 
 @app.get("/dashboard")
@@ -964,6 +1034,15 @@ def dashboard():
                     '<div class="tablewrap"><table><tr><th>Aufgabe</th><th>Personen heute</th>'
                     '<th>davon gelöst</th><th>ø Versuche</th></tr>%s</table></div>' % hot_rows)
 
+    # Häufige Fehlwerte heute: welcher Fehler passiert gerade vielen? (Ansage an alle)
+    wrong_head = ('<tr><th>Aufgabe</th><th>typische Eingabe</th><th>Lösung</th>'
+                  '<th>Anzahl</th><th>erkannte Ursache</th></tr>')
+    wrong_today = wrong_value_rows(db, answers, midnight)
+    wrong_html = ""
+    if wrong_today:
+        wrong_html = ('<h3>Häufige Fehlwerte heute</h3><div class="tablewrap"><table>%s%s'
+                      '</table></div>' % (wrong_head, wrong_today))
+
     # Raumkarte: Plätze örtlich wie im Pool (vorn unten; pro Reihe zwei
     # Zweiergruppen mit Mittelgang; Platz 1 vorne rechts, dann 2/3/4 nach
     # links, nächste Reihe dahinter zählt weiter).
@@ -1027,6 +1106,7 @@ def dashboard():
         + multi_html
         + map_html
         + hot_html
+        + wrong_html
         + ("<h3>Alle heute Aktiven</h3><div class=\"tablewrap\"><table>"
            "<tr><th>PC</th><th>Name</th><th>Praktikum</th><th>gelöst</th><th>zuletzt an</th>"
            "<th>Versuche</th><th>zuletzt aktiv</th><th>Status</th></tr>%s</table></div>"
@@ -1141,8 +1221,13 @@ details summary{cursor:pointer;font-weight:600;font-size:1rem;padding:.3rem 0}
 <details><summary>Pro Aufgabe (Lösequote · ø Versuche · Volltreffer im 1. Versuch)</summary>
 <div class="tablewrap"><table><tr><th>Aufgabe</th><th>gelöst</th><th>Lösequote</th><th>ø Versuche</th><th>Volltreffer</th></tr>%s</table></div>
 <p><em>Gelb hinterlegt: Lösequote unter 40 %% (ab 5 Personen) — Kandidaten zum Nachschärfen.</em></p></details>
+<details><summary>Häufige Fehlwerte (gesamt, anonym)</summary>
+<div class="tablewrap"><table>%s%s</table></div>
+<p><em>Ohne erkannte Ursache: Kandidaten für neue data-diagnose-Einträge in der Übungsseite.</em></p></details>
 </html>""" % (n, len(answers), datetime.datetime.now().strftime("%d.%m.%Y %H:%M"),
-              live_html, dist_rows, p_rows, q_rows)
+              live_html, dist_rows, p_rows, q_rows, wrong_head,
+              wrong_value_rows(db, answers, 0)
+              or '<tr><td colspan="5"><em>Noch keine falschen Eingaben.</em></td></tr>')
     return html
 
 

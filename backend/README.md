@@ -97,6 +97,17 @@ serverseitig geführt, Gäste bekommen nur richtig/falsch-Feedback.
 (Die Antworten stehen weiterhin in den Markdown-Quellen im öffentlichen Repo —
 bewusste Entscheidung, es sind Übungen.)
 
+**Diagnose bei falschen Zahlenwerten:** Passt eine falsche Eingabe zu einem
+bekannten Fehlerbild, liefert `/api/check` zusätzlich `diagnosis` (Text der
+wahrscheinlichen Ursache), die Seite zeigt ihn statt des allgemeinen Hinweises.
+Geprüft wird zuerst gegen die Fehlwerte aus `data-diagnose` der Übungsseite
+(Toleranz: Aufgabentoleranz, mindestens 3 %), danach gegen typische Faktoren
+(Vorzeichen, Faktor 1000 bzw. 10⁶ für Einheiten, Faktor 2 bzw. 4 für Last und
+Symmetrie). Jede falsche Zahl wird **anonym** (Frage, Wert, Zeit; ohne
+Pseudonym) in `wrong_values` gespeichert. Das Dashboard zeigt daraus „Häufige
+Fehlwerte" (heute und gesamt); Einträge ohne erkannte Ursache sind Kandidaten
+für neue `data-diagnose`-Werte.
+
 ## Noten-Rückkanal zu OPAL (AGS)
 
 Bei jeder Punkteverbesserung meldet das Backend die Gesamtpunktzahl als

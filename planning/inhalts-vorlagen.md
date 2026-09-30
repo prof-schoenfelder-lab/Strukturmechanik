@@ -85,7 +85,7 @@ hide: [toc]
 ## Gesucht
 ### Maximale Durchbiegung $u_{\max}$ in mm
 
-<div class="numeric-question" data-answer="7.378" data-tolerance="0.1" data-points="5" data-attempts="5" data-hints="Einheit auf mm?"></div>
+<div class="numeric-question" data-answer="7.378" data-tolerance="0.1" data-points="5" data-attempts="5" data-hints="Einheit auf mm?" data-diagnose="7.747: Wert passt zu Standardmaterial Structural Steel (200 GPa). Material zugeordnet?"></div>
 
 ## Hinweise
 !!! tip "Vorgehen"
@@ -96,6 +96,13 @@ hide: [toc]
 **Wichtige Punkte:** …
 </div>
 ```
+
+`data-diagnose` (optional): typische Fehlwerte mit Ursache, `Wert: Text | Wert: Text`.
+Passt eine falsche Eingabe dazu (Aufgabentoleranz, mindestens 3 %), zeigt die Seite
+den Text statt des allgemeinen Hinweises. Faktor 1000, Faktor 2/4 und Vorzeichen
+erkennt das Backend ohnehin; hier gehören aufgabenspezifische Fehler hin (z. B.
+Material vergessen, falsche Lagerung). Kandidaten liefert das Dashboard unter
+„Häufige Fehlwerte".
 
 ## Startseite eines Praktikums
 

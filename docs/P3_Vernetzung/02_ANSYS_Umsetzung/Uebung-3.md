@@ -50,7 +50,7 @@ Die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung $u_{\max }$ in mm
 
-<div class="numeric-question" data-answer="1.0" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Kraft in negative x-Richtung mit 50mm Abstand von Mittelpunkt der Bohrung?">
+<div class="numeric-question" data-answer="1.0" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Kraft in negative x-Richtung mit 50mm Abstand von Mittelpunkt der Bohrung?" data-diagnose="0.35: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Aluminium (E = 70 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
 </div>
 
 ### Die maximale von-Mises Vergleichsspannung $\sigma_{von Mises}$ in MPa
