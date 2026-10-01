@@ -54,6 +54,14 @@ wie der Alltag läuft und was bei Problemen zu tun ist.
 - **„Mein Fortschritt"**: Ringe pro Praktikum, Punkte, Abzeichen, Sync-Status.
 - **Kurs-Statistik** unter jeder Frage („73 % des Kurses haben diese Aufgabe
   gelöst") — anonym, erscheint ab 5 Teilnehmenden.
+- **Zwischenspiel Knackpunkt** am Ende jeder Praktikums-Startseite: nur sichtbar
+  mit dem Dashboard-Schalter „Knackpunkt“ (Standard AUS), spielbar, sobald das
+  Praktikum komplett gelöst ist (wie das Praktikums-Abzeichen), vorher mit der
+  Zahl offener Aufgaben. Einstieg P1 Brücke, P2 Baukasten (Lagerungen), P3
+  L-Winkel (Singularität, im Spiel „Was das Spiel vereinfacht“), P4
+  Zufallsbauteile. Das Spiel läuft öffentlich auf
+  https://fkaule.github.io/Knackpunkt/ (ohne VPN); Kommilitonen fordert man per
+  Link heraus. Es gibt keine Punkte und es wird nichts gespeichert.
 - Account-Wechsel im selben Browser wird erkannt (kein Punkte-Übertrag);
   anonym gesammelte Gast-Punkte übernimmt der **erste** Login als Feature.
 

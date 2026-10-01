@@ -115,9 +115,10 @@ die Begründung der angeklickten Zeile als `diagnosis`, beim Treffer oder nach
 dem letzten Versuch zusätzlich `aufloesung`. „Wo knallt's?" (qid `:hs<i>`,
 `content/hotspot/*.json`) nutzt denselben Weg.
 
-**Spiele freischalten:** Modell-Detektiv und „Wo knallt's?" sind aus, bis sie im
-Dashboard freigeschaltet werden (Schalter unter dem Hilfe-Button, `GET
-/api/spiele`). Ausgeschaltete Spiele verschwinden von der Seite und zählen weder
+**Spiele freischalten:** Modell-Detektiv, „Wo knallt's?" und das Zwischenspiel
+Knackpunkt sind aus, bis sie im Dashboard freigeschaltet werden (Schalter unter
+dem Hilfe-Button, `GET /api/spiele`; Knackpunkt hat keine Fragen, der Schalter
+zeigt nur den Kasten am Ende jeder Praktikums-Startseite). Ausgeschaltete Spiele verschwinden von der Seite und zählen weder
 in `/api/questions` noch im Dashboard oder im OPAL-Maximum; `/api/check` lehnt
 sie mit 403 ab. Score-Pushes an OPAL laufen nacheinander, damit die zuletzt
 gesendete Meldung immer den aktuellen Stand trägt.

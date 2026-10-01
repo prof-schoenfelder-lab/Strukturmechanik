@@ -271,6 +271,7 @@
           localStorage.setItem('ac_qcatalog', JSON.stringify({ t: Date.now(), data: cat }));
           updatePlayerBadge();
           evaluateBadges(false); // Baseline ohne Feuerwerk
+          renderZwischenspiele();
         })
         .catch(function () { });
     } catch (e) { }
@@ -1612,6 +1613,44 @@
     }
   }
 
+  // Zwischenspiel Knackpunkt am Ende jeder Praktikums-Startseite: spielbar, sobald das
+  // Praktikum komplett gelöst ist (wie das Abzeichen, einmal frei bleibt frei); sonst mit
+  // der Zahl offener Aufgaben. Das Spiel läuft öffentlich auf GitHub Pages, ohne VPN.
+  var KNACKPUNKT_URL = 'https://fkaule.github.io/Knackpunkt/';
+  function renderZwischenspiel(el) {
+    var prefix = el.dataset.praktikum;
+    var p = BADGE_PRAKTIKA.filter(function (x) { return x[0] === prefix; })[0];
+    if (!p) return;
+    var frei = false, offen = null, cat = cachedCatalog();
+    try { frei = localStorage.getItem('answer_badge_' + p[1]) === '1'; } catch (e) { }
+    if (!frei && cat) {
+      var s = 0, t = 0;
+      Object.keys(cat).forEach(function (qid) {
+        if (qid.indexOf(prefix) === -1) return;
+        t++;
+        var r = safeJSONParse(localStorage.getItem('answer_best_' + qid));
+        if (r && r.points > 0) s++;
+      });
+      if (t > 0 && s >= t) frei = true; else if (t > 0) offen = t - s;
+    }
+    var box = el.querySelector('.zs-status');
+    if (!box) { box = document.createElement('div'); box.className = 'zs-status'; el.appendChild(box); }
+    el.classList.toggle('zs-frei', frei);
+    var login = false;
+    try { login = !!localStorage.getItem('ac_backend_token'); } catch (e) { }
+    box.innerHTML = frei
+      ? '<p><a class="md-button md-button--primary" href="' + KNACKPUNKT_URL + '#' + el.dataset.start +
+        '" target="_blank" rel="noopener">Knackpunkt spielen</a></p>' +
+        '<p>Nach einer Runde, die hält, erzeugt „Kommilitonen herausfordern“ einen Link: Wer ihn öffnet, ' +
+        'spielt dasselbe Bauteil und muss Ihr Ergebnis schlagen. Es gibt keine Punkte, nur die Ehre.</p>'
+      : '<p class="spiel-gesperrt">Wird freigeschaltet, sobald Sie alle Aufgaben dieses Praktikums gelöst haben' +
+        (offen ? ' (noch ' + offen + (offen === 1 ? ' Aufgabe' : ' Aufgaben') + ' offen)' : '') + '.' +
+        (login ? '' : ' Dafür ist der ' + opalLoginLink() + ' nötig.') + '</p>';
+  }
+  function renderZwischenspiele() {
+    document.querySelectorAll('.zwischenspiel.spiel-an').forEach(renderZwischenspiel);
+  }
+
   // Freigabe der Spiele (Schalter im Dashboard); null = Backend nicht erreichbar.
   // Ändert sie sich, wird der Fragenkatalog für Fortschritt und Abzeichen neu geladen.
   function spieleFreigabe() {
@@ -1671,6 +1710,16 @@
       try { checkPageCompletion(); } catch (e) { }
       try { showSolutionImages(); } catch (e) { }
       renderSummary();
+    });
+
+    // Zwischenspiel Knackpunkt nur mit Schalter im Dashboard, sonst ganz von der Seite
+    var zwischen = document.querySelectorAll('.zwischenspiel');
+    if (zwischen.length) spieleFreigabe().then(function (an) {
+      zwischen.forEach(function (el) {
+        if (!an || !an.kp) { el.remove(); return; }
+        el.classList.add('spiel-an');
+        renderZwischenspiel(el);
+      });
     });
 
     // update player badge and nav

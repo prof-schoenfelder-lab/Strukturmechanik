@@ -844,7 +844,8 @@ def help_toggle():
 # --- Spiele freischalten (Schalter im Dashboard) ------------------------------
 # Spieltyp = Endung der qid. Ausgeschaltete Spiele verschwinden von der Seite und
 # zählen weder im Fragenkatalog noch im Dashboard oder im OPAL-Maximum.
-SPIELE = {"det": "Modell-Detektiv", "hs": "Wo knallt's?"}
+# Knackpunkt (kp) hat keine Fragen: der Schalter zeigt nur das Zwischenspiel am Ende jedes Praktikums.
+SPIELE = {"det": "Modell-Detektiv", "hs": "Wo knallt's?", "kp": "Knackpunkt"}
 
 
 def spieltyp(qid):

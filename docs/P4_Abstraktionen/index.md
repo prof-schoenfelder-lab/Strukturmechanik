@@ -157,3 +157,8 @@ Um Rechenzeit zu sparen, sollte immer versucht werden, das Modell so weit wie m�
     </span>
   </a>
 </div>
+
+<div class="zwischenspiel" data-praktikum="/P4_Abstraktionen/" data-start="zufall">
+<h2>Zwischenspiel: Knackpunkt</h2>
+<p>Zufallsbauteile: Kragarme, Träger, Rahmen, Masten, Konsolen und mehr, jedes mit eigener Nummer. Nehmen Sie so viel Material weg wie möglich und fordern Sie Ihre Kommilitonen mit demselben Bauteil heraus.</p>
+</div>

@@ -667,3 +667,9 @@ a.player-badge:hover { transform: scale(1.12); color: var(--player-badge-fg, #11
 /* Spiele erst zeigen, wenn sie im Dashboard freigeschaltet sind */
 .detektiv-fall:not(.spiel-an), .hotspot-frage:not(.spiel-an) { display: none; }
 .spiel-gesperrt { color: var(--md-default-fg-color--light); font-style: italic; }
+/* Zwischenspiel Knackpunkt am Ende der Praktikums-Startseiten */
+.zwischenspiel:not(.spiel-an) { display: none; }
+.zwischenspiel { border: 1px solid var(--md-default-fg-color--lightest); border-radius: 8px; padding: 0.8rem 1rem; margin: 1.5rem 0; }
+.zwischenspiel.zs-frei { border-color: var(--md-accent-fg-color); }
+.zwischenspiel h2 { margin-top: 0; }
+.zwischenspiel .zs-status p { margin: 0.6em 0 0; }

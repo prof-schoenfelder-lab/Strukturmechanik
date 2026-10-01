@@ -82,3 +82,8 @@ hide:
     </span>
   </a>
 </div>
+
+<div class="zwischenspiel" data-praktikum="/P3_Vernetzung/" data-start="teil-3">
+<h2>Zwischenspiel: Knackpunkt</h2>
+<p>Der L-Winkel hat eine scharfe Innenecke, also genau die Singularität aus diesem Praktikum. Knackpunkt wertet den Mittelwert der Spannung je Kachel und umgeht sie damit; was das bedeutet, steht im Spiel unter „Was das Spiel vereinfacht“. Nehmen Sie so viel Material weg wie möglich, ohne dass der Winkel versagt.</p>
+</div>

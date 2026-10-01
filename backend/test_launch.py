@@ -240,7 +240,7 @@ def main():
         check("diagnosis: Vorzeichen", "Vorzeichen" in diag(-7.378))
         # Spiele sind aus, bis sie im Dashboard freigeschaltet werden
         check("spiele standardmäßig aus",
-              requests.get(BACKEND + "/api/spiele").json() == {"det": False, "hs": False})
+              requests.get(BACKEND + "/api/spiele").json() == {"det": False, "hs": False, "kp": False})
         check("ausgeschaltetes Spiel fehlt im Katalog",
               "/T/Det:det0" not in requests.get(BACKEND + "/api/questions").json())
         check("ausgeschaltetes Spiel nicht prüfbar", requests.post(BACKEND + "/api/check", json={

@@ -66,3 +66,8 @@ hide:
     </span>
   </a>
 </div>
+
+<div class="zwischenspiel" data-praktikum="/P1_Einfuehrung/" data-start="teil-2">
+<h2>Zwischenspiel: Knackpunkt</h2>
+<p>Nehmen Sie der Brücke auf Fest- und Loslager so viel Material weg wie möglich, ganz wie beim zweiseitig gelagerten Balken aus diesem Praktikum. Eine echte FE-Rechnung entscheidet, ob sie hält: Wer zu viel wegnimmt, bricht, wer zu wenig wegnimmt, verliert gegen die anderen.</p>
+</div>
