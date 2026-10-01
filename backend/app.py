@@ -36,6 +36,8 @@ import requests as http_requests
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
+from html import escape
+
 from flask import Flask, g, jsonify, redirect, request
 from itsdangerous import BadSignature, URLSafeTimedSerializer
 from oauthlib.oauth1 import RequestValidator, SignatureOnlyEndpoint
@@ -908,10 +910,140 @@ def wrong_value_rows(db, answers, since):
     rows = ""
     for (qid, hint, _), vals in sorted(groups.items(), key=lambda kv: -len(kv[1]))[:10]:
         vals.sort()
-        rows += ("<tr><td>%s</td><td>%.4g</td><td>%.4g</td><td>%d</td><td>%s</td></tr>"
-                 % (qid.replace("/Strukturmechanik/", ""), vals[len(vals) // 2],
+        rows += ('<tr><td title="%s">%s</td><td class="num">%.4g</td><td class="num">%.4g</td>'
+                 '<td class="num">%d</td><td>%s</td></tr>'
+                 % (escape(qid), short_qid(qid), vals[len(vals) // 2],
                     answers[qid]["answer"], len(vals), hint or "<em>unbekannt</em>"))
     return rows
+
+
+# --- Dashboard: Darstellung ---------------------------------------------------
+# Aufgaben und Seiten lesbar statt als Pfad; Logos von der öffentlichen Kursseite.
+_QTYP = {"q": "Frage", "mc": "Frage", "det": "Fall", "hs": "Runde"}
+
+
+def short_page(path):
+    """'P1_Einfuehrung/03_Selbsttests/Uebung-3' -> 'P1 Übung 3'."""
+    parts = [x for x in path.replace("/Strukturmechanik/", "").strip("/").split("/") if x]
+    if not parts:
+        return ""
+    name = parts[-1].replace("Modell_Detektiv", "Modell-Detektiv")
+    m = re.match(r"Uebung-?0*(\d+)-?(.*)$", name)
+    name = ("Übung %s %s" % m.groups()).strip() if m else name.replace("_", " ")
+    return ("%s %s" % (parts[0].split("_")[0], name)) if len(parts) > 1 else name
+
+
+def short_qid(qid):
+    """'.../P1_Einfuehrung/03_Selbsttests/Uebung-1:q0' -> 'P1 Übung 1 · Frage 1'."""
+    page, _, q = qid.rpartition(":")
+    m = re.match(r"([a-z]+)(\d+)$", q)
+    if not page or not m:
+        return escape(qid.replace("/Strukturmechanik/", ""))
+    return escape("%s · %s %d" % (short_page(page), _QTYP.get(m.group(1), m.group(1)), int(m.group(2)) + 1))
+
+
+DASH_LOGOS = ("https://prof-schoenfelder-lab.github.io/Strukturmechanik/assets/images/HTWK_white_text.svg",
+              "https://prof-schoenfelder-lab.github.io/Strukturmechanik/assets/images/MecSim_weiss.png")
+# HTWK-Farben: Dunkelblau, Cyan als Akzent; Ampel für den Status (ohne Gelb)
+DASH_CSS = """
+:root{--blau:#022541;--cyan:#009EE3;--grau:#2E3639;--silber:#BEC3C6;--bg:#F2F4F6;--line:#E1E5E8;--muted:#68757C;
+--ok:#00964E;--ok-bg:#E2F3E9;--warn:#C96A00;--warn-bg:#FDEEDC;--alarm:#E53009;--alarm-bg:#FCE7E2;--idle:#87929A;--idle-bg:#EDF0F2}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--grau);
+font:15px/1.45 "Source Sans 3","Source Sans Pro",-apple-system,"Segoe UI",system-ui,sans-serif}
+.wrap{max-width:78rem;margin:0 auto;padding:0 1.25rem}
+header.top{background:var(--blau);color:#fff}
+.topin{display:flex;align-items:center;gap:.8rem 1.6rem;padding:.9rem 1.25rem;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:1rem}
+.logo-htwk{height:1.45rem}.logo-ms{height:1.9rem}
+.ttl h1{margin:0;font-size:1.35rem;font-weight:700}
+.ttl p{margin:0;color:#9DB4C6;font-size:.85rem}
+.stamp{margin-left:auto;text-align:right;font-size:.82rem;color:#C6D4DF;line-height:1.5}
+.stamp b{color:#fff}
+main{padding-top:1.25rem;padding-bottom:1rem}
+h2{font-size:1.12rem;color:var(--blau);margin:1.5rem 0 .7rem}
+h3{font-size:.95rem;color:var(--blau);margin:0 0 .55rem}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;margin:0 0 1rem}
+.card>h2:first-child{margin-top:0}
+.row2{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:1rem;align-items:start}
+.queue.busy{border-color:#F3A58F;box-shadow:inset 4px 0 0 var(--alarm)}
+.queue.busy h2{color:var(--alarm)}
+p.empty{margin:0;color:var(--muted)}
+ul.sw{list-style:none;margin:0;padding:0}
+ul.sw li{display:grid;grid-template-columns:1fr auto auto;gap:.6rem;align-items:center;padding:.45rem 0;border-top:1px solid #EEF1F3}
+ul.sw li:first-child{border-top:0;padding-top:0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));gap:.75rem;margin:0 0 1rem}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem}
+.kpi b{display:block;font-size:1.9rem;line-height:1.1;color:var(--blau);font-weight:700;font-variant-numeric:tabular-nums}
+.kpi span{display:block;font-size:.74rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:.25rem}
+.kpi.good b{color:var(--ok)}
+.kpi.alarm{background:var(--alarm-bg);border-color:#F3A58F}.kpi.alarm b{color:var(--alarm)}
+.pill,b.ok,b.done,b.warn,b.alarm,b.idle{display:inline-block;border-radius:999px;padding:.08rem .6rem;
+font-size:.78rem;font-weight:600;white-space:nowrap}
+b.ok,.pill.on{background:var(--ok-bg);color:var(--ok)}
+b.done{background:var(--ok);color:#fff}
+b.warn{background:var(--warn-bg);color:var(--warn)}
+b.alarm{background:var(--alarm-bg);color:var(--alarm)}
+b.idle,.pill.off{background:var(--idle-bg);color:var(--idle)}
+a.btn{display:inline-block;padding:.28rem .75rem;border-radius:8px;font-size:.82rem;font-weight:600;text-decoration:none;
+border:1px solid var(--line);color:var(--grau);background:#fff;white-space:nowrap}
+a.btn:hover{border-color:var(--silber)}
+a.btn.go{background:var(--cyan);border-color:var(--cyan);color:#fff}
+a.btn.done{background:var(--ok);border-color:var(--ok);color:#fff}
+.alert{background:var(--alarm-bg);border:1px solid #F3A58F;box-shadow:inset 4px 0 0 var(--alarm);border-radius:12px;
+padding:.8rem 1rem;margin:0 0 1rem}
+.alert h3{color:var(--alarm)}
+ul.chips{display:flex;flex-wrap:wrap;gap:.45rem;list-style:none;margin:0;padding:0}
+ul.chips li{background:#fff;border:1px solid #F3A58F;border-radius:8px;padding:.25rem .65rem;font-size:.88rem}
+ul.chips li span{color:var(--alarm);font-weight:600;margin-left:.3rem}
+p.spans{font-size:.88rem;color:var(--muted);margin:0 0 1rem}
+p.spans b{color:var(--grau)}
+.rooms{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start}
+.room{margin:0}
+.roommap{display:grid;grid-template-columns:repeat(2,6.2rem) 1.1rem repeat(2,6.2rem);gap:.35rem}
+.seat{border:1px solid var(--line);border-radius:8px;padding:.25rem .4rem;font-size:.72rem;min-height:2.7rem;
+background:#FAFBFC;color:#A6AFB5;font-variant-numeric:tabular-nums}
+.seat b{display:block;font-size:.76rem;color:inherit}
+.seat u{display:block;text-decoration:none;font-weight:600;font-size:.74rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.seat.s-ok{background:var(--ok-bg);border-color:#9AD3B4;color:#006B37}
+.seat.s-done{background:var(--ok);border-color:var(--ok);color:#fff}
+.seat.s-warn{background:var(--warn-bg);border-color:#F1B878;color:#8F4B00}
+.seat.s-alarm{background:var(--alarm-bg);border-color:#F09A84;color:#A32100}
+.seat.s-idle{background:var(--idle-bg);border-style:dashed;color:var(--idle)}
+p.front{font-size:.74rem;color:var(--muted);margin:.5rem 0 0;text-align:center}
+p.legend{display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 1rem}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600;text-align:left;
+padding:.4rem .6rem;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:.45rem .6rem;border-bottom:1px solid #EEF1F3;font-size:.9rem;vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+td.act{text-align:right}
+small{color:var(--muted);font-size:.8rem}
+tr.lowq td{background:var(--alarm-bg)}
+.bar{display:inline-block;width:11rem;height:.55rem;background:#E3E9EE;border-radius:99px;vertical-align:middle;
+margin-right:.6rem;overflow:hidden}
+.bar span{display:block;height:100%;background:var(--cyan);border-radius:99px}
+em{font-style:normal;color:var(--muted);font-size:.85rem}
+details.card{padding:0}
+details.card summary{cursor:pointer;font-weight:600;color:var(--blau);padding:.85rem 1.1rem;list-style:none}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary::before{content:"▸";display:inline-block;width:1.1em;color:var(--cyan);transition:transform .15s}
+details.card[open] summary::before{transform:rotate(90deg)}
+details.card>.tablewrap,details.card>p{margin:0 1.1rem 1rem}
+p.note{font-size:.82rem;color:var(--muted)}
+footer{font-size:.78rem;color:var(--muted);padding-bottom:2rem}
+@media (max-width:760px){
+.row2{grid-template-columns:minmax(0,1fr)}
+.stamp{margin-left:0;text-align:left}
+.kpi b{font-size:1.5rem}
+.roommap{grid-template-columns:repeat(2,minmax(2.9rem,1fr)) .7rem repeat(2,minmax(2.9rem,1fr))}
+.seat{font-size:.62rem;padding:.2rem .25rem}
+.bar{width:6rem}
+td,th{padding:.35rem .45rem;font-size:.82rem}
+}
+"""
 
 
 @app.get("/dashboard")
@@ -971,18 +1103,18 @@ def dashboard():
         allowed = int(answers.get(r["qid"], {}).get("attempts", 5))
         idle = now_ts - r["updated_at"]
         if pk and ptotal and psolved >= ptotal:
-            skey, status = "done", '<b class="ok">✓ Praktikum fertig</b>'
+            skey, status = "done", '<b class="done">Praktikum fertig</b>'
         elif r["best"] <= 0 and r["attempts"] >= allowed:
-            skey, status = "alarm", '<b class="alarm">Aufgabe aufgegeben — Hilfe anbieten?</b>'
+            skey, status = "alarm", '<b class="alarm">aufgegeben, Hilfe anbieten</b>'
         elif r["best"] <= 0 and r["attempts"] >= 3:
-            skey, status = "warn", '<b class="warn">hängt (%d. Versuch)</b>' % r["attempts"]
+            skey, status = "warn", '<b class="warn">hängt, %d. Versuch</b>' % r["attempts"]
         elif idle > 15 * 60:
             skey, status = "idle", '<b class="idle">pausiert</b>'
         else:
             skey, status = "ok", '<b class="ok">arbeitet</b>'
         seen = LAST_SEEN.get(pseu) or {}
         pc = host_label(seen.get("ip", "")) or ("&hellip;" + pseu[:6])
-        pname = next((nm for k, nm in praktika if k == pk), "—")
+        pname = next((nm for k, nm in praktika if k == pk), "")
         entries.append({"pc": pc, "pname": pname, "pk": pk, "solved": psolved,
                         "total": ptotal, "qid": r["qid"], "attempts": r["attempts"],
                         "idle": idle, "status": status, "skey": skey,
@@ -996,71 +1128,68 @@ def dashboard():
     for e in entries:
         if e["pk"]:
             by_pk.setdefault(e["pk"], []).append(e["solved"])
-    kpis = [("%d" % active_now, "gerade aktiv"), ("%d" % len(latest), "heute aktiv")]
-    dom_name = ""
+    kpis = [("%d" % active_now, "gerade aktiv", ""), ("%d" % len(latest), "heute aktiv", "")]
     if by_pk:
         dom = max(by_pk, key=lambda k: len(by_pk[k]))
         vals = sorted(by_pk[dom])
         dom_name = next(nm for k, nm in praktika if k == dom)
-        kpis += [("%d/%d" % (vals[-1], q_per_p.get(dom, 0)), "Spitze (%s)" % dom_name),
-                 ("%d" % vals[len(vals) // 2], "Median"),
-                 ("%d" % vals[0], "Schlusslicht")]
+        kpis += [("%d/%d" % (vals[-1], q_per_p.get(dom, 0)), "Spitze, " + dom_name, ""),
+                 ("%d" % vals[len(vals) // 2], "Median", ""),
+                 ("%d" % vals[0], "Schlusslicht", "")]
     need_help = [e for e in entries if e["skey"] in ("warn", "alarm")]
-    kpis.append(('<span class="%s">%d</span>' % ("alarmnum" if need_help else "oknum",
-                                                 len(need_help)), "Hilfe empfohlen"))
+    kpis.append(("%d" % len(need_help), "Hilfe empfohlen", " alarm" if need_help else " good"))
     kpi_html = '<div class="kpis">%s</div>' % "".join(
-        '<div class="kpi"><b>%s</b><span>%s</span></div>' % (v, l) for v, l in kpis)
+        '<div class="kpi%s"><b>%s</b><span>%s</span></div>' % (c, v, l) for v, l, c in kpis)
 
-    # Hilfe-Warteschlange (aktiv gemeldete) — in Meldereihenfolge
+    # Hilfe-Warteschlange (aktiv gemeldete), in Meldereihenfolge
     _help_cleanup(db)
     h_on = help_enabled(db)
-    toggle_html = (
-        '<p class="helptoggle">🙋 Hilfe-Button auf der Kursseite: '
-        '<strong>%s</strong> · <a class="donebtn%s" href="dashboard-help-toggle?key=%s">%s</a></p>'
-        % ("AN" if h_on else "AUS", "" if h_on else " onbtn", DASHBOARD_TOKEN,
-           "ausschalten" if h_on else "für die Lehrveranstaltung einschalten"))
-    an = spiele_an(db)
-    toggle_html += '<p class="helptoggle">Spiele auf der Kursseite: %s</p>' % " &nbsp;·&nbsp; ".join(
-        '%s: <strong>%s</strong> <a class="donebtn%s" href="dashboard-spiel-toggle?key=%s&amp;spiel=%s">%s</a>'
-        % (name, "AN" if an[typ] else "AUS", "" if an[typ] else " onbtn", DASHBOARD_TOKEN, typ,
-           "ausschalten" if an[typ] else "freischalten")
-        for typ, name in SPIELE.items())
     queue_rows = db.execute(
         "SELECT id, who, page, created_at FROM help_requests WHERE done_at IS NULL "
         "ORDER BY created_at").fetchall()
-    queue_html = toggle_html
-    if queue_rows:
-        items = ""
-        for i, qr in enumerate(queue_rows, start=1):
-            if qr["who"].startswith("ip:"):
-                label = host_label(qr["who"][3:]) or qr["who"][3:]
-                who_name = ""
-            else:
-                seen = LAST_SEEN.get(qr["who"]) or {}
-                label = host_label(seen.get("ip", "")) or ("…" + qr["who"][:6])
-                who_name = names.get(qr["who"], "")
-            wait_min = max(0, round((now_ts - qr["created_at"]) / 60))
-            page = (qr["page"] or "").replace("/Strukturmechanik/", "").strip("/")
-            items += ("<tr><td><b>%d.</b></td><td>%s</td><td>%s</td><td>%s</td>"
-                      "<td>wartet %d min</td>"
-                      "<td><a class=\"donebtn\" href=\"dashboard-help-done?key=%s&amp;id=%d\">✓ erledigt</a></td></tr>"
-                      % (i, label, who_name or "—", page or "—", wait_min,
-                         DASHBOARD_TOKEN, qr["id"]))
-        queue_html = ('<div class="queue"><h2>🙋 Hilfe-Warteschlange (%d)</h2>'
-                      '<div class="tablewrap"><table><tr><th></th><th>PC</th><th>Name</th>'
-                      '<th>Seite</th><th></th><th></th></tr>%s</table></div>%s</div>'
-                      % (len(queue_rows), items, toggle_html))
+    items = ""
+    for i, qr in enumerate(queue_rows, start=1):
+        if qr["who"].startswith("ip:"):
+            label = host_label(qr["who"][3:]) or qr["who"][3:]
+            who_name = ""
+        else:
+            seen = LAST_SEEN.get(qr["who"]) or {}
+            label = host_label(seen.get("ip", "")) or ("…" + qr["who"][:6])
+            who_name = names.get(qr["who"], "")
+        wait_min = max(0, round((now_ts - qr["created_at"]) / 60))
+        items += ('<tr><td class="num"><b>%d.</b></td><td><b>%s</b>%s</td>'
+                  '<td>%s<br><small>wartet %d min</small></td>'
+                  '<td class="act"><a class="btn done" href="dashboard-help-done?key=%s&amp;id=%d">erledigt</a></td></tr>'
+                  % (i, escape(label), ("<br><small>%s</small>" % escape(who_name)) if who_name else "",
+                     escape(short_page(qr["page"] or "")), wait_min, DASHBOARD_TOKEN, qr["id"]))
+    if items:
+        queue_body = ('<div class="tablewrap"><table><tr><th></th><th>Platz</th><th>Seite</th><th></th></tr>%s'
+                      '</table></div>' % items)
+    else:
+        queue_body = ('<p class="empty">%s</p>' % ("Keine offenen Meldungen." if h_on else
+                      "Der Hilfe-Button ist aus. Einschalten unter „Schalter auf der Kursseite“."))
+    queue_html = ('<section class="card queue%s"><h2>Hilfe-Warteschlange%s</h2>%s</section>'
+                  % (" busy" if queue_rows else "", " (%d)" % len(queue_rows) if queue_rows else "", queue_body))
+
+    # Schalter auf der Kursseite: Hilfe-Button und Spiele
+    an = spiele_an(db)
+    switches = [("Hilfe-Button", h_on, "dashboard-help-toggle?key=%s" % DASHBOARD_TOKEN, "einschalten")]
+    switches += [(name, an[typ], "dashboard-spiel-toggle?key=%s&amp;spiel=%s" % (DASHBOARD_TOKEN, typ), "freischalten")
+                 for typ, name in SPIELE.items()]
+    switch_html = ('<section class="card switches"><h2>Schalter auf der Kursseite</h2><ul class="sw">%s</ul></section>'
+                   % "".join('<li><span>%s</span><b class="pill %s">%s</b><a class="btn%s" href="%s">%s</a></li>'
+                             % (name, "on" if on else "off", "AN" if on else "AUS", "" if on else " go", url,
+                                "ausschalten" if on else verb)
+                             for name, on, url, verb in switches))
 
     # Direkt handlungsleitend: wo hingehen?
     help_html = ""
     if need_help:
-        help_html = ('<p class="helpline">🚨 Hilfe empfohlen: %s</p>'
-                     % " · ".join("<strong>%s</strong>%s (%s)"
-                                  % (e["pc"],
-                                     " — " + e["name"] if e["name"] else "",
-                                     "aufgegeben" if e["skey"] == "alarm"
-                                     else "%d. Versuch" % e["attempts"])
-                                  for e in need_help[:10]))
+        help_html = ('<div class="alert"><h3>Hilfe empfohlen</h3><ul class="chips">%s</ul></div>'
+                     % "".join('<li><b>%s</b>%s <span>%s</span></li>'
+                               % (e["pc"], (" " + escape(e["name"])) if e["name"] else "",
+                                  "aufgegeben" if e["skey"] == "alarm" else "%d. Versuch" % e["attempts"])
+                               for e in need_help[:10]))
 
     # Arbeiten Leute in unterschiedlichen Praktika (Vorzieher/Nachzügler),
     # bekommt jedes aktive Praktikum seine eigene Spannweiten-Zeile.
@@ -1071,14 +1200,11 @@ def dashboard():
             v = sorted(by_pk[k])
             nm = next(nm for kk, nm in praktika if kk == k)
             if len(v) == 1:
-                parts.append("%s: <strong>%d/%d</strong> (1 Person)"
-                             % (nm, v[0], q_per_p.get(k, 0)))
+                parts.append("%s: <b>%d/%d</b> (1 Person)" % (nm, v[0], q_per_p.get(k, 0)))
             else:
-                parts.append("%s: Spitze <strong>%d/%d</strong> · Median <strong>%d</strong>"
-                             " · Schlusslicht <strong>%d</strong> (%d Personen)"
+                parts.append("%s: Spitze <b>%d/%d</b> · Median <b>%d</b> · Schlusslicht <b>%d</b> (%d Personen)"
                              % (nm, v[-1], q_per_p.get(k, 0), v[len(v) // 2], v[0], len(v)))
-        multi_html = ('<p class="spans">Parallel aktiv: ' + " &nbsp;·&nbsp; ".join(parts)
-                      + "</p>")
+        multi_html = '<p class="spans">Parallel aktiv: ' + " &nbsp;|&nbsp; ".join(parts) + "</p>"
 
     # Brennpunkt heute: an welcher Aufgabe arbeiten/hingen heute die meisten?
     # Lohnt sich für eine Ansage an alle statt zehn Einzelerklärungen.
@@ -1090,14 +1216,14 @@ def dashboard():
         if r["best"] > 0:
             d["solved"] += 1
     hot_rows = "".join(
-        "<tr><td>%s</td><td>%d</td><td>%d</td><td>%.1f</td></tr>"
-        % (qid.replace("/Strukturmechanik/", ""), d["n"], d["solved"], d["att"] / d["n"])
+        '<tr><td title="%s">%s</td><td class="num">%d</td><td class="num">%d</td><td class="num">%.1f</td></tr>'
+        % (escape(qid), short_qid(qid), d["n"], d["solved"], d["att"] / d["n"])
         for qid, d in sorted(hot.items(), key=lambda kv: -kv[1]["n"])[:8])
     hot_html = ""
     if hot_rows:
-        hot_html = ('<h3>Brennpunkt heute — meistbearbeitete Aufgaben</h3>'
+        hot_html = ('<div class="card"><h3>Brennpunkt heute: meistbearbeitete Aufgaben</h3>'
                     '<div class="tablewrap"><table><tr><th>Aufgabe</th><th>Personen heute</th>'
-                    '<th>davon gelöst</th><th>ø Versuche</th></tr>%s</table></div>' % hot_rows)
+                    '<th>davon gelöst</th><th>ø Versuche</th></tr>%s</table></div></div>' % hot_rows)
 
     # Häufige Fehlwerte heute: welcher Fehler passiert gerade vielen? (Ansage an alle)
     wrong_head = ('<tr><th>Aufgabe</th><th>typische Eingabe</th><th>Lösung</th>'
@@ -1105,8 +1231,8 @@ def dashboard():
     wrong_today = wrong_value_rows(db, answers, midnight)
     wrong_html = ""
     if wrong_today:
-        wrong_html = ('<h3>Häufige Fehlwerte heute</h3><div class="tablewrap"><table>%s%s'
-                      '</table></div>' % (wrong_head, wrong_today))
+        wrong_html = ('<div class="card"><h3>Häufige Fehlwerte heute</h3><div class="tablewrap"><table>%s%s'
+                      '</table></div></div>' % (wrong_head, wrong_today))
 
     # Raumkarte: Plätze örtlich wie im Pool (vorn unten; pro Reihe zwei
     # Zweiergruppen mit Mittelgang; Platz 1 vorne rechts, dann 2/3/4 nach
@@ -1136,47 +1262,44 @@ def dashboard():
                     continue
                 e = seat_of.get((room, seat))
                 if e:
-                    first = e["name"] or ""
-                    cells += ('<span class="seat s-%s" title="%s%s · zuletzt: %s · vor %d min">'
-                              '<b>%d</b>%s%s%d/%d</span>'
+                    cells += ('<span class="seat s-%s" title="%s%s · zuletzt %s · vor %d min">'
+                              '<b>%d</b><u>%s</u>%s%d/%d</span>'
                               % (e["skey"],
-                                 e["name"] + " · " if e["name"] else "", e["pname"],
-                                 e["qid"].replace("/Strukturmechanik/", ""),
-                                 max(0, round(e["idle"] / 60)),
-                                 seat,
-                                 '<u>%s</u>' % first if first else "",
+                                 escape(e["name"]) + " · " if e["name"] else "", e["pname"],
+                                 escape(short_qid(e["qid"])), max(0, round(e["idle"] / 60)),
+                                 seat, escape(e["name"]) or "&nbsp;",
                                  ("%s " % e["pshort"]) if e["pshort"] else "",
                                  e["solved"], e["total"]))
                 else:
                     cells += '<span class="seat"><b>%d</b></span>' % seat
-        map_html += ('<h3>Raum %s</h3><div class="roommap">%s</div>'
-                     '<p class="front">▲ vorne (Tafel)</p>' % (room, cells))
+        map_html += ('<div class="card room"><h3>Raum %s</h3><div class="roommap">%s</div>'
+                     '<p class="front">▲ vorne, Tafel</p></div>' % (room, cells))
     if map_html:
-        map_html += ('<p><em>Legende: <b class="ok">gr&uuml;n</b> arbeitet/fertig · '
-                     '<b class="warn">orange</b> h&auml;ngt · <b class="alarm">rot</b> '
-                     'aufgegeben · grau/gestrichelt pausiert bzw. leer</em></p>')
+        map_html = ('<div class="rooms">%s</div><p class="legend"><b class="ok">arbeitet</b>'
+                    '<b class="done">Praktikum fertig</b><b class="warn">hängt</b><b class="alarm">aufgegeben</b>'
+                    '<b class="idle">pausiert</b></p>' % map_html)
 
     person_rows = "".join(
-        "<tr><td>%s</td><td>%s</td><td>%s</td><td>%d/%d</td><td>%s</td><td>%d</td>"
-        "<td>vor %d min</td><td>%s</td></tr>"
-        % (e["pc"], e["name"] or "—", e["pname"], e["solved"], e["total"],
-           e["qid"].replace("/Strukturmechanik/", ""), e["attempts"],
+        '<tr><td><b>%s</b></td><td>%s</td><td>%s</td><td class="num">%d/%d</td><td title="%s">%s</td>'
+        '<td class="num">%d</td><td class="num">vor %d min</td><td>%s</td></tr>'
+        % (e["pc"], escape(e["name"]), e["pname"], e["solved"], e["total"],
+           escape(e["qid"]), short_qid(e["qid"]), e["attempts"],
            max(0, round(e["idle"] / 60)), e["status"])
         for e in entries[:60])
     live_html = (
-        queue_html
-        + "<h2>Praktikums-Ansicht — wer ist heute wie weit?</h2>"
+        '<div class="row2">' + queue_html + switch_html + "</div>"
+        + "<h2>Praktikum heute: wer ist wie weit?</h2>"
         + kpi_html
         + help_html
         + multi_html
         + map_html
         + hot_html
         + wrong_html
-        + ("<h3>Alle heute Aktiven</h3><div class=\"tablewrap\"><table>"
-           "<tr><th>PC</th><th>Name</th><th>Praktikum</th><th>gelöst</th><th>zuletzt an</th>"
-           "<th>Versuche</th><th>zuletzt aktiv</th><th>Status</th></tr>%s</table></div>"
+        + ('<div class="card"><h3>Alle heute Aktiven</h3><div class="tablewrap"><table>'
+           "<tr><th>Platz</th><th>Name</th><th>Praktikum</th><th>gelöst</th><th>zuletzt an</th>"
+           "<th>Versuche</th><th>zuletzt aktiv</th><th>Status</th></tr>%s</table></div></div>"
            % person_rows
-           if person_rows else "<p><em>Heute war noch niemand aktiv.</em></p>"))
+           if person_rows else '<div class="card"><p class="empty">Heute war noch niemand aktiv.</p></div>'))
 
     n = len(per_user)
     buckets = [("noch nichts gelöst", 0, 0), ("bis 25 %", 0.0001, 0.25), ("bis 50 %", 0.25, 0.5),
@@ -1188,7 +1311,7 @@ def dashboard():
 
     def bar(count):
         pct = int(100 * count / n) if n else 0
-        return ('<div class="bar"><span style="width:%d%%"></span></div><em>%d (%d %%)</em>'
+        return ('<span class="bar"><span style="width:%d%%"></span></span><em>%d (%d %%)</em>'
                 % (max(pct, 1) if count else 0, count, pct))
 
     p_rows = ""
@@ -1213,86 +1336,42 @@ def dashboard():
         d = qagg[qid]
         quote = 100 * d["solved"] / d["n"] if d["n"] else 0
         cls = ' class="lowq"' if d["n"] >= 5 and quote < 40 else ""
-        q_rows += ("<tr%s><td>%s</td><td>%d/%d</td><td>%d %%</td><td>%.1f</td><td>%s</td></tr>"
-                   % (cls, qid.replace("/Strukturmechanik/", ""), d["solved"], d["n"],
+        q_rows += ('<tr%s><td title="%s">%s</td><td class="num">%d/%d</td><td class="num">%d %%</td>'
+                   '<td class="num">%.1f</td><td class="num">%s</td></tr>'
+                   % (cls, escape(qid), short_qid(qid), d["solved"], d["n"],
                       quote, d["att"] / d["n"] if d["n"] else 0,
-                      "%d %%" % (100 * d["first"] / d["solved"]) if d["solved"] else "—"))
+                      "%d %%" % (100 * d["first"] / d["solved"]) if d["solved"] else ""))
 
     dist_rows = "".join("<tr><td>%s</td><td>%s</td></tr>" % (label, bar(c)) for label, c in dist)
     html = """<!doctype html><html lang="de"><meta charset="utf-8">
 <meta http-equiv="refresh" content="30">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FEM-Kurs Dashboard</title>
-<style>body{font-family:system-ui,sans-serif;max-width:60rem;margin:2rem auto;padding:0 1rem;color:#222;background:#fff}
-h1{font-size:1.4rem} h2{font-size:1.05rem;margin-top:2rem} table{border-collapse:collapse;width:100%%;min-width:32rem}
-td,th{padding:.35rem .6rem;border-bottom:1px solid #ddd;text-align:left;font-size:.9rem;vertical-align:middle}
-.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.bar{display:inline-block;width:12rem;height:.7rem;background:#eee;border-radius:.35rem;vertical-align:middle;margin-right:.5rem}
-.bar span{display:block;height:100%%;background:#3f51b5;border-radius:.35rem}
-em{font-style:normal;color:#555;font-size:.85rem}
-b.ok{color:#2e7d32} b.warn{color:#e65100} b.alarm{color:#c62828} b.idle{color:#888}
-b{font-weight:600}
-.kpis{display:flex;flex-wrap:wrap;gap:.5rem;margin:.7rem 0}
-.kpi{background:#f4f5fa;border-radius:.55rem;padding:.5rem .85rem;min-width:5rem;flex:0 1 auto}
-.kpi b{display:block;font-size:1.3rem;line-height:1.2}
-.kpi span{font-size:.72rem;color:#666}
-.kpi .alarmnum{color:#c62828} .kpi .oknum{color:#2e7d32}
-p.helpline{background:#fff3f3;border:1px solid #ffcdd2;border-radius:.5rem;padding:.5rem .7rem;font-size:.9rem}
-p.spans{font-size:.85rem;color:#444}
-.queue{background:#fffde7;border:1px solid #ffe082;border-radius:.6rem;padding:.2rem .8rem .6rem;margin:1rem 0}
-.queue h2{margin-top:.6rem}
-.queue table{min-width:24rem}
-a.donebtn{display:inline-block;background:#2e7d32;color:#fff;border-radius:.4rem;
-  padding:.2rem .6rem;text-decoration:none;font-size:.8rem}
-a.donebtn.onbtn{background:#e65100}
-p.helptoggle{font-size:.85rem}
-.roommap{display:grid;grid-template-columns:repeat(2,5.6rem) 1.4rem repeat(2,5.6rem);gap:.3rem;margin:.4rem 0}
-.seat{border:1px solid #ccc;border-radius:.3rem;padding:.2rem .3rem;font-size:.72rem;
-  min-height:2.1rem;background:#fafafa;color:#999}
-.seat b{display:block;font-size:.8rem;color:inherit}
-.seat u{display:block;text-decoration:none;font-weight:600;font-size:.66rem;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.seat.s-ok{background:#c8e6c9;border-color:#66bb6a;color:#1b5e20}
-.seat.s-done{background:#2e7d32;border-color:#2e7d32;color:#fff}
-.seat.s-warn{background:#ffe0b2;border-color:#ffa726;color:#e65100}
-.seat.s-alarm{background:#ffcdd2;border-color:#e53935;color:#b71c1c}
-.seat.s-idle{background:#eee;border-style:dashed;color:#888}
-p.front{font-size:.75rem;color:#888;margin:.1rem 0 1rem}
-h3{font-size:.95rem;margin:1.2rem 0 .2rem}
-tr.lowq td{background:#fff8e1}
-details{margin:.6rem 0}
-details summary{cursor:pointer;font-weight:600;font-size:1rem;padding:.3rem 0}
-@media (max-width:640px){
-  body{margin:.8rem auto}
-  h1{font-size:1.1rem}
-  td,th{padding:.28rem .4rem;font-size:.78rem}
-  table{min-width:26rem}
-  .bar{width:6rem}
-  .kpi{padding:.4rem .6rem;min-width:4.1rem}
-  .kpi b{font-size:1.1rem}
-  .roommap{grid-template-columns:repeat(2,minmax(2.9rem,1fr)) .8rem repeat(2,minmax(2.9rem,1fr));max-width:22rem}
-  .seat{font-size:.6rem;min-height:1.8rem;padding:.15rem .2rem}
-  .seat b{font-size:.72rem}
-}</style>
-<h1>FEM-Kurs — Fortschritts-Dashboard</h1>
-<p><strong>%d</strong> Teilnehmende mit Login · <strong>%d</strong> Aufgaben im Katalog · Stand: %s
-· <em>aktualisiert sich alle 30 s selbst · PC-Namen nur im RAM</em></p>
+<style>""" + DASH_CSS + """</style>
+<header class="top"><div class="wrap topin">
+<div class="brand"><img src="%s" alt="HTWK Leipzig" class="logo-htwk"><img src="%s" alt="MecSim" class="logo-ms"></div>
+<div class="ttl"><h1>FEM-Kurs Dashboard</h1><p>Angewandte FEM in der Strukturmechanik</p></div>
+<div class="stamp"><b>%d</b> Teilnehmende mit Login · <b>%d</b> Aufgaben im Katalog<br>Stand %s · aktualisiert sich alle 30 s</div>
+</div></header>
+<main class="wrap">
 %s
 <h2>Kurs gesamt</h2>
-<details open><summary>Wie weit ist der Kurs? (Anteil gelöster Aufgaben pro Person)</summary>
+<details class="card" open><summary>Wie weit ist der Kurs? Anteil gelöster Aufgaben pro Person</summary>
 <div class="tablewrap"><table>%s</table></div></details>
-<details><summary>Pro Praktikum (begonnen / komplett)</summary>
+<details class="card"><summary>Pro Praktikum: begonnen und komplett</summary>
 <div class="tablewrap"><table><tr><th></th><th>mind. 1 Aufgabe gelöst</th><th>komplett gelöst</th></tr>%s</table></div></details>
-<details><summary>Pro Aufgabe (Lösequote · ø Versuche · Volltreffer im 1. Versuch)</summary>
+<details class="card"><summary>Pro Aufgabe: Lösequote, ø Versuche, Volltreffer im 1. Versuch</summary>
 <div class="tablewrap"><table><tr><th>Aufgabe</th><th>gelöst</th><th>Lösequote</th><th>ø Versuche</th><th>Volltreffer</th></tr>%s</table></div>
-<p><em>Gelb hinterlegt: Lösequote unter 40 %% (ab 5 Personen) — Kandidaten zum Nachschärfen.</em></p></details>
-<details><summary>Häufige Fehlwerte (gesamt, anonym)</summary>
+<p class="note">Rot hinterlegt: Lösequote unter 40 %% (ab 5 Personen), Kandidaten zum Nachschärfen.</p></details>
+<details class="card"><summary>Häufige Fehlwerte, gesamt und anonym</summary>
 <div class="tablewrap"><table>%s%s</table></div>
-<p><em>Ohne erkannte Ursache: Kandidaten für neue data-diagnose-Einträge in der Übungsseite.</em></p></details>
-</html>""" % (n, len(answers), datetime.datetime.now().strftime("%d.%m.%Y %H:%M"),
+<p class="note">Ohne erkannte Ursache: Kandidaten für neue data-diagnose-Einträge in der Übungsseite.</p></details>
+</main>
+<footer class="wrap">PC-Namen stehen nur im Arbeitsspeicher, Namen nur hinter dem Schlüssel. Nicht am Beamer zeigen.</footer>
+</html>""" % (DASH_LOGOS[0], DASH_LOGOS[1], n, len(answers), datetime.datetime.now().strftime("%d.%m.%Y, %H:%M"),
               live_html, dist_rows, p_rows, q_rows, wrong_head,
               wrong_value_rows(db, answers, 0)
-              or '<tr><td colspan="5"><em>Noch keine falschen Eingaben.</em></td></tr>')
+              or '<tr><td colspan="5"><p class="empty">Noch keine falschen Eingaben.</p></td></tr>')
     return html
 
 
