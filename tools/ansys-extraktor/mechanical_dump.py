@@ -350,6 +350,10 @@ def bild(obj, name, ansicht):
             s.Width = BILD_BREITE
             s.Height = BILD_HOEHE
             _bild_settings = s
+            try:
+                graphics.GlobalLegendSettings.ShowDateAndTime = False   # kein Datum im Bild
+            except Exception as e:
+                merke_fehler("Datum ausblenden", e)
         if not os.path.isdir(ordner):
             os.makedirs(ordner)
         tree.Activate([obj])
