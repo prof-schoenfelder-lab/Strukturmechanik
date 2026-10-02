@@ -97,15 +97,25 @@
   },
   {
    "id": "lager",
-   "label": "Klemmung (Remote Displacement und Frictionless Support)",
+   "label": "Remote Displacement (Klemmung)",
    "art": "lager",
    "ebene": 1,
-   "pruefen": "Die Klemmung am Vorbau nicht mit Fixed Support umsetzen, sondern mit Remote Displacement und Frictionless Support (sonst Singularität).",
+   "pruefen": "Die Klemmung am Vorbau mit Remote Displacement umsetzen, alle Verschiebungen und Rotationen 0, nicht mit Fixed Support (sonst Singularität an den Kanten).",
    "details": [
     {
      "id": "lager.geometrie",
      "name": "Geometry",
-     "wert": "Mittelbereich, 50 mm breit"
+     "wert": "Klemmfläche in der Mitte, 50 mm breit"
+    },
+    {
+     "id": "lager.verschiebung",
+     "name": "X, Y, Z Component",
+     "wert": "0 mm"
+    },
+    {
+     "id": "lager.rotation",
+     "name": "Rotation X, Y, Z",
+     "wert": "0°"
     }
    ]
   },

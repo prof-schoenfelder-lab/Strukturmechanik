@@ -32,7 +32,7 @@ Alu
 
 Lagerung:
 
-- feste Einspannung im mittleren Bereich auf einer Breite von 50mm (Klemmung Vorbau)
+- feste Einspannung im mittleren Bereich auf einer Breite von 50 mm (Klemmung Vorbau), umgesetzt mit `Remote Displacement` (alle Verschiebungen und Rotationen 0) wie in Übung 2, damit an den Kanten keine Singularität entsteht
 
 Belastung:
 

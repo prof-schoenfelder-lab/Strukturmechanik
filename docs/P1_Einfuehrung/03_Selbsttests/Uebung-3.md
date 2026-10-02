@@ -51,7 +51,7 @@ Die Geometrie beinhaltet noch nicht die Flächen an denen die Randbedingungen an
 
 Lagerung:
 
-- feste Einspannung im Bereich des Kopfes (10 mm)
+- feste Einspannung im Bereich des Kopfes (10 mm), umgesetzt mit `Remote Displacement` (alle Verschiebungen und Rotationen 0) wie in Übung 2, damit an den Kanten keine Singularität entsteht
 
 Belastung:
 
@@ -108,7 +108,7 @@ RemoteDisp (Fläche): 2,1309 mm
 
 ### Die maximale von-Mises-Spannung in MPa
 
-<div class="numeric-question" data-baum="p1-u3-alt" data-answer="353.11" data-tolerance="3" data-points="5" data-attempts="5"  data-hints="Wurde die von-Mises Spannung ausgewertet? Fixierte Lagerung mit Remote Displacement?" data-diagnose="393.35 [lager]: Das Maximum liegt an der festen Einspannung, einer Singularität. Remote Displacement verwenden oder außerhalb der Einspannung auswerten.">
+<div class="numeric-question" data-baum="p1-u3" data-answer="353.11" data-tolerance="3" data-points="5" data-attempts="5"  data-hints="Wurde die von-Mises Spannung ausgewertet? Fixierte Lagerung mit Remote Displacement?" data-diagnose="393.35 [lager]: Das Maximum liegt an der festen Einspannung, einer Singularität. Remote Displacement verwenden oder außerhalb der Einspannung auswerten.">
 </div>
 
 <!---
