@@ -960,7 +960,7 @@
       var kopf = verdacht.length ? 'Ihr Wert deutet auf den rot markierten Eintrag hin.' : 'Vergleichen Sie Ihren Strukturbaum von oben nach unten mit den Soll-Werten.';
       if (vert && vert.n) kopf += ' Die Prozente zeigen, wo der Fehler bei den bisher ' + vert.n + ' falschen Eingaben zu dieser Frage lag' +
         (vert.anteile && vert.anteile.sonstige ? ' (' + Math.round(100 * vert.anteile.sonstige) + ' % nicht zuzuordnen)' : '') + '.';
-      var html = '<div class="fs-kopf"><strong>Fehlersuche im Modell</strong><span>' + kopf +
+      var html = '<div class="fs-kopf"><strong>Fehlersuche im Modell:</strong> <span>' + kopf +
         '</span></div><div class="det-grid fs-grid"><div class="det-baum fs-baum">';
       baum.baum.forEach(function (k, i) {
         html += '<button type="button" data-i="' + i + '" class="det-knoten det-' + (k.art || 'ordner') +
@@ -970,13 +970,12 @@
       });
       html += '</div><div class="det-details fs-details">';
       if (aktiv) {
-        html += '<div class="det-details-titel">Details of "' + aktiv.label + '"</div><div class="det-zeilen">' +
+        html += '<div class="det-zeilen">' +
           aktiv.details.map(function (d) {
             return '<div class="det-zeile' + (d.id === knoten ? ' fs-verdacht' : '') + '"><span>' + d.name + '</span><span>' + d.wert + '</span></div>';
           }).join('') + '</div>';
-        if (trifft(aktiv, knoten) && text) html += '<div class="fs-diagnose">' + text + '</div>';
         if (aktiv.pruefen) html += '<p class="fs-pruefen">' + aktiv.pruefen + '</p>';
-      } else html += '<div class="det-details-titel">Links einen Eintrag wählen</div>';
+      } else html += '<p class="fs-pruefen">Links einen Eintrag wählen.</p>';
       box.innerHTML = html + '</div></div>';
       box.querySelectorAll('.det-knoten').forEach(function (b) {
         b.onclick = function () { aktiv = baum.baum[+b.dataset.i]; malen(); };
