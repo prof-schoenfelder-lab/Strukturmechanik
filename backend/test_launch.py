@@ -295,6 +295,15 @@ def main():
         for bad in ({"teil": "x", "prozent": 5, "entwurf": "A"}, {"teil": TEIL, "prozent": 101, "entwurf": "A"},
                     {"teil": TEIL, "prozent": 5, "entwurf": "<script>"}):
             check("kp: ungültig abgelehnt %s" % bad, requests.post(KP, json=bad).status_code == 400)
+        requests.post(KP, headers=p7, json={"teil": "f0", "prozent": 12, "entwurf": "AB",
+                                            "titel": "Kragarm (Übung 2)", "seite": "/Strukturmechanik/P1/Uebung-2/"})
+        r = requests.get(KP + "/meine", headers=p7).json()
+        check("kp: Mein Fortschritt mit Platz je Bauteil",
+              r["an"] and [(t["titel"], t["rang"], t["anzahl"], t["prozent"]) for t in r["teile"]]
+              == [("Knackpunkt", 2, 4, 41.3), ("Kragarm (Übung 2)", 1, 1, 12.0)]
+              and r["teile"][1]["seite"] == "/Strukturmechanik/P1/Uebung-2/", str(r))
+        r = requests.post(KP, headers=p8, json={"teil": "f0", "prozent": 5, "entwurf": "A", "seite": "javascript:alert(1)"}).json()
+        check("kp: unsichere Seite verworfen", requests.get(KP + "/meine", headers=p8).json()["teile"][1]["seite"] is None)
         r = requests.get(BACKEND + "/dashboard", params={"key": "test-dashboard-key"})
         check("kp: Spitzname im Dashboard", "bAda/b1234567890 <a href" in r.text)
         requests.get(BACKEND + "/dashboard-kp-name-loeschen", params={"key": "test-dashboard-key", "name": "bAda/b1234567890"})

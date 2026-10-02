@@ -1707,7 +1707,7 @@
       if (!frame || e.source !== frame.contentWindow || !e.data) return;
       if (e.data.typ === 'knackpunkt-hoehe') frame.style.height = Math.min(Math.max(+e.data.h || 0, 400), 2400) + 'px';
       if (e.data.typ === 'knackpunkt-ergebnis' && e.data.teil === key)
-        kpApi('/api/kp', { teil: key, prozent: e.data.prozent, entwurf: e.data.entwurf }).then(zeige);
+        kpApi('/api/kp', { teil: key, prozent: e.data.prozent, entwurf: e.data.entwurf, titel: el.dataset.name || '', seite: location.pathname }).then(zeige);
     });
   }
   function renderZwischenspiele() {

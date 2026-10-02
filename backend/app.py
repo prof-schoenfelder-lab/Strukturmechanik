@@ -125,6 +125,8 @@ def init_db():
             prozent REAL NOT NULL,
             entwurf TEXT,
             platz TEXT,
+            titel TEXT,
+            seite TEXT,
             updated_at REAL,
             PRIMARY KEY (who, teil)
         );
@@ -150,7 +152,9 @@ def init_db():
         db.commit()
     # Migration für Bestandsdatenbanken
     for stmt in ("ALTER TABLE users ADD COLUMN sub_enc TEXT",
-                 "ALTER TABLE users ADD COLUMN name_enc TEXT"):
+                 "ALTER TABLE users ADD COLUMN name_enc TEXT",
+                 "ALTER TABLE kp_scores ADD COLUMN titel TEXT",
+                 "ALTER TABLE kp_scores ADD COLUMN seite TEXT"):
         try:
             db.execute(stmt)
             db.commit()
@@ -908,11 +912,12 @@ def spiel_toggle():
 KP_TEIL_RE = re.compile(r"^(f[0-2]|z[1-9]\d{0,4}|b[0-9A-Za-z._-]{1,300})$")
 KP_ENTWURF_RE = re.compile(r"^[A-Za-z0-9_-]{1,2000}$")
 KP_PLATZ_RE = re.compile(r"^N\d{3} Platz \d+$")
+KP_SEITE_RE = re.compile(r"^/[A-Za-z0-9_/.-]{1,200}$")
 KP_TOP = 10
 
 
-def kp_name_sauber(v):
-    return re.sub(r"[\x00-\x1f\x7f<>&\"']", "", str(v or "")).strip()[:16]
+def kp_name_sauber(v, n=16):
+    return re.sub(r"[\x00-\x1f\x7f<>&\"']", "", str(v or "")).strip()[:n]
 
 
 def kp_anzeige(name, platz):
@@ -960,14 +965,36 @@ def kp_bestenliste():
             return jsonify({"error": "ungültig"}), 400
         platz = host_label(client_ip())
         platz = platz if KP_PLATZ_RE.match(platz or "") else None
+        titel = kp_name_sauber(data.get("titel"), 60) or None
+        seite = str(data.get("seite", ""))
+        seite = seite if KP_SEITE_RE.match(seite) else None
         alt = db.execute("SELECT prozent FROM kp_scores WHERE who=? AND teil=?", (who, teil)).fetchone()
         if not alt or prozent > alt[0]:
-            db.execute("INSERT OR REPLACE INTO kp_scores (who, teil, prozent, entwurf, platz, updated_at) "
-                       "VALUES (?, ?, ?, ?, ?, ?)", (who, teil, prozent, entwurf, platz, time.time()))
+            db.execute("INSERT OR REPLACE INTO kp_scores (who, teil, prozent, entwurf, platz, titel, seite, updated_at) "
+                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (who, teil, prozent, entwurf, platz, titel, seite, time.time()))
             db.commit()
     if not KP_TEIL_RE.match(teil):
         return jsonify({"error": "teil fehlt"}), 400
     return kp_liste(db, teil, who)
+
+
+@app.get("/api/kp/meine")
+def kp_meine():
+    """Für „Mein Fortschritt“: je gespieltem Bauteil Platz, Prozent und Teilnehmerzahl."""
+    db = get_db()
+    if not spiele_an(db)["kp"]:
+        return jsonify({"an": False})
+    who = _help_identity()
+    teile = []
+    for teil, prozent, titel, seite, t in db.execute(
+            "SELECT teil, prozent, titel, seite, updated_at FROM kp_scores WHERE who=? ORDER BY updated_at",
+            (who,)).fetchall():
+        vor = db.execute("SELECT COUNT(*) FROM kp_scores WHERE teil=? AND (prozent > ? OR (prozent = ? AND updated_at < ?))",
+                         (teil, prozent, prozent, t)).fetchone()[0]
+        anzahl = db.execute("SELECT COUNT(*) FROM kp_scores WHERE teil=?", (teil,)).fetchone()[0]
+        teile.append({"titel": titel or "Knackpunkt", "seite": seite, "prozent": prozent, "rang": vor + 1, "anzahl": anzahl})
+    name = db.execute("SELECT name FROM kp_namen WHERE who=?", (who,)).fetchone() if who else None
+    return jsonify({"an": True, "teile": teile, "name": name[0] if name else ""})
 
 
 @app.post("/api/kp/name")

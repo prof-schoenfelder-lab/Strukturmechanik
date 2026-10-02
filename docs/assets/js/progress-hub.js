@@ -79,7 +79,35 @@
       '</div>' +
       '<div class="ph-grid">' + cards.join('') + '</div>' +
       '<h2>Abzeichen <small>(' + earned + '/' + badges.length + ')</small></h2>' +
-      '<div class="ph-medals">' + badgeHtml + '</div>';
+      '<div class="ph-medals">' + badgeHtml + '</div>' +
+      '<div id="ph-kp"></div>';
+    renderKnackpunkt();
+  }
+
+  // Knackpunkt-Bestenliste: eigener Platz je gespieltem Bauteil (nur mit Schalter im Dashboard)
+  function esc(v) { return String(v).replace(/[&<>"']/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; }); }
+  function renderKnackpunkt() {
+    var box = document.getElementById('ph-kp'), BACKEND = (window.AC_BACKEND_URL || '').replace(/\/$/, '');
+    if (!box || !BACKEND) return;
+    var headers = {};
+    try { var t = localStorage.getItem('ac_backend_token'); if (t) headers['Authorization'] = 'Bearer ' + t; } catch (e) { }
+    fetch(BACKEND + '/api/kp/meine', { headers: headers })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d || !d.an) return;
+        var rows = d.teile.map(function (t) {
+          var titel = t.seite ? '<a href="' + esc(t.seite) + '">' + esc(t.titel) + '</a>' : esc(t.titel);
+          return '<li>' + titel + ': <strong>Platz ' + t.rang + '</strong> von ' + t.anzahl + ', ' +
+            String(t.prozent).replace('.', ',') + ' % entfernt</li>';
+        });
+        box.innerHTML = '<h2>Knackpunkt-Bestenliste</h2>' + (rows.length
+          ? '<ul class="ph-kp">' + rows.join('') + '</ul>' +
+            '<p class="ph-kp-name">' + (d.name ? 'Ihr Spitzname: ' + esc(d.name) + '. ' : 'Noch ohne Spitzname. ') +
+            'Ändern können Sie ihn unter dem Spiel auf der Übungsseite.</p>'
+          : '<p>Noch keine Runde gespielt. Knackpunkt wird nach <a href="../P1_Einfuehrung/03_Selbsttests/Uebung-2/">Übung 2</a> und ' +
+            '<a href="../P1_Einfuehrung/03_Selbsttests/Uebung-4/">Übung 4</a> in Praktikum 1 freigeschaltet.</p>');
+      })
+      .catch(function () { });
   }
 
   function init() {
