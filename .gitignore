@@ -67,3 +67,6 @@ backend/lti_private.pem
 backend/__pycache__/
 answers.json
 site/
+
+# ANSYS-Extraktor (Ausgaben, ggf. mit Studierendendaten)
+tools/ansys-extraktor/out/

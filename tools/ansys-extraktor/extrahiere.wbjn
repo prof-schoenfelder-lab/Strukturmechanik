@@ -1,0 +1,91 @@
+# encoding: utf-8
+# Workbench-Journal (ANSYS 2024 R2): entpackt EIN Archiv in einen Arbeitsordner und
+# laesst mechanical_dump.py in jedem Modell laufen, das eine eigene .mechdb hat.
+# Wird von extrahiere.cmd gestartet, das die A2A_*-Umgebungsvariablen setzt.
+# Datei bewusst nur ASCII.
+SetScriptVersion(Version="24.2.133")
+
+import os
+import shutil
+import codecs
+
+archiv = os.environ["A2A_ARCHIV"]
+ausgabe = os.environ["A2A_AUSGABE"]
+skripte = os.environ["A2A_SKRIPTE"]
+arbeit = os.environ["A2A_ARBEIT"]
+loesen = os.environ.get("A2A_LOESEN", "1") == "1"
+bilder = os.environ.get("A2A_BILDER", "1") == "1"
+interaktiv = os.environ.get("A2A_INTERAKTIV", "0") == "1"
+
+if not os.path.isdir(ausgabe):
+    os.makedirs(ausgabe)
+_log = open(os.path.join(ausgabe, "journal_log.txt"), "a")
+
+
+def log(msg):
+    try:
+        _log.write(msg.encode("ascii", "replace") + "\n")
+    except Exception:
+        _log.write(repr(msg) + "\n")
+    _log.flush()
+
+
+def text(e):
+    try:
+        return e.Message.encode("ascii", "replace")
+    except Exception:
+        return repr(str(e))
+
+
+name = os.path.splitext(os.path.basename(archiv))[0]
+log("=== Archiv %s, loesen=%s, bilder=%s" % (name, loesen, bilder))
+
+if os.path.isdir(arbeit):
+    shutil.rmtree(arbeit, True)
+os.makedirs(arbeit)
+projekt = os.path.join(arbeit, "modell.wbpj")
+Unarchive(ArchivePath=archiv, ProjectPath=projekt, Overwrite=True)
+
+code = codecs.open(os.path.join(skripte, "mechanical_dump.py"), "r", "ascii").read()
+
+# Mehrere Systeme koennen sich ein Modell teilen; dann gibt es nur EINE .mechdb,
+# benannt nach dem Besitzer-System ("SYS 4" -> SYS-4.mechdb). Nur diese Systeme oeffnen.
+mech_dir = os.path.join(arbeit, "modell_files", "dp0", "global", "MECH")
+mechdbs = set()
+if os.path.isdir(mech_dir):
+    for f in os.listdir(mech_dir):
+        if f.lower().endswith(".mechdb"):
+            mechdbs.add(os.path.splitext(f)[0])
+log("mechdb: %s" % sorted(mechdbs))
+
+kandidaten = []
+for system in GetAllSystems():
+    try:
+        container = system.GetContainer(ComponentName="Model")
+    except Exception:
+        continue
+    kandidaten.append((system, container))
+
+auswahl = [(s, c) for (s, c) in kandidaten if s.Name.replace(" ", "-") in mechdbs]
+if not auswahl:
+    log("keine Zuordnung System -> mechdb, nehme alle %d Modell-Systeme" % len(kandidaten))
+    auswahl = kandidaten
+
+for system, container in auswahl:
+    kennung = "%s | %s | %s" % (name, system.Name, system.DisplayText)
+    ziel = os.path.join(ausgabe, system.Name.replace(" ", "-"))
+    log("--- %s -> %s" % (kennung, ziel))
+    kopf = "A2A_AUSGABE = %r\nA2A_LOESEN = %r\nA2A_BILDER = %r\nA2A_KENNUNG = %r\n" % (
+        ziel, loesen, bilder, kennung)
+    try:
+        container.Edit(Interactive=interaktiv)
+        container.SendCommand(Language="Python", Command=kopf + code)
+    except Exception as e:
+        log("FEHLER %s: %s" % (kennung, text(e)))
+    try:
+        container.Exit()
+    except Exception as e:
+        log("FEHLER Exit %s: %s" % (kennung, text(e)))
+
+log("=== fertig")
+_log.close()
