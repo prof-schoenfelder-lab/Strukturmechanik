@@ -135,8 +135,9 @@ function zeigen() {
   $('t-anfragen').setAttribute('aria-pressed', String(ansicht === 'anfragen'));
   $('t-empfohlen').setAttribute('aria-pressed', String(ansicht === 'empfohlen'));
   $('z-anfragen').textContent = e.length;
-  $('z-empfohlen').textContent = emp.length;
-  $('z-empfohlen').className = 'z' + (emp.some(x => x.aufgegeben) ? ' rot' : '');
+  const offenEmp = emp.filter(x => besucht.indexOf(besuchtKey(x)) === -1);
+  $('z-empfohlen').textContent = offenEmp.length;
+  $('z-empfohlen').className = 'z' + (offenEmp.some(x => x.aufgegeben) ? ' rot' : '');
   if (ansicht === 'empfohlen') return zeigenEmpfohlen(emp);
   let h;
   if (!d.an) h = '<div class="next leer"><div class="lbl">Hilfe-Knopf ist aus</div><div class="wo">Niemand kann sich melden</div>' +
@@ -154,16 +155,39 @@ function zeigen() {
   fertig(h);
 }
 
-// Wer heute hängt (ab dem 3. Fehlversuch) oder aufgegeben hat (alle Versuche verbraucht), ohne sich gemeldet zu haben
-function zeigenEmpfohlen(emp) {
-  let h = emp.length ? '<ol class="queue">' + emp.map(x =>
+// Wer heute hängt (ab dem 3. Fehlversuch) oder aufgegeben hat (alle Versuche verbraucht), ohne sich gemeldet zu haben.
+// „War da, nächster“ blendet die Person auf diesem Gerät aus, bis sie einen weiteren Versuch macht.
+const besuchtKey = x => x.label + '|' + x.frage + '|' + x.versuche;
+let besucht = [];
+try { besucht = JSON.parse(localStorage.getItem('hilfe_besucht') || '[]'); } catch (e) { }
+function zeigenEmpfohlen(alle) {
+  const emp = alle.filter(x => besucht.indexOf(besuchtKey(x)) === -1);
+  $('z-empfohlen').textContent = emp.length;
+  $('z-empfohlen').className = 'z' + (emp.some(x => x.aufgegeben) ? ' rot' : '');
+  let h = '';
+  if (emp.length) {
+    const x = emp[0];
+    h += `<div class="next"><div class="lbl">Als Nächstes${emp.length > 1 ? ' · ' + emp.length + ' empfohlen' : ''}</div>
+      <div class="wo">${esc(x.label)}</div><div class="was"><span class="chip ${x.aufgegeben ? 'auf' : 'haengt'}">${x.aufgegeben ? 'aufgegeben' : 'hängt'}</span> ` +
+      `${esc(x.name ? x.name + ' · ' : '')}${esc(x.frage)} · ${x.versuche}. Versuch</div>
+      <button class="big" id="besucht">War da, nächster</button></div>`;
+    if (emp.length > 1) h += '<h2>Danach</h2>';
+  }
+  const rest = emp.slice(1);
+  h += rest.length ? '<ol class="queue">' + rest.map(x =>
     `<li><span class="t"><span class="chip ${x.aufgegeben ? 'auf' : 'haengt'}">${x.aufgegeben ? 'aufgegeben' : 'hängt'}</span>` +
     `<b>${esc(x.label)}${x.name ? ' · ' + esc(x.name) : ''}</b><small>${esc(x.frage)} · ${x.versuche}. Versuch · zuletzt ${dauer(x.seit).replace('seit ', 'vor ')}</small></span></li>`).join('') + '</ol>'
-    : '<div class="next leer"><div class="lbl">Hilfe empfohlen</div><div class="wo">Niemand hängt gerade</div>' +
+    : emp.length ? '' : '<div class="next leer"><div class="lbl">Hilfe empfohlen</div><div class="wo">Niemand hängt gerade</div>' +
       '<div class="was">Gezählt werden heute eingeloggte Studierende: ab dem 3. Fehlversuch „hängt“, alle Versuche verbraucht „aufgegeben“.</div></div>';
-  const karte = raumkarte(daten.raeume, emp.map(x => ({ raum: x.raum, platz: x.platz, cls: x.aufgegeben ? 'auf' : 'w', marke: x.aufgegeben ? '!' : x.versuche + '.' })));
+  const karte = raumkarte(daten.raeume, emp.map((x, i) => ({ raum: x.raum, platz: x.platz, cls: i ? (x.aufgegeben ? 'auf' : 'w') : 'n', marke: (i + 1) + '.' })));
   if (karte) h += '<h2>Raumkarte</h2><div class="rooms">' + karte + '</div>';
   fertig(h);
+  const b = $('besucht');
+  if (b) b.onclick = () => {
+    besucht = besucht.concat(besuchtKey(emp[0])).slice(-200);
+    try { localStorage.setItem('hilfe_besucht', JSON.stringify(besucht)); } catch (e) { }
+    zeigen();
+  };
 }
 
 function fertig(h) {
