@@ -25,7 +25,7 @@ Bevor wir mit einer Übung starten müssen wir eine Einstellung vornehmen die un
   </div>
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2"><code>ANSYS Workbench 2024R2</code> neustarten</p>
+    <p class="step-title" role="heading" aria-level="2"><code>ANSYS Workbench 2025R2</code> neustarten</p>
   </div>
 
 </div>

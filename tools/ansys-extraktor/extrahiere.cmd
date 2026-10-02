@@ -12,12 +12,16 @@ if "%~1"=="" (
   echo Aufruf: extrahiere.cmd ^<datei.wbpz ^| ordner^>
   exit /b 1
 )
-if not defined AWP_ROOT242 (
-  echo AWP_ROOT242 ist nicht gesetzt - ist ANSYS 2024 R2 installiert?
+rem Neueste installierte Version: 2025 R2, sonst 2024 R2
+set "AWP="
+if defined AWP_ROOT242 set "AWP=%AWP_ROOT242%"
+if defined AWP_ROOT252 set "AWP=%AWP_ROOT252%"
+if not defined AWP (
+  echo Weder AWP_ROOT252 noch AWP_ROOT242 gesetzt - ist ANSYS installiert?
   exit /b 1
 )
 
-set "WB=%AWP_ROOT242%\Framework\bin\Win64\RunWB2.exe"
+set "WB=%AWP%\Framework\bin\Win64\RunWB2.exe"
 set "A2A_SKRIPTE=%~dp0"
 if not defined A2A_LOESEN set "A2A_LOESEN=1"
 if not defined A2A_BILDER set "A2A_BILDER=1"

@@ -27,7 +27,7 @@ Folgende Einstellung der `Beta Optionen` im Workbench Projektmenü ermöglicht u
   </div>
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2"><code>ANSYS Workbench 2024R2</code> neustarten</p>
+    <p class="step-title" role="heading" aria-level="2"><code>ANSYS Workbench 2025R2</code> neustarten</p>
   </div>
 
 </div>

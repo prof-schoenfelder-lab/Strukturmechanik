@@ -1,6 +1,6 @@
 # Mechanical-Dump: liest das offene Mechanical-Modell vollstaendig aus.
 #
-# Laeuft IN Mechanical (IronPython, ANSYS 2024 R2), entweder
+# Laeuft IN Mechanical (IronPython, ANSYS 2025 R2 oder 2024 R2), entweder
 #   a) per Workbench-Journal (extrahiere.wbjn setzt die A2A_*-Variablen davor) oder
 #   b) von Hand in der Scripting-Konsole von Mechanical (dann gelten die Standardwerte unten).
 #

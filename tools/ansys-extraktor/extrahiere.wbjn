@@ -1,5 +1,5 @@
 # encoding: utf-8
-# Workbench-Journal (ANSYS 2024 R2): entpackt EIN Archiv in einen Arbeitsordner und
+# Workbench-Journal (ANSYS 2025 R2, 2024 R2 geht auch): entpackt EIN Archiv in einen Arbeitsordner und
 # laesst mechanical_dump.py in jedem Modell laufen, das eine eigene .mechdb hat.
 # Wird von extrahiere.cmd gestartet, das die A2A_*-Umgebungsvariablen setzt.
 # Datei bewusst nur ASCII.

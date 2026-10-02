@@ -12,7 +12,7 @@ hide:
 
 
 
-# ANSYS Installations Anleitung für Version im PC Pool ANSYS2024R2
+# ANSYS Installations Anleitung für Version im PC Pool ANSYS2025R2
 
 <div class="steps" markdown="1">
 
@@ -22,12 +22,12 @@ hide:
   </div>
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2">ANSYS2024R2 runterladen</p>
+    <p class="step-title" role="heading" aria-level="2">ANSYS2025R2 runterladen</p>
     <p>ANSYS Downloadlink im OPAL: <a href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/18448121873/CourseNode/102618893872254" target="_blank">HTWK OPAL LINK</a></p>
   </div>
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2">ZIP Entpacken und alle 3 ISO Dateien mounten und auf der ersten Setup.exe ausführen</p>
+    <p class="step-title" role="heading" aria-level="2">ZIP entpacken, alle ISO-Dateien (bei 2025R2 acht Stück, DISK1 bis DISK8) mounten und die setup.exe der ersten ausführen</p>
   </div>
 
   <div class="step">

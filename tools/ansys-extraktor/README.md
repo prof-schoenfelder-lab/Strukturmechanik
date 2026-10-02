@@ -3,7 +3,7 @@
 Liest Workbench-Archive (`.wbpz`) vollständig aus, ohne dass jemand klickt. Grundlage dafür,
 aus einem fertigen Modell automatisch eine Übungsseite zu erzeugen.
 
-Läuft nur auf einem Windows-Rechner mit **ANSYS 2024 R2**. Kein zusätzliches Python nötig, alles
+Läuft nur auf einem Windows-Rechner mit **ANSYS 2025 R2** (2024 R2 geht weiterhin, der Starter nimmt die neueste installierte Version). Ältere Archive werden beim Öffnen auf die neue Version migriert, das betrifft nur die Arbeitskopie. Kein zusätzliches Python nötig, alles
 läuft im ANSYS-eigenen IronPython.
 
 ## Dateien
