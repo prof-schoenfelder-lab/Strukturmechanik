@@ -107,7 +107,7 @@ Belastung:
 </div>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->
-<div class="solution-images">
+<div class="solution-images" markdown="1">
 
 ### 🎯 Lösung
 
@@ -133,6 +133,7 @@ Hier ist die korrekte Lösung für diese Übung:
 -->
 
 **Wichtige Punkte:**
+
 - Einheit auf mm umstellen (nicht vergessen!)
 - Kraft muss auf der **Kante** appliziert werden (nicht auf der Fläche)
 - Kraftrichtung: -5000N in **z-Richtung** (negativ!)

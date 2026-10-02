@@ -90,7 +90,7 @@ Fixed Support: 288,8MPa
 RemoteDisp+Frictionless Support (Fläche): 271.05MPa
 -->
 
-<div class="zwischenspiel" data-seite="/P1_Einfuehrung/03_Selbsttests/Uebung-4" data-name="Lenker (Übung 4)" data-teil="bau-2ya.AA_8AAAH_4AAA__wAAH__gAA___AP_wA___-AB___wAD__-AAH__wAAP8.wBe05wTe45.T09861eTq9861e">
+<div class="zwischenspiel" data-seite="/P1_Einfuehrung/03_Selbsttests/Uebung-3,/P1_Einfuehrung/03_Selbsttests/Uebung-4" data-voraussetzung="Übung 3 und 4" data-name="Lenker (Übung 4)" data-teil="bau-2ya.AA_8AAAH_4AAA__wAAH__gAA___AP_wA___-AB___wAD__-AAH__wAAP8.wBe05wTe45.T09861eTq9861e">
 <h2>Zwischenspiel: Knackpunkt</h2>
 <p>Der Lenker aus dieser Übung, von vorn gesehen: in der Mitte auf 50 mm geklemmt, an beiden Griffen (80 mm) drücken die Hände nach unten. Im Spiel ist er verkleinert und eine 10 mm dicke Platte aus Stahl S235; die Kraft in Fahrtrichtung fehlt, weil das Spiel eben rechnet. Wie viel Material darf weg, bevor der Lenker versagt?</p>
 </div>

@@ -1616,17 +1616,28 @@
   // Zwischenspiel Knackpunkt am Ende jeder Praktikums-Startseite: spielbar, sobald das
   // Praktikum komplett gelöst ist (wie das Abzeichen, einmal frei bleibt frei); sonst mit
   // der Zahl offener Aufgaben. Das Spiel läuft öffentlich auf GitHub Pages, ohne VPN.
-  // Auf einer Übungsseite (data-seite) frei, sobald deren Aufgaben gelöst sind; mit data-teil läuft das Spiel
+  // Auf Übungsseiten (data-seite, mehrere mit Komma) frei, sobald deren Aufgaben bearbeitet sind: gelöst oder
+  // alle Versuche aufgebraucht (answer_done_), auch ohne Login; data-voraussetzung nennt die Übungen; mit data-teil läuft das Spiel
   // eingebettet (Kursmodus) mit Bestenliste. Kästen mit .zs-werbung zeigen nur, wo es das Spiel gibt.
   var KNACKPUNKT_URL = 'https://fkaule.github.io/Knackpunkt/';
   function renderZwischenspiel(el) {
     if (el.classList.contains('zs-werbung')) return;
-    var seite = el.dataset.seite, prefix = seite ? seite + ':' : el.dataset.praktikum;
+    var seite = el.dataset.seite, prefix = el.dataset.praktikum;
     var p = BADGE_PRAKTIKA.filter(function (x) { return x[0] === prefix; })[0];
     if (!seite && !p) return;
     var frei = false, offen = null, cat = cachedCatalog();
     try { if (p) frei = localStorage.getItem('answer_badge_' + p[1]) === '1'; } catch (e) { }
-    if (!frei && cat) {
+    if (seite && cat) {
+      var seiten = seite.split(',').map(function (x) { return x.trim() + ':'; }), n = 0, fertig = 0;
+      Object.keys(cat).forEach(function (qid) {
+        if (!seiten.some(function (s) { return qid.indexOf(s) !== -1; })) return;
+        n++;
+        var r = safeJSONParse(localStorage.getItem('answer_best_' + qid)), done = false;
+        try { done = localStorage.getItem('answer_done_' + qid) === '1'; } catch (e) { }
+        if ((r && r.points > 0) || done) fertig++;
+      });
+      if (n > 0 && fertig >= n) frei = true; else if (n > 0) offen = n - fertig;
+    } else if (!frei && cat) {
       var s = 0, t = 0;
       Object.keys(cat).forEach(function (qid) {
         if (qid.indexOf(prefix) === -1) return;
@@ -1647,7 +1658,11 @@
         '" target="_blank" rel="noopener">Knackpunkt spielen</a></p>' +
         '<p>Nach einer Runde, die hält, erzeugt „Kommilitonen herausfordern“ einen Link: Wer ihn öffnet, ' +
         'spielt dasselbe Bauteil und muss Ihr Ergebnis schlagen. Es gibt keine Punkte, nur die Ehre.</p>'
-      : '<p class="spiel-gesperrt">Wird freigeschaltet, sobald Sie alle Aufgaben ' + (seite ? 'dieser Übung' : 'dieses Praktikums') + ' gelöst haben' +
+      : seite
+      ? '<p class="spiel-gesperrt">Wird freigeschaltet, sobald Sie ' + escapeHtml(el.dataset.voraussetzung || 'diese Übung') + ' bearbeitet haben' +
+        (offen ? ' (noch ' + offen + (offen === 1 ? ' Aufgabe' : ' Aufgaben') + ' offen)' : '') +
+        '. Bearbeitet heißt: gelöst oder alle Versuche aufgebraucht.</p>'
+      : '<p class="spiel-gesperrt">Wird freigeschaltet, sobald Sie alle Aufgaben dieses Praktikums gelöst haben' +
         (offen ? ' (noch ' + offen + (offen === 1 ? ' Aufgabe' : ' Aufgaben') + ' offen)' : '') + '.' +
         (login ? '' : ' Dafür ist der ' + opalLoginLink() + ' nötig.') + '</p>';
   }
