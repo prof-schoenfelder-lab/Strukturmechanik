@@ -1,0 +1,223 @@
+{
+ "titel": "Übung 1: zweiseitig gelagerter Balken",
+ "baum": [
+  {
+   "id": "einheiten",
+   "label": "Units",
+   "art": "einheiten",
+   "ebene": 0,
+   "pruefen": "Ergebnisse in mm und MPa ablesen: Unter Home > Units auf Metric (mm, kg, N, s, mV, mA) stellen.",
+   "details": [
+    {
+     "id": "einheiten.system",
+     "name": "Unit System",
+     "wert": "Metric (mm, kg, N, s, mV, mA)"
+    }
+   ]
+  },
+  {
+   "id": "geometrie",
+   "label": "Geometry",
+   "art": "ordner",
+   "ebene": 0,
+   "pruefen": "Genau ein Körper, nichts unterdrückt?",
+   "details": [
+    {
+     "id": "geometrie.koerper",
+     "name": "Bodies",
+     "wert": "1"
+    }
+   ]
+  },
+  {
+   "id": "koerper",
+   "label": "Balken",
+   "art": "geometrie",
+   "ebene": 1,
+   "pruefen": "Ist dem Körper das vorgegebene Material zugeordnet und nicht Structural Steel? Stimmen die Maße?",
+   "details": [
+    {
+     "id": "koerper.material",
+     "name": "Material Assignment",
+     "wert": "Stahl"
+    },
+    {
+     "id": "koerper.masse",
+     "name": "Abmessungen (L × b × h)",
+     "wert": "1000 × 30 × 30 mm"
+    },
+    {
+     "id": "koerper.teilung",
+     "name": "Fläche oben",
+     "wert": "in der Mitte geteilt (Kante für die Kraft)"
+    }
+   ]
+  },
+  {
+   "id": "material",
+   "label": "Stahl (Engineering Data)",
+   "art": "material",
+   "ebene": 0,
+   "pruefen": "Material angelegt mit den Werten aus „Gegeben“? Einheit beim E-Modul (MPa oder GPa) beachten.",
+   "details": [
+    {
+     "id": "material.e",
+     "name": "Young's Modulus",
+     "wert": "210000 MPa"
+    },
+    {
+     "id": "material.nu",
+     "name": "Poisson's Ratio",
+     "wert": "0,3"
+    }
+   ]
+  },
+  {
+   "id": "netz",
+   "label": "Mesh",
+   "art": "netz",
+   "ebene": 0,
+   "pruefen": "Globale Elementgröße eingetragen und Netz neu erzeugt (Generate Mesh)?",
+   "details": [
+    {
+     "id": "netz.groesse",
+     "name": "Element Size",
+     "wert": "15 mm"
+    }
+   ]
+  },
+  {
+   "id": "analyse",
+   "label": "Static Structural",
+   "art": "ordner",
+   "ebene": 0,
+   "pruefen": "Lager und Lasten liegen in der Analyse, die Sie auswerten?",
+   "details": [
+    {
+     "id": "analyse.typ",
+     "name": "Analysis Type",
+     "wert": "Static Structural"
+    }
+   ]
+  },
+  {
+   "id": "lager",
+   "label": "Displacement (Loslager)",
+   "art": "lager",
+   "ebene": 1,
+   "pruefen": "Loslager links: nur in Längsrichtung frei verschiebbar.",
+   "details": [
+    {
+     "id": "lager.geometrie",
+     "name": "Geometry",
+     "wert": "1 Edge (links)"
+    },
+    {
+     "id": "lager.x",
+     "name": "X Component",
+     "wert": "0 mm"
+    },
+    {
+     "id": "lager.y",
+     "name": "Y Component",
+     "wert": "Free"
+    },
+    {
+     "id": "lager.z",
+     "name": "Z Component",
+     "wert": "0 mm"
+    }
+   ]
+  },
+  {
+   "id": "lager2",
+   "label": "Fixed Support (Festlager)",
+   "art": "lager",
+   "ebene": 1,
+   "pruefen": "Festlager auf der rechten Seite.",
+   "details": [
+    {
+     "id": "lager2.geometrie",
+     "name": "Geometry",
+     "wert": "1 Edge (rechts)"
+    }
+   ]
+  },
+  {
+   "id": "last",
+   "label": "Force",
+   "art": "last",
+   "ebene": 1,
+   "pruefen": "Kraft auf der Kante in der Mitte, nicht auf der Fläche; Vorzeichen: nach unten, also negativ in z.",
+   "details": [
+    {
+     "id": "last.geometrie",
+     "name": "Geometry",
+     "wert": "1 Edge (Mitte, oben)"
+    },
+    {
+     "id": "last.def",
+     "name": "Define By",
+     "wert": "Components"
+    },
+    {
+     "id": "last.z",
+     "name": "Z Component",
+     "wert": "-5000 N"
+    }
+   ]
+  },
+  {
+   "id": "loesung",
+   "label": "Solution",
+   "art": "ordner",
+   "ebene": 0,
+   "pruefen": "Nach jeder Änderung neu gelöst (Solve)? Ergebnis aktuell (grüner Haken)?",
+   "details": [
+    {
+     "id": "loesung.status",
+     "name": "Status",
+     "wert": "gelöst, aktuell"
+    }
+   ]
+  },
+  {
+   "id": "ergebnis",
+   "label": "Total Deformation",
+   "art": "ergebnis",
+   "ebene": 1,
+   "pruefen": "Gesucht ist der Betrag der Verformung im ganzen Bauteil, Maximum ablesen.",
+   "details": [
+    {
+     "id": "ergebnis.typ",
+     "name": "Type",
+     "wert": "Total Deformation"
+    },
+    {
+     "id": "ergebnis.scope",
+     "name": "Geometry",
+     "wert": "All Bodies"
+    }
+   ]
+  },
+  {
+   "id": "ergebnis2",
+   "label": "Normal Stress",
+   "art": "ergebnis",
+   "ebene": 1,
+   "pruefen": "Normalspannung in y-Richtung (Längsrichtung des Balkens), nicht von-Mises.",
+   "details": [
+    {
+     "id": "ergebnis2.typ",
+     "name": "Type",
+     "wert": "Normal Stress"
+    },
+    {
+     "id": "ergebnis2.achse",
+     "name": "Orientation",
+     "wert": "Y Axis"
+    }
+   ]
+  }
+ ]
+}

@@ -623,31 +623,53 @@ DIAG_REL = 0.03  # Eingabe passt zu einem Fehlwert bis 3 % Abweichung (mind. Auf
 # Eingabe = Faktor × Lösung → typische Ursache (gilt für alle Zahlenfragen)
 DIAG_FACTORS = [
     (-1, "Der Betrag stimmt, das Vorzeichen nicht: Ist nach dem Betrag gefragt, "
-         "oder zeigt die Last in die falsche Richtung?"),
-    (1e3, "Genau 1000-mal zu groß: Stimmen die Einheiten? Gefragt ist in mm, N und MPa."),
-    (1e-3, "Genau 1000-mal zu klein: Stimmen die Einheiten (mm statt m, MPa statt GPa)?"),
-    (1e6, "Genau 1 000 000-mal zu groß: Spannung in Pa statt MPa? Einheitensystem auf mm umstellen."),
+         "oder zeigt die Last in die falsche Richtung?", "last"),
+    (1e3, "Genau 1000-mal zu groß: Stimmen die Einheiten? Gefragt ist in mm, N und MPa.", "einheiten"),
+    (1e-3, "Genau 1000-mal zu klein: Stimmen die Einheiten (mm statt m, MPa statt GPa)?", "einheiten"),
+    (1e6, "Genau 1 000 000-mal zu groß: Spannung in Pa statt MPa? Einheitensystem auf mm umstellen.", "einheiten"),
     (2, "Genau doppelt so groß wie erwartet: Wirkt die Last doppelt, "
-        "oder wurde sie im Symmetriemodell nicht halbiert?"),
+        "oder wurde sie im Symmetriemodell nicht halbiert?", "last"),
     (0.5, "Genau halb so groß wie erwartet: Wurde die Last zu oft geteilt, "
-          "oder fehlt ein Teil der Last?"),
-    (4, "Genau viermal so groß wie erwartet: Wurde die Last im Viertelmodell durch 4 geteilt?"),
+          "oder fehlt ein Teil der Last?", "last"),
+    (4, "Genau viermal so groß wie erwartet: Wurde die Last im Viertelmodell durch 4 geteilt?", "last"),
     (0.25, "Nur ein Viertel des erwarteten Werts: Wurde die Last zu oft geteilt, "
-           "oder ist das Modell steifer gelagert als vorgegeben?"),
+           "oder ist das Modell steifer gelagert als vorgegeben?", "last"),
 ]
 
 
-def diagnose(q, val):
-    """Wahrscheinliche Ursache eines falschen Zahlenwerts, sonst None.
-    Zuerst die aufgabenspezifischen Fehlwerte (data-diagnose), dann die Faktoren."""
+def diagnose_eintrag(q, val):
+    """Wahrscheinliche Ursache eines falschen Zahlenwerts: {"hint", "knoten"} oder None.
+    Zuerst die aufgabenspezifischen Fehlwerte (data-diagnose), dann die Faktoren. „knoten“ zeigt
+    auf den Eintrag im Strukturbaum der Übung (Knoten-ID, Detail-ID oder Art wie „einheiten“)."""
     for d in q.get("diagnose", []):
         if abs(val - d["value"]) <= max(q.get("tolerance", 0), DIAG_REL * abs(d["value"])):
-            return d["hint"]
+            return {"hint": d["hint"], "knoten": d.get("knoten")}
     if q["answer"]:
-        for factor, hint in DIAG_FACTORS:
+        for factor, hint, knoten in DIAG_FACTORS:
             if abs(val / (factor * q["answer"]) - 1) <= DIAG_REL:
-                return hint
+                return {"hint": hint, "knoten": knoten}
     return None
+
+
+def diagnose(q, val):
+    e = diagnose_eintrag(q, val)
+    return e["hint"] if e else None
+
+
+FS_MIN = 10   # Anteile je Baumeintrag erst ab so vielen Fehlwerten einer Frage
+
+
+def fehler_verteilung(db, q, qid):
+    """Wo lagen die bisherigen Fehler dieser Frage? Aus dem anonymen Fehlwert-Log:
+    {"n": Anzahl, "anteile": {knoten: Anteil}}, nicht erkannte Ursachen unter „sonstige“."""
+    werte = [r[0] for r in db.execute("SELECT value FROM wrong_values WHERE qid=?", (qid,))]
+    if len(werte) < FS_MIN:
+        return None
+    zaehler = {}
+    for v in werte:
+        k = (diagnose_eintrag(q, v) or {}).get("knoten") or "sonstige"
+        zaehler[k] = zaehler.get(k, 0) + 1
+    return {"n": len(werte), "anteile": {k: round(c / len(werte), 2) for k, c in zaehler.items()}}
 
 
 def earned_points(points, attempt_number, attempts_allowed):
@@ -667,7 +689,7 @@ def check_answer():
         return jsonify({"error": "Spiel nicht freigeschaltet"}), 403
 
     attempts_allowed = int(q.get("attempts", 5))
-    diagnosis = None
+    diagnosis = knoten = verteilung = None
     if "answer" in q:
         try:
             val = float(str(payload.get("value")).replace(",", "."))
@@ -676,11 +698,13 @@ def check_answer():
         correct = abs(val - q["answer"]) <= q.get("tolerance", 0)
         solution = q["answer"]
         if not correct and math.isfinite(val):
-            diagnosis = diagnose(q, val)
+            diag = diagnose_eintrag(q, val) or {}
+            diagnosis, knoten = diag.get("hint"), diag.get("knoten")
             db = get_db()
             db.execute("INSERT INTO wrong_values (qid, value, created_at) VALUES (?, ?, ?)",
                        (qid, val, time.time()))
             db.commit()
+            verteilung = fehler_verteilung(db, q, qid)
     else:
         selected = payload.get("selected")
         if not isinstance(selected, list):
@@ -722,6 +746,10 @@ def check_answer():
                 resp["aufloesung"] = q["aufloesung"]
         if diagnosis:
             resp["diagnosis"] = diagnosis
+        if knoten:
+            resp["diagnosisKnoten"] = knoten
+        if verteilung:
+            resp["verteilung"] = verteilung
         return jsonify(resp)
 
     # Gast: keine Speicherung, Versuche zählt der Client (Selbstbetrug erlaubt)
@@ -734,6 +762,10 @@ def check_answer():
             resp["aufloesung"] = q["aufloesung"]
     if diagnosis:
         resp["diagnosis"] = diagnosis
+    if knoten:
+        resp["diagnosisKnoten"] = knoten
+    if verteilung:
+        resp["verteilung"] = verteilung
     return jsonify(resp)
 
 

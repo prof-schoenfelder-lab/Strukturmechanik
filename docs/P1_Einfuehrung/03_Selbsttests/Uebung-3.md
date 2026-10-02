@@ -98,7 +98,7 @@ Belastung:
 
 ### Die maximale Durchbiegung $u_{\max }$ in mm
 
-<div class="numeric-question" data-answer="2.06" data-tolerance="0.2" data-points="5" data-attempts="5"  data-hints="Material zugeordnet?">
+<div class="numeric-question" data-baum="p1-u3" data-answer="2.06" data-tolerance="0.2" data-points="5" data-attempts="5"  data-hints="Material zugeordnet?">
 </div>
 
 <!---
@@ -108,7 +108,7 @@ RemoteDisp (Fläche): 2,1309 mm
 
 ### Die maximale von-Mises-Spannung in MPa
 
-<div class="numeric-question" data-answer="353.11" data-tolerance="3" data-points="5" data-attempts="5"  data-hints="Wurde die von-Mises Spannung ausgewertet? Fixierte Lagerung mit Remote Displacement?" data-diagnose="393.35: Das Maximum liegt an der festen Einspannung, einer Singularität. Remote Displacement verwenden oder außerhalb der Einspannung auswerten.">
+<div class="numeric-question" data-baum="p1-u3-alt" data-answer="353.11" data-tolerance="3" data-points="5" data-attempts="5"  data-hints="Wurde die von-Mises Spannung ausgewertet? Fixierte Lagerung mit Remote Displacement?" data-diagnose="393.35 [lager]: Das Maximum liegt an der festen Einspannung, einer Singularität. Remote Displacement verwenden oder außerhalb der Einspannung auswerten.">
 </div>
 
 <!---

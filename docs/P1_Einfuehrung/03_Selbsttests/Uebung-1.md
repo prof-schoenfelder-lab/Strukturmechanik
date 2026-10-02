@@ -98,12 +98,12 @@ Belastung:
 
 ### Die maximale Durchbiegung $u_{\max }$ in mm
 
-<div class="numeric-question" data-answer="7.378" data-tolerance="0.1" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Kraft auf -5000N in z-Richtung auf der Kante?" data-diagnose="7.747: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Stahl (E = 210 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
+<div class="numeric-question" data-baum="p1-u1" data-answer="7.378" data-tolerance="0.1" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Kraft auf -5000N in z-Richtung auf der Kante?" data-diagnose="7.747 [koerper.material]: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Stahl (E = 210 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
 </div>
 
 ### Die maximale Spannung in y-Richtung $\sigma_{y, \max }$ in MPa
 
-<div class="numeric-question" data-answer="275.03" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Kraft auf -5000N in z-Richtung auf der Kante?">
+<div class="numeric-question" data-baum="p1-u1" data-answer="275.03" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Kraft auf -5000N in z-Richtung auf der Kante?">
 </div>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->

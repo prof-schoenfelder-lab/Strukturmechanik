@@ -1,0 +1,180 @@
+{
+ "titel": "Übung 2: Kragarm mit alternativer Einspannung",
+ "baum": [
+  {
+   "id": "einheiten",
+   "label": "Units",
+   "art": "einheiten",
+   "ebene": 0,
+   "pruefen": "Ergebnisse in mm und MPa ablesen: Unter Home > Units auf Metric (mm, kg, N, s, mV, mA) stellen.",
+   "details": [
+    {
+     "id": "einheiten.system",
+     "name": "Unit System",
+     "wert": "Metric (mm, kg, N, s, mV, mA)"
+    }
+   ]
+  },
+  {
+   "id": "geometrie",
+   "label": "Geometry",
+   "art": "ordner",
+   "ebene": 0,
+   "pruefen": "Genau ein Körper, nichts unterdrückt?",
+   "details": [
+    {
+     "id": "geometrie.koerper",
+     "name": "Bodies",
+     "wert": "1"
+    }
+   ]
+  },
+  {
+   "id": "koerper",
+   "label": "Balken",
+   "art": "geometrie",
+   "ebene": 1,
+   "pruefen": "Ist dem Körper das vorgegebene Material zugeordnet und nicht Structural Steel? Stimmen die Maße?",
+   "details": [
+    {
+     "id": "koerper.material",
+     "name": "Material Assignment",
+     "wert": "Aluminium"
+    },
+    {
+     "id": "koerper.masse",
+     "name": "Abmessungen (L × b × h)",
+     "wert": "500 × 30 × 60 mm"
+    }
+   ]
+  },
+  {
+   "id": "material",
+   "label": "Aluminium (Engineering Data)",
+   "art": "material",
+   "ebene": 0,
+   "pruefen": "Material angelegt mit den Werten aus „Gegeben“? Einheit beim E-Modul (MPa oder GPa) beachten.",
+   "details": [
+    {
+     "id": "material.e",
+     "name": "Young's Modulus",
+     "wert": "70000 MPa"
+    },
+    {
+     "id": "material.nu",
+     "name": "Poisson's Ratio",
+     "wert": "0,34"
+    }
+   ]
+  },
+  {
+   "id": "netz",
+   "label": "Mesh",
+   "art": "netz",
+   "ebene": 0,
+   "pruefen": "Globale Elementgröße eingetragen und Netz neu erzeugt (Generate Mesh)?",
+   "details": [
+    {
+     "id": "netz.groesse",
+     "name": "Element Size",
+     "wert": "5 mm"
+    }
+   ]
+  },
+  {
+   "id": "analyse",
+   "label": "Static Structural 2",
+   "art": "ordner",
+   "ebene": 0,
+   "pruefen": "Zweite Analyse am selben Modell; ausgewertet wird diese, nicht die mit Fixed Support.",
+   "details": [
+    {
+     "id": "analyse.typ",
+     "name": "Analysis Type",
+     "wert": "Static Structural"
+    }
+   ]
+  },
+  {
+   "id": "lager",
+   "label": "Remote Displacement",
+   "art": "lager",
+   "ebene": 1,
+   "pruefen": "Statt Fixed Support: Remote Displacement mit allen Verschiebungen und Rotationen 0, damit an den Ecken keine Singularität entsteht.",
+   "details": [
+    {
+     "id": "lager.geometrie",
+     "name": "Geometry",
+     "wert": "1 Face (Stirnseite links)"
+    },
+    {
+     "id": "lager.verschiebung",
+     "name": "X, Y, Z Component",
+     "wert": "0 mm"
+    },
+    {
+     "id": "lager.rotation",
+     "name": "Rotation X, Y, Z",
+     "wert": "0°"
+    }
+   ]
+  },
+  {
+   "id": "last",
+   "label": "Force",
+   "art": "last",
+   "ebene": 1,
+   "pruefen": "Die Kraft aus der ersten Analyse per Drag&Drop übernommen?",
+   "details": [
+    {
+     "id": "last.geometrie",
+     "name": "Geometry",
+     "wert": "1 Edge (Kante rechts)"
+    },
+    {
+     "id": "last.def",
+     "name": "Define By",
+     "wert": "Components"
+    },
+    {
+     "id": "last.z",
+     "name": "Z Component",
+     "wert": "-3000 N"
+    }
+   ]
+  },
+  {
+   "id": "loesung",
+   "label": "Solution",
+   "art": "ordner",
+   "ebene": 0,
+   "pruefen": "Nach jeder Änderung neu gelöst (Solve)? Ergebnis aktuell (grüner Haken)?",
+   "details": [
+    {
+     "id": "loesung.status",
+     "name": "Status",
+     "wert": "gelöst, aktuell"
+    }
+   ]
+  },
+  {
+   "id": "ergebnis",
+   "label": "Normal Stress",
+   "art": "ergebnis",
+   "ebene": 1,
+   "pruefen": "Normalspannung in y-Richtung (Längsrichtung des Balkens), nicht von-Mises.",
+   "details": [
+    {
+     "id": "ergebnis2.typ",
+     "name": "Type",
+     "wert": "Normal Stress"
+    },
+    {
+     "id": "ergebnis2.achse",
+     "name": "Orientation",
+     "wert": "Y Axis"
+    }
+   ]
+  }
+ ]
+}

@@ -62,12 +62,12 @@ Belastung:
 
 ### Die maximale Durchbiegung $u_{\max }$ in mm
 
-<div class="numeric-question" data-answer="3.3462" data-tolerance="0.1" data-points="5" data-attempts="5"  data-hints="Material definiert und zugeordnet? Einheit auf mm gewechselt? Kraft auf Kante in z-Richtung?" data-diagnose="1.171: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Aluminium (E = 70 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
+<div class="numeric-question" data-baum="p1-u2" data-answer="3.3462" data-tolerance="0.1" data-points="5" data-attempts="5"  data-hints="Material definiert und zugeordnet? Einheit auf mm gewechselt? Kraft auf Kante in z-Richtung?" data-diagnose="1.171 [koerper.material]: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Aluminium (E = 70 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
 </div>
 
 ### Die maximale Spannung in y-Richtung $\sigma_{y, \max }$ in MPa
 
-<div class="numeric-question" data-answer="142.47" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Material definiert und zugeordnet? Einheit auf mm gewechselt? Kraft auf Kante in z-Richtung? Spannung in y-Richtung (Längsrichtung des Balkens) ausgewertet?" data-diagnose="87.7: Das ist der Wert mit der alternativen Einspannung. Hier ist noch die Rechnung mit Fixed Support gefragt. | 83.3: Das ist die analytische Lösung. Gefragt ist der ANSYS-Wert, der wegen der Singularität an der Einspannung höher liegt.">
+<div class="numeric-question" data-baum="p1-u2" data-answer="142.47" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Material definiert und zugeordnet? Einheit auf mm gewechselt? Kraft auf Kante in z-Richtung? Spannung in y-Richtung (Längsrichtung des Balkens) ausgewertet?" data-diagnose="87.7 [lager]: Das ist der Wert mit der alternativen Einspannung. Hier ist noch die Rechnung mit Fixed Support gefragt. | 83.3 [ergebnis2]: Das ist die analytische Lösung. Gefragt ist der ANSYS-Wert, der wegen der Singularität an der Einspannung höher liegt.">
 </div>
 
 ## Analytische Lösung 
@@ -158,7 +158,7 @@ Um den Unterschied zur `Fixed Support` zu sehen fügen wir eine weitere Analyse 
 
 Nun erneut die Spannung berechnen:
 
-<div class="numeric-question" data-answer="87.7" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Spannung in y-Richtung (Längsrichtung des Balkens) ausgewertet?" data-diagnose="142.47: Das ist noch der Wert mit Fixed Support (Singularität an der Einspannung). Die neue Analyse mit der alternativen Einspannung auswerten.">
+<div class="numeric-question" data-baum="p1-u2-alt" data-answer="87.7" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Spannung in y-Richtung (Längsrichtung des Balkens) ausgewertet?" data-diagnose="142.47 [lager]: Das ist noch der Wert mit Fixed Support (Singularität an der Einspannung). Die neue Analyse mit der alternativen Einspannung auswerten.">
 </div>
 
 Hier noch mal die neue Lösung im Vergleich mit unterschiedlichen Netzgrößen

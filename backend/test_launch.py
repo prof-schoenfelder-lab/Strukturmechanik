@@ -108,7 +108,7 @@ def main():
     with open(os.path.join(tmp, "answers.json"), "w") as f:
         json.dump({
             "/T/Ueb:q0": {"answer": 7.378, "tolerance": 0.1, "points": 5, "attempts": 5,
-                          "diagnose": [{"value": 7.747, "hint": "Material zugeordnet?"}]},
+                          "diagnose": [{"value": 7.747, "hint": "Material zugeordnet?", "knoten": "koerper.material"}]},
             "/T/Ueb:mc0": {"correct": ["a", "c"], "points": 4, "attempts": 3},
             "/T/Det:det0": {"correct": ["balken.material"], "points": 5, "attempts": 3,
                             "explain": {"netz.groesse": "Richtig: 5 mm."},
@@ -243,6 +243,21 @@ def main():
         check("diagnosis: Faktor 1000 (Einheit)", "1000-mal zu klein" in diag(0.007378))
         check("diagnosis: doppelte Last", "doppelt" in diag(14.8))
         check("diagnosis: Vorzeichen", "Vorzeichen" in diag(-7.378))
+
+        def knoten(value):
+            return requests.post(BACKEND + "/api/check", json={
+                "qid": "/T/Ueb:q0", "value": value, "attemptsUsed": 0}).json().get("diagnosisKnoten")
+        check("diagnosis: Baumknoten aus data-diagnose", knoten(7.75) == "koerper.material")
+        check("diagnosis: Baumknoten Einheiten bei Faktor 1000", knoten(0.007378) == "einheiten")
+        check("diagnosis: Baumknoten Last bei Vorzeichen", knoten(-7.378) == "last")
+        check("diagnosis: ohne Ursache kein Knoten", knoten(9.9) is None)
+        for v in (7.75, 7.75, 7.76, 0.007378, 9.9, 9.8):
+            requests.post(BACKEND + "/api/check", json={"qid": "/T/Ueb:q0", "value": v, "attemptsUsed": 0})
+        r = requests.post(BACKEND + "/api/check", json={"qid": "/T/Ueb:q0", "value": 9.7, "attemptsUsed": 0}).json()
+        v = r.get("verteilung") or {}
+        check("diagnosis: Verteilung je Baumeintrag ab 10 Fehlwerten",
+              v.get("n", 0) >= 10 and v["anteile"].get("koerper.material", 0) > 0
+              and abs(sum(v["anteile"].values()) - 1) < 0.05, str(v))
         # Spiele sind aus, bis sie im Dashboard freigeschaltet werden
         check("spiele standardmäßig aus",
               requests.get(BACKEND + "/api/spiele").json() == {"det": False, "hs": False, "kp": False})

@@ -929,6 +929,92 @@
     } catch (e) { }
   }
 
+  // Fehlersuche neben der Eingabe: ab dem 2. Fehlversuch der Soll-Strukturbaum der Übung (data-baum,
+  // docs/assets/baeume/<id>.json). Erkennt der Server die Ursache (diagnosisKnoten), ist der Eintrag rot
+  // markiert und aufgeklappt; sonst dient der Baum als Checkliste von oben nach unten.
+  var FS_AB = 2;
+  function baumUrl(id) {
+    var s = document.querySelector('script[src*="answer-checker.js"]');
+    return (s ? s.src.replace(/js\/answer-checker\.js.*$/, '') : '/assets/') + 'baeume/' + id + '.json';
+  }
+  function setupFehlersuche(q, qid) {
+    var id = q.dataset.baum, baum = null, laden = null, box = null, aktiv = null, knoten = null, text = '', vert = null;
+    if (!id) return { zeige: function () { } };
+    var geprueft = safeJSONParse(localStorage.getItem('answer_geprueft_' + qid)) || {};
+    function trifft(k, x) {
+      return !!x && (k.id === x || k.art === x || k.details.some(function (d) { return d.id === x; }));
+    }
+    // Anteile aus dem Fehlwert-Log je Knoten (jede Ursache beim ersten passenden Eintrag)
+    function anteile() {
+      var a = {};
+      if (!vert || !vert.anteile) return a;
+      Object.keys(vert.anteile).forEach(function (key) {
+        for (var i = 0; i < baum.baum.length; i++) {
+          if (trifft(baum.baum[i], key)) { a[i] = (a[i] || 0) + vert.anteile[key]; return; }
+        }
+      });
+      return a;
+    }
+    function malen() {
+      var verdacht = baum.baum.filter(function (k) { return trifft(k, knoten); }), a = anteile();
+      if (!aktiv) aktiv = verdacht[0] || null;
+      var kopf = verdacht.length ? 'Ihr Wert deutet auf den rot markierten Eintrag hin.' : 'Vergleichen Sie Ihren Strukturbaum von oben nach unten mit den Soll-Werten.';
+      if (vert && vert.n) kopf += ' Die Prozente zeigen, wo der Fehler bei den bisher ' + vert.n + ' falschen Eingaben zu dieser Frage lag' +
+        (vert.anteile && vert.anteile.sonstige ? ' (' + Math.round(100 * vert.anteile.sonstige) + ' % nicht zuzuordnen)' : '') + '.';
+      var html = '<div class="fs-kopf"><strong>Fehlersuche im Modell</strong><span>' + kopf +
+        '</span></div><div class="det-grid fs-grid"><div class="det-baum fs-baum">';
+      baum.baum.forEach(function (k, i) {
+        html += '<button type="button" data-i="' + i + '" class="det-knoten det-' + (k.art || 'ordner') +
+          (k === aktiv ? ' aktiv' : '') + (trifft(k, knoten) ? ' fs-verdacht' : '') + (geprueft[k.id] ? ' fs-ok' : '') +
+          '" style="padding-left:' + (0.5 + 1.1 * (k.ebene || 0)) + 'rem">' + k.label +
+          (a[i] ? '<span class="fs-anteil" style="--fs-a:' + a[i] + '">' + Math.round(100 * a[i]) + ' %</span>' : '') + '</button>';
+      });
+      html += '</div><div class="det-details fs-details">';
+      if (aktiv) {
+        html += '<div class="det-details-titel">Details of "' + aktiv.label + '"</div><div class="det-zeilen">' +
+          aktiv.details.map(function (d) {
+            return '<div class="det-zeile' + (d.id === knoten ? ' fs-verdacht' : '') + '"><span>' + d.name + '</span><span>' + d.wert + '</span></div>';
+          }).join('') + '</div>';
+        if (trifft(aktiv, knoten) && text) html += '<div class="fs-diagnose">' + text + '</div>';
+        if (aktiv.pruefen) html += '<p class="fs-pruefen">' + aktiv.pruefen + '</p>';
+        html += '<label class="fs-check"><input type="checkbox"' + (geprueft[aktiv.id] ? ' checked' : '') + '> In meinem Modell geprüft</label>';
+      } else html += '<div class="det-details-titel">Links einen Eintrag wählen</div>';
+      box.innerHTML = html + '</div></div>';
+      box.querySelectorAll('.det-knoten').forEach(function (b) {
+        b.onclick = function () { aktiv = baum.baum[+b.dataset.i]; malen(); };
+      });
+      var cb = box.querySelector('.fs-check input');
+      if (cb) cb.onchange = function () {
+        if (cb.checked) geprueft[aktiv.id] = 1; else delete geprueft[aktiv.id];
+        try { localStorage.setItem('answer_geprueft_' + qid, JSON.stringify(geprueft)); } catch (e) { }
+        malen();
+      };
+    }
+    return {
+      zeige: function (kn, tx, vt) {
+        if (kn !== undefined) {
+          knoten = kn || null; text = tx || ''; vert = vt || vert; aktiv = null;
+          try { localStorage.setItem('answer_knoten_' + qid, JSON.stringify({ k: knoten, t: text, v: vert })); } catch (e) { }
+        } else {
+          var alt = safeJSONParse(localStorage.getItem('answer_knoten_' + qid));
+          if (alt) { knoten = alt.k; text = alt.t; vert = alt.v || null; }
+        }
+        if (!box) {
+          var links = document.createElement('div');
+          links.className = 'fs-links';
+          while (q.firstChild) links.appendChild(q.firstChild);
+          box = document.createElement('div');
+          box.className = 'fs-box';
+          q.appendChild(links); q.appendChild(box);
+          q.classList.add('fs-an');
+          box.innerHTML = '<p class="fs-laedt">Strukturbaum wird geladen …</p>';
+        }
+        laden = laden || fetch(baumUrl(id)).then(function (r) { return r.ok ? r.json() : null; });
+        laden.then(function (b) { if (b) { baum = b; malen(); } else box.remove(); }).catch(function () { });
+      }
+    };
+  }
+
   function setupQuestion(q, index) {
     // use normalized page path for fallback qid to avoid collisions when pages were copied
     var normPath = (function () { try { var p = window.location && window.location.pathname ? window.location.pathname : (new URL(window.location.href)).pathname; if (p.indexOf('/index.html') !== -1) p = p.replace(/\/index\.html$/, '/'); if (p.length > 1 && p.endsWith('/')) p = p.slice(0, -1); return p; } catch (e) { return (document.location.pathname || document.location.href); } })();
@@ -954,6 +1040,9 @@
     if (!btn) { btn = document.createElement('button'); btn.type = 'button'; btn.className = 'numeric-answer-submit'; btn.textContent = 'Antwort prüfen'; q.appendChild(btn); }
     var fb = q.querySelector('.numeric-answer-feedback'); if (!fb) { fb = document.createElement('div'); fb.className = 'numeric-answer-feedback'; q.appendChild(fb); }
     var scoreEl = q.querySelector('.numeric-answer-score'); if (!scoreEl) { scoreEl = document.createElement('div'); scoreEl.className = 'numeric-answer-score'; q.appendChild(scoreEl); }
+    var fehlersuche = setupFehlersuche(q, qid);
+    if (attempts >= FS_AB && !((safeJSONParse(localStorage.getItem('answer_best_' + qid)) || {}).points > 0) &&
+        localStorage.getItem('answer_done_' + qid) !== '1') fehlersuche.zeige();
 
     // Per-question local-delete button removed to avoid easy reset by students.
 
@@ -1023,6 +1112,7 @@
             var hint2 = res.diagnosis || hints[Math.min(attempts, hints.length) - 1];
             if (hint2) s2 += '<div class="numeric-hint">Hinweis: ' + hint2 + '</div>';
             fb.innerHTML = s2;
+            if (attempts >= FS_AB) fehlersuche.zeige(res.diagnosisKnoten || null, res.diagnosis || '', res.verteilung || null);
             if (attempts >= aa) {
               if (res.authed) scoreEl.textContent = 'Punkte: 0/' + points;
               reveal(res.solution);

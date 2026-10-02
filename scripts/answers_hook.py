@@ -43,14 +43,22 @@ def _attr(tag, name, default=""):
 
 
 def _diagnose(raw, qid):
-    """'7,747: Text | 0,35: Text' -> [{"value": 7.747, "hint": "Text"}, ...]"""
+    """'7,747 [koerper.material]: Text | 0,35: Text' ->
+    [{"value": 7.747, "hint": "Text", "knoten": "koerper.material"}, ...]
+    Der Knoten in eckigen Klammern ist optional und zeigt auf den Eintrag im Strukturbaum der Übung."""
     out = []
     for part in raw.split("|"):
         val, sep, hint = part.partition(":")
         try:
             if not sep:
                 raise ValueError
-            out.append({"value": float(val.strip().replace(",", ".")), "hint": hint.strip()})
+            m = re.match(r"^\s*([-+0-9.,eE]+)\s*(?:\[([\w.-]+)\])?\s*$", val)
+            if not m:
+                raise ValueError
+            eintrag = {"value": float(m.group(1).replace(",", ".")), "hint": hint.strip()}
+            if m.group(2):
+                eintrag["knoten"] = m.group(2)
+            out.append(eintrag)
         except ValueError:
             if part.strip():
                 print(f"answers_hook: data-diagnose in {qid} nicht lesbar: {part.strip()!r}")
