@@ -108,17 +108,17 @@ Nun haben wir nur noch einen Unterschied von etwa 0,5 % zwischen den Spannungswe
     <th>im Knick</th>
   </tr>
   <tr>
-    <td>4&nbsp;mm</td>
+    <td>2&nbsp;mm</td>
     <td>354,48&nbsp;MPa</td>
     <td>354,48&nbsp;MPa</td>
   </tr>
   <tr>
-    <td>2&nbsp;mm</td>
+    <td>1&nbsp;mm</td>
     <td>393,35&nbsp;MPa</td>
     <td>353,11&nbsp;MPa</td>
   </tr>
   <tr>
-    <td>1&nbsp;mm</td>
+    <td>0,5&nbsp;mm</td>
     <td>562,21&nbsp;MPa</td>
     <td>355,06&nbsp;MPa</td>
   </tr>

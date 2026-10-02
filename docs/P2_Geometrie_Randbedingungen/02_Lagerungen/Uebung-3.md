@@ -24,7 +24,7 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung)
 
 ## Aufgabenstellung
 
-Nach dem Import der Archivdatei die Geometrie mit SpaceClaim öffnen und wie folgt ändern:
+Nach dem Import der Archivdatei in Mechanical die Lagerung wie folgt ergänzen:
 
 - [ ] Die Lagerung analog des gegebenen Bildes nur mit der Randbedingung `Displacement` einfügen
 

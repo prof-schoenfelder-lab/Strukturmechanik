@@ -17,7 +17,7 @@ Oft haben Geometrien nicht benötige Teile oder Features (z.B.  Bohrungen oder K
 Wir starten in diese Fall mit einer Step Datei eines Fahrradrahmens:
 
 <figure style="text-align:center;">
-    <img src="../images/Trekkingrahmen.png" alt="Trekkingrahmen" width="300">
+    <img src="../images/TrekkingRahmen.png" alt="Trekkingrahmen" width="300">
 </figure>
 
 [:material-paperclip: TrekkingRahmen_Original_v2.stp](assets/TrekkingRahmen_Original_v2.stp)

@@ -67,7 +67,7 @@ multikristallines Silizium
 
 ??? tip "<code>HINWEIS</code> – Elementdarstellung (klicken zum Aufklappen)"
 
-    --8<-- "P4_Abstraktionen/04_Linienstrukturen/Umsetzung.md:Elementdarstellung"
+    --8<-- "P4_Abstraktionen/05_Flaechenstrukturen/Umsetzung.md:Elementdarstellung"
 
 ## Gesucht
 

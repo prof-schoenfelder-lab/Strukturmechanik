@@ -39,5 +39,5 @@ Körper werden zusammengeführt um das Netz über die Grenzen hinaus zu verwende
 So müsste der Rahmen final aussehen:
 
 <figure style="text-align:center;">
-    <img src="../images/Trekkingrahmen_vereinfacht.png" alt="Trekkingrahmen vereinfacht" width="500">
+    <img src="../images/TrekkingRahmen_vereinfacht.png" alt="Trekkingrahmen vereinfacht" width="500">
 </figure>
