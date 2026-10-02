@@ -42,7 +42,21 @@ hide:
     <p> Structures / Mechanical Products </p>
   </div>
 
+  <div class="step">
+    <p class="step-title" role="heading" aria-level="2">SpaceClaim-Paket installieren</p>
+    <p>Nach der Grundinstallation im Download den Ordner <code>SPACECLAIM_2025R2_WINX64</code> öffnen und dort die <code>setup.exe</code> ausführen. Als Lizenzserver wieder <code>ansys.htwk-leipzig.de</code> mit Port <code>1055</code> angeben.</p>
+  </div>
+
+  <div class="step">
+    <p class="step-title" role="heading" aria-level="2">Service Pack 05 installieren (immer als Letztes)</p>
+    <p>Im Download den Ordner <code>ANSYS_2025R2.05_WINX64</code> öffnen und die <code>setup.exe</code> ausführen. Das Service Pack bringt alle installierten Teile, auch SpaceClaim, auf den aktuellen Stand. Deshalb erst nach dem SpaceClaim-Paket installieren.</p>
+  </div>
+
 </div>
+
+!!! warning "Discovery nicht zusätzlich installieren"
+
+    Liegt im Download auch ein Einzelpaket für Discovery, dieses nicht installieren: Discovery ist in der Grundinstallation schon enthalten, und das zusätzliche Paket bricht bei einer bestehenden Installation mit einem Fehler ab.
 
 
 
