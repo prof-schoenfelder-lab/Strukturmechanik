@@ -36,8 +36,8 @@ Balken mit rechteckigem Querschnitt
 
 Lagerung:
 
-- Loslager auf der linken Seite
-- Festlager auf der rechten Seite
+- Festlager auf der linken Seite
+- Loslager auf der rechten Seite
 
 Belastung:
 
