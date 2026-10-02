@@ -63,6 +63,9 @@ input { font: inherit; width: 100%; padding: 12px; border-radius: 10px; border: 
 .chip { display: inline-block; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; padding: 2px 8px; border-radius: 6px; margin-bottom: 2px; }
 .chip.auf { background: #E53009; color: #fff; }
 .chip.haengt { background: #E5007D; color: #fff; }
+.raumwahl { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+.raumwahl button { background: transparent; color: var(--ink2); border: 1.5px solid var(--rule); padding: 4px 10px; font-size: 13px; font-weight: 700; }
+.raumwahl button[aria-pressed="true"] { border-color: var(--cyan); color: #fff; }
 .seat.auf { background: #E53009; border-color: #E53009; color: #fff; font-weight: 800; }
 </style>
 </head>
@@ -82,8 +85,12 @@ input { font: inherit; width: 100%; padding: 12px; border-radius: 10px; border: 
 'use strict';
 const API = '../api/hilfe';
 const $ = id => document.getElementById(id);
-let key = '', daten = null, timer = null, ansicht = 'anfragen';
-try { key = localStorage.getItem('hilfe_key') || ''; ansicht = localStorage.getItem('hilfe_ansicht') || 'anfragen'; } catch (e) { }
+let key = '', daten = null, timer = null, ansicht = 'anfragen', raumWahl = '';   // raumWahl '' = automatisch
+try {
+  key = localStorage.getItem('hilfe_key') || '';
+  ansicht = localStorage.getItem('hilfe_ansicht') || 'anfragen';
+  raumWahl = localStorage.getItem('hilfe_raum') || '';
+} catch (e) { }
 
 const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => '&#' + c.charCodeAt(0) + ';');
 const dauer = s => s < 60 ? 'gerade eben' : 'seit ' + Math.round(s / 60) + ' min';
@@ -106,11 +113,17 @@ function anmelden(fehler) {
   $('ok').onclick = () => { key = $('k').value.trim(); try { localStorage.setItem('hilfe_key', key); } catch (e) { } laden(); };
 }
 
+// Nur der Raum, in dem gerade Praktikum ist (automatisch vom Backend oder fest gewählt).
 // plaetze: [{ raum, platz, cls, marke }] in Anzeige-Reihenfolge
 function raumkarte(raeume, plaetze) {
+  if (!plaetze.length) return '';
   const belegt = {};
   plaetze.forEach(e => { if (e.raum) belegt[e.raum + ':' + e.platz] = e; });
-  return Object.keys(raeume).sort().filter(r => plaetze.some(e => e.raum === r)).map(r => {
+  const raum = raumWahl || daten.raum_aktiv || (plaetze.find(e => e.raum) || {}).raum;
+  if (!raum || !raeume[raum]) return '';
+  const wahl = [''].concat(Object.keys(raeume).sort()).map(x =>
+    `<button data-raum="${x}" aria-pressed="${x === raumWahl}">${x || 'automatisch'}</button>`).join('');
+  return [raum].map(r => {
     const n = raeume[r], reihen = Math.ceil(n / 4);
     let zellen = '';
     for (let reihe = reihen; reihe >= 1; reihe--) {           // hinterste Reihe oben, wie im Dashboard
@@ -121,7 +134,10 @@ function raumkarte(raeume, plaetze) {
         zellen += b ? `<span class="seat ${b.cls}">${p}<sup>${esc(b.marke)}</sup></span>` : `<span class="seat">${p}</span>`;
       }
     }
-    return `<div class="room"><h3>Raum ${r}</h3><div class="map">${zellen}</div><p class="front">vorne, Tafel</p></div>`;
+    const anderswo = plaetze.filter(e => e.raum && e.raum !== r).length;
+    return `<div class="room"><h3>Raum ${r}</h3><div class="map">${zellen}</div><p class="front">vorne, Tafel</p>` +
+      (anderswo ? `<p class="hint">${anderswo} weitere in anderen Räumen, siehe Liste.</p>` : '') +
+      `<div class="raumwahl">${wahl}</div></div>`;
   }).join('');
 }
 
@@ -194,6 +210,11 @@ function fertig(h) {
   $('app').innerHTML = h;
   for (const b of document.querySelectorAll('[data-id]')) b.onclick = () => erledigt(+b.dataset.id, b);
   const pb = $('push'); if (pb) pb.onclick = pushAn;
+  for (const b of document.querySelectorAll('[data-raum]')) b.onclick = () => {
+    raumWahl = b.dataset.raum;
+    try { localStorage.setItem('hilfe_raum', raumWahl); } catch (e) { }
+    zeigen();
+  };
   $('stand').textContent = 'Stand ' + new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 }
 

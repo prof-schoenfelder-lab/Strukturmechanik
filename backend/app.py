@@ -953,7 +953,20 @@ def hilfe_liste():
                           "platz": int(m.group(2)) if m else None, "seite": short_page(r["page"] or ""),
                           "wartet": int(now_ts - r["created_at"])})
     empfohlen = []
-    for e in pool_status(db)["entries"]:
+    # Es ist immer nur ein Raum belegt: der mit den meisten in der letzten halben Stunde Aktiven,
+    # sonst der mit den meisten Anfragen
+    zaehler = {}
+    pool = pool_status(db)["entries"]
+    for e in pool:
+        m = re.match(r"^(N\d{3}) Platz \d+$", e["pc"])
+        if m and e["idle"] < 30 * 60:
+            zaehler[m.group(1)] = zaehler.get(m.group(1), 0) + 1
+    if not zaehler:
+        for e in eintraege:
+            if e["raum"]:
+                zaehler[e["raum"]] = zaehler.get(e["raum"], 0) + 1
+    raum_aktiv = max(sorted(zaehler), key=lambda r: zaehler[r]) if zaehler else None
+    for e in pool:
         if e["skey"] not in ("warn", "alarm"):
             continue
         label = e["pc"].replace("&hellip;", "…")
@@ -963,7 +976,7 @@ def hilfe_liste():
                           "name": e["name"], "seit": int(e["idle"])})
     empfohlen.sort(key=lambda x: (not x["aufgegeben"], -x["versuche"], x["seit"]))
     return jsonify({"an": help_enabled(db), "eintraege": eintraege, "empfohlen": empfohlen,
-                    "raeume": HILFE_RAEUME, "vapid": vapid_public()})
+                    "raeume": HILFE_RAEUME, "raum_aktiv": raum_aktiv, "vapid": vapid_public()})
 
 
 @app.post("/api/hilfe/erledigt")

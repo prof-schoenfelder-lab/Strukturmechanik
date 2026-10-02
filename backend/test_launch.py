@@ -353,6 +353,7 @@ def main():
         e = r["eintraege"]
         check("hilfe: Reihenfolge mit Raum, Platz, Seite",
               [(x["raum"], x["platz"], x["seite"]) for x in e] == [("N103", 7, "P1 Übung 3"), ("N103", 8, "P1 Übung 1")], str(r))
+        check("hilfe: aktiver Raum aus den Anfragen", r["raum_aktiv"] == "N103", str(r.get("raum_aktiv")))
         r = requests.post(BACKEND + "/api/hilfe/erledigt", headers=HK, json={"id": e[0]["id"]}).json()
         check("hilfe: erledigt, Platz 8 ist der nächste", [x["platz"] for x in r["eintraege"]] == [8], str(r))
         requests.post(BACKEND + "/api/help", headers=p8, json={"page": "x"})
