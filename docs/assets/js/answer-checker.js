@@ -943,7 +943,8 @@
     function trifft(k, x) {
       return !!x && (k.id === x || k.art === x || k.details.some(function (d) { return d.id === x; }));
     }
-    // Anteile aus dem Fehlwert-Log je Knoten (jede Ursache beim ersten passenden Eintrag)
+    // Wahrscheinlichkeit je Knoten, dass der eingegebene Wert von dieser Ursache kommt (vom Server;
+    // jede Ursache beim ersten passenden Eintrag)
     function anteile() {
       var a = {};
       if (!vert || !vert.anteile) return a;
@@ -958,8 +959,10 @@
       var verdacht = baum.baum.filter(function (k) { return trifft(k, knoten); }), a = anteile();
       if (!aktiv) aktiv = verdacht[0] || null;
       var kopf = verdacht.length ? 'Ihr Wert deutet auf den rot markierten Eintrag hin.' : 'Vergleichen Sie Ihren Strukturbaum von oben nach unten mit den Soll-Werten.';
-      if (vert && vert.n) kopf += ' Die Prozente zeigen, wo der Fehler bei den bisher ' + vert.n + ' falschen Eingaben zu dieser Frage lag' +
-        (vert.anteile && vert.anteile.sonstige ? ' (' + Math.round(100 * vert.anteile.sonstige) + ' % nicht zuzuordnen)' : '') + '.';
+      if (vert && vert.anteile && Object.keys(vert.anteile).length)
+        kopf += ' Die Prozente: wie wahrscheinlich Ihr Wert von diesem Fehler kommt' +
+          (vert.unbekannt >= 0.05 ? ', ' + Math.round(100 * vert.unbekannt) + ' % andere Ursache' : '') + '.';
+      else if (vert && !verdacht.length) kopf += ' Ihr Wert passt zu keinem bekannten Fehlerbild.';
       var html = '<div class="fs-kopf"><strong>Fehlersuche im Modell:</strong> <span>' + kopf +
         '</span></div><div class="det-grid fs-grid"><div class="det-baum fs-baum">';
       baum.baum.forEach(function (k, i) {
@@ -984,7 +987,7 @@
     return {
       zeige: function (kn, tx, vt) {
         if (kn !== undefined) {
-          knoten = kn || null; text = tx || ''; vert = vt || vert; aktiv = null;
+          knoten = kn || null; text = tx || ''; vert = vt || null; aktiv = null;
           try { localStorage.setItem('answer_knoten_' + qid, JSON.stringify({ k: knoten, t: text, v: vert })); } catch (e) { }
         } else {
           var alt = safeJSONParse(localStorage.getItem('answer_knoten_' + qid));
@@ -1099,7 +1102,7 @@
             var hint2 = res.diagnosis || hints[Math.min(attempts, hints.length) - 1];
             if (hint2) s2 += '<div class="numeric-hint">Hinweis: ' + hint2 + '</div>';
             fb.innerHTML = s2;
-            if (attempts >= FS_AB) fehlersuche.zeige(res.diagnosisKnoten || null, res.diagnosis || '', res.verteilung || null);
+            if (attempts >= FS_AB) fehlersuche.zeige(res.diagnosisKnoten || null, res.diagnosis || '', res.wahrscheinlichkeit || null);
             if (attempts >= aa) {
               if (res.authed) scoreEl.textContent = 'Punkte: 0/' + points;
               reveal(res.solution);

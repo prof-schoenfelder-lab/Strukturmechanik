@@ -656,20 +656,46 @@ def diagnose(q, val):
     return e["hint"] if e else None
 
 
-FS_MIN = 10   # Anteile je Baumeintrag erst ab so vielen Fehlwerten einer Frage
+FS_SIGMA = 0.03     # Breite eines Fehlerbilds: relativer Abstand (log), ab dem es deutlich weniger passt
+FS_UNBEKANNT = 0.135  # Passung „unbekannte Ursache“ (wie ein Fehlerbild in 2 sigma Abstand)
+FS_MIN = 10         # Häufigkeiten aus dem Fehlwert-Log erst ab so vielen Fehlwerten als Vorwissen
 
 
-def fehler_verteilung(db, q, qid):
-    """Wo lagen die bisherigen Fehler dieser Frage? Aus dem anonymen Fehlwert-Log:
-    {"n": Anzahl, "anteile": {knoten: Anteil}}, nicht erkannte Ursachen unter „sonstige“."""
-    werte = [r[0] for r in db.execute("SELECT value FROM wrong_values WHERE qid=?", (qid,))]
-    if len(werte) < FS_MIN:
+def fehlerbilder(q):
+    """Bekannte Fehlerbilder einer Frage: [(knoten, erwarteter Fehlwert)] aus data-diagnose und den Faktoren."""
+    bilder = [(d.get("knoten"), d["value"]) for d in q.get("diagnose", [])]
+    if q.get("answer"):
+        bilder += [(knoten, factor * q["answer"]) for factor, _, knoten in DIAG_FACTORS]
+    return bilder
+
+
+def fehler_wahrscheinlichkeit(db, q, qid, val):
+    """Wie gut passt der eingegebene Wert zu den bekannten Fehlerbildern? Je Fehlerbild eine Passung
+    exp(-(ln(Wert/Fehlwert)/sigma)²/2), dazu eine feste Passung für „unbekannte Ursache“. Vorwissen:
+    Häufigkeit der Ursachen im anonymen Fehlwert-Log (ab FS_MIN Fehlwerten, sonst gleich).
+    Ergebnis: {"anteile": {knoten: p}, "unbekannt": p}, Summe 1."""
+    bilder = fehlerbilder(q)
+    if not bilder:
         return None
-    zaehler = {}
-    for v in werte:
-        k = (diagnose_eintrag(q, v) or {}).get("knoten") or "sonstige"
-        zaehler[k] = zaehler.get(k, 0) + 1
-    return {"n": len(werte), "anteile": {k: round(c / len(werte), 2) for k, c in zaehler.items()}}
+    vor = {}
+    werte = [r[0] for r in db.execute("SELECT value FROM wrong_values WHERE qid=?", (qid,))]
+    if len(werte) >= FS_MIN:
+        for v in werte:
+            k = (diagnose_eintrag(q, v) or {}).get("knoten")
+            vor[k] = vor.get(k, 0) + 1
+    gewicht = lambda k: (vor.get(k, 0) + 1) if vor else 1   # Laplace, damit seltene Ursachen nicht 0 werden
+    roh, unbekannt = {}, FS_UNBEKANNT * gewicht(None)
+    for knoten, fw in bilder:
+        if not fw or val / fw <= 0:
+            continue
+        passung = math.exp(-0.5 * (math.log(val / fw) / FS_SIGMA) ** 2)
+        if knoten:
+            roh[knoten] = roh.get(knoten, 0) + passung * gewicht(knoten)
+        else:
+            unbekannt += passung * gewicht(None)
+    summe = unbekannt + sum(roh.values())
+    anteile = {k: round(v / summe, 2) for k, v in roh.items() if v / summe >= 0.05}
+    return {"anteile": anteile, "unbekannt": round(unbekannt / summe, 2)}
 
 
 def earned_points(points, attempt_number, attempts_allowed):
@@ -689,7 +715,7 @@ def check_answer():
         return jsonify({"error": "Spiel nicht freigeschaltet"}), 403
 
     attempts_allowed = int(q.get("attempts", 5))
-    diagnosis = knoten = verteilung = None
+    diagnosis = knoten = wahrscheinlichkeit = None
     if "answer" in q:
         try:
             val = float(str(payload.get("value")).replace(",", "."))
@@ -704,7 +730,7 @@ def check_answer():
             db.execute("INSERT INTO wrong_values (qid, value, created_at) VALUES (?, ?, ?)",
                        (qid, val, time.time()))
             db.commit()
-            verteilung = fehler_verteilung(db, q, qid)
+            wahrscheinlichkeit = fehler_wahrscheinlichkeit(db, q, qid, val)
     else:
         selected = payload.get("selected")
         if not isinstance(selected, list):
@@ -748,8 +774,8 @@ def check_answer():
             resp["diagnosis"] = diagnosis
         if knoten:
             resp["diagnosisKnoten"] = knoten
-        if verteilung:
-            resp["verteilung"] = verteilung
+        if wahrscheinlichkeit:
+            resp["wahrscheinlichkeit"] = wahrscheinlichkeit
         return jsonify(resp)
 
     # Gast: keine Speicherung, Versuche zählt der Client (Selbstbetrug erlaubt)
@@ -764,8 +790,8 @@ def check_answer():
         resp["diagnosis"] = diagnosis
     if knoten:
         resp["diagnosisKnoten"] = knoten
-    if verteilung:
-        resp["verteilung"] = verteilung
+    if wahrscheinlichkeit:
+        resp["wahrscheinlichkeit"] = wahrscheinlichkeit
     return jsonify(resp)
 
 

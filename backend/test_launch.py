@@ -251,13 +251,19 @@ def main():
         check("diagnosis: Baumknoten Einheiten bei Faktor 1000", knoten(0.007378) == "einheiten")
         check("diagnosis: Baumknoten Last bei Vorzeichen", knoten(-7.378) == "last")
         check("diagnosis: ohne Ursache kein Knoten", knoten(9.9) is None)
-        for v in (7.75, 7.75, 7.76, 0.007378, 9.9, 9.8):
-            requests.post(BACKEND + "/api/check", json={"qid": "/T/Ueb:q0", "value": v, "attemptsUsed": 0})
-        r = requests.post(BACKEND + "/api/check", json={"qid": "/T/Ueb:q0", "value": 9.7, "attemptsUsed": 0}).json()
-        v = r.get("verteilung") or {}
-        check("diagnosis: Verteilung je Baumeintrag ab 10 Fehlwerten",
-              v.get("n", 0) >= 10 and v["anteile"].get("koerper.material", 0) > 0
-              and abs(sum(v["anteile"].values()) - 1) < 0.05, str(v))
+        def wk(value):
+            return requests.post(BACKEND + "/api/check", json={
+                "qid": "/T/Ueb:q0", "value": value, "attemptsUsed": 0}).json().get("wahrscheinlichkeit") or {}
+        w = wk(7.75)
+        check("wahrscheinlichkeit: Wert am Fehlerbild Material", w["anteile"].get("koerper.material", 0) > 0.8, str(w))
+        w = wk(0.0074)
+        check("wahrscheinlichkeit: Faktor 1000 zu Einheiten", w["anteile"].get("einheiten", 0) > 0.8, str(w))
+        w = wk(9.9)
+        check("wahrscheinlichkeit: fern aller Fehlerbilder unbekannt", w["unbekannt"] > 0.9 and not w["anteile"], str(w))
+        w = wk(7.95)
+        check("wahrscheinlichkeit: zwischen Material und unbekannt",
+              0.1 < w["anteile"].get("koerper.material", 0) < 0.9
+              and abs(sum(w["anteile"].values()) + w["unbekannt"] - 1) < 0.03, str(w))
         # Spiele sind aus, bis sie im Dashboard freigeschaltet werden
         check("spiele standardmäßig aus",
               requests.get(BACKEND + "/api/spiele").json() == {"det": False, "hs": False, "kp": False})
