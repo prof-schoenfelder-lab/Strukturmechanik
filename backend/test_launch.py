@@ -128,6 +128,8 @@ def main():
                LTI_CONSUMER_SECRET=SECRET,
                DASHBOARD_TOKEN="test-dashboard-key",
                PCNAMES_PATH=os.path.join(tmp, "pc-names.json"),
+               VAPID_PATH=os.path.join(tmp, "vapid.pem"),
+               HILFE_TEST="1",
                FLASK_RUN_PORT="5099")
     with open(os.path.join(tmp, "pc-names.json"), "w") as f:
         json.dump({"10.0.0.7": "N103 Platz 7", "10.0.0.8": "N103 Platz 8"}, f)
@@ -309,6 +311,55 @@ def main():
         requests.get(BACKEND + "/dashboard-kp-name-loeschen", params={"key": "test-dashboard-key", "name": "bAda/b1234567890"})
         r = requests.get(KP, headers=p7, params={"teil": TEIL}).json()
         check("kp: Name im Dashboard entfernt", r["ich"]["anzeige"] == "N103 Platz 7" and r["name"] == "", str(r))
+
+        # Hilfe-App: Schlüssel nötig, Warteschlange mit Platz, Push bei neuer Anfrage, erledigt
+        import base64
+        from cryptography.hazmat.primitives import serialization
+        from cryptography.hazmat.primitives.asymmetric import ec
+        HK = {"X-Key": "test-dashboard-key"}
+        pushes = []
+
+        class PushSink(http.server.BaseHTTPRequestHandler):
+            def do_POST(self):
+                pushes.append({"auth": self.headers.get("Authorization", ""), "enc": self.headers.get("Content-Encoding"),
+                               "body": self.rfile.read(int(self.headers.get("Content-Length", 0)))})
+                self.send_response(201)
+                self.end_headers()
+
+            def log_message(self, *a):
+                pass
+        sink = http.server.HTTPServer(("127.0.0.1", 5096), PushSink)
+        threading.Thread(target=sink.serve_forever, daemon=True).start()
+        check("hilfe: ohne Schlüssel gesperrt", requests.get(BACKEND + "/api/hilfe").status_code == 403)
+        check("hilfe: Seite und Manifest", requests.get(BACKEND + "/hilfe/").status_code == 200
+              and "manifest+json" in requests.get(BACKEND + "/hilfe/manifest.webmanifest").headers["Content-Type"])
+        r = requests.post(BACKEND + "/api/hilfe/schalter", headers=HK, json={"an": True}).json()
+        check("hilfe: Schalter an, VAPID-Schlüssel da", r["an"] and len(base64.urlsafe_b64decode(r["vapid"] + "==")) == 65, str(r))
+        geraet = ec.generate_private_key(ec.SECP256R1()).public_key().public_bytes(
+            serialization.Encoding.X962, serialization.PublicFormat.UncompressedPoint)
+        abo = {"endpoint": "http://127.0.0.1:5096/push/1", "keys": {
+            "p256dh": base64.urlsafe_b64encode(geraet).rstrip(b"=").decode(),
+            "auth": base64.urlsafe_b64encode(os.urandom(16)).rstrip(b"=").decode()}}
+        check("hilfe: Push-Abo gespeichert", requests.post(BACKEND + "/api/hilfe/abo", headers=HK, json={"abo": abo}).json() == {"ok": True})
+        requests.post(BACKEND + "/api/help", headers=p7, json={"page": "/Strukturmechanik/P1_Einfuehrung/03_Selbsttests/Uebung-3"})
+        requests.post(BACKEND + "/api/help", headers=p8, json={"page": "/Strukturmechanik/P1_Einfuehrung/03_Selbsttests/Uebung-1"})
+        for _ in range(40):
+            if len(pushes) >= 2:
+                break
+            time.sleep(0.25)
+        check("hilfe: Push je neuer Anfrage, verschlüsselt mit VAPID",
+              len(pushes) == 2 and all(x["enc"] == "aes128gcm" and x["auth"].startswith("vapid") for x in pushes), str(pushes)[:300])
+        r = requests.get(BACKEND + "/api/hilfe", headers=HK).json()
+        e = r["eintraege"]
+        check("hilfe: Reihenfolge mit Raum, Platz, Seite",
+              [(x["raum"], x["platz"], x["seite"]) for x in e] == [("N103", 7, "P1 Übung 3"), ("N103", 8, "P1 Übung 1")], str(r))
+        r = requests.post(BACKEND + "/api/hilfe/erledigt", headers=HK, json={"id": e[0]["id"]}).json()
+        check("hilfe: erledigt, Platz 8 ist der nächste", [x["platz"] for x in r["eintraege"]] == [8], str(r))
+        requests.post(BACKEND + "/api/help", headers=p8, json={"page": "x"})
+        check("hilfe: kein zweiter Push für offene Anfrage", len(pushes) == 2)
+        r = requests.post(BACKEND + "/api/hilfe/schalter", headers=HK, json={"an": False}).json()
+        check("hilfe: ausschalten schließt offene Anfragen", not r["an"] and r["eintraege"] == [], str(r))
+        sink.shutdown()
 
         r = requests.get(BACKEND + "/dashboard", params={"key": "test-dashboard-key"})
         check("dashboard zeigt Fehlwerte mit Ursache",

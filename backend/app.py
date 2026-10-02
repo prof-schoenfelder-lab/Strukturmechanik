@@ -38,7 +38,7 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from html import escape
 
-from flask import Flask, g, jsonify, redirect, request
+from flask import Flask, g, jsonify, redirect, request, send_from_directory
 from itsdangerous import BadSignature, URLSafeTimedSerializer
 from oauthlib.oauth1 import RequestValidator, SignatureOnlyEndpoint
 
@@ -129,6 +129,12 @@ def init_db():
             seite TEXT,
             updated_at REAL,
             PRIMARY KEY (who, teil)
+        );
+        -- Hilfe-App: Push-Abos der Geräte (nur Dozent, per Dashboard-Schlüssel)
+        CREATE TABLE IF NOT EXISTS push_abos (
+            endpoint TEXT PRIMARY KEY,
+            abo TEXT NOT NULL,
+            created_at REAL
         );
         -- selbst gewählter Spitzname (keine echten Namen)
         CREATE TABLE IF NOT EXISTS kp_namen (
@@ -845,7 +851,148 @@ def help_request():
         db.execute("INSERT INTO help_requests (who, page, created_at) VALUES (?, ?, ?)",
                    (who, str(payload.get("page") or "")[:200], time.time()))
         db.commit()
+        offen = db.execute("SELECT COUNT(*) FROM help_requests WHERE done_at IS NULL").fetchone()[0]
+        titel = "Hilfe: " + hilfe_label(who)
+        text = short_page(str(payload.get("page") or "")) + ("" if offen == 1 else " · %d warten" % offen)
+        threading.Thread(target=hilfe_push, args=(titel, text), daemon=True).start()
     return help_status()
+
+
+# --- Hilfe-App fürs Handy -------------------------------------------------------
+# Web-App unter /hilfe/ (zum Home-Bildschirm hinzufügen): nächste Anfrage mit Raum und
+# Platz, Raumkarte, „Erledigt, nächster“. Push bei jeder neuen Anfrage (Web Push,
+# auf dem iPhone ab iOS 16.4 für Apps vom Home-Bildschirm; die Uhr spiegelt das).
+# Zugang mit dem Dashboard-Schlüssel. Den VAPID-Schlüssel legt das Backend selbst an.
+HILFE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "hilfe")
+VAPID_PATH = os.environ.get("VAPID_PATH", os.path.join(os.path.dirname(os.path.abspath(DB_PATH)), "vapid_private.pem"))
+VAPID_SUB = os.environ.get("VAPID_SUB", "mailto:felix.kaule@htwk-leipzig.de")
+HILFE_RAEUME = {"N102": 32, "N103": 20, "N104": 16}
+
+
+def vapid_public():
+    """Öffentlicher VAPID-Schlüssel (base64url, unkomprimierter Punkt); legt das Schlüsselpaar bei Bedarf an."""
+    from cryptography.hazmat.primitives import serialization
+    from cryptography.hazmat.primitives.asymmetric import ec
+    if not os.path.exists(VAPID_PATH):
+        key = ec.generate_private_key(ec.SECP256R1())
+        with open(VAPID_PATH, "wb") as f:
+            f.write(key.private_bytes(serialization.Encoding.PEM, serialization.PrivateFormat.PKCS8,
+                                      serialization.NoEncryption()))
+        os.chmod(VAPID_PATH, 0o600)
+    with open(VAPID_PATH, "rb") as f:
+        key = serialization.load_pem_private_key(f.read(), None)
+    raw = key.public_key().public_bytes(serialization.Encoding.X962, serialization.PublicFormat.UncompressedPoint)
+    return base64.urlsafe_b64encode(raw).rstrip(b"=").decode()
+
+
+def hilfe_label(who):
+    """Sitzplatz einer Hilfe-Anfrage, z. B. „N103 Platz 7“; sonst Rechnername oder Pseudonym-Anfang."""
+    if who.startswith("ip:"):
+        return host_label(who[3:]) or who[3:]
+    seen = LAST_SEEN.get(who) or {}
+    return host_label(seen.get("ip", "")) or ("…" + who[:6])
+
+
+def hilfe_push(titel, text):
+    """Push an alle angemeldeten Geräte; abgelaufene Abos werden entfernt. Läuft im Hintergrund."""
+    try:
+        from pywebpush import webpush, WebPushException
+    except ImportError:
+        return
+    db = sqlite3.connect(DB_PATH)
+    try:
+        vapid_public()
+        for endpoint, abo in db.execute("SELECT endpoint, abo FROM push_abos").fetchall():
+            try:
+                webpush(json.loads(abo), json.dumps({"titel": titel, "text": text}),
+                        vapid_private_key=VAPID_PATH, vapid_claims={"sub": VAPID_SUB},
+                        ttl=600, headers={"Urgency": "high"}, timeout=10)
+            except WebPushException as e:
+                if e.response is not None and e.response.status_code in (404, 410):
+                    db.execute("DELETE FROM push_abos WHERE endpoint=?", (endpoint,))
+                    db.commit()
+            except Exception:
+                pass
+    finally:
+        db.close()
+
+
+def hilfe_key_ok():
+    key = request.headers.get("X-Key") or request.args.get("key")
+    return bool(DASHBOARD_TOKEN) and key == DASHBOARD_TOKEN
+
+
+@app.get("/hilfe/")
+def hilfe_seite():
+    return send_from_directory(HILFE_DIR, "index.html")
+
+
+@app.get("/hilfe/<path:datei>")
+def hilfe_datei(datei):
+    resp = send_from_directory(HILFE_DIR, datei)
+    if datei.endswith(".webmanifest"):
+        resp.mimetype = "application/manifest+json"
+    if datei == "sw.js":
+        resp.headers["Cache-Control"] = "no-cache"
+    return resp
+
+
+@app.get("/api/hilfe")
+def hilfe_liste():
+    if not hilfe_key_ok():
+        return jsonify({"error": "Schlüssel falsch"}), 403
+    db = get_db()
+    _help_cleanup(db)
+    now_ts = time.time()
+    eintraege = []
+    for r in db.execute("SELECT id, who, page, created_at FROM help_requests WHERE done_at IS NULL "
+                        "ORDER BY created_at").fetchall():
+        label = hilfe_label(r["who"])
+        m = re.match(r"^(N\d{3}) Platz (\d+)$", label)
+        eintraege.append({"id": r["id"], "label": label, "raum": m.group(1) if m else None,
+                          "platz": int(m.group(2)) if m else None, "seite": short_page(r["page"] or ""),
+                          "wartet": int(now_ts - r["created_at"])})
+    return jsonify({"an": help_enabled(db), "eintraege": eintraege, "raeume": HILFE_RAEUME,
+                    "vapid": vapid_public()})
+
+
+@app.post("/api/hilfe/erledigt")
+def hilfe_erledigt():
+    if not hilfe_key_ok():
+        return jsonify({"error": "Schlüssel falsch"}), 403
+    db = get_db()
+    db.execute("UPDATE help_requests SET done_at=? WHERE id=? AND done_at IS NULL",
+               (time.time(), (request.get_json(silent=True) or {}).get("id")))
+    db.commit()
+    return hilfe_liste()
+
+
+@app.post("/api/hilfe/schalter")
+def hilfe_schalter():
+    if not hilfe_key_ok():
+        return jsonify({"error": "Schlüssel falsch"}), 403
+    db = get_db()
+    an = bool((request.get_json(silent=True) or {}).get("an"))
+    db.execute("INSERT OR REPLACE INTO meta (key, value) VALUES ('help_enabled', ?)", ("1" if an else "0",))
+    if not an:
+        db.execute("UPDATE help_requests SET done_at=? WHERE done_at IS NULL", (time.time(),))
+    db.commit()
+    return hilfe_liste()
+
+
+@app.post("/api/hilfe/abo")
+def hilfe_abo():
+    if not hilfe_key_ok():
+        return jsonify({"error": "Schlüssel falsch"}), 403
+    abo = (request.get_json(silent=True) or {}).get("abo") or {}
+    endpoint = abo.get("endpoint", "")
+    if not endpoint.startswith("https://") and not (app.debug or os.environ.get("HILFE_TEST")):
+        return jsonify({"error": "ungültig"}), 400
+    db = get_db()
+    db.execute("INSERT OR REPLACE INTO push_abos (endpoint, abo, created_at) VALUES (?, ?, ?)",
+               (endpoint, json.dumps(abo), time.time()))
+    db.commit()
+    return jsonify({"ok": True})
 
 
 @app.get("/dashboard-help-toggle")
@@ -1289,13 +1436,8 @@ def dashboard():
         "ORDER BY created_at").fetchall()
     items = ""
     for i, qr in enumerate(queue_rows, start=1):
-        if qr["who"].startswith("ip:"):
-            label = host_label(qr["who"][3:]) or qr["who"][3:]
-            who_name = ""
-        else:
-            seen = LAST_SEEN.get(qr["who"]) or {}
-            label = host_label(seen.get("ip", "")) or ("…" + qr["who"][:6])
-            who_name = names.get(qr["who"], "")
+        label = hilfe_label(qr["who"])
+        who_name = "" if qr["who"].startswith("ip:") else names.get(qr["who"], "")
         wait_min = max(0, round((now_ts - qr["created_at"]) / 60))
         items += ('<tr><td class="num"><b>%d.</b></td><td><b>%s</b>%s</td>'
                   '<td>%s<br><small>wartet %d min</small></td>'
