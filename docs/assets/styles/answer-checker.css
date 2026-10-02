@@ -689,11 +689,9 @@ a.player-badge:hover { transform: scale(1.12); color: var(--player-badge-fg, #11
 .fs-kopf span { color: var(--md-default-fg-color--light); }
 .fs-grid { margin: 0; }
 .det-knoten.fs-verdacht { color: #E53009; font-weight: 700; outline: 2px solid #E53009; outline-offset: -2px; }
-.det-knoten.fs-ok::after { content: " ✓"; color: #00964E; font-weight: 700; }
 .det-zeile.fs-verdacht { background: rgba(229, 48, 9, 0.12); }
 .fs-diagnose { margin: 0.5rem 0; padding: 0.4rem 0.6rem; border-left: 3px solid #E53009; background: rgba(229, 48, 9, 0.06); }
 .fs-pruefen { margin: 0.5rem 0 0.3rem; color: var(--md-default-fg-color--light); }
-.fs-check { display: flex; gap: 0.4rem; align-items: center; cursor: pointer; }
 .fs-laedt { color: var(--md-default-fg-color--light); margin: 0; }
 .fs-anteil { float: right; margin-left: 0.5rem; font-size: 0.8em; font-weight: 700; padding: 0 0.35rem; border-radius: 4px;
   color: #fff; background: rgba(229, 48, 9, calc(0.35 + 0.65 * var(--fs-a))); }

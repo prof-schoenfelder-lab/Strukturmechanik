@@ -108,13 +108,33 @@
      "wert": "Flächen am Kopf (10 mm)"
     },
     {
-     "id": "lager.verschiebung",
-     "name": "X, Y, Z Component",
+     "id": "lager.x",
+     "name": "X Component",
      "wert": "0 mm"
     },
     {
-     "id": "lager.rotation",
-     "name": "Rotation X, Y, Z",
+     "id": "lager.y",
+     "name": "Y Component",
+     "wert": "0 mm"
+    },
+    {
+     "id": "lager.z",
+     "name": "Z Component",
+     "wert": "0 mm"
+    },
+    {
+     "id": "lager.rx",
+     "name": "Rotation X",
+     "wert": "0°"
+    },
+    {
+     "id": "lager.ry",
+     "name": "Rotation Y",
+     "wert": "0°"
+    },
+    {
+     "id": "lager.rz",
+     "name": "Rotation Z",
      "wert": "0°"
     }
    ]

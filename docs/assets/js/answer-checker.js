@@ -940,7 +940,6 @@
   function setupFehlersuche(q, qid) {
     var id = q.dataset.baum, baum = null, laden = null, box = null, aktiv = null, knoten = null, text = '', vert = null;
     if (!id) return { zeige: function () { } };
-    var geprueft = safeJSONParse(localStorage.getItem('answer_geprueft_' + qid)) || {};
     function trifft(k, x) {
       return !!x && (k.id === x || k.art === x || k.details.some(function (d) { return d.id === x; }));
     }
@@ -965,7 +964,7 @@
         '</span></div><div class="det-grid fs-grid"><div class="det-baum fs-baum">';
       baum.baum.forEach(function (k, i) {
         html += '<button type="button" data-i="' + i + '" class="det-knoten det-' + (k.art || 'ordner') +
-          (k === aktiv ? ' aktiv' : '') + (trifft(k, knoten) ? ' fs-verdacht' : '') + (geprueft[k.id] ? ' fs-ok' : '') +
+          (k === aktiv ? ' aktiv' : '') + (trifft(k, knoten) ? ' fs-verdacht' : '') +
           '" style="padding-left:' + (0.5 + 1.1 * (k.ebene || 0)) + 'rem">' + k.label +
           (a[i] ? '<span class="fs-anteil" style="--fs-a:' + a[i] + '">' + Math.round(100 * a[i]) + ' %</span>' : '') + '</button>';
       });
@@ -977,18 +976,11 @@
           }).join('') + '</div>';
         if (trifft(aktiv, knoten) && text) html += '<div class="fs-diagnose">' + text + '</div>';
         if (aktiv.pruefen) html += '<p class="fs-pruefen">' + aktiv.pruefen + '</p>';
-        html += '<label class="fs-check"><input type="checkbox"' + (geprueft[aktiv.id] ? ' checked' : '') + '> In meinem Modell geprüft</label>';
       } else html += '<div class="det-details-titel">Links einen Eintrag wählen</div>';
       box.innerHTML = html + '</div></div>';
       box.querySelectorAll('.det-knoten').forEach(function (b) {
         b.onclick = function () { aktiv = baum.baum[+b.dataset.i]; malen(); };
       });
-      var cb = box.querySelector('.fs-check input');
-      if (cb) cb.onchange = function () {
-        if (cb.checked) geprueft[aktiv.id] = 1; else delete geprueft[aktiv.id];
-        try { localStorage.setItem('answer_geprueft_' + qid, JSON.stringify(geprueft)); } catch (e) { }
-        malen();
-      };
     }
     return {
       zeige: function (kn, tx, vt) {
