@@ -14,6 +14,7 @@
 
 import os
 import re
+import sys
 import json
 import traceback
 import System
@@ -45,12 +46,14 @@ except NameError:
 BILD_BREITE = 1600
 BILD_HOEHE = 1000
 MAX_LISTE = 2000            # laengere Listen werden gekuerzt
+MAX_TIEFE = 4               # Verschachtelung; Materialdaten: Eigenschaft -> Groesse -> [Einheit, Werte]
 MAX_GEO_BESCHREIBUNG = 50   # so viele Geometrie-IDs je Auswahl werden beschrieben
 
 # Eigenschaften, die nur Rauschen oder Rekursion erzeugen
 AUSLASSEN = set([
     "Children", "Parent", "InternalObject", "Properties", "VisibleProperties",
     "PropertyNames", "Comments", "Figures", "Images", "Author",
+    "DateOfRun", "TimeOfRun",           # Zeitstempel als Text
 ])
 
 # Pfade (Laufwerk, UNC, Benutzerordner) werden nicht ins JSON uebernommen
@@ -158,7 +161,7 @@ def konv(v, tiefe=0):
     if v is None:
         return None
     if isinstance(v, bool):
-        return v
+        return bool(v)      # Reflection liefert geboxte Booleans, json prueft "is True"
     if isinstance(v, (int, long, float)):
         return v
     if isinstance(v, (str, unicode)):
@@ -198,7 +201,10 @@ def konv(v, tiefe=0):
         if str(v.SelectionType) == "GeometryEntities":
             d["geometrie"] = [geo_beschreibung(i) for i in ids[:MAX_GEO_BESCHREIBUNG]]
         return d
-    if tiefe < 3 and isinstance(v, System.Collections.IEnumerable):
+    if tiefe < MAX_TIEFE and isinstance(v, (dict, System.Collections.IDictionary)):
+        schluessel = v.keys() if isinstance(v, dict) else list(v.Keys)
+        return dict((unicode(k), konv(v[k], tiefe + 1)) for k in schluessel)
+    if tiefe < MAX_TIEFE and isinstance(v, System.Collections.IEnumerable):
         aus = []
         for k, x in enumerate(v):
             if k >= MAX_LISTE:
@@ -210,7 +216,7 @@ def konv(v, tiefe=0):
 
 
 # ---------------------------------------------------------------- Baum
-def eigenschaften(obj, wo):
+def eigenschaften(obj, wo, nicht_lesbar):
     d = {}
     for p in obj.GetType().GetProperties():
         name = p.Name
@@ -218,6 +224,11 @@ def eigenschaften(obj, wo):
             continue
         try:
             w = konv(p.GetValue(obj, None))
+        except System.Reflection.TargetInvocationException as e:
+            # Der Getter selbst wirft: Mechanical liefert die Eigenschaft in diesem
+            # Zustand nicht (in der Oberflaeche ausgeblendet). Kein Extraktionsfehler.
+            nicht_lesbar[name] = text(e.InnerException or e)
+            continue
         except Exception as e:
             merke_fehler("%s.%s" % (wo, name), e)
             continue
@@ -257,11 +268,20 @@ def knoten(obj, pfad):
         "kategorie": str(obj.DataModelObjectCategory),
         "id": obj.ObjectId,
     }
+    nicht_lesbar = {}
     try:
-        d["eigenschaften"] = eigenschaften(obj, wo)
+        d["eigenschaften"] = eigenschaften(obj, wo, nicht_lesbar)
     except Exception as e:
         merke_fehler(wo, e)
+    if nicht_lesbar:
+        d["nicht_lesbar"] = nicht_lesbar
     d["details"] = details(obj)
+    if d["kategorie"] == "Material":
+        try:
+            # Werte aus Engineering Data gibt es nur per Methode, nicht als Eigenschaft
+            d["materialdaten"] = konv(obj.GetAsDictionary())
+        except Exception as e:
+            merke_fehler(wo + ".GetAsDictionary", e)
     kinder = []
     try:
         for c in obj.Children:
@@ -343,9 +363,51 @@ def bild(obj, name, ansicht):
 
 
 # ---------------------------------------------------------------- Ablauf
+def vollstaendig(pfad):
+    """WriteInputFile schliesst eine vollstaendige Datei mit /wb,file,end ab. Haengt die
+    Analyse am Ergebnis einer anderen (Anfangstemperatur) und fehlt dessen Datei im
+    Archiv, bricht sie still vor dem Loesungsteil ab, also ohne Lasten."""
+    with open(pfad, "rb") as f:
+        f.seek(0, 2)
+        f.seek(max(0, f.tell() - 2000))
+        return "/wb,file,end" in f.read()
+
+
+def ergebnis_fehlt(a):
+    """Status 'Done' stammt aus der mechdb. Archive ohne Ergebnisdateien behalten
+    ihn, die Datei fehlt aber."""
+    try:
+        return not os.path.isfile(a.ResultFileName)
+    except Exception:
+        return True
+
+
+def loese(a):
+    log("loese %s" % a.Name)
+    try:
+        if str(a.Solution.Status) == "Done":
+            a.Solution.ClearGeneratedData()     # sonst tut Solve nichts
+        a.Solve(True)
+    except Exception as e:
+        merke_fehler("solve " + a.Name, e)
+
+
+def schreibe_input(a, d):
+    datei = "%02d_%s.dat" % (d["nr"], dateiname(a.Name))
+    try:
+        a.WriteInputFile(os.path.join(A2A_AUSGABE, datei))
+        d["input_datei"] = datei
+        d["input_vollstaendig"] = vollstaendig(os.path.join(A2A_AUSGABE, datei))
+        if not d["input_vollstaendig"]:
+            log("unvollstaendig: %s" % datei)
+    except Exception as e:
+        merke_fehler("WriteInputFile " + a.Name, e)
+
+
 def analysen_vorbereiten():
+    analysen = list(model.Analyses)
     aus = []
-    for k, a in enumerate(model.Analyses):
+    for k, a in enumerate(analysen):
         d = {"nr": k + 1, "name": sauber(a.Name), "id": a.ObjectId}
         try:
             d["system"] = sauber(a.SystemCaption)
@@ -355,28 +417,35 @@ def analysen_vorbereiten():
             d["status_vorher"] = str(a.Solution.Status)
         except Exception as e:
             merke_fehler("status " + a.Name, e)
-        if A2A_LOESEN and d.get("status_vorher") != "Done":
-            log("loese %s" % a.Name)
-            try:
-                a.Solve(True)
-            except Exception as e:
-                merke_fehler("solve " + a.Name, e)
+        if A2A_LOESEN and (d.get("status_vorher") != "Done" or ergebnis_fehlt(a)):
+            loese(a)
         if A2A_LOESEN:
             try:
                 a.Solution.EvaluateAllResults()
             except Exception as e:
                 merke_fehler("evaluate " + a.Name, e)
+        schreibe_input(a, d)
+        aus.append(d)
+    # Unvollstaendiger Solverinput: die Analyse haengt am Ergebnis einer vorgeschalteten
+    # (z. B. Anfangstemperatur), dessen Datei im Archiv fehlt. Dann fehlen im .dat auch
+    # die Lasten. Vorgeschaltete Analysen ohne Ergebnisdatei nachloesen, auch bei
+    # A2A_LOESEN=0 (bei Klausuren trivial), und neu schreiben.
+    for i, d in enumerate(aus):
+        if d.get("input_vollstaendig") is not False:
+            continue
+        for j in range(i):
+            if ergebnis_fehlt(analysen[j]):
+                loese(analysen[j])
+                aus[j]["nachgeloest"] = True
+        schreibe_input(analysen[i], d)
+        if not d.get("input_vollstaendig"):
+            merke_fehler("input " + analysen[i].Name, Exception("Solverinput bleibt unvollstaendig"))
+    for a, d in zip(analysen, aus):
         try:
             d["status_nachher"] = str(a.Solution.Status)
+            d["zustand_nachher"] = str(a.Solution.ObjectState)     # z. B. SolveFailed
         except Exception:
             pass
-        datei = "%02d_%s.dat" % (k + 1, dateiname(a.Name))
-        try:
-            a.WriteInputFile(os.path.join(A2A_AUSGABE, datei))
-            d["input_datei"] = datei
-        except Exception as e:
-            merke_fehler("WriteInputFile " + a.Name, e)
-        aus.append(d)
     return aus
 
 
@@ -409,12 +478,17 @@ def bilder_exportieren(analysen, zwei_d):
     for k, a in enumerate(model.Analyses):
         for j, c in enumerate(a.Children):
             kat = str(c.DataModelObjectCategory)
-            if kat in ("AnalysisSettings", "Solution", "InitialConditions"):
+            if kat.endswith("AnalysisSettings") or kat in ("Solution", "InitialConditions", "InitialCondition"):
                 continue
             neu(c, "a%d_rb%02d_%s" % (k + 1, j + 1, dateiname(c.Name)))
         try:
             for j, r in enumerate(a.Solution.Children):
                 if str(r.DataModelObjectCategory) == "SolutionInformation":
+                    continue
+                zustand = str(r.ObjectState)
+                if zustand not in ("Solved", "SolvedNotLoaded"):
+                    # sonst zeigt das Bild veraltete Werte aus der mechdb
+                    log("kein Bild %s: ObjectState %s" % (r.Name, zustand))
                     continue
                 neu(r, "a%d_erg%02d_%s" % (k + 1, j + 1, dateiname(r.Name)))
         except Exception as e:
@@ -422,9 +496,23 @@ def bilder_exportieren(analysen, zwei_d):
     return liste
 
 
+def utf8(o):
+    """IronPython-json haelt jeden str fuer UTF-8-Bytes und scheitert an Umlauten
+    (deutsche Oberflaeche, z. B. Beschriftung 'Laenge'). Deshalb vorher kodieren."""
+    if isinstance(o, dict):
+        return dict((utf8(k), utf8(v)) for k, v in o.items())
+    if isinstance(o, list):
+        return [utf8(x) for x in o]
+    if isinstance(o, unicode):
+        return o.encode("utf-8")
+    return o
+
+
 def schreibe(daten):
+    if sys.version_info[0] == 2:
+        daten = utf8(daten)
     with open(os.path.join(A2A_AUSGABE, "modell.json"), "w") as f:
-        json.dump(daten, f, indent=1)
+        json.dump(daten, f, indent=1, sort_keys=True)
 
 
 def main():
@@ -435,9 +523,10 @@ def main():
     except Exception:
         pass
     try:
-        daten["geo_einheit"] = str(geodata.Unit)
-    except Exception:
-        pass
+        # Einheit der GeoData-Werte (bbox, Flaechen, Volumen) steht an der Baugruppe
+        daten["geo_einheit"] = ", ".join(sorted(set(str(a.Unit) for a in geodata.Assemblies)))
+    except Exception as e:
+        merke_fehler("geo_einheit", e)
     daten["analysen"] = analysen_vorbereiten()
     kp = koerper()
     daten["koerper"] = kp

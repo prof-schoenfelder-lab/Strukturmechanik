@@ -24,7 +24,7 @@ Optionen vorher mit `set` setzen:
 
 | Variable | Standard | Wirkung |
 |---|---|---|
-| `A2A_LOESEN` | `1` | `0` = nicht rechnen |
+| `A2A_LOESEN` | `1` | `1` = jede Analyse ohne Ergebnisdatei lösen, `0` = nicht rechnen (Ausnahme siehe unten) |
 | `A2A_BILDER` | `1` | `0` = keine Bilder |
 | `A2A_INTERAKTIV` | `0` | `1` = Mechanical sichtbar öffnen (zur Fehlersuche) |
 | `A2A_AUSGABE_ROOT` | `out\` | Zielordner |
@@ -35,11 +35,24 @@ Optionen vorher mit `set` setzen:
 
 - `modell.json`: kompletter Strukturbaum (alle Eigenschaften per Reflection, dazu das Detailfenster
   als Text), Körper mit Bounding Box, Analysestatus vor und nach dem Lösen, Meldungen, abgefangene Fehler
+  - `geo_einheit`: Einheit der GeoData-Werte (Bounding Box, Flächen, Kantenlängen), meist `m`
+  - `materialdaten` an jedem Material: Werte aus Engineering Data, `Größe: [Einheit, [Werte]]`
+  - `nicht_lesbar` an einem Objekt: Eigenschaften, die Mechanical im aktuellen Zustand nicht liefert
+    (in der Oberfläche ausgeblendet), mit Grund; das sind keine Fehler
+  - `input_vollstaendig`, `nachgeloest`, `zustand_nachher` je Analyse (z. B. `SolveFailed`)
 - `NN_<Analyse>.dat`: APDL-Solverinput je Analyse
-- `bilder/`: Geometrie, Netz, jede Randbedingung, jedes Ergebnis (PNG, 1600 × 1000, weißer Hintergrund)
+- `bilder/`: Geometrie, Netz, jede Randbedingung, jedes gelöste Ergebnis (PNG, 1600 × 1000, weißer
+  Hintergrund). Ergebnisse, die nicht `Solved` sind, bekommen kein Bild: Die mechdb hält sonst
+  Konturen eines älteren Modellstands.
 - `log.txt`, `../journal_log.txt`: Ablauf
 
-Pfade werden aus dem JSON entfernt (`<pfad entfernt>`), Zeitstempel nicht übernommen.
+Pfade werden aus dem JSON entfernt (`<pfad entfernt>`), Zeitstempel nicht übernommen. Das JSON ist
+reines ASCII, Umlaute stehen als `ä` usw. darin.
+
+**Gekoppelte Analysen:** Hängt eine Analyse am Ergebnis einer anderen (z. B. Anfangstemperatur aus
+Steady-State) und fehlt dessen Ergebnisdatei im Archiv, schreibt Mechanical einen unvollständigen
+Solverinput ohne Lasten. Dann werden die vorgeschalteten Analysen auch bei `A2A_LOESEN=0` nachgelöst
+(`nachgeloest` im JSON). Bei Klausuren ist das eine Sekundensache.
 
 ## Ohne Stapellauf testen
 
