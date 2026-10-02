@@ -6,12 +6,12 @@
    "label": "Units",
    "art": "einheiten",
    "ebene": 0,
-   "pruefen": "Ergebnisse in mm und MPa ablesen: Unter Home > Units auf Metric (mm, kg, N, s, mV, mA) stellen.",
+   "pruefen": "Einheitensystem N, mm, MPa: Unter Home > Units auf Metric (mm, kg, N, s, mV, mA) stellen, dann stehen Verformungen in mm und Spannungen in MPa.",
    "details": [
     {
      "id": "einheiten.system",
      "name": "Unit System",
-     "wert": "Metric (mm, kg, N, s, mV, mA)"
+     "wert": "N, mm, MPa (Metric mm, kg, N, s, mV, mA)"
     }
    ]
   },

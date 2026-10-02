@@ -999,14 +999,10 @@
           var alt = safeJSONParse(localStorage.getItem('answer_knoten_' + qid));
           if (alt) { knoten = alt.k; text = alt.t; vert = alt.v || null; }
         }
-        if (!box) {
-          var links = document.createElement('div');
-          links.className = 'fs-links';
-          while (q.firstChild) links.appendChild(q.firstChild);
+        if (!box) {   // unter der Eingabe, über die volle Breite
           box = document.createElement('div');
           box.className = 'fs-box';
-          q.appendChild(links); q.appendChild(box);
-          q.classList.add('fs-an');
+          q.appendChild(box);
           box.innerHTML = '<p class="fs-laedt">Strukturbaum wird geladen …</p>';
         }
         laden = laden || fetch(baumUrl(id)).then(function (r) { return r.ok ? r.json() : null; });
