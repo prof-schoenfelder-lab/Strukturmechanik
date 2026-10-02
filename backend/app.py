@@ -36,7 +36,7 @@ import requests as http_requests
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
-from html import escape
+from html import escape, unescape
 
 from flask import Flask, g, jsonify, redirect, request, send_from_directory
 from itsdangerous import BadSignature, URLSafeTimedSerializer
@@ -952,8 +952,18 @@ def hilfe_liste():
         eintraege.append({"id": r["id"], "label": label, "raum": m.group(1) if m else None,
                           "platz": int(m.group(2)) if m else None, "seite": short_page(r["page"] or ""),
                           "wartet": int(now_ts - r["created_at"])})
-    return jsonify({"an": help_enabled(db), "eintraege": eintraege, "raeume": HILFE_RAEUME,
-                    "vapid": vapid_public()})
+    empfohlen = []
+    for e in pool_status(db)["entries"]:
+        if e["skey"] not in ("warn", "alarm"):
+            continue
+        label = e["pc"].replace("&hellip;", "…")
+        m = re.match(r"^(N\d{3}) Platz (\d+)$", label)
+        empfohlen.append({"label": label, "raum": m.group(1) if m else None, "platz": int(m.group(2)) if m else None,
+                          "aufgegeben": e["skey"] == "alarm", "versuche": e["attempts"], "frage": unescape(short_qid(e["qid"])),
+                          "name": e["name"], "seit": int(e["idle"])})
+    empfohlen.sort(key=lambda x: (not x["aufgegeben"], -x["versuche"], x["seit"]))
+    return jsonify({"an": help_enabled(db), "eintraege": eintraege, "empfohlen": empfohlen,
+                    "raeume": HILFE_RAEUME, "vapid": vapid_public()})
 
 
 @app.post("/api/hilfe/erledigt")
@@ -1333,14 +1343,9 @@ td,th{padding:.35rem .45rem;font-size:.82rem}
 """
 
 
-@app.get("/dashboard")
-def dashboard():
-    """Lehrenden-Übersicht: wie viele sind wie weit (aggregiert, pseudonym).
-    Zugriff nur mit ?key=<DASHBOARD_TOKEN>."""
-    if not DASHBOARD_TOKEN or request.args.get("key") != DASHBOARD_TOKEN:
-        return "Zugriff nur mit gültigem key-Parameter (DASHBOARD_TOKEN).", 403
-
-    db = get_db()
+def pool_status(db):
+    """Heute Aktive je Pool-PC mit Status (arbeitet, hängt, aufgegeben, pausiert, fertig);
+    gemeinsam für Dashboard und Hilfe-App."""
     answers = aktive_answers(db)  # ausgeschaltete Spiele zählen nicht mit
     total_q = len(answers) or 1
     praktika = [("P1_Einfuehrung", "Praktikum 1"), ("P2_Geometrie_Randbedingungen", "Praktikum 2"),
@@ -1408,6 +1413,23 @@ def dashboard():
                         "name": names.get(pseu, ""),
                         "pshort": pk.split("_")[0] if pk else ""})
     entries.sort(key=lambda e: (-e["solved"], e["idle"]))
+    return dict(answers=answers, total_q=total_q, praktika=praktika, q_per_p=q_per_p, rows=rows,
+                per_user=per_user, now_ts=now_ts, midnight=midnight, today_raw=today_raw, latest=latest,
+                active_now=active_now, names=names, entries=entries)
+
+
+@app.get("/dashboard")
+def dashboard():
+    """Lehrenden-Übersicht: wie viele sind wie weit (aggregiert, pseudonym).
+    Zugriff nur mit ?key=<DASHBOARD_TOKEN>."""
+    if not DASHBOARD_TOKEN or request.args.get("key") != DASHBOARD_TOKEN:
+        return "Zugriff nur mit gültigem key-Parameter (DASHBOARD_TOKEN).", 403
+
+    db = get_db()
+    ps = pool_status(db)
+    answers, total_q, praktika, q_per_p, rows = ps["answers"], ps["total_q"], ps["praktika"], ps["q_per_p"], ps["rows"]
+    per_user, now_ts, midnight, today_raw = ps["per_user"], ps["now_ts"], ps["midnight"], ps["today_raw"]
+    latest, active_now, names, entries = ps["latest"], ps["active_now"], ps["names"], ps["entries"]
 
     # KPI-Kacheln: die Zahlen, die man im Praktikum ständig braucht.
     # Spannweite bezieht sich aufs dominante Praktikum (typisch läuft eins).

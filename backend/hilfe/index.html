@@ -55,6 +55,15 @@ ol.queue button { background: transparent; color: var(--ink); border: 2px solid 
 input { font: inherit; width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--rule); background: var(--bg); color: var(--ink); margin: 8px 0; }
 .stand { color: var(--ink2); font-size: 13px; margin-top: 18px; text-align: center; }
 .fehler { color: #ffb3a6; }
+.tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: var(--card); padding: 4px; border-radius: 12px; margin-bottom: 14px; }
+.tabs button { background: transparent; color: var(--ink2); padding: 10px 6px; font-weight: 700; font-size: 16px; }
+.tabs button[aria-pressed="true"] { background: var(--cyan); color: #fff; }
+.tabs .z { display: inline-block; min-width: 22px; padding: 0 6px; margin-left: 4px; border-radius: 11px; background: var(--rule); color: #fff; font-size: 13px; }
+.tabs .z.rot { background: #E53009; }
+.chip { display: inline-block; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; padding: 2px 8px; border-radius: 6px; margin-bottom: 2px; }
+.chip.auf { background: #E53009; color: #fff; }
+.chip.haengt { background: #E5007D; color: #fff; }
+.seat.auf { background: #E53009; border-color: #E53009; color: #fff; font-weight: 800; }
 </style>
 </head>
 <body>
@@ -62,6 +71,10 @@ input { font: inherit; width: 100%; padding: 12px; border-radius: 10px; border: 
   <h1>FEM-Hilfe</h1>
   <button class="pill" id="schalter" hidden>Hilfe-Knopf</button>
 </header>
+<nav class="tabs" id="tabs" hidden>
+  <button id="t-anfragen" aria-pressed="true">Anfragen <span class="z" id="z-anfragen">0</span></button>
+  <button id="t-empfohlen" aria-pressed="false">Hilfe empfohlen <span class="z" id="z-empfohlen">0</span></button>
+</nav>
 <main id="app"></main>
 <div class="stand" id="stand"></div>
 
@@ -69,8 +82,8 @@ input { font: inherit; width: 100%; padding: 12px; border-radius: 10px; border: 
 'use strict';
 const API = '../api/hilfe';
 const $ = id => document.getElementById(id);
-let key = '', daten = null, timer = null;
-try { key = localStorage.getItem('hilfe_key') || ''; } catch (e) { }
+let key = '', daten = null, timer = null, ansicht = 'anfragen';
+try { key = localStorage.getItem('hilfe_key') || ''; ansicht = localStorage.getItem('hilfe_ansicht') || 'anfragen'; } catch (e) { }
 
 const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => '&#' + c.charCodeAt(0) + ';');
 const dauer = s => s < 60 ? 'gerade eben' : 'seit ' + Math.round(s / 60) + ' min';
@@ -86,24 +99,26 @@ async function api(pfad, body) {
 
 function anmelden(fehler) {
   $('schalter').hidden = true;
+  $('tabs').hidden = true;
   $('app').innerHTML = `<div class="box"><p>Einmal den Schlüssel des Dashboards eingeben (der Wert hinter <code>key=</code>). Die App merkt ihn sich.</p>
     <input id="k" type="password" autocomplete="off" placeholder="Schlüssel">
     <button id="ok">Anmelden</button>${fehler ? '<p class="fehler">Schlüssel falsch.</p>' : ''}</div>`;
   $('ok').onclick = () => { key = $('k').value.trim(); try { localStorage.setItem('hilfe_key', key); } catch (e) { } laden(); };
 }
 
-function raumkarte(raeume, eintraege) {
+// plaetze: [{ raum, platz, cls, marke }] in Anzeige-Reihenfolge
+function raumkarte(raeume, plaetze) {
   const belegt = {};
-  eintraege.forEach((e, i) => { if (e.raum) belegt[e.raum + ':' + e.platz] = i + 1; });
-  return Object.keys(raeume).sort().filter(r => eintraege.some(e => e.raum === r)).map(r => {
+  plaetze.forEach(e => { if (e.raum) belegt[e.raum + ':' + e.platz] = e; });
+  return Object.keys(raeume).sort().filter(r => plaetze.some(e => e.raum === r)).map(r => {
     const n = raeume[r], reihen = Math.ceil(n / 4);
     let zellen = '';
     for (let reihe = reihen; reihe >= 1; reihe--) {           // hinterste Reihe oben, wie im Dashboard
       for (const o of [4, 3, 0, 2, 1]) {                       // links 4, 3, Gang, rechts 2, 1
         const p = (reihe - 1) * 4 + o;
         if (o === 0 || p > n) { zellen += '<i></i>'; continue; }
-        const pos = belegt[r + ':' + p];
-        zellen += pos ? `<span class="seat ${pos === 1 ? 'n' : 'w'}">${p}<sup>${pos}.</sup></span>` : `<span class="seat">${p}</span>`;
+        const b = belegt[r + ':' + p];
+        zellen += b ? `<span class="seat ${b.cls}">${p}<sup>${esc(b.marke)}</sup></span>` : `<span class="seat">${p}</span>`;
       }
     }
     return `<div class="room"><h3>Raum ${r}</h3><div class="map">${zellen}</div><p class="front">vorne, Tafel</p></div>`;
@@ -111,11 +126,18 @@ function raumkarte(raeume, eintraege) {
 }
 
 function zeigen() {
-  const d = daten, e = d.eintraege;
+  const d = daten, e = d.eintraege, emp = d.empfohlen || [];
   const s = $('schalter');
   s.hidden = false;
   s.className = 'pill' + (d.an ? ' an' : '');
   s.textContent = 'Hilfe-Knopf ' + (d.an ? 'an' : 'aus');
+  $('tabs').hidden = false;
+  $('t-anfragen').setAttribute('aria-pressed', String(ansicht === 'anfragen'));
+  $('t-empfohlen').setAttribute('aria-pressed', String(ansicht === 'empfohlen'));
+  $('z-anfragen').textContent = e.length;
+  $('z-empfohlen').textContent = emp.length;
+  $('z-empfohlen').className = 'z' + (emp.some(x => x.aufgegeben) ? ' rot' : '');
+  if (ansicht === 'empfohlen') return zeigenEmpfohlen(emp);
   let h;
   if (!d.an) h = '<div class="next leer"><div class="lbl">Hilfe-Knopf ist aus</div><div class="wo">Niemand kann sich melden</div>' +
     '<div class="was">Oben einschalten, wenn das Praktikum beginnt.</div></div>';
@@ -126,9 +148,25 @@ function zeigen() {
   if (e.length > 1) h += '<h2>Danach</h2><ol class="queue">' + e.slice(1).map((x, i) =>
     `<li><span class="nr">${i + 2}</span><span class="t"><b>${esc(x.label)}</b><small>${esc(x.seite || 'ohne Seite')} · ${dauer(x.wartet)}</small></span>` +
     `<button data-id="${x.id}">erledigt</button></li>`).join('') + '</ol>';
-  const karte = raumkarte(d.raeume, e);
+  const karte = raumkarte(d.raeume, e.map((x, i) => ({ raum: x.raum, platz: x.platz, cls: i ? 'w' : 'n', marke: (i + 1) + '.' })));
   if (karte) h += '<h2>Raumkarte</h2><div class="rooms">' + karte + '</div>';
   h += pushBox();
+  fertig(h);
+}
+
+// Wer heute hängt (ab dem 3. Fehlversuch) oder aufgegeben hat (alle Versuche verbraucht), ohne sich gemeldet zu haben
+function zeigenEmpfohlen(emp) {
+  let h = emp.length ? '<ol class="queue">' + emp.map(x =>
+    `<li><span class="t"><span class="chip ${x.aufgegeben ? 'auf' : 'haengt'}">${x.aufgegeben ? 'aufgegeben' : 'hängt'}</span>` +
+    `<b>${esc(x.label)}${x.name ? ' · ' + esc(x.name) : ''}</b><small>${esc(x.frage)} · ${x.versuche}. Versuch · zuletzt ${dauer(x.seit).replace('seit ', 'vor ')}</small></span></li>`).join('') + '</ol>'
+    : '<div class="next leer"><div class="lbl">Hilfe empfohlen</div><div class="wo">Niemand hängt gerade</div>' +
+      '<div class="was">Gezählt werden heute eingeloggte Studierende: ab dem 3. Fehlversuch „hängt“, alle Versuche verbraucht „aufgegeben“.</div></div>';
+  const karte = raumkarte(daten.raeume, emp.map(x => ({ raum: x.raum, platz: x.platz, cls: x.aufgegeben ? 'auf' : 'w', marke: x.aufgegeben ? '!' : x.versuche + '.' })));
+  if (karte) h += '<h2>Raumkarte</h2><div class="rooms">' + karte + '</div>';
+  fertig(h);
+}
+
+function fertig(h) {
   $('app').innerHTML = h;
   for (const b of document.querySelectorAll('[data-id]')) b.onclick = () => erledigt(+b.dataset.id, b);
   const pb = $('push'); if (pb) pb.onclick = pushAn;
@@ -176,6 +214,8 @@ async function erledigt(id, b) {
   b.disabled = true;
   try { daten = await api('/erledigt', { id }); zeigen(); } catch (e) { fehler(e); }
 }
+for (const [id, a] of [['t-anfragen', 'anfragen'], ['t-empfohlen', 'empfohlen']])
+  $(id).onclick = () => { ansicht = a; try { localStorage.setItem('hilfe_ansicht', a); } catch (e) { } if (daten) zeigen(); };
 $('schalter').onclick = async () => {
   if (!daten) return;
   const an = !daten.an;

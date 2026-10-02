@@ -357,6 +357,20 @@ def main():
         check("hilfe: erledigt, Platz 8 ist der nächste", [x["platz"] for x in r["eintraege"]] == [8], str(r))
         requests.post(BACKEND + "/api/help", headers=p8, json={"page": "x"})
         check("hilfe: kein zweiter Push für offene Anfrage", len(pushes) == 2)
+        import sqlite3
+        tdb = sqlite3.connect(os.path.join(tmp, "test.db"))
+        tdb.execute("INSERT INTO results (pseudonym, qid, best, max, attempts, updated_at) VALUES (?, ?, 0, 5, 5, ?)",
+                    ("test-aufgegeben", "/T/Ueb:q0", time.time()))
+        tdb.execute("INSERT INTO results (pseudonym, qid, best, max, attempts, updated_at) VALUES (?, ?, 0, 5, 3, ?)",
+                    ("test-haengt", "/T/Ueb:q0", time.time()))
+        tdb.commit()
+        r = requests.get(BACKEND + "/api/hilfe", headers=HK).json()
+        check("hilfe: empfohlen mit aufgegeben vor hängt",
+              [(x["aufgegeben"], x["versuche"], x["frage"]) for x in r["empfohlen"]] == [(True, 5, "T Ueb · Frage 1"), (False, 3, "T Ueb · Frage 1")]
+              and r["empfohlen"][0]["label"].startswith("…"), str(r["empfohlen"]))
+        tdb.execute("DELETE FROM results WHERE pseudonym IN ('test-aufgegeben', 'test-haengt')")
+        tdb.commit()
+        tdb.close()
         r = requests.post(BACKEND + "/api/hilfe/schalter", headers=HK, json={"an": False}).json()
         check("hilfe: ausschalten schließt offene Anfragen", not r["an"] and r["eintraege"] == [], str(r))
         sink.shutdown()
