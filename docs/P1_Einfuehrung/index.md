@@ -67,7 +67,9 @@ hide:
   </a>
 </div>
 
-<div class="zwischenspiel" data-praktikum="/P1_Einfuehrung/" data-start="teil-2">
+<div class="zwischenspiel zs-werbung">
 <h2>Zwischenspiel: Knackpunkt</h2>
-<p>Nehmen Sie der Brücke auf Fest- und Loslager so viel Material weg wie möglich, ganz wie beim zweiseitig gelagerten Balken aus diesem Praktikum. Eine echte FE-Rechnung entscheidet, ob sie hält: Wer zu viel wegnimmt, bricht, wer zu wenig wegnimmt, verliert gegen die anderen.</p>
+<video class="zs-video" src="images/knackpunkt-lenker.mp4" poster="images/knackpunkt-lenker.jpg" autoplay muted loop playsinline aria-label="Knackpunkt am Lenker: Material wird weggenommen, die FE-Rechnung zeigt, ob er hält"></video>
+<p>Wie viel Material darf weg, bevor das Bauteil versagt? Nach Übung 2 und Übung 4 finden Sie das Bauteil der Übung im Spiel Knackpunkt wieder: Nehmen Sie Material weg, eine echte FE-Rechnung entscheidet, ob es hält. Wer am meisten wegnimmt, ohne dass es bricht, steht oben in der Bestenliste.</p>
+<p><a href="03_Selbsttests/Uebung-2/">Zu Übung 2: Kragarm</a> und <a href="03_Selbsttests/Uebung-4/">zu Übung 4: Lenker</a>. Freigeschaltet wird das Spiel, sobald Sie die Übung gelöst haben.</p>
 </div>

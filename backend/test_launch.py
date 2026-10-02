@@ -127,7 +127,10 @@ def main():
                LTI_CONSUMER_KEY=KEY,
                LTI_CONSUMER_SECRET=SECRET,
                DASHBOARD_TOKEN="test-dashboard-key",
+               PCNAMES_PATH=os.path.join(tmp, "pc-names.json"),
                FLASK_RUN_PORT="5099")
+    with open(os.path.join(tmp, "pc-names.json"), "w") as f:
+        json.dump({"10.0.0.7": "N103 Platz 7", "10.0.0.8": "N103 Platz 8"}, f)
     server = subprocess.Popen(
         [sys.executable, "-c",
          "import app; app.app.run(host='127.0.0.1', port=5099)"],
@@ -267,6 +270,36 @@ def main():
         r = det("netz.groesse", used=2)
         check("detektiv: letzter Versuch zeigt Lösung und Auflösung",
               r.get("solution") == ["balken.material"] and "aufloesung" in r, str(r))
+
+        # Knackpunkt-Bestenliste: nur mit Schalter, Bestes je Person, Spitzname plus Platz
+        KP = BACKEND + "/api/kp"
+        TEIL = "b2u6.abc.wL006.Tt5160u"
+        p7, p8 = {"X-Forwarded-For": "10.0.0.7"}, {"X-Forwarded-For": "10.0.0.8"}
+        check("kp: aus, solange nicht freigeschaltet", requests.get(KP, params={"teil": TEIL}).json() == {"an": False})
+        requests.get(BACKEND + "/dashboard-spiel-toggle", params={"key": "test-dashboard-key", "spiel": "kp"})
+        r = requests.post(KP, headers=p7, json={"teil": TEIL, "prozent": 41.26, "entwurf": "AB_-"}).json()
+        check("kp: Platz ohne Namen", r["liste"] == [{"rang": 1, "anzeige": "N103 Platz 7", "prozent": 41.3, "ich": True}]
+              and r["platz"] == "N103 Platz 7", str(r))
+        r = requests.post(KP, headers=p7, json={"teil": TEIL, "prozent": 30, "entwurf": "AB"}).json()
+        check("kp: schlechteres Ergebnis überschreibt nicht", r["ich"]["prozent"] == 41.3, str(r))
+        r = requests.post(KP + "/name", headers=p7, json={"teil": TEIL, "name": " <b>Ada</b>12345678901234 "}).json()
+        check("kp: Spitzname gesäubert, gekürzt, mit Platz", r["liste"][0]["anzeige"] == "bAda/b1234567890 (N103 Platz 7)"
+              and r["name"] == "bAda/b1234567890", str(r))
+        r = requests.post(KP, headers=p8, json={"teil": TEIL, "prozent": 55, "entwurf": "AB"}).json()
+        check("kp: Rangfolge nach Prozent, eigener Rang", [e["anzeige"] for e in r["liste"]] == ["N103 Platz 8", "bAda/b1234567890 (N103 Platz 7)"]
+              and r["ich"]["rang"] == 1 and r["anzahl"] == 2, str(r))
+        r = requests.post(KP, headers={"X-Forwarded-For": "10.9.9.9"}, json={"teil": TEIL, "prozent": 10, "entwurf": "AB"}).json()
+        check("kp: ohne Platz und Namen", r["ich"]["anzeige"] == "ohne Namen" and r["platz"] == "", str(r))
+        r = requests.post(KP, headers=headers, json={"teil": TEIL, "prozent": 20, "entwurf": "AB"}).json()
+        check("kp: eingeloggt ohne Platz im Pool", r["ich"]["anzeige"] == "ohne Namen" and r["ich"]["rang"] == 3, str(r))
+        for bad in ({"teil": "x", "prozent": 5, "entwurf": "A"}, {"teil": TEIL, "prozent": 101, "entwurf": "A"},
+                    {"teil": TEIL, "prozent": 5, "entwurf": "<script>"}):
+            check("kp: ungültig abgelehnt %s" % bad, requests.post(KP, json=bad).status_code == 400)
+        r = requests.get(BACKEND + "/dashboard", params={"key": "test-dashboard-key"})
+        check("kp: Spitzname im Dashboard", "bAda/b1234567890 <a href" in r.text)
+        requests.get(BACKEND + "/dashboard-kp-name-loeschen", params={"key": "test-dashboard-key", "name": "bAda/b1234567890"})
+        r = requests.get(KP, headers=p7, params={"teil": TEIL}).json()
+        check("kp: Name im Dashboard entfernt", r["ich"]["anzeige"] == "N103 Platz 7" and r["name"] == "", str(r))
 
         r = requests.get(BACKEND + "/dashboard", params={"key": "test-dashboard-key"})
         check("dashboard zeigt Fehlwerte mit Ursache",

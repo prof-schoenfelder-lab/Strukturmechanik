@@ -166,3 +166,8 @@ Hier noch mal die neue Lösung im Vergleich mit unterschiedlichen Netzgrößen
 <center>
 <iframe title="Maximale Spannung bei unterschiedlicher Netzgröße" aria-label="Liniendiagramm" id="datawrapper-chart-2WMO0" src="https://datawrapper.dwcdn.net/2WMO0/6/" scrolling="no" frameborder="0" style="width: 0; min-width: 80% !important; border: none;" height="400" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
 </center>
+
+<div class="zwischenspiel" data-seite="/P1_Einfuehrung/03_Selbsttests/Uebung-2" data-name="Kragarm (Übung 2)" data-teil="bau-2u6.______________________________.wL006.Tt5160u">
+<h2>Zwischenspiel: Knackpunkt</h2>
+<p>Derselbe Kragarm wie in dieser Übung: 60 mm hoch, links eingespannt, oben am rechten Ende drücken 3 kN. Im Spiel ist er 300 statt 500 mm lang und eine 10 mm dicke Platte aus Stahl S235. Nehmen Sie so viel Material weg wie möglich: Eine echte FE-Rechnung entscheidet, ob der Kragarm hält. Wer zu viel wegnimmt, bricht, wer zu wenig wegnimmt, landet in der Bestenliste weiter hinten.</p>
+</div>

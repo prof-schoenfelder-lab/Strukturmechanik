@@ -1616,13 +1616,16 @@
   // Zwischenspiel Knackpunkt am Ende jeder Praktikums-Startseite: spielbar, sobald das
   // Praktikum komplett gelöst ist (wie das Abzeichen, einmal frei bleibt frei); sonst mit
   // der Zahl offener Aufgaben. Das Spiel läuft öffentlich auf GitHub Pages, ohne VPN.
+  // Auf einer Übungsseite (data-seite) frei, sobald deren Aufgaben gelöst sind; mit data-teil läuft das Spiel
+  // eingebettet (Kursmodus) mit Bestenliste. Kästen mit .zs-werbung zeigen nur, wo es das Spiel gibt.
   var KNACKPUNKT_URL = 'https://fkaule.github.io/Knackpunkt/';
   function renderZwischenspiel(el) {
-    var prefix = el.dataset.praktikum;
+    if (el.classList.contains('zs-werbung')) return;
+    var seite = el.dataset.seite, prefix = seite ? seite + ':' : el.dataset.praktikum;
     var p = BADGE_PRAKTIKA.filter(function (x) { return x[0] === prefix; })[0];
-    if (!p) return;
+    if (!seite && !p) return;
     var frei = false, offen = null, cat = cachedCatalog();
-    try { frei = localStorage.getItem('answer_badge_' + p[1]) === '1'; } catch (e) { }
+    try { if (p) frei = localStorage.getItem('answer_badge_' + p[1]) === '1'; } catch (e) { }
     if (!frei && cat) {
       var s = 0, t = 0;
       Object.keys(cat).forEach(function (qid) {
@@ -1636,6 +1639,7 @@
     var box = el.querySelector('.zs-status');
     if (!box) { box = document.createElement('div'); box.className = 'zs-status'; el.appendChild(box); }
     el.classList.toggle('zs-frei', frei);
+    if (frei && el.dataset.teil) { if (!el.querySelector('.zs-spiel')) kursSpiel(el, box); return; }
     var login = false;
     try { login = !!localStorage.getItem('ac_backend_token'); } catch (e) { }
     box.innerHTML = frei
@@ -1643,9 +1647,68 @@
         '" target="_blank" rel="noopener">Knackpunkt spielen</a></p>' +
         '<p>Nach einer Runde, die hält, erzeugt „Kommilitonen herausfordern“ einen Link: Wer ihn öffnet, ' +
         'spielt dasselbe Bauteil und muss Ihr Ergebnis schlagen. Es gibt keine Punkte, nur die Ehre.</p>'
-      : '<p class="spiel-gesperrt">Wird freigeschaltet, sobald Sie alle Aufgaben dieses Praktikums gelöst haben' +
+      : '<p class="spiel-gesperrt">Wird freigeschaltet, sobald Sie alle Aufgaben ' + (seite ? 'dieser Übung' : 'dieses Praktikums') + ' gelöst haben' +
         (offen ? ' (noch ' + offen + (offen === 1 ? ' Aufgabe' : ' Aufgaben') + ' offen)' : '') + '.' +
         (login ? '' : ' Dafür ist der ' + opalLoginLink() + ' nötig.') + '</p>';
+  }
+  // Knackpunkt eingebettet: Spiel im Rahmen, gehaltene Runden landen in der Bestenliste des Backends
+  function kpUrl() { return window.AC_KNACKPUNKT_URL || KNACKPUNKT_URL; }
+  function kpKey(teil) {
+    var m = /^bau-(.+)$/.exec(teil || '');
+    if (m) return 'b' + m[1];
+    m = /^teil-([1-3])$/.exec(teil || '');
+    return m ? 'f' + (m[1] - 1) : null;
+  }
+  function kpApi(path, body) {
+    var base = (window.AC_BACKEND_URL || '').replace(/\/$/, '');
+    if (!base || !window.fetch) return Promise.resolve(null);
+    var headers = { 'Content-Type': 'application/json' };
+    try { var t = localStorage.getItem('ac_backend_token'); if (t) headers['Authorization'] = 'Bearer ' + t; } catch (e) { }
+    return fetch(base + path, body ? { method: 'POST', headers: headers, body: JSON.stringify(body) } : { headers: headers })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function () { return null; });
+  }
+  function escapeHtml(v) {
+    return String(v).replace(/[&<>"']/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; });
+  }
+  function kursSpiel(el, box) {
+    var key = kpKey(el.dataset.teil), frame = null;
+    if (!key) return;
+    box.innerHTML = '<div class="zs-spiel"><p><button type="button" class="md-button md-button--primary zs-start">Knackpunkt hier spielen</button></p></div>' +
+      '<div class="zs-board"><h3>Bestenliste</h3><div class="zs-liste"><p>Lädt …</p></div>' +
+      '<p class="zs-name"><label>Spitzname <input class="zs-name-in" maxlength="16" autocomplete="off" placeholder="optional, kein echter Name"></label> ' +
+      '<button type="button" class="md-button zs-name-ok">Speichern</button> <span class="zs-platz"></span></p>' +
+      '<p class="zs-regel">Es zählt Ihre beste Runde, die hält und ohne Live-Spannungen gespielt wurde. ' +
+      'Angezeigt werden nur Spitzname und Sitzplatz, ohne Spitzname nur der Sitzplatz.</p></div>';
+    var liste = box.querySelector('.zs-liste'), nameIn = box.querySelector('.zs-name-in');
+    function zeige(d) {
+      if (!d || !d.an) { liste.innerHTML = '<p>Bestenliste nicht erreichbar (HTWK-Netz oder VPN nötig).</p>'; return; }
+      var rows = d.liste.map(function (e) {
+        return '<li class="' + (e.ich ? 'zs-ich' : '') + '" value="' + e.rang + '">' + escapeHtml(e.anzeige) +
+          ' <b>' + String(e.prozent).replace('.', ',') + ' %</b></li>';
+      });
+      if (d.ich && d.ich.rang > d.liste.length) rows.push('<li class="zs-ich" value="' + d.ich.rang + '">' + escapeHtml(d.ich.anzeige) +
+        ' <b>' + String(d.ich.prozent).replace('.', ',') + ' %</b></li>');
+      liste.innerHTML = rows.length ? '<ol>' + rows.join('') + '</ol><p>' + d.anzahl + ' Teilnehmende</p>'
+        : '<p>Noch kein Eintrag. Seien Sie die oder der Erste.</p>';
+      if (document.activeElement !== nameIn) nameIn.value = d.name || '';
+      box.querySelector('.zs-platz').textContent = d.platz ? 'Ihr Platz: ' + d.platz : '';
+    }
+    kpApi('/api/kp?teil=' + encodeURIComponent(key)).then(zeige);
+    box.querySelector('.zs-name-ok').onclick = function () { kpApi('/api/kp/name', { teil: key, name: nameIn.value }).then(zeige); };
+    box.querySelector('.zs-start').onclick = function () {
+      frame = document.createElement('iframe');
+      frame.className = 'zs-frame';
+      frame.title = 'Knackpunkt';
+      frame.src = kpUrl() + '?kurs=' + encodeURIComponent(el.dataset.name || '') + '#' + el.dataset.teil;
+      box.querySelector('.zs-spiel').replaceChildren(frame);
+    };
+    window.addEventListener('message', function (e) {
+      if (!frame || e.source !== frame.contentWindow || !e.data) return;
+      if (e.data.typ === 'knackpunkt-hoehe') frame.style.height = Math.min(Math.max(+e.data.h || 0, 400), 2400) + 'px';
+      if (e.data.typ === 'knackpunkt-ergebnis' && e.data.teil === key)
+        kpApi('/api/kp', { teil: key, prozent: e.data.prozent, entwurf: e.data.entwurf }).then(zeige);
+    });
   }
   function renderZwischenspiele() {
     document.querySelectorAll('.zwischenspiel.spiel-an').forEach(renderZwischenspiel);

@@ -673,3 +673,12 @@ a.player-badge:hover { transform: scale(1.12); color: var(--player-badge-fg, #11
 .zwischenspiel.zs-frei { border-color: var(--md-accent-fg-color); }
 .zwischenspiel h2 { margin-top: 0; }
 .zwischenspiel .zs-status p { margin: 0.6em 0 0; }
+.zwischenspiel .zs-frame { width: 100%; height: 760px; border: 0; border-radius: 6px; display: block; }
+.zwischenspiel .zs-board h3 { margin: 1em 0 0.3em; }
+.zwischenspiel .zs-board ol { margin: 0.3em 0; }
+.zwischenspiel .zs-board li b { font-variant-numeric: tabular-nums; }
+.zwischenspiel .zs-board li.zs-ich { font-weight: 700; color: var(--md-accent-fg-color); }
+.zwischenspiel .zs-name input { font: inherit; padding: 0.2em 0.4em; width: 13em; max-width: 100%;
+  border: 1px solid var(--md-default-fg-color--lighter); border-radius: 4px; background: transparent; color: inherit; }
+.zwischenspiel .zs-regel, .zwischenspiel .zs-platz { color: var(--md-default-fg-color--light); font-size: 0.9em; }
+.zwischenspiel .zs-video { width: 100%; max-width: 720px; border-radius: 6px; display: block; margin: 0.5em 0; }

@@ -118,6 +118,21 @@ def init_db():
             created_at REAL,
             done_at REAL
         );
+        -- Knackpunkt-Bestenliste: bestes gehaltenes Ergebnis je Person und Bauteil
+        CREATE TABLE IF NOT EXISTS kp_scores (
+            who TEXT NOT NULL,
+            teil TEXT NOT NULL,
+            prozent REAL NOT NULL,
+            entwurf TEXT,
+            platz TEXT,
+            updated_at REAL,
+            PRIMARY KEY (who, teil)
+        );
+        -- selbst gewählter Spitzname (keine echten Namen)
+        CREATE TABLE IF NOT EXISTS kp_namen (
+            who TEXT PRIMARY KEY,
+            name TEXT NOT NULL
+        );
         -- falsche Zahlenwerte, anonym (ohne Pseudonym): welche Fehler passieren?
         CREATE TABLE IF NOT EXISTS wrong_values (
             qid TEXT NOT NULL,
@@ -885,6 +900,104 @@ def spiel_toggle():
     return redirect("dashboard?key=" + DASHBOARD_TOKEN)
 
 
+# --- Knackpunkt-Bestenliste ----------------------------------------------------
+# Die Kursseite bettet Knackpunkt ein und meldet gehaltene Runden (ohne Live-
+# Spannungen). Gespeichert wird das Beste je Person und Bauteil. Angezeigt werden
+# nur Spitzname und Sitzplatz, nie Pseudonym oder echter Name. Das Ergebnis
+# rechnet der Browser; der Entwurf wird zum Nachprüfen mitgespeichert.
+KP_TEIL_RE = re.compile(r"^(f[0-2]|z[1-9]\d{0,4}|b[0-9A-Za-z._-]{1,300})$")
+KP_ENTWURF_RE = re.compile(r"^[A-Za-z0-9_-]{1,2000}$")
+KP_PLATZ_RE = re.compile(r"^N\d{3} Platz \d+$")
+KP_TOP = 10
+
+
+def kp_name_sauber(v):
+    return re.sub(r"[\x00-\x1f\x7f<>&\"']", "", str(v or "")).strip()[:16]
+
+
+def kp_anzeige(name, platz):
+    if name and platz:
+        return "%s (%s)" % (name, platz)
+    return name or platz or "ohne Namen"
+
+
+def kp_liste(db, teil, who):
+    rows = db.execute(
+        "SELECT s.who, s.prozent, s.platz, n.name FROM kp_scores s "
+        "LEFT JOIN kp_namen n ON n.who = s.who WHERE s.teil=? "
+        "ORDER BY s.prozent DESC, s.updated_at ASC", (teil,)).fetchall()
+    liste, ich = [], None
+    for i, (w, prozent, platz, name) in enumerate(rows):
+        eintrag = {"rang": i + 1, "anzeige": kp_anzeige(name, platz), "prozent": prozent, "ich": w == who}
+        if w == who:
+            ich = eintrag
+        if i < KP_TOP:
+            liste.append(eintrag)
+    name = db.execute("SELECT name FROM kp_namen WHERE who=?", (who,)).fetchone() if who else None
+    platz = host_label(client_ip())
+    return jsonify({"an": True, "liste": liste, "ich": ich, "anzahl": len(rows),
+                    "name": name[0] if name else "",
+                    "platz": platz if KP_PLATZ_RE.match(platz or "") else ""})
+
+
+@app.route("/api/kp", methods=["GET", "POST"])
+def kp_bestenliste():
+    db = get_db()
+    if not spiele_an(db)["kp"]:
+        return jsonify({"an": False})
+    who = _help_identity()
+    if request.method == "GET":
+        teil = request.args.get("teil", "")
+    else:
+        data = request.get_json(silent=True) or {}
+        teil = str(data.get("teil", ""))
+        try:
+            prozent = round(float(data.get("prozent")), 1)
+        except (TypeError, ValueError):
+            return jsonify({"error": "prozent fehlt"}), 400
+        entwurf = str(data.get("entwurf", ""))
+        if not KP_TEIL_RE.match(teil) or not (0 < prozent <= 100) or not KP_ENTWURF_RE.match(entwurf) or not who:
+            return jsonify({"error": "ungültig"}), 400
+        platz = host_label(client_ip())
+        platz = platz if KP_PLATZ_RE.match(platz or "") else None
+        alt = db.execute("SELECT prozent FROM kp_scores WHERE who=? AND teil=?", (who, teil)).fetchone()
+        if not alt or prozent > alt[0]:
+            db.execute("INSERT OR REPLACE INTO kp_scores (who, teil, prozent, entwurf, platz, updated_at) "
+                       "VALUES (?, ?, ?, ?, ?, ?)", (who, teil, prozent, entwurf, platz, time.time()))
+            db.commit()
+    if not KP_TEIL_RE.match(teil):
+        return jsonify({"error": "teil fehlt"}), 400
+    return kp_liste(db, teil, who)
+
+
+@app.post("/api/kp/name")
+def kp_name_setzen():
+    db = get_db()
+    if not spiele_an(db)["kp"]:
+        return jsonify({"an": False})
+    who = _help_identity()
+    data = request.get_json(silent=True) or {}
+    name, teil = kp_name_sauber(data.get("name")), str(data.get("teil", ""))
+    if not who or not KP_TEIL_RE.match(teil):
+        return jsonify({"error": "ungültig"}), 400
+    if name:
+        db.execute("INSERT OR REPLACE INTO kp_namen (who, name) VALUES (?, ?)", (who, name))
+    else:
+        db.execute("DELETE FROM kp_namen WHERE who=?", (who,))
+    db.commit()
+    return kp_liste(db, teil, who)
+
+
+@app.get("/dashboard-kp-name-loeschen")
+def kp_name_loeschen():
+    if not DASHBOARD_TOKEN or request.args.get("key") != DASHBOARD_TOKEN:
+        return "Zugriff nur mit gültigem key-Parameter.", 403
+    db = get_db()
+    db.execute("DELETE FROM kp_namen WHERE name=?", (request.args.get("name", ""),))
+    db.commit()
+    return redirect("dashboard?key=" + DASHBOARD_TOKEN)
+
+
 @app.get("/dashboard-help-done")
 def help_done():
     if not DASHBOARD_TOKEN or request.args.get("key") != DASHBOARD_TOKEN:
@@ -1181,6 +1294,12 @@ def dashboard():
                              % (name, "on" if on else "off", "AN" if on else "AUS", "" if on else " go", url,
                                 "ausschalten" if on else verb)
                              for name, on, url, verb in switches))
+    # Knackpunkt: selbst gewählte Spitznamen der Bestenliste, anstößige hier entfernen
+    kp_namen = [r[0] for r in db.execute("SELECT DISTINCT name FROM kp_namen ORDER BY name")]
+    if kp_namen:
+        switch_html = switch_html.replace("</ul></section>", "</ul><p>Spitznamen in der Knackpunkt-Bestenliste: %s</p></section>" % ", ".join(
+            '%s <a href="dashboard-kp-name-loeschen?key=%s&amp;name=%s">entfernen</a>'
+            % (escape(n), DASHBOARD_TOKEN, urllib.parse.quote(n)) for n in kp_namen), 1)
 
     # Direkt handlungsleitend: wo hingehen?
     help_html = ""
