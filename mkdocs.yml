@@ -1,6 +1,6 @@
 site_name: Angewandte FEM in der Strukturmechanik
 site_url: https://prof-schoenfelder-lab.github.io/Strukturmechanik
-copyright: Copyright &copy; 2025 Felix Kaule & Stephan Schönfelder
+copyright: Copyright &copy; 2026 Felix Kaule & Stephan Schönfelder<br>Diese Webseite wurde mit Unterstützung von KI erstellt.
 repo_name: prof-schoenfelder-lab/Strukturmechanik
 repo_url: https://github.com/prof-schoenfelder-lab/Strukturmechanik
 edit_uri: edit/main/docs/
@@ -25,6 +25,7 @@ theme:
       name: material
       custom_dir: overrides
       language: de
+      font: false # Source Sans Pro liegt lokal (styles/modern.css), kein Google Fonts
       features:
             - toc.follow
             - navigation.tracking
@@ -33,7 +34,6 @@ theme:
             - navigation.path
             - navigation.indexes
             - navigation.top
-            - navigation.footer
             - content.code.copy
             - search.suggest
             - search.highlight
@@ -96,16 +96,39 @@ extra_javascript:
       - "assets/vendor/three-0.147.0.min.js"
       - "assets/js/course-stats.js"
       - "assets/js/progress-hub.js"
-      - "assets/js/home-scroll.js"
+      - "assets/js/hero-anim.js"
 
 extra_css:
       - "assets/tutorials/player.css"
       - "styles/overrides.css"
       - "styles/steps.css"
-      - "styles/home.css"
       - "styles/grid.css"
       - "assets/styles/answer-checker.css"
       - "styles/modern.css"
+
+# Die vier Praktika: Startseite (Liste) und Abschluss-Karte am Ende jedes Praktikums
+extra:
+      praktika:
+            - nr: 1
+              titel: Einführung in ANSYS Workbench
+              text: Oberfläche, Projektaufbau und die erste eigene Simulation.
+              bild: P1_Einfuehrung/01_Grundlagen/images/Uebersicht.png
+              link: P1_Einfuehrung/
+            - nr: 2
+              titel: Geometrieaufbereitung, Lagerung und Lasten
+              text: Geometrie vorbereiten, Lagerungen und Lasten richtig anbringen.
+              bild: P2_Geometrie_Randbedingungen/02_Lagerungen/images/Lager.png
+              link: P2_Geometrie_Randbedingungen/
+            - nr: 3
+              titel: Vernetzung
+              text: Netze erstellen, verfeinern und ihre Qualität beurteilen.
+              bild: P3_Vernetzung/01_Grundlagen/images/Netzverfeinerung.excalidraw.png
+              link: P3_Vernetzung/
+            - nr: 4
+              titel: Abstraktionen
+              text: "Vollmodell, Symmetrie, 2D und Balken: das passende Modell wählen."
+              bild: P4_Abstraktionen/Praktikum04.excalidraw.png
+              link: P4_Abstraktionen/
 nav:
       - Home: index.md
       # >>> AUTO-NAV — Praktika werden vom Kurs-Studio erzeugt, nicht von Hand ändern

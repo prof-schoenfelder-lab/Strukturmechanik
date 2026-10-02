@@ -10,65 +10,33 @@ hide:
 
 <div class="page--home" hidden></div>
 
-<div class="hero" markdown>
-  ![Header](assets/images/Header.png){ .no-lightbox data-glightbox="disabled" width="100%" loading=lazy }
-</div>
-
-<a class="fem-scroll-hint" id="fem-scroll-hint" href="#fem-scrolly">
-  <span>So läuft eine FEM-Simulation ab — einfach weiterscrollen</span>
-  <span class="fem-scroll-chevron" aria-hidden="true"></span>
-</a>
-
-<section class="fem-scrolly" id="fem-scrolly" data-phase="0" markdown>
-  <div class="fem-sticky">
-    <svg id="fem-svg" role="img" aria-label="Animation: Ein Balken wird vernetzt, gelagert, belastet und gelöst"></svg>
-    <div class="fem-caption" id="fem-caption"><strong>1 · Geometrie</strong><span>Das Bauteil wird als CAD-Geometrie beschrieben: ein Balken auf zwei Lagern.</span></div>
+<section class="kurs-hero">
+  <div class="kurs-hero-text">
+    <p class="kurs-kicker">HTWK Leipzig · Fakultät Ingenieurwissenschaften</p>
+    <h1 class="kurs-hero-title">Angewandte FEM in der <span>Strukturmechanik</span></h1>
+    <p class="kurs-hero-lead">Vier Praktika von der ersten eigenen Simulation bis zum passenden Modell. Mit Schritt-für-Schritt-Anleitungen für ANSYS Workbench und Selbsttests zu jedem Praktikum.</p>
+    <div class="kurs-hero-actions">
+      <a class="kurs-btn kurs-btn--primary" href="P1_Einfuehrung/">Mit Praktikum 1 starten <span aria-hidden="true">→</span></a>
+      <a class="kurs-btn" href="Fortschritt/">Mein Fortschritt</a>
+    </div>
   </div>
+  <div class="kurs-hero-media"><div class="kurs-anim" role="img" aria-label="Animation: das erste Lösungsbeispiel aus Praktikum 1 durch alle sieben Schritte des Simulations-Workflows"></div></div>
 </section>
 
 ## Die Praktika
 
+<!-- Daten der Praktika: extra.praktika in mkdocs.yml (auch für die Abschluss-Karte am Ende jedes Praktikums) -->
 <div class="prakt-list">
-  <a class="prakt-row" href="P1_Einfuehrung/">
-    <span class="prakt-num">1</span>
+{%- for p in praktika %}
+  <a class="prakt-row" href="{{ p.link }}">
     <span class="prakt-body">
-      <span class="prakt-label">Praktikum 1</span>
-      <span class="prakt-title">Einführung in ANSYS Workbench</span>
-      <span class="prakt-desc">Oberfläche, Projektaufbau und die erste eigene Simulation.</span>
+      <span class="prakt-label">Praktikum {{ p.nr }}</span>
+      <span class="prakt-title">{{ p.titel }}</span>
+      <span class="prakt-desc">{{ p.text }}</span>
     </span>
-    <img class="prakt-thumb no-lightbox" src="P1_Einfuehrung/01_Grundlagen/images/Uebersicht.png" alt="">
-    <span class="prakt-arrow">→</span>
+    <img class="prakt-thumb no-lightbox" src="{{ p.bild }}" alt="">
   </a>
-  <a class="prakt-row" href="P2_Geometrie_Randbedingungen/">
-    <span class="prakt-num">2</span>
-    <span class="prakt-body">
-      <span class="prakt-label">Praktikum 2</span>
-      <span class="prakt-title">Geometrieaufbereitung, Lagerung und Lasten</span>
-      <span class="prakt-desc">Geometrie vorbereiten, Lagerungen und Lasten richtig anbringen.</span>
-    </span>
-    <img class="prakt-thumb no-lightbox" src="P2_Geometrie_Randbedingungen/02_Lagerungen/images/Lager.png" alt="">
-    <span class="prakt-arrow">→</span>
-  </a>
-  <a class="prakt-row" href="P3_Vernetzung/">
-    <span class="prakt-num">3</span>
-    <span class="prakt-body">
-      <span class="prakt-label">Praktikum 3</span>
-      <span class="prakt-title">Vernetzung</span>
-      <span class="prakt-desc">Netze erstellen, verfeinern und ihre Qualität beurteilen.</span>
-    </span>
-    <img class="prakt-thumb no-lightbox" src="P3_Vernetzung/01_Grundlagen/images/Netzverfeinerung.excalidraw.png" alt="">
-    <span class="prakt-arrow">→</span>
-  </a>
-  <a class="prakt-row" href="P4_Abstraktionen/">
-    <span class="prakt-num">4</span>
-    <span class="prakt-body">
-      <span class="prakt-label">Praktikum 4</span>
-      <span class="prakt-title">Abstraktionen</span>
-      <span class="prakt-desc">Vollmodell, Symmetrie, 2D und Balken — das passende Modell wählen.</span>
-    </span>
-    <img class="prakt-thumb no-lightbox" src="P4_Abstraktionen/Praktikum04.excalidraw.png" alt="">
-    <span class="prakt-arrow">→</span>
-  </a>
+{%- endfor %}
 </div>
 
 <a class="home-faq" href="00_FAQ/">Fragen? Antworten auf die häufigsten gibt es im <strong>FAQ</strong> →</a>
