@@ -8,6 +8,9 @@
   function emitChanged() {
     try { document.dispatchEvent(new CustomEvent('answer-checker:changed')); } catch (e) { }
     try { updatePlayerBadge(); evaluateBadges(true); } catch (e) { }
+    // Knackpunkt-Runden gleich freischalten, sobald die letzte nötige Aufgabe bearbeitet ist; erst nach dem
+    // laufenden Speichern, denn markDone() folgt auf saveAttempts()
+    setTimeout(function () { try { renderZwischenspiele(); } catch (e) { } }, 0);
   }
 
   // Server-side answer check (data-answer/-correct sind im Build entfernt).
