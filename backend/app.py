@@ -1279,9 +1279,10 @@ def kp_ticket_key():
 
 
 def kp_ticket(name, tage=KP_TICKET_TAGE):
+    """wk: Wettkampf-Server; damit führt das Spiel auf GitHub Pages unter „Mehrspieler“ dorthin."""
     jetzt = int(time.time())
-    return jwt.encode({"aud": "knackpunkt", "name": name, "iat": jetzt, "exp": jetzt + tage * 86400},
-                      kp_ticket_key(), algorithm="ES256")
+    return jwt.encode({"aud": "knackpunkt", "name": name, "iat": jetzt, "exp": jetzt + tage * 86400,
+                       "wk": KNACKPUNKT_WETTKAMPF_URL}, kp_ticket_key(), algorithm="ES256")
 
 
 def kurs_stand(db, pseudonym):
@@ -1316,7 +1317,9 @@ def kp_freigabe():
             "aufgaben": sum(x["n"] for x in stand.values())}
     if resp["frei"]:
         name = db.execute("SELECT name FROM kp_namen WHERE who=?", (pseudonym,)).fetchone()
-        resp["link"] = KNACKPUNKT_URL + "#ticket=" + kp_ticket(name[0] if name else "")
+        ticket = kp_ticket(name[0] if name else "")
+        resp["link"] = KNACKPUNKT_URL + "#ticket=" + ticket
+        resp["wettkampf"] = KNACKPUNKT_WETTKAMPF_URL + "#ticket=" + ticket
     return jsonify(resp)
 
 
