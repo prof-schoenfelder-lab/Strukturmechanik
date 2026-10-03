@@ -112,10 +112,10 @@ für neue `data-diagnose`-Werte.
 (qid `:det<i>`). Der Hook legt Fehlerzeile, Begründungen (`explain`) und
 `aufloesung` nur in `answers.json` ab. `/api/check` liefert bei einem Fehlgriff
 die Begründung der angeklickten Zeile als `diagnosis`, beim Treffer oder nach
-dem letzten Versuch zusätzlich `aufloesung`. „Wo knallt's?" (qid `:hs<i>`,
+dem letzten Versuch zusätzlich `aufloesung`. „Schwachstelle" (qid `:hs<i>`,
 `content/hotspot/*.json`) nutzt denselben Weg.
 
-**Spiele freischalten:** Modell-Detektiv, „Wo knallt's?" und das Zwischenspiel
+**Spiele freischalten:** Modell-Detektiv, „Schwachstelle" und das Zwischenspiel
 Knackpunkt sind aus, bis sie im Dashboard freigeschaltet werden (Karte „Schalter
 auf der Kursseite“, `GET /api/spiele`; Knackpunkt hat keine Fragen, der Schalter
 zeigt nur den Kasten am Ende jeder Praktikums-Startseite). Ausgeschaltete Spiele verschwinden von der Seite und zählen weder

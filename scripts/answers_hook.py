@@ -17,7 +17,7 @@ Modell-Detektiv: <div class="detektiv-fall" data-fall="name"> lädt den Fall aus
 content/detektiv/name.json. Strukturbaum und Details kommen als JSON in die
 Seite, Fehlerzeile, Begründungen und Auflösung nur in answers.json (qid :det<i>).
 
-Wo knallt's?: <div class="hotspot-frage" data-fall="name"> lädt die Runde aus
+Schwachstelle: <div class="hotspot-frage" data-fall="name"> lädt die Runde aus
 content/hotspot/name.json. Bild und Zonen kommen in die Seite, richtige Zone,
 Begründungen und Auflösung (samt Lösungsbild) nur in answers.json (qid :hs<i>).
 """

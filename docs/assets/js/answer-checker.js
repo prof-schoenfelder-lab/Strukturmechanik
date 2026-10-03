@@ -1559,7 +1559,7 @@
     }
   }
 
-  // Wo knallt's?: vorab auf die vermutete Spannungsspitze tippen. Die Seite ordnet
+  // Schwachstelle: vorab auf die vermutete Spannungsspitze tippen. Die Seite ordnet
   // den Tipp einer Zone zu (sonst "sonst"); der Server prüft wie bei MC,
   // begründet Fehltipps und liefert am Ende die Auflösung.
   function setupHotspot(q) {
@@ -1573,11 +1573,11 @@
     var attempts = parseInt(localStorage.getItem('answer_attempts_' + qid) || '0', 10) || 0;
 
     q.insertAdjacentHTML('beforeend',
-      '<div class="det-kopf"><span class="det-label">Wo knallt\'s?</span>' +
+      '<div class="det-kopf"><span class="det-label">Schwachstelle</span>' +
       '<strong class="det-titel">' + fall.titel + '</strong></div>' +
       '<p class="det-fall">' + fall.frage + '</p>' +
       '<div class="hs-bild"><img class="no-lightbox" src="' + fall.bild + '" alt="' + fall.titel + '"></div>' +
-      '<div><button type="button" class="mc-submit hs-submit">Hier knallt\'s</button></div>' +
+      '<div><button type="button" class="mc-submit hs-submit">Hier ist die Schwachstelle</button></div>' +
       '<div class="mc-feedback hs-feedback"></div><div class="mc-score hs-score"></div>');
     var bildEl = q.querySelector('.hs-bild'), img = bildEl.querySelector('img');
     var btn = q.querySelector('.hs-submit');
@@ -1659,7 +1659,7 @@
           fb.innerHTML = s;
           if (attempts >= aa) {
             scoreEl.textContent = res.authed ? 'Punkte: 0/' + points : 'Versuche: ' + attempts + '/' + aa;
-            fb.innerHTML += '<div class="mc-reveal">Keine Versuche mehr, hier knallt es:</div>';
+            fb.innerHTML += '<div class="mc-reveal">Keine Versuche mehr, hier liegt die Schwachstelle:</div>';
             aufloesen(res.solution, res.aufloesung);
           } else {
             scoreEl.textContent = 'Versuche: ' + attempts + '/' + aa;
@@ -1683,7 +1683,7 @@
       scoreEl.textContent = 'Punkte: ' + best + '/' + points;
       aufloesen(sol, text);
     } else if (attempts >= attemptsAllowed) {
-      fb.innerHTML = '<div class="mc-reveal">Keine Versuche mehr, hier knallt es:</div>';
+      fb.innerHTML = '<div class="mc-reveal">Keine Versuche mehr, hier liegt die Schwachstelle:</div>';
       scoreEl.textContent = 'Punkte: 0/' + points;
       aufloesen(sol, text);
     } else if (localStorage.getItem('answer_done_' + qid) === '1') {
@@ -1835,7 +1835,7 @@
     var mcQuestions = document.querySelectorAll('.multiple-choice-question');
     for (var j = 0; j < mcQuestions.length; j++) setupMultipleChoiceQuestion(mcQuestions[j], j);
 
-    // Spiele (Modell-Detektiv, Wo knallt's?) nur, wenn im Dashboard freigeschaltet;
+    // Spiele (Modell-Detektiv, Schwachstelle) nur, wenn im Dashboard freigeschaltet;
     // sonst von der Seite nehmen, damit Fortschritt und Lösungsbilder stimmen
     var spielElemente = document.querySelectorAll('.detektiv-fall, .hotspot-frage');
     if (spielElemente.length) spieleFreigabe().then(function (an) {

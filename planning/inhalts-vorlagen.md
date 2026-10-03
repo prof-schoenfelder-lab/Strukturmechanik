@@ -123,14 +123,14 @@ Inhalt in `content/detektiv/<name>.json` (wird nicht deployt):
 Lösung und Begründungen landen beim Build nur in `answers.json`, nie im HTML.
 Zahlenwerte am besten aus bekannten Fehlwerten (Dashboard, `data-diagnose`).
 
-## Vorlage: Wo knallt's? (Vorhersage vor dem Rechnen)
+## Vorlage: Schwachstelle (Vorhersage vor dem Rechnen)
 
 Auf der Übungsseite vor dem Rechnen: Studierende tippen auf die vermutete
 Spannungsspitze. Aufgelöst wird nur die Stelle; der Plot mit Zahlen erscheint
 wie gehabt erst mit den Lösungsbildern.
 
 ```markdown
-## Vorab: Wo knallt's?
+## Vorab: Wo ist die Schwachstelle?
 
 <div class="hotspot-frage" data-fall="p2-lineal" data-points="3" data-attempts="2"></div>
 ```
