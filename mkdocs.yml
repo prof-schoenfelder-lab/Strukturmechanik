@@ -108,7 +108,8 @@ extra_css:
       - "assets/styles/answer-checker.css"
       - "styles/modern.css"
 
-# Die vier Praktika: Startseite (Liste) und Abschluss-Karte am Ende jedes Praktikums
+# Die vier Praktika: Startseite (Liste) und Abschluss-Karte am Ende jedes Praktikums;
+# knackpunkt: Runde über der Abschluss-Karte (Bauteil, Name in der Bestenliste, Absätze)
 extra:
       praktika:
             - nr: 1
@@ -121,16 +122,32 @@ extra:
               text: Geometrie vorbereiten, Lagerungen und Lasten richtig anbringen.
               bild: P2_Geometrie_Randbedingungen/02_Lagerungen/images/Lager.png
               link: P2_Geometrie_Randbedingungen/
+              knackpunkt:
+                    teil: teil-2
+                    name: Brücke (Praktikum 2)
+                    text:
+                          - "Die Brücke liegt auf einem Festlager und einem Loslager, das nur senkrecht hält, genau wie die Lagerungen aus diesem Praktikum. Nehmen Sie so viel Material weg wie möglich, ohne dass sie versagt. Ihre beste Runde kommt in die Bestenliste."
             - nr: 3
               titel: Vernetzung
               text: Netze erstellen, verfeinern und ihre Qualität beurteilen.
               bild: P3_Vernetzung/01_Grundlagen/images/Netzverfeinerung.excalidraw.png
               link: P3_Vernetzung/
+              knackpunkt:
+                    teil: teil-3
+                    name: L-Winkel (Praktikum 3)
+                    text:
+                          - "Der L-Winkel hat eine scharfe Innenecke, also genau die Singularität aus diesem Praktikum. Knackpunkt wertet den Mittelwert der Spannung je Kachel und umgeht sie damit; was das bedeutet, steht im Spiel unter „Was das Spiel vereinfacht“. Nehmen Sie so viel Material weg wie möglich, ohne dass der Winkel versagt."
             - nr: 4
               titel: Abstraktionen
               text: "Vollmodell, Symmetrie, 2D und Balken: das passende Modell wählen."
               bild: P4_Abstraktionen/Praktikum04.excalidraw.png
               link: P4_Abstraktionen/
+              knackpunkt:
+                    teil: teil-1
+                    name: Kragarm (Praktikum 4)
+                    text:
+                          - "Zum Schluss der Klassiker unter den Balken: der Kragarm, links eingespannt, rechts belastet. Nehmen Sie so viel Material weg wie möglich, ohne dass er versagt."
+                          - "Wer alle vier Praktika abgeschlossen hat, schaltet das ganze Spiel frei: Zufallsbauteile, Baukasten, Herausforderungen und Wettkämpfe. Der Knopf dazu erscheint auf der Startseite des Kurses."
 nav:
       - Home: index.md
       # >>> AUTO-NAV — Praktika werden vom Kurs-Studio erzeugt, nicht von Hand ändern

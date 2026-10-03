@@ -2,7 +2,8 @@
   Zurück/Weiter am Ende des Inhalts (ersetzt die Links in der blauen Fußzeile).
   Auf der letzten Seite eines Praktikums (die nächste Seite gehört zu einem
   anderen Praktikum) steht stattdessen eine Abschluss-Karte mit dem nächsten
-  Praktikum aus extra.praktika in mkdocs.yml. Die Startseite bekommt keine
+  Praktikum aus extra.praktika in mkdocs.yml, darüber die Knackpunkt-Runde des
+  Praktikums (extra.praktika[].knackpunkt). Die Startseite bekommt keine
   Navigation, sondern die Liste der Praktikumsseiten für den Weiter-Knopf
   (assets/js/weiter.js).
 -#}
@@ -15,6 +16,15 @@
   {%- if cur_p and next_p != cur_p and page.url.count('/') > 1 -%}
     {%- set praktika = config.extra.praktika -%}
     {%- set np = (praktika | selectattr("nr", "equalto", next_p | int) | first) if next_p else none -%}
+    {%- set kp = (praktika | selectattr("nr", "equalto", cur_p | int) | first).knackpunkt -%}
+    {%- if kp %}
+    <div class="zwischenspiel" data-praktikum="/{{ (praktika | selectattr("nr", "equalto", cur_p | int) | first).link }}" data-name="{{ kp.name }}" data-teil="{{ kp.teil }}">
+      <h2>Zwischenspiel: Knackpunkt</h2>
+      {%- for absatz in kp.text %}
+      <p>{{ absatz }}</p>
+      {%- endfor %}
+    </div>
+    {%- endif %}
     <section class="kurs-finish" aria-label="Praktikum {{ cur_p }} abgeschlossen">
       <div class="kurs-finish-main">
         <div class="kurs-finish-kicker">

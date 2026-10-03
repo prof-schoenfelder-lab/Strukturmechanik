@@ -67,9 +67,3 @@ hide:
   </a>
 </div>
 
-<div class="zwischenspiel zs-werbung">
-<h2>Zwischenspiel: Knackpunkt</h2>
-<video class="zs-video" src="images/knackpunkt-lenker.mp4" poster="images/knackpunkt-lenker.jpg" autoplay muted loop playsinline aria-label="Knackpunkt am Lenker: Material wird weggenommen, die FE-Rechnung zeigt, ob er hält"></video>
-<p>Wie viel Material darf weg, bevor das Bauteil versagt? Nach Übung 2 und Übung 4 finden Sie das Bauteil der Übung im Spiel Knackpunkt wieder: Nehmen Sie Material weg, eine echte FE-Rechnung entscheidet, ob es hält. Wer am meisten wegnimmt, ohne dass es bricht, steht oben in der Bestenliste.</p>
-<p><a href="03_Selbsttests/Uebung-2/">Zu Übung 2: Kragarm</a> und <a href="03_Selbsttests/Uebung-4/">zu Übung 4: Lenker</a>. Freigeschaltet wird der Kragarm, sobald Sie Übung 1 und 2 bearbeitet haben, der Lenker nach Übung 3 und 4. Nach jedem weiteren Praktikum wartet eine Runde, und wer alle vier abgeschlossen hat, schaltet das ganze Spiel frei.</p>
-</div>
