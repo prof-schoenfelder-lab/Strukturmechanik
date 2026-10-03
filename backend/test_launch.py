@@ -509,6 +509,25 @@ def main():
             "SELECT COUNT(*) FROM eingaben WHERE pseudonym='test-a'").fetchone()[0] == 0)
         tdb.close()
 
+        # ---- Zurücksetzen: alter Stand aus einem anderen Browser wird abgelehnt -------------
+        R = person("test-r")
+        alt = requests.get(BACKEND + "/api/me", headers=R).json()["generation"]
+        stand = {"results": {"/T/P3:q0": {"best": 5, "max": 5, "attempts": 1}}}
+        check("ohne Zurücksetzen: Abgleich ohne Generation geht (älteres Skript)",
+              requests.post(BACKEND + "/api/results", headers=R, json=stand).status_code == 200)
+        r = requests.post(BACKEND + "/api/reset", headers=R).json()
+        neu = requests.get(BACKEND + "/api/me", headers=R).json()["generation"]
+        check("zurücksetzen: neue Generation mit Marke",
+              r.get("generation") == neu and neu.startswith(alt + ":"), str(r))
+        check("anderer Browser: Stand mit alter Generation abgelehnt", requests.post(
+            BACKEND + "/api/results", headers=R, json=dict(stand, generation=alt)).status_code == 409)
+        check("anderer Browser mit älterem Skript (ohne Generation) abgelehnt",
+              requests.post(BACKEND + "/api/results", headers=R, json=stand).status_code == 409)
+        check("vom alten Stand nichts gespeichert",
+              requests.get(BACKEND + "/api/results", headers=R).json()["results"] == {})
+        check("Abgleich mit aktueller Generation geht", requests.post(
+            BACKEND + "/api/results", headers=R, json=dict(stand, generation=neu)).status_code == 200)
+
     finally:
         server.terminate()
         jwks_srv.shutdown()

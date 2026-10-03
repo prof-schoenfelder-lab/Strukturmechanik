@@ -142,7 +142,12 @@
     };
     if (!token) return leeren();
     fetch(BACKEND + '/api/reset', { method: 'POST', headers: { 'Authorization': 'Bearer ' + token } })
-      .then(function (r) { if (!r.ok) throw new Error(); leeren(); })
+      .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
+      .then(function (d) {
+        // neue Generation gleich merken; andere Browser mit altem Stand leeren sich beim nächsten Abgleich selbst
+        try { if (d && d.generation) localStorage.setItem('ac_generation', d.generation); } catch (e) { }
+        leeren();
+      })
       .catch(function () { alert('Zurücksetzen gerade nicht möglich: Dafür ist das HTWK-Netz oder VPN nötig.'); });
   }
 

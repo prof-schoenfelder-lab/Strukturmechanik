@@ -586,6 +586,12 @@ def post_results():
         return jsonify({"error": "bad payload"}), 400
 
     db = get_db()
+    # Stand aus einem Browser, der vor „Fortschritt zurücksetzen“ oder vor dem Semester-Reset geladen wurde:
+    # nicht übernehmen, der Browser leert sich dann selbst. Ohne Generation (älteres Skript) nur ablehnen,
+    # wenn die Person schon einmal zurückgesetzt hat.
+    aktuell, gen = nutzer_generation(db, pseudonym), payload.get("generation")
+    if (gen is not None and gen != aktuell) or (gen is None and ":" in aktuell):
+        return jsonify({"error": "veraltet", "generation": aktuell}), 409
     now = time.time()
     for qid, rec in list(results.items())[:500]:
         if not isinstance(rec, dict):
@@ -837,9 +843,11 @@ def reset_eigener_fortschritt():
     db = get_db()
     n = db.execute("DELETE FROM results WHERE pseudonym=?", (pseudonym,)).rowcount
     db.execute("DELETE FROM eingaben WHERE pseudonym=?", (pseudonym,))
+    db.execute("INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)",
+               ("reset:" + pseudonym, secrets.token_urlsafe(6)))
     db.commit()
     push_score_async(pseudonym)
-    return jsonify({"geloescht": n})
+    return jsonify({"geloescht": n, "generation": nutzer_generation(db, pseudonym)})
 
 
 @app.get("/api/results")
@@ -860,6 +868,13 @@ def course_generation():
     return row["value"] if row else "0"
 
 
+def nutzer_generation(db, pseudonym):
+    """Kurs-Generation, nach „Fortschritt zurücksetzen“ mit einer Marke der Person: Browser mit älterem Stand
+    leeren sich dann selbst, statt ihn wieder hochzuladen (wie nach dem Semester-Reset)."""
+    row = db.execute("SELECT value FROM meta WHERE key=?", ("reset:" + pseudonym,)).fetchone()
+    return course_generation() + (":" + row["value"] if row else "")
+
+
 @app.get("/api/me")
 def me():
     pseudonym = current_pseudonym()
@@ -872,7 +887,7 @@ def me():
     ).fetchone()
     return jsonify({
         "pseudonym": pseudonym,
-        "generation": course_generation(),
+        "generation": nutzer_generation(get_db(), pseudonym),
         "total_points": row["total"],
         "max_points": row["max"],
         "questions": row["n"],

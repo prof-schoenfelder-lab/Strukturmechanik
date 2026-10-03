@@ -22,6 +22,7 @@ db = sqlite3.connect('data/results.db')
 import secrets
 db.execute('DELETE FROM results')
 db.execute('DELETE FROM eingaben')
+db.execute("DELETE FROM meta WHERE key LIKE 'reset:%'")
 db.execute('DELETE FROM users')
 db.execute("INSERT OR REPLACE INTO meta (key, value) VALUES ('generation', ?)", (secrets.token_urlsafe(8),))
 db.commit()
