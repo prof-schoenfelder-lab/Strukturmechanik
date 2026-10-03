@@ -30,7 +30,7 @@ Nach dem Import der Archivdatei die Geometrie mit SpaceClaim öffnen und wie fol
 
 ## Hinweise
 
-<div class="steps" markdown="1" data-kategorie="Geometrie, Material, Lagerung">
+<div class="steps" markdown="1" data-anleitung="nein">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2"><code>SpaceClaim</code>:  Körper an Übergangsstellen mit  <code>Split Body</code>  auftrennen und Übergang entfernen</p>

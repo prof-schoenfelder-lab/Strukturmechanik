@@ -3,7 +3,8 @@
 Jeder Block <div class="steps"> wird auf der Seite „Anleitungen“ (tutorials.md,
 assets/js/tutorials.js) eine Listen-Anleitung neben den Klick-Anleitungen. Die Themen
 stehen im Block selbst, mehrere mit Komma: data-kategorie="Auswertung, Belastung"
-(ohne Angabe: Sonstiges). Titel ist
+(ohne Angabe: Sonstiges). Übungsspezifische Hinweise bleiben mit data-anleitung="nein"
+draußen. Titel ist
 die Überschrift über dem Block, bei allgemeinen Überschriften wie „Hinweise“ mit dem
 Seitentitel. Gleiche Blöcke auf mehreren Seiten erscheinen einmal, mit allen
 Fundstellen. Im Kurs bekommt jeder Block eine id (anleitung-1, -2, …), damit der
@@ -74,7 +75,7 @@ def on_page_content(html, page, config, files, **kwargs):
             break
         block = html[m.start():ende]
         schritte = [_text(s) for s in _SCHRITT.findall(block)]
-        if not schritte:
+        if not schritte or 'data-anleitung="nein"' in html[m.start():html.index(">", m.start())]:
             continue
         n += 1
         anker = "anleitung-%d" % n

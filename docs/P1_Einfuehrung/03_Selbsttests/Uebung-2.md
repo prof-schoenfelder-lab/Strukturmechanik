@@ -45,7 +45,7 @@ Belastung:
 
 ## Hinweise
 
-<div class="steps" markdown="1" data-kategorie="Setup, Lagerung, Belastung">
+<div class="steps" markdown="1" data-anleitung="nein">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Neue Analyse anlegen</p>
