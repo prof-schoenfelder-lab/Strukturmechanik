@@ -77,17 +77,17 @@ Rechte Handauflage auf einer Breite von 80mm:<br>
 
 <!---
 Fixed Support: 17.361mm
-RemoteDisp+Frictionless Support (Fläche): 18.24mm
+RemoteDisp mit/ohne Frictionless Support (Fläche), 2025 R2: 18.24mm
 -->
 
 ### Die maximale von-Mises-Spannung in MPa
 
-<div class="numeric-question" data-baum="p1-u4" data-answer="271.05" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Spannung an Singularität? (Oben Tab Result > Maximum) ggf. Randbedingung für fixierte Lagerung überdenken Netzgröße 1,5 mm eingestellt?" data-diagnose="288.8 [lager]: Dieser Wert entsteht mit Fixed Support, das Maximum sitzt an der Singularität. Die Klemmung mit Remote Displacement und Frictionless Support umsetzen.">
+<div class="numeric-question" data-baum="p1-u4" data-answer="271.97" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Spannung an Singularität? (Oben Tab Result > Maximum) ggf. Randbedingung für fixierte Lagerung überdenken. Netzgröße 1,5 mm eingestellt?" data-diagnose="288.8 [lager]: Dieser Wert entsteht mit Fixed Support, das Maximum sitzt an der Singularität. Die Klemmung mit Remote Displacement umsetzen.">
 </div>
 
 <!---
 Fixed Support: 288,8MPa
-RemoteDisp+Frictionless Support (Fläche): 271.05MPa
+RemoteDisp mit/ohne Frictionless Support (Fläche), 2025 R2: 271.97MPa (ältere Version: 271.05MPa)
 -->
 
 <div class="zwischenspiel" data-seite="/P1_Einfuehrung/03_Selbsttests/Uebung-3,/P1_Einfuehrung/03_Selbsttests/Uebung-4" data-voraussetzung="Übung 3 und 4" data-name="Lenker (Übung 4)" data-teil="bau-2ya.AA_8AAAH_4AAA__wAAH__gAA___AP_wA___-AB___wAD__-AAH__wAAP8.wBe05wTe45.T09861eTq9861e">
