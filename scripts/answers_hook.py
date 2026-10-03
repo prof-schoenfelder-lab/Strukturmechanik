@@ -20,6 +20,9 @@ Seite, Fehlerzeile, Begründungen und Auflösung nur in answers.json (qid :det<i
 Schwachstelle: <div class="hotspot-frage" data-fall="name"> lädt die Runde aus
 content/hotspot/name.json. Bild und Zonen kommen in die Seite, richtige Zone,
 Begründungen und Auflösung (samt Lösungsbild) nur in answers.json (qid :hs<i>).
+
+HTML-Kommentare im Seitentext (etwa Vergleichswerte zur Lösung) werden nicht
+mit ausgeliefert.
 """
 
 import json
@@ -35,6 +38,7 @@ _TAG_RE = re.compile(
 _SUFFIX = {"numeric-question": ":q", "multiple-choice-question": ":mc",
            "detektiv-fall": ":det", "hotspot-frage": ":hs"}
 _ATTR_RE = re.compile(r'\s*data-(answer|tolerance|correct|diagnose)="([^"]*)"')
+_KOMMENTAR_RE = re.compile(r"<!--.*?-->", re.S)
 
 
 def _attr(tag, name, default=""):
@@ -141,7 +145,7 @@ def on_page_content(html, page, config, files):
         stripped = _ATTR_RE.sub("", tag)
         return stripped[:-1] + ' data-qid="' + qid + '">'
 
-    return _TAG_RE.sub(replace, html)
+    return _KOMMENTAR_RE.sub("", _TAG_RE.sub(replace, html))
 
 
 def on_post_build(config):
