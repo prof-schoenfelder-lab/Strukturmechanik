@@ -1095,6 +1095,7 @@ def help_toggle():
 # zählen weder im Fragenkatalog noch im Dashboard oder im OPAL-Maximum.
 # Knackpunkt (kp) hat keine Fragen: der Schalter zeigt nur das Zwischenspiel am Ende jedes Praktikums.
 SPIELE = {"det": "Modell-Detektiv", "hs": "Wo knallt's?", "kp": "Knackpunkt"}
+SPIELE_STANDARD_AN = {"kp"}  # an, solange im Dashboard nicht ausdrücklich ausgeschaltet
 
 
 def spieltyp(qid):
@@ -1103,9 +1104,9 @@ def spieltyp(qid):
 
 
 def spiele_an(db):
-    an = {r[0][len("spiel_"):] for r in
-          db.execute("SELECT key FROM meta WHERE key LIKE 'spiel_%' AND value='1'")}
-    return {typ: typ in an for typ in SPIELE}
+    werte = dict(db.execute("SELECT key, value FROM meta WHERE key LIKE 'spiel_%'").fetchall())
+    return {typ: werte.get("spiel_" + typ, "1" if typ in SPIELE_STANDARD_AN else "0") == "1"
+            for typ in SPIELE}
 
 
 def aktive_answers(db):
