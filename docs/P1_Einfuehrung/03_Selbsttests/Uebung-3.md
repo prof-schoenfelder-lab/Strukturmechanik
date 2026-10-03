@@ -47,6 +47,8 @@ Die Geometrie beinhaltet noch nicht die Flächen an denen die Randbedingungen an
    style="width:600px">
 </div>
 
+Die Fläche für die Kraft am langen Ende entsteht genauso: eine Ebene auf der Stirnfläche des langen Endes erzeugen, um `30` mm verschieben und die Flächen mit `Split` teilen.
+
 ### Randbedingungen
 
 Lagerung:
@@ -55,7 +57,7 @@ Lagerung:
 
 Belastung:
 
-- Am Langen Ende 30 mm senkrecht auf die Fläche (negative y-Richtung) mit einer Kraft von 200 N
+- Kraft $F_y=-200 \mathrm{N}$ auf den letzten 30 mm am langen Ende, senkrecht auf die Fläche
 
 ## Hinweise
 
@@ -98,7 +100,7 @@ Belastung:
 
 ### Die maximale Durchbiegung $u_{\max }$ in mm
 
-<div class="numeric-question" data-baum="p1-u3" data-answer="2.06" data-tolerance="0.2" data-points="5" data-attempts="5"  data-hints="Material zugeordnet?">
+<div class="numeric-question" data-baum="p1-u3" data-answer="2.06" data-tolerance="0.2" data-points="5" data-attempts="5"  data-hints="Material zugeordnet? Netzgröße 1 mm eingestellt?">
 </div>
 
 <!---
@@ -108,7 +110,7 @@ RemoteDisp (Fläche): 2,1309 mm
 
 ### Die maximale von-Mises-Spannung in MPa
 
-<div class="numeric-question" data-baum="p1-u3" data-answer="353.11" data-tolerance="3" data-points="5" data-attempts="5"  data-hints="Wurde die von-Mises Spannung ausgewertet? Fixierte Lagerung mit Remote Displacement?" data-diagnose="393.35 [lager]: Das Maximum liegt an der festen Einspannung, einer Singularität. Remote Displacement verwenden oder außerhalb der Einspannung auswerten.">
+<div class="numeric-question" data-baum="p1-u3" data-answer="353.11" data-tolerance="3" data-points="5" data-attempts="5"  data-hints="Wurde die von-Mises Spannung ausgewertet? Fixierte Lagerung mit Remote Displacement? Netzgröße 1 mm eingestellt?" data-diagnose="393.35 [lager]: Das Maximum liegt an der festen Einspannung, einer Singularität. Remote Displacement verwenden oder außerhalb der Einspannung auswerten. | 331.07 [netz.groesse]: Dieser Wert entsteht mit dem Standardnetz. Hier ist eine Netzgröße von 1 mm vorgegeben.">
 </div>
 
 <!---

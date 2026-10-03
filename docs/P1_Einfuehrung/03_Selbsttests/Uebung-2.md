@@ -55,6 +55,13 @@ Belastung:
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Lagerung: Feste Einspannung</p>
     <p>Bei einer festen Einspannung werden alle Freiheitsgrade auf der Stirnseite (Fläche) links unterdrückt.</p>
+    <p>Im Mechanical: <code>Klick</code> auf <code>Flächenauswahl</code> und die linke Stirnseite <code>auswählen</code>, dann im Strukturbaum <code>Rechtsklick</code> auf <code>Static Structural</code> > <code>Insert</code> > <code>Fixed Support</code>.</p>
+  </div>
+
+  <div class="step">
+    <p class="step-title" role="heading" aria-level="2">Belastung: Kraft auf der oberen Kante</p>
+    <p>Die Kraft wird oben am rechten Ende aufgebracht, also auf die <strong>obere Kante</strong> der rechten Stirnseite und nicht auf die Fläche.</p>
+    <p>Im Mechanical: <code>Klick</code> auf <code>Kantenauswahl</code> und die obere Kante rechts <code>auswählen</code>, dann im Strukturbaum <code>Rechtsklick</code> auf <code>Static Structural</code> > <code>Insert</code> > <code>Force</code>.</p>
   </div>
 </div>
 
@@ -62,12 +69,12 @@ Belastung:
 
 ### Die maximale Durchbiegung $u_{\max }$ in mm
 
-<div class="numeric-question" data-baum="p1-u2" data-answer="3.3462" data-tolerance="0.1" data-points="5" data-attempts="5"  data-hints="Material definiert und zugeordnet? Einheit auf mm gewechselt? Kraft auf Kante in z-Richtung?" data-diagnose="1.171 [koerper.material]: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Aluminium (E = 70 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
+<div class="numeric-question" data-baum="p1-u2" data-answer="3.3462" data-tolerance="0.1" data-points="5" data-attempts="5"  data-hints="Material definiert und zugeordnet? Einheit auf mm gewechselt? Netzgröße 5 mm eingestellt? Kraft auf Kante in z-Richtung?" data-diagnose="1.171 [koerper.material]: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Aluminium (E = 70 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
 </div>
 
 ### Die maximale Spannung in y-Richtung $\sigma_{y, \max }$ in MPa
 
-<div class="numeric-question" data-baum="p1-u2" data-answer="142.47" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Material definiert und zugeordnet? Einheit auf mm gewechselt? Kraft auf Kante in z-Richtung? Spannung in y-Richtung (Längsrichtung des Balkens) ausgewertet?" data-diagnose="87.7 [lager]: Das ist der Wert mit der alternativen Einspannung. Hier ist noch die Rechnung mit Fixed Support gefragt. | 83.3 [ergebnis2]: Das ist die analytische Lösung. Gefragt ist der ANSYS-Wert, der wegen der Singularität an der Einspannung höher liegt.">
+<div class="numeric-question" data-baum="p1-u2" data-answer="142.47" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Material definiert und zugeordnet? Einheit auf mm gewechselt? Netzgröße 5 mm eingestellt? Kraft auf Kante in z-Richtung? Spannung in y-Richtung (Längsrichtung des Balkens) ausgewertet?" data-diagnose="87.7 [lager]: Das ist der Wert mit der alternativen Einspannung. Hier ist noch die Rechnung mit Fixed Support gefragt. | 83.3 [ergebnis2]: Das ist die analytische Lösung. Gefragt ist der ANSYS-Wert, der wegen der Singularität an der Einspannung höher liegt. | 101.8 [netz.groesse]: Dieser Wert entsteht mit der Netzgröße aus Übung 1 (15 mm). Hier ist eine Netzgröße von 5 mm vorgegeben.">
 </div>
 
 ## Analytische Lösung 
