@@ -1513,6 +1513,7 @@ input.num.tol{width:4.5rem}
 .card.ok h3{color:var(--ok)}
 p.hinweis{color:var(--warn);font-weight:600}
 code{font-size:.82rem;background:var(--panel);border-radius:.3rem;padding:.05rem .3rem;white-space:nowrap}
+code.kopie{white-space:normal;user-select:all;cursor:copy}
 a.btn.done{background:var(--ok);border-color:var(--ok);color:#fff}
 .alert{background:var(--alarm-bg);border:1px solid var(--alarm-line);box-shadow:inset 4px 0 0 var(--alarm);border-radius:var(--r-md);
 padding:.8rem 1rem;margin:0 0 1rem}
@@ -2093,16 +2094,18 @@ def sollwerte():
     if korr:
         zeilen = "".join(
             '<tr><td title="%s">%s</td><td class="num">%s ± %s</td><td class="num"><b>%s ± %s</b></td><td>%s</td>'
-            '<td><code>data-answer="%s" data-tolerance="%s"</code></td>'
+            '<td><code class="kopie">%s%s: data-answer="%s" data-tolerance="%s"</code></td>'
             '<td class="act"><form method="post" action="dashboard-sollwert-zurueck?key=%s">'
             '<input type="hidden" name="qid" value="%s"><button class="btn">zurücknehmen</button></form></td></tr>'
             % (escape(qid), aufgabe(qid), _zahl(datei.get(qid, {}).get("answer", 0)),
                _zahl(datei.get(qid, {}).get("tolerance", 0)), _zahl(r["answer"]), _zahl(r["tolerance"]),
-               datetime.datetime.fromtimestamp(r["created_at"]).strftime("%d.%m.%Y"),
+               datetime.datetime.fromtimestamp(r["created_at"]).strftime("%d.%m.%Y"), short_qid(qid),
+               " (docs/%s)" % escape(datei[qid]["quelle"]) if datei.get(qid, {}).get("quelle") else "",
                _zahl(r["answer"], False), _zahl(r["tolerance"], False), key, escape(qid))
             for qid, r in korr.items())
         teile.append('<section class="card"><h2>Aktive Korrekturen</h2><p class="note">Im Kurstext (Markdown) '
-                     'nachziehen, dann verschwindet die Korrektur hier von selbst. Zurücknehmen stellt den Wert '
+                     'nachziehen, dann verschwindet die Korrektur hier von selbst. Ein Klick markiert die Zeile zum Kopieren. '
+                     'Zurücknehmen stellt den Wert '
                      'aus dem Kurstext wieder her, vergebene Punkte bleiben.</p><div class="tablewrap"><table>'
                      '<tr><th>Aufgabe</th><th>Kurstext</th><th>Korrektur</th><th>seit</th><th>im Markdown</th>'
                      '<th></th></tr>%s</table></div></section>' % zeilen)

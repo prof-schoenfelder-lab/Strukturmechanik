@@ -453,7 +453,7 @@ def main():
         with open(os.path.join(tmp, "answers.json")) as f:
             katalog = json.load(f)
         katalog[QK] = {"answer": 271.05, "tolerance": 0.5, "points": 5, "attempts": 5,
-                       "titel": "Die maximale von-Mises-Spannung in MPa"}
+                       "titel": "Die maximale von-Mises-Spannung in MPa", "quelle": "T/Korr.md"}
         with open(os.path.join(tmp, "answers.json"), "w") as f:
             json.dump(katalog, f)
 
@@ -497,7 +497,8 @@ def main():
         check("korrektur gilt sofort", eingabe(person("test-d"), 271.97).get("correct") is True)
         r = requests.get(BACKEND + "/dashboard-sollwerte", params=dict(K, ok="gespeichert", qid=QK, n=2, f=3))
         check("sollwerte zeigen die aktive Korrektur", "Aktive Korrekturen" in r.text
-              and 'data-answer="271.97"' in r.text and "2 Personen nachträglich gewertet" in r.text)
+              and '(docs/T/Korr.md): data-answer="271.97" data-tolerance="0.5"' in r.text
+              and "2 Personen nachträglich gewertet" in r.text)
         check("dashboard verlinkt die Sollwerte",
               "dashboard-sollwerte?key=" in requests.get(BACKEND + "/dashboard", params=K).text)
         requests.post(BACKEND + "/dashboard-sollwert-zurueck", params=K, data={"qid": QK})

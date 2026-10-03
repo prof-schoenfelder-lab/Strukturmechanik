@@ -128,6 +128,7 @@ def on_page_content(html, page, config, files):
         titel = [t for pos, t in kopf if pos < m.start()]
         if titel:
             entry["titel"] = titel[-1]  # Überschrift über der Frage, für die Sollwerte im Dashboard
+        entry["quelle"] = page.file.src_uri  # Markdown-Datei, damit Korrekturen aus dem Dashboard zurückfinden
         if cls in ("detektiv-fall", "hotspot-frage"):
             root = os.path.dirname(config["config_file_path"])
             if cls == "detektiv-fall":
