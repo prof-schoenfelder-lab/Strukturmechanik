@@ -14,11 +14,35 @@ hide:
   <div class="kurs-hero-text">
     <p class="kurs-kicker">HTWK Leipzig · Fakultät Ingenieurwissenschaften</p>
     <h1 class="kurs-hero-title">Angewandte FEM in der <span>Strukturmechanik</span></h1>
-    <p class="kurs-hero-lead">Vier Praktika von der ersten eigenen Simulation bis zum passenden Modell. Mit Schritt-für-Schritt-Anleitungen für ANSYS Workbench und Selbsttests zu jedem Praktikum.</p>
     <div class="kurs-hero-actions">
       <a class="kurs-btn kurs-btn--primary" href="P1_Einfuehrung/">Mit Praktikum 1 starten <span aria-hidden="true">→</span></a>
       <a class="kurs-btn" href="Fortschritt/">Mein Fortschritt</a>
     </div>
+    <div class="kurs-opal" id="kurs-opal">
+      <div class="kurs-opal-out">
+        <span class="kurs-opal-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5v3H3v4h7v3zm9 2h-6v2h6c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-6v2h6v14z"/></svg></span>
+        <div>
+          <p class="kurs-opal-title">Fortschritt mit OPAL sichern</p>
+          <p>Melden Sie sich über den OPAL-Kurs an: Dann werden Ihre Punkte gespeichert und auf jedem Gerät angezeigt, auf dem Sie angemeldet sind. Ohne Anmeldung bleibt Ihr Stand nur in diesem Browser.</p>
+          <p class="kurs-opal-game"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7,6H17A6,6 0 0,1 23,12A6,6 0 0,1 17,18C15.22,18 13.63,17.23 12.53,16H11.47C10.37,17.23 8.78,18 7,18A6,6 0 0,1 1,12A6,6 0 0,1 7,6M6,9V11H4V13H6V15H8V13H10V11H8V9H6M15.5,12A1.5,1.5 0 0,0 14,13.5A1.5,1.5 0 0,0 15.5,15A1.5,1.5 0 0,0 17,13.5A1.5,1.5 0 0,0 15.5,12M18.5,9A1.5,1.5 0 0,0 17,10.5A1.5,1.5 0 0,0 18.5,12A1.5,1.5 0 0,0 20,10.5A1.5,1.5 0 0,0 18.5,9Z"/></svg><span><b>Minispiele:</b> Im Knackpunkt nehmen Sie Material weg, bis das Bauteil bricht, und spielen um die Bestenliste. Die Runde am Ende jedes Praktikums schalten Sie mit der Anmeldung frei.</span></p>
+          <p class="kurs-opal-note">Außerhalb des HTWK-Netzes muss dafür das VPN aktiv sein.</p>
+          <a class="kurs-opal-link" href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/18448121873/CourseNode/1784428828536783012">Über OPAL anmelden →</a>
+        </div>
+      </div>
+      <div class="kurs-opal-in">
+        <span class="kurs-opal-icon kurs-opal-icon--ok" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span>
+        <div>
+          <p class="kurs-opal-title">Über OPAL angemeldet</p>
+          <p>Ihre Punkte werden gespeichert und auf jedem Gerät angezeigt, auf dem Sie angemeldet sind. Ihre Plätze in den Knackpunkt-Bestenlisten finden Sie unter Mein Fortschritt.</p>
+          <p class="kurs-opal-note">Außerhalb des HTWK-Netzes muss für den Abgleich das VPN aktiv sein.</p>
+          <a class="kurs-opal-link" href="Fortschritt/">Mein Fortschritt →</a>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Angemeldet (Token gespeichert oder gerade von OPAL zurück): zweite Karte zeigen
+      try { if (localStorage.getItem('ac_backend_token') || /[#&]ac_token=/.test(location.hash)) document.getElementById('kurs-opal').classList.add('is-in'); } catch (e) { }
+    </script>
   </div>
   <div class="kurs-hero-media"><div class="kurs-anim" role="img" aria-label="Animation: das erste Lösungsbeispiel aus Praktikum 1 durch alle sieben Schritte des Simulations-Workflows"></div></div>
 </section>
