@@ -114,12 +114,12 @@
    "label": "Force",
    "art": "last",
    "ebene": 1,
-   "pruefen": "Kraft auf der Kante rechts, nicht auf der Fläche; nach unten, also negativ in z.",
+   "pruefen": "Kraft auf der oberen Kante rechts, nicht auf der Fläche; nach unten, also negativ in z.",
    "details": [
     {
      "id": "last.geometrie",
      "name": "Geometry",
-     "wert": "1 Edge (Kante rechts)"
+     "wert": "1 Edge (obere Kante rechts)"
     },
     {
      "id": "last.def",

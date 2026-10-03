@@ -140,6 +140,20 @@
    ]
   },
   {
+   "id": "lager2",
+   "label": "Frictionless Support",
+   "art": "lager",
+   "ebene": 1,
+   "pruefen": "Auf derselben Stirnseite wie das Remote Displacement: Die Fläche kann sich nur noch in der x-z-Ebene bewegen.",
+   "details": [
+    {
+     "id": "lager2.geometrie",
+     "name": "Geometry",
+     "wert": "1 Face (Stirnseite links)"
+    }
+   ]
+  },
+  {
    "id": "last",
    "label": "Force",
    "art": "last",
@@ -149,7 +163,7 @@
     {
      "id": "last.geometrie",
      "name": "Geometry",
-     "wert": "1 Edge (Kante rechts)"
+     "wert": "1 Edge (obere Kante rechts)"
     },
     {
      "id": "last.def",

@@ -20,31 +20,31 @@
    "label": "Geometry",
    "art": "ordner",
    "ebene": 0,
-   "pruefen": "Genau ein Körper, nichts unterdrückt?",
+   "pruefen": "Fünf Körper (Links, Linke Auflage, Mittelteil, Rechts, Rechte Auflage), keiner unterdrückt?",
    "details": [
     {
      "id": "geometrie.koerper",
      "name": "Bodies",
-     "wert": "1"
+     "wert": "5"
     }
    ]
   },
   {
    "id": "koerper",
-   "label": "Lenker",
+   "label": "Lenker (fünf Körper)",
    "art": "geometrie",
    "ebene": 1,
-   "pruefen": "Ist dem Körper das vorgegebene Material zugeordnet und nicht Structural Steel? Stimmen die Maße?",
+   "pruefen": "Ist allen fünf Körpern Aluminium zugeordnet und keinem mehr Structural Steel?",
    "details": [
     {
      "id": "koerper.material",
      "name": "Material Assignment",
-     "wert": "Aluminium"
+     "wert": "Aluminium (alle fünf Körper)"
     },
     {
      "id": "koerper.teilung",
-     "name": "Flächen",
-     "wert": "Klemmung 50 mm in der Mitte, Griffe je 80 mm abgeteilt"
+     "name": "Körper",
+     "wert": "Mittelteil 50 mm (Klemmung), Linke und Rechte Auflage je 80 mm (Griffe), dazu Links und Rechts; in der Geometriedatei schon getrennt"
     }
    ]
   },
@@ -105,7 +105,7 @@
     {
      "id": "lager.geometrie",
      "name": "Geometry",
-     "wert": "Klemmfläche in der Mitte, 50 mm breit"
+     "wert": "1 Face (Mittelteil, 50 mm breit)"
     },
     {
      "id": "lager.x",
@@ -149,7 +149,7 @@
     {
      "id": "last.geometrie",
      "name": "Geometry",
-     "wert": "Handauflage links, 80 mm"
+     "wert": "1 Face (Linke Auflage, 80 mm)"
     },
     {
      "id": "last.def",
@@ -178,7 +178,7 @@
     {
      "id": "last2.geometrie",
      "name": "Geometry",
-     "wert": "Handauflage rechts, 80 mm"
+     "wert": "1 Face (Rechte Auflage, 80 mm)"
     },
     {
      "id": "last2.def",

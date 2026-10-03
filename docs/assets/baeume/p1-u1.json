@@ -102,30 +102,15 @@
   },
   {
    "id": "lager",
-   "label": "Displacement (Festlager)",
+   "label": "Fixed Support (Festlager)",
    "art": "lager",
    "ebene": 1,
-   "pruefen": "Festlager links auf der unteren linken Kante: alle drei Verschiebungen 0, auch X.",
+   "pruefen": "Festlager mit Fixed Support auf der unteren linken Kante: alle drei Verschiebungen 0.",
    "details": [
     {
      "id": "lager.geometrie",
      "name": "Geometry",
      "wert": "1 Edge (unten links)"
-    },
-    {
-     "id": "lager.x",
-     "name": "X Component",
-     "wert": "0 mm"
-    },
-    {
-     "id": "lager.y",
-     "name": "Y Component",
-     "wert": "0 mm"
-    },
-    {
-     "id": "lager.z",
-     "name": "Z Component",
-     "wert": "0 mm"
     }
    ]
   },
@@ -134,7 +119,7 @@
    "label": "Displacement (Loslager)",
    "art": "lager",
    "ebene": 1,
-   "pruefen": "Loslager rechts auf der unteren rechten Kante: in Längsrichtung (Y) frei verschiebbar, Z = 0.",
+   "pruefen": "Loslager rechts auf der unteren rechten Kante: X und Z gesperrt (0), in Längsrichtung (Y) frei verschiebbar.",
    "details": [
     {
      "id": "lager2.geometrie",
@@ -144,7 +129,7 @@
     {
      "id": "lager2.x",
      "name": "X Component",
-     "wert": "Free"
+     "wert": "0 mm"
     },
     {
      "id": "lager2.y",

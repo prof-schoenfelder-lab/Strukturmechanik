@@ -77,7 +77,7 @@ Rechte Handauflage auf einer Breite von 80mm:<br>
 
 <!---
 Fixed Support: 17.361mm
-RemoteDisp mit/ohne Frictionless Support (Fläche), 2025 R2: 18.24mm
+2025 R2: nur RemoteDisp 18.779mm, RemoteDisp+Frictionless Support (Fläche) 18.24mm
 -->
 
 ### Die maximale von-Mises-Spannung in MPa
