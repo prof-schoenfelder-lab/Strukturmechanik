@@ -58,7 +58,7 @@ Anschließend die folgenden Größen berechnen:
 
 ### Betrag der mittleren Verschiebung der elastischen Bettung in z-Richtung $u_{z,}$ in mm
 
-<div class="steps" markdown="1" data-kategorie="Auswertung">
+<div class="steps" markdown="1" data-kategorie="Auswertung" data-titel="Mittlere Verschiebung einer Fläche auswerten">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Fläche auswählen</p>

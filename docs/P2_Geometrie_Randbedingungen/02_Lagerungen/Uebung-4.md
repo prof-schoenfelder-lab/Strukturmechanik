@@ -80,7 +80,7 @@ Anschließend die folgenden Größen berechnen:
 
 ### Die maximale Verschiebung in z-Richtung (entgegen Fahrtrichtung) $u_{z}$ in mm
 
-<div class="steps" markdown="1" data-kategorie="Auswertung">
+<div class="steps" markdown="1" data-kategorie="Auswertung" data-titel="Verschiebung in z-Richtung auswerten">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Directional Deformation einfügen</p>
@@ -100,7 +100,7 @@ Anschließend die folgenden Größen berechnen:
 
 ### Die maximale Verschiebung des Rahmens in <code>negative</code> y-Richtung (Richtung Boden) $u_{y}$ in mm
 
-<div class="steps" markdown="1" data-kategorie="Auswertung">
+<div class="steps" markdown="1" data-kategorie="Auswertung" data-titel="Verschiebung in y-Richtung auswerten">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Directional Deformation einfügen</p>

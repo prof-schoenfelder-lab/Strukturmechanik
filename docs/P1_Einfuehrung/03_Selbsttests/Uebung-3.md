@@ -27,7 +27,7 @@ Stahl
 
 [:material-paperclip: Inbus.scdoc](assets/Inbus.scdoc)
 
-<div class="steps" markdown="1" data-kategorie="Geometrie">
+<div class="steps" markdown="1" data-kategorie="Geometrie" data-titel="Geometrie einladen">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Geometrie einladen</p>

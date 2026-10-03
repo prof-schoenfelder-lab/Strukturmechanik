@@ -46,7 +46,7 @@ Rechte Handauflage auf einer Breite von 80mm:<br>
 
 ## Hinweise
 
-<div class="steps" markdown="1" data-kategorie="Auswertung">
+<div class="steps" markdown="1" data-kategorie="Auswertung" data-titel="von-Mises-Spannung einfügen und Maximum anzeigen">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">von-Mises Spannung einfügen</p>

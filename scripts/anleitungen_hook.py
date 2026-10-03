@@ -4,7 +4,7 @@ Jeder Block <div class="steps"> wird auf der Seite „Anleitungen“ (tutorials.
 assets/js/tutorials.js) eine Listen-Anleitung neben den Klick-Anleitungen. Die Themen
 stehen im Block selbst, mehrere mit Komma: data-kategorie="Auswertung, Belastung"
 (ohne Angabe: Sonstiges). Übungsspezifische Hinweise bleiben mit data-anleitung="nein"
-draußen. Titel ist
+draußen. Titel ist data-titel="…" am Kasten, sonst
 die Überschrift über dem Block, bei allgemeinen Überschriften wie „Hinweise“ mit dem
 Seitentitel. Gleiche Blöcke auf mehreren Seiten erscheinen einmal, mit allen
 Fundstellen. Im Kurs bekommt jeder Block eine id (anleitung-1, -2, …), damit der
@@ -24,6 +24,7 @@ _KOPF = re.compile(r"<h([1-4])[^>]*>(.*?)</h\1>", re.S)
 _SCHRITT = re.compile(r'class="step-title"[^>]*>(.*?)</p>', re.S)
 _PFAD = re.compile(r'\b(src|href)="([^"]+)"')
 _THEMA = re.compile(r'data-kategorie="([^"]*)"')
+_TITEL = re.compile(r'data-titel="([^"]*)"')
 # Reihenfolge wie bei den Klick-Anleitungen, danach die nur hier gebrauchten Themen
 REIHENFOLGE = ["Setup", "Geometrie", "Material", "Vernetzung", "Lagerung", "Belastung", "Auswertung", "Bedienung"]
 ALLGEMEIN = {"Hinweise", "Gegeben", "Geometrie", "Umsetzung", "Lösung"}
@@ -74,15 +75,17 @@ def on_page_content(html, page, config, files, **kwargs):
         if ende is None:
             break
         block = html[m.start():ende]
+        tag = html[m.start():html.index(">", m.start())]
         schritte = [_text(s) for s in _SCHRITT.findall(block)]
-        if not schritte or 'data-anleitung="nein"' in html[m.start():html.index(">", m.start())]:
+        if not schritte or 'data-anleitung="nein"' in tag:
             continue
         n += 1
         anker = "anleitung-%d" % n
         kopf = [_titel(k.group(2)) for k in _KOPF.finditer(html, 0, m.start())]
-        titel = kopf[-1] if kopf else page.title
-        allgemein = titel in ALLGEMEIN
-        thema = _THEMA.search(html[m.start():html.index(">", m.start())])
+        eigen = _TITEL.search(tag)
+        titel = unescape(eigen.group(1)) if eigen else (kopf[-1] if kopf else page.title)
+        allgemein = not eigen and titel in ALLGEMEIN
+        thema = _THEMA.search(tag)
         kategorien = [k.strip() for k in thema.group(1).split(",") if k.strip()] if thema else ["Sonstiges"]
         inhalt = _PFAD.sub(lambda p: '%s="%s"' % (p.group(1), _von_wurzel(page.url, p.group(2))), block)
         _bloecke.append({
