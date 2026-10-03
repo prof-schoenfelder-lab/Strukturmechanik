@@ -1386,108 +1386,127 @@ def short_qid(qid):
     return escape("%s · %s %d" % (short_page(page), _QTYP.get(m.group(1), m.group(1)), int(m.group(2)) + 1))
 
 
-DASH_LOGOS = ("https://prof-schoenfelder-lab.github.io/Strukturmechanik/assets/images/HTWK_white_text.svg",
-              "https://prof-schoenfelder-lab.github.io/Strukturmechanik/assets/images/MecSim_weiss.png")
-# HTWK-Farben: Dunkelblau, Cyan als Akzent; Ampel für den Status (ohne Gelb)
+# Kursdesign „Campus“ wie die Kursseite (docs/styles/modern.css): Source Sans Pro und HTWK-Logo von der
+# Kursseite, weiße Kopfzeile, Cyan als einziger Akzent, Dunkelblau für Überschriften, getönte Flächen;
+# Ampel für den Status ohne Gelb; dunkel nach Systemeinstellung
+DASH_LOGO = SITE_URL + "assets/images/HTWK_white_text.svg"
 DASH_CSS = """
-:root{--blau:#022541;--cyan:#009EE3;--grau:#2E3639;--silber:#BEC3C6;--bg:#F2F4F6;--line:#E1E5E8;--muted:#68757C;
---ok:#00964E;--ok-bg:#E2F3E9;--warn:#C96A00;--warn-bg:#FDEEDC;--alarm:#E53009;--alarm-bg:#FCE7E2;--idle:#87929A;--idle-bg:#EDF0F2}
+@font-face{font-family:"Source Sans Pro";font-weight:400;font-display:swap;src:url("{SITE}assets/fonts/source-sans-pro-400.woff2") format("woff2")}
+@font-face{font-family:"Source Sans Pro";font-weight:600;font-display:swap;src:url("{SITE}assets/fonts/source-sans-pro-600.woff2") format("woff2")}
+@font-face{font-family:"Source Sans Pro";font-weight:700;font-display:swap;src:url("{SITE}assets/fonts/source-sans-pro-700.woff2") format("woff2")}
+:root{--bg:#fff;--panel:#f2f6f9;--text:#2e3639;--text2:#566166;--text3:#87939a;--head:#022541;--line:#e2e8ec;--line2:#cdd6dc;
+--accent:#009ee3;--accent-ink:#0070a6;--accent-soft:#e3f4fc;--btn-fg:#fff;--logo:brightness(0);--foot-bg:#022541;--foot-fg:#fff;
+--ok:#00964e;--ok-bg:#e2f3e9;--ok-line:#9ad3b4;--warn:#b25e00;--warn-bg:#fdeedc;--warn-line:#f1b878;
+--alarm:#e53009;--alarm-bg:#fce7e2;--alarm-line:#f3a58f;--idle:#87939a;--idle-bg:#eef2f5;--r:.38rem;--r-md:.6rem;--r-lg:.85rem}
+@media (prefers-color-scheme:dark){:root{--bg:#0a1621;--panel:#102231;--text:#d5dee4;--text2:#a3b1ba;--text3:#74848f;--head:#fff;
+--line:#1c3142;--line2:#2a465c;--accent:#18aeef;--accent-ink:#62c9f5;--accent-soft:rgba(0,158,227,.15);--btn-fg:#022541;--logo:none;
+--foot-bg:#06101a;--foot-fg:#dbe4ea;--ok:#3cc583;--ok-bg:rgba(60,197,131,.14);--ok-line:rgba(60,197,131,.45);
+--warn:#ffa24a;--warn-bg:rgba(255,162,74,.14);--warn-line:rgba(255,162,74,.45);--alarm:#ff6a45;--alarm-bg:rgba(255,106,69,.14);
+--alarm-line:rgba(255,106,69,.45);--idle:#74848f;--idle-bg:#13283a;color-scheme:dark}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--grau);
-font:15px/1.45 "Source Sans 3","Source Sans Pro",-apple-system,"Segoe UI",system-ui,sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 "Source Sans Pro",-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+a{color:var(--accent-ink)}
 .wrap{max-width:78rem;margin:0 auto;padding:0 1.25rem}
-header.top{background:var(--blau);color:#fff}
-.topin{display:flex;align-items:center;gap:.8rem 1.6rem;padding:.9rem 1.25rem;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:1rem}
-.logo-htwk{height:1.45rem}.logo-ms{height:1.9rem}
-.ttl h1{margin:0;font-size:1.35rem;font-weight:700}
-.ttl p{margin:0;color:#9DB4C6;font-size:.85rem}
-.stamp{margin-left:auto;text-align:right;font-size:.82rem;color:#C6D4DF;line-height:1.5}
-.stamp b{color:#fff}
+header.top{background:var(--bg);border-bottom:1px solid var(--line)}
+.topin{display:flex;align-items:center;gap:.6rem 1.4rem;padding:.8rem 1.25rem;flex-wrap:wrap}
+.logo{height:1.2rem;filter:var(--logo)}
+.ttl{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.ttl b{font-size:1.05rem;font-weight:700;color:var(--head)}
+.ttl .tag{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.15rem .55rem;border-radius:99px;
+background:var(--accent-soft);color:var(--accent-ink)}
+.stamp{margin-left:auto;text-align:right;font-size:.8rem;color:var(--text3);line-height:1.45}
+.stamp b{color:var(--head)}
 main{padding-top:1.25rem;padding-bottom:1rem}
-h2{font-size:1.12rem;color:var(--blau);margin:1.5rem 0 .7rem}
-h3{font-size:.95rem;color:var(--blau);margin:0 0 .55rem}
-.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;margin:0 0 1rem}
+h2{font-size:1.2rem;font-weight:700;color:var(--head);margin:1.6rem 0 .7rem;letter-spacing:-.01em}
+h3{font-size:.98rem;font-weight:700;color:var(--head);margin:0 0 .55rem}
+.kicker{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin:0 0 .3rem}
+.card{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-lg);padding:1rem 1.15rem;margin:0 0 1rem}
 .card>h2:first-child{margin-top:0}
 .row2{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:1rem;align-items:start}
-.queue.busy{border-color:#F3A58F;box-shadow:inset 4px 0 0 var(--alarm)}
+.queue.busy{border-color:var(--alarm-line);box-shadow:inset 4px 0 0 var(--alarm)}
 .queue.busy h2{color:var(--alarm)}
-p.empty{margin:0;color:var(--muted)}
+p.empty{margin:0;color:var(--text3)}
 ul.sw{list-style:none;margin:0;padding:0}
-ul.sw li{display:grid;grid-template-columns:1fr auto auto;gap:.6rem;align-items:center;padding:.45rem 0;border-top:1px solid #EEF1F3}
+ul.sw li{display:grid;grid-template-columns:1fr auto auto;gap:.6rem;align-items:center;padding:.45rem 0;border-top:1px solid var(--line)}
 ul.sw li:first-child{border-top:0;padding-top:0}
+.switches p{font-size:.88rem;color:var(--text2);margin:.8rem 0 0}
+.hero{border-radius:var(--r-lg);padding:1.1rem 1.25rem .3rem;margin:1.6rem 0 1rem;
+background:radial-gradient(90% 120% at 100% 0%,var(--accent-soft) 0%,transparent 60%),var(--panel)}
+.hero h2{margin:0 0 .8rem}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));gap:.75rem;margin:0 0 1rem}
-.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem}
-.kpi b{display:block;font-size:1.9rem;line-height:1.1;color:var(--blau);font-weight:700;font-variant-numeric:tabular-nums}
-.kpi span{display:block;font-size:.74rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:.25rem}
+.kpi{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-md);padding:.75rem .95rem}
+.kpi b{display:block;font-size:1.9rem;line-height:1.1;color:var(--head);font-weight:700;font-variant-numeric:tabular-nums}
+.kpi span{display:block;font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-top:.25rem}
 .kpi.good b{color:var(--ok)}
-.kpi.alarm{background:var(--alarm-bg);border-color:#F3A58F}.kpi.alarm b{color:var(--alarm)}
-.pill,b.ok,b.done,b.warn,b.alarm,b.idle{display:inline-block;border-radius:999px;padding:.08rem .6rem;
-font-size:.78rem;font-weight:600;white-space:nowrap}
+.kpi.alarm{background:var(--alarm-bg);border-color:var(--alarm-line)}.kpi.alarm b{color:var(--alarm)}
+.pill,b.ok,b.done,b.warn,b.alarm,b.idle{display:inline-block;border-radius:99px;padding:.12rem .55rem;font-size:.7rem;font-weight:700;
+letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
 b.ok,.pill.on{background:var(--ok-bg);color:var(--ok)}
 b.done{background:var(--ok);color:#fff}
 b.warn{background:var(--warn-bg);color:var(--warn)}
 b.alarm{background:var(--alarm-bg);color:var(--alarm)}
 b.idle,.pill.off{background:var(--idle-bg);color:var(--idle)}
-a.btn{display:inline-block;padding:.28rem .75rem;border-radius:8px;font-size:.82rem;font-weight:600;text-decoration:none;
-border:1px solid var(--line);color:var(--grau);background:#fff;white-space:nowrap}
-a.btn:hover{border-color:var(--silber)}
-a.btn.go{background:var(--cyan);border-color:var(--cyan);color:#fff}
+a.btn{display:inline-block;padding:.3rem .8rem;border-radius:.5rem;font-size:.85rem;font-weight:600;text-decoration:none;
+border:1px solid var(--line2);color:var(--head);background:var(--bg);white-space:nowrap}
+a.btn:hover{background:var(--panel)}
+a.btn.go{background:var(--accent);border-color:var(--accent);color:var(--btn-fg)}
+a.btn.go:hover,a.btn.done:hover{filter:brightness(1.07)}
 a.btn.done{background:var(--ok);border-color:var(--ok);color:#fff}
-.alert{background:var(--alarm-bg);border:1px solid #F3A58F;box-shadow:inset 4px 0 0 var(--alarm);border-radius:12px;
+.alert{background:var(--alarm-bg);border:1px solid var(--alarm-line);box-shadow:inset 4px 0 0 var(--alarm);border-radius:var(--r-md);
 padding:.8rem 1rem;margin:0 0 1rem}
 .alert h3{color:var(--alarm)}
 ul.chips{display:flex;flex-wrap:wrap;gap:.45rem;list-style:none;margin:0;padding:0}
-ul.chips li{background:#fff;border:1px solid #F3A58F;border-radius:8px;padding:.25rem .65rem;font-size:.88rem}
+ul.chips li{background:var(--bg);border:1px solid var(--alarm-line);border-radius:var(--r);padding:.25rem .65rem;font-size:.9rem}
 ul.chips li span{color:var(--alarm);font-weight:600;margin-left:.3rem}
-p.spans{font-size:.88rem;color:var(--muted);margin:0 0 1rem}
-p.spans b{color:var(--grau)}
+p.spans{font-size:.9rem;color:var(--text2);margin:0 0 1rem}
+p.spans b{color:var(--head)}
 .rooms{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start}
 .room{margin:0}
 .roommap{display:grid;grid-template-columns:repeat(2,6.2rem) 1.1rem repeat(2,6.2rem);gap:.35rem}
-.seat{border:1px solid var(--line);border-radius:8px;padding:.25rem .4rem;font-size:.72rem;min-height:2.7rem;
-background:#FAFBFC;color:#A6AFB5;font-variant-numeric:tabular-nums}
-.seat b{display:block;font-size:.76rem;color:inherit}
-.seat u{display:block;text-decoration:none;font-weight:600;font-size:.74rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.seat.s-ok{background:var(--ok-bg);border-color:#9AD3B4;color:#006B37}
+.seat{border:1px solid var(--line);border-radius:var(--r);padding:.25rem .4rem;font-size:.74rem;min-height:2.7rem;
+background:var(--panel);color:var(--text3);font-variant-numeric:tabular-nums}
+.seat b{display:block;font-size:.78rem;color:inherit}
+.seat u{display:block;text-decoration:none;font-weight:600;font-size:.76rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.seat.s-ok{background:var(--ok-bg);border-color:var(--ok-line);color:var(--ok)}
 .seat.s-done{background:var(--ok);border-color:var(--ok);color:#fff}
-.seat.s-warn{background:var(--warn-bg);border-color:#F1B878;color:#8F4B00}
-.seat.s-alarm{background:var(--alarm-bg);border-color:#F09A84;color:#A32100}
+.seat.s-warn{background:var(--warn-bg);border-color:var(--warn-line);color:var(--warn)}
+.seat.s-alarm{background:var(--alarm-bg);border-color:var(--alarm-line);color:var(--alarm)}
 .seat.s-idle{background:var(--idle-bg);border-style:dashed;color:var(--idle)}
-p.front{font-size:.74rem;color:var(--muted);margin:.5rem 0 0;text-align:center}
+p.front{font-size:.76rem;color:var(--text3);margin:.5rem 0 0;text-align:center}
 p.legend{display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 1rem}
 .tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 table{border-collapse:collapse;width:100%}
-th{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600;text-align:left;
-padding:.4rem .6rem;border-bottom:1px solid var(--line);white-space:nowrap}
-td{padding:.45rem .6rem;border-bottom:1px solid #EEF1F3;font-size:.9rem;vertical-align:middle}
+th{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);font-weight:700;text-align:left;
+padding:.4rem .6rem;border-bottom:1px solid var(--line2);white-space:nowrap}
+td{padding:.45rem .6rem;border-bottom:1px solid var(--line);font-size:.92rem;vertical-align:middle}
 tr:last-child td{border-bottom:0}
 td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 td.act{text-align:right}
-small{color:var(--muted);font-size:.8rem}
+small{color:var(--text3);font-size:.82rem}
 tr.lowq td{background:var(--alarm-bg)}
-.bar{display:inline-block;width:11rem;height:.55rem;background:#E3E9EE;border-radius:99px;vertical-align:middle;
+.bar{display:inline-block;width:11rem;height:.5rem;background:var(--panel);border-radius:99px;vertical-align:middle;
 margin-right:.6rem;overflow:hidden}
-.bar span{display:block;height:100%;background:var(--cyan);border-radius:99px}
-em{font-style:normal;color:var(--muted);font-size:.85rem}
+.bar span{display:block;height:100%;background:var(--accent);border-radius:99px}
+em{font-style:normal;color:var(--text3);font-size:.86rem}
 details.card{padding:0}
-details.card summary{cursor:pointer;font-weight:600;color:var(--blau);padding:.85rem 1.1rem;list-style:none}
+details.card summary{cursor:pointer;font-weight:700;color:var(--head);padding:.85rem 1.15rem;list-style:none}
 details.card summary::-webkit-details-marker{display:none}
-details.card summary::before{content:"▸";display:inline-block;width:1.1em;color:var(--cyan);transition:transform .15s}
+details.card summary::before{content:"▸";display:inline-block;width:1.1em;color:var(--accent);transition:transform .15s}
 details.card[open] summary::before{transform:rotate(90deg)}
-details.card>.tablewrap,details.card>p{margin:0 1.1rem 1rem}
-p.note{font-size:.82rem;color:var(--muted)}
-footer{font-size:.78rem;color:var(--muted);padding-bottom:2rem}
+details.card>.tablewrap,details.card>p{margin:0 1.15rem 1rem}
+p.note{font-size:.84rem;color:var(--text3)}
+footer{background:var(--foot-bg);color:var(--foot-fg);font-size:.82rem;margin-top:1.5rem}
+footer .wrap{padding-top:1.1rem;padding-bottom:1.3rem;opacity:.85}
 @media (max-width:760px){
 .row2{grid-template-columns:minmax(0,1fr)}
 .stamp{margin-left:0;text-align:left}
 .kpi b{font-size:1.5rem}
 .roommap{grid-template-columns:repeat(2,minmax(2.9rem,1fr)) .7rem repeat(2,minmax(2.9rem,1fr))}
-.seat{font-size:.62rem;padding:.2rem .25rem}
+.seat{font-size:.64rem;padding:.2rem .25rem}
 .bar{width:6rem}
-td,th{padding:.35rem .45rem;font-size:.82rem}
+td,th{padding:.35rem .45rem;font-size:.84rem}
 }
-"""
+""".replace("{SITE}", SITE_URL)
 
 
 def pool_status(db):
@@ -1638,7 +1657,6 @@ def dashboard():
         switch_html = switch_html.replace("</ul></section>", "</ul><p>Spitznamen in der Knackpunkt-Bestenliste: %s</p></section>" % ", ".join(
             '%s <a href="dashboard-kp-name-loeschen?key=%s&amp;name=%s">entfernen</a>'
             % (escape(n), DASHBOARD_TOKEN, urllib.parse.quote(n)) for n in kp_namen), 1)
-    # Knackpunkt ganz (sonst nur nach allen Praktika), z. B. zum Eröffnen eines Wettkampfs
     # Knackpunkt für Lehrende und Kollegen: Links mit Lehrenden-Ticket (ein Jahr) ohne Dashboard-Schlüssel, zum Weitergeben
     ticket = kp_ticket("Lehrende", 365)
     links = [(KNACKPUNKT_URL + "#ticket=", "Einzelspiel", ""),
@@ -1755,8 +1773,7 @@ def dashboard():
         for e in entries[:60])
     live_html = (
         '<div class="row2">' + queue_html + switch_html + "</div>"
-        + "<h2>Praktikum heute: wer ist wie weit?</h2>"
-        + kpi_html
+        + '<section class="hero"><p class="kicker">Praktikum heute</p><h2>Wer ist wie weit?</h2>' + kpi_html + "</section>"
         + help_html
         + multi_html
         + map_html
@@ -1816,8 +1833,8 @@ def dashboard():
 <title>FEM-Kurs Dashboard</title>
 <style>""" + DASH_CSS + """</style>
 <header class="top"><div class="wrap topin">
-<div class="brand"><img src="%s" alt="HTWK Leipzig" class="logo-htwk"><img src="%s" alt="MecSim" class="logo-ms"></div>
-<div class="ttl"><h1>FEM-Kurs Dashboard</h1><p>Angewandte FEM in der Strukturmechanik</p></div>
+<img src="%s" alt="HTWK Leipzig" class="logo">
+<div class="ttl"><b>Angewandte FEM in der Strukturmechanik</b><span class="tag">Dashboard</span></div>
 <div class="stamp"><b>%d</b> Teilnehmende mit Login · <b>%d</b> Aufgaben im Katalog<br>Stand %s · aktualisiert sich alle 30 s</div>
 </div></header>
 <main class="wrap">
@@ -1834,8 +1851,8 @@ def dashboard():
 <div class="tablewrap"><table>%s%s</table></div>
 <p class="note">Ohne erkannte Ursache: Kandidaten für neue data-diagnose-Einträge in der Übungsseite.</p></details>
 </main>
-<footer class="wrap">PC-Namen stehen nur im Arbeitsspeicher, Namen nur hinter dem Schlüssel. Nicht am Beamer zeigen.</footer>
-</html>""" % (DASH_LOGOS[0], DASH_LOGOS[1], n, len(answers), datetime.datetime.now().strftime("%d.%m.%Y, %H:%M"),
+<footer><div class="wrap">PC-Namen stehen nur im Arbeitsspeicher, Namen nur hinter dem Schlüssel. Nicht am Beamer zeigen.</div></footer>
+</html>""" % (DASH_LOGO, n, len(answers), datetime.datetime.now().strftime("%d.%m.%Y, %H:%M"),
               live_html, dist_rows, p_rows, q_rows, wrong_head,
               wrong_value_rows(db, answers, 0)
               or '<tr><td colspan="5"><p class="empty">Noch keine falschen Eingaben.</p></td></tr>')
