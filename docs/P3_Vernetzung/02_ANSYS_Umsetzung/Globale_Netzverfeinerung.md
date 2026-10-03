@@ -16,7 +16,7 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung)
 
 ## Import der Archivdatei
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Setup">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Projekt speichern</p>

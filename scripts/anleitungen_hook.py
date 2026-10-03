@@ -1,7 +1,9 @@
 """MkDocs-Hook: sammelt die Schrittkästen der Kursseiten als Listen-Anleitungen.
 
 Jeder Block <div class="steps"> wird auf der Seite „Anleitungen“ (tutorials.md,
-assets/js/tutorials.js) eine Listen-Anleitung neben den Klick-Anleitungen. Titel ist
+assets/js/tutorials.js) eine Listen-Anleitung neben den Klick-Anleitungen. Die Themen
+stehen im Block selbst, mehrere mit Komma: data-kategorie="Auswertung, Belastung"
+(ohne Angabe: Sonstiges). Titel ist
 die Überschrift über dem Block, bei allgemeinen Überschriften wie „Hinweise“ mit dem
 Seitentitel. Gleiche Blöcke auf mehreren Seiten erscheinen einmal, mit allen
 Fundstellen. Im Kurs bekommt jeder Block eine id (anleitung-1, -2, …), damit der
@@ -20,6 +22,9 @@ _DIV = re.compile(r'<div\b|</div>')
 _KOPF = re.compile(r"<h([1-4])[^>]*>(.*?)</h\1>", re.S)
 _SCHRITT = re.compile(r'class="step-title"[^>]*>(.*?)</p>', re.S)
 _PFAD = re.compile(r'\b(src|href)="([^"]+)"')
+_THEMA = re.compile(r'data-kategorie="([^"]*)"')
+# Reihenfolge wie bei den Klick-Anleitungen, danach die nur hier gebrauchten Themen
+REIHENFOLGE = ["Setup", "Geometrie", "Material", "Vernetzung", "Lagerung", "Belastung", "Auswertung", "Bedienung"]
 ALLGEMEIN = {"Hinweise", "Gegeben", "Geometrie", "Umsetzung", "Lösung"}
 # Seiten, deren Schrittkästen Inhalte zusammenfassen statt Handgriffe zu zeigen
 OHNE = ("P1_Einfuehrung/Zusammenfassung/", "P1_Einfuehrung/01_Grundlagen/Grundprinzipien-FEM/", "styleguide/")
@@ -29,6 +34,12 @@ _bloecke = []
 
 def _text(html):
     return " ".join(unescape(re.sub(r"<[^>]+>", "", re.sub(r'<a class="headerlink".*?</a>', "", html))).split())
+
+
+def _titel(html):
+    """Überschrift ohne Formel-Markup: u_z statt \\(u_{z}\\) (Karten setzen keine Formeln)."""
+    s = re.sub(r"\\(?:text|mathrm|mathbf|rm)\s*", "", _text(html).replace("\\(", "").replace("\\)", ""))
+    return " ".join(re.sub(r"\\([A-Za-z]+)", r"\1", s).replace("{", "").replace("}", "").split())
 
 
 def _kategorie(url):
@@ -67,13 +78,16 @@ def on_page_content(html, page, config, files, **kwargs):
             continue
         n += 1
         anker = "anleitung-%d" % n
-        kopf = [_text(k.group(2)) for k in _KOPF.finditer(html, 0, m.start())]
+        kopf = [_titel(k.group(2)) for k in _KOPF.finditer(html, 0, m.start())]
         titel = kopf[-1] if kopf else page.title
         allgemein = titel in ALLGEMEIN
+        thema = _THEMA.search(html[m.start():html.index(">", m.start())])
+        kategorien = [k.strip() for k in thema.group(1).split(",") if k.strip()] if thema else ["Sonstiges"]
         inhalt = _PFAD.sub(lambda p: '%s="%s"' % (p.group(1), _von_wurzel(page.url, p.group(2))), block)
         _bloecke.append({
-            "titel": "%s (%s)" % (titel, page.title) if allgemein else titel, "allgemein": allgemein,
-            "kategorie": _kategorie(page.url), "seite": page.title, "schritte": schritte,
+            "titel": "%s (%s %s)" % (titel, _kategorie(page.url).replace("Praktikum ", "P"), page.title)
+            if allgemein else titel, "allgemein": allgemein,
+            "kategorien": kategorien, "seite": page.title, "schritte": schritte,
             "html": inhalt,
             "fundstelle": {"titel": "%s, %s" % (_kategorie(page.url), page.title), "url": page.url + "#" + anker},
         })
@@ -105,7 +119,7 @@ def on_post_build(config, **kwargs):
             ziel["fundstellen"] += a["fundstellen"]
         else:
             liste.append(a)
-    liste.sort(key=lambda a: (not a["kategorie"].startswith("Praktikum"), a["kategorie"]))
+    liste.sort(key=lambda a: REIHENFOLGE.index(a["kategorien"][0]) if a["kategorien"][0] in REIHENFOLGE else len(REIHENFOLGE))
     for a in liste:
         del a["allgemein"], a["fundstelle"]
     ziel = os.path.join(config["site_dir"], "assets", "anleitungen.json")

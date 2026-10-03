@@ -24,7 +24,7 @@ thumb: images/Radius_aendern.gif
     <img src="../images/Radius_aendern.gif" alt="Radius ändern mit Pull" width="800">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Geometrie">
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Pull Tool starten</p>
@@ -58,7 +58,7 @@ Wenn eine Verrundung noch nicht vorhanden ist kann diese mit dem `Pull` Tool auc
     <img src="../images/Verrundung_einfuegen.gif" alt="Verrundungen einfügen mit Pull" width="800">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Geometrie">
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Pull Tool starten</p>

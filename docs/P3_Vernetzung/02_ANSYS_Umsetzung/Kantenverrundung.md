@@ -16,7 +16,7 @@ Wie im Praktikum 2 gezeigt zur Geometrieanpassung können wir innenliegenden Kan
     <img src="../../../P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/images/Verrundung_einfuegen.gif" alt="Verrundungen einfügen mit Pull" width="800">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Geometrie">
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Pull Tool starten</p>

@@ -45,7 +45,7 @@ Belastung:
 
 ## Hinweise
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Setup, Geometrie, Belastung">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Analyse duplizieren</p>

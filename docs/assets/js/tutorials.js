@@ -120,11 +120,14 @@
       fetchJSON(BASE + 'assets/anleitungen.json').catch(function () { return {}; })
     ]).then(function (daten) {
       var listen = (daten[1].anleitungen || []).map(function (a) {
-        return { slug: 'liste-' + a.id, title: a.titel, category: a.kategorie, steps: a.schritte.length, liste: a };
+        return { slug: 'liste-' + a.id, title: a.titel, category: a.kategorien[0], kategorien: a.kategorien,
+                 steps: a.schritte.length, liste: a };
       });
       var all = (daten[0].tutorials || []).concat(listen);
       var cats = [];
-      all.forEach(function (t) { if (cats.indexOf(t.category) === -1) cats.push(t.category); });
+      all.forEach(function (t) {
+        (t.kategorien || [t.category]).forEach(function (c) { if (cats.indexOf(c) === -1) cats.push(c); });
+      });
 
       var bar = document.createElement('div');
       bar.className = 'tut-bar';
@@ -199,7 +202,7 @@
       function openListe(a) {
         var meta = document.createElement('div');
         meta.className = 'tut-meta';
-        meta.innerHTML = '<span class="tut-cat">' + esc(a.kategorie) + '</span>' +
+        meta.innerHTML = '<span class="tut-cat">' + esc(a.kategorien.join(' · ')) + '</span>' +
           '<span class="tut-art">Listen-Anleitung</span>' +
           '<span class="tut-count">' + a.schritte.length + ' Schritte</span>';
         detailKopf(a.titel, meta);
@@ -228,9 +231,9 @@
         grid.innerHTML = '';
         var shown = 0;
         all.forEach(function (t) {
-          if (active && t.category !== active) return;
+          if (active && (t.kategorien || [t.category]).indexOf(active) === -1) return;
           var hay = (t.title + ' ' + t.category + ' ' + (t.tags || []).join(' ') +
-            (t.liste ? ' ' + t.liste.seite + ' ' + t.liste.schritte.join(' ') : '')).toLowerCase();
+            (t.liste ? ' ' + t.kategorien.join(' ') + ' ' + t.liste.seite + ' ' + t.liste.schritte.join(' ') : '')).toLowerCase();
           if (q && hay.indexOf(q) === -1) return;
           shown++;
           var card = document.createElement('a');
@@ -249,7 +252,7 @@
           b.innerHTML = '<span class="tut-card-title">' + esc(t.title) + '</span>' +
             (t.liste ? '<span class="tut-card-desc">' + esc(t.liste.schritte.slice(0, 3).join(' · ') +
               (t.liste.schritte.length > 3 ? ' · …' : '')) + '</span>' : '') +
-            '<span class="tut-card-meta"><span class="tut-cat">' + esc(t.category) + '</span>' +
+            '<span class="tut-card-meta"><span class="tut-cat">' + esc((t.kategorien || [t.category]).join(' · ')) + '</span>' +
             '<span class="tut-art">' + (t.liste ? 'Liste' : 'Klick') + '</span>' +
             '<span class="tut-count">' + t.steps + ' Schritte</span></span>';
           card.appendChild(b);

@@ -29,7 +29,7 @@ Diese Option ist besonders praktisch wenn man bereits viele Flächenstrukturen h
     <img src="../images/SpaceClaim.png" alt="SHELL in SpaceClaim erstellen mit Extract" width="1000">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Geometrie">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Volumenkörper muss vorhanden sein</p>

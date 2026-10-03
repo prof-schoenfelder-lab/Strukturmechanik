@@ -18,7 +18,7 @@ Linienstrukturen mit BEAM-Elementen können auf zwei Arten erstellt werden:
     <img src="../images/SpaceClaim1.png" alt="Balken in SpaceClaim erstellen" width="800">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Geometrie">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Linie zeichnen</p>
@@ -41,7 +41,7 @@ Diese Option ist besonders praktisch wenn man bereits viele Linienstrukturen hat
     <img src="../images/SpaceClaim2.png" alt="Balken in SpaceClaim erstellen mit Extract" width="800">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Geometrie">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Volumenkörper muss vorhanden sein</p>

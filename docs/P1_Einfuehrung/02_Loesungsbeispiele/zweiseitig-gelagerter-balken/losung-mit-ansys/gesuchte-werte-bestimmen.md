@@ -14,7 +14,7 @@ hide:
 
 ### maximale Verformung
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Auswertung">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Maximale Verformung einfügen</p>
@@ -44,7 +44,7 @@ Als Ergebnis bekommen wir folgende Grafik mit dem maximalen Verschiebungswert vo
 
 Die Spannung ergibt sich ähnlich, nur das wir hier zusätzlich die y-Richtung auswählen müssen.
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Auswertung">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Normalspannung einfügen</p>

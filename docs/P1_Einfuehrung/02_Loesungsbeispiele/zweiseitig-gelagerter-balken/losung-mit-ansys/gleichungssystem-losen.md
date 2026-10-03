@@ -12,7 +12,7 @@ Wir lösen jetzt das Gleichungssystem (Bestimmung der restlichen Verschiebungsfr
     <img src="../../images/Gleichungssystem_Loesen.png" alt="Gleichungssystem lösen" width="600">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Auswertung">
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Gleichungssystem lösen</p>

@@ -22,7 +22,7 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz,Lagerung und B
 
 [:material-paperclip: Uebung-01.wbpz](assets/Uebung-01.wbpz)
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Setup">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Projekt speichern</p>

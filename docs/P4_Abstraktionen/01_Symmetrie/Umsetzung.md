@@ -10,7 +10,7 @@ hide:
 
 Folgende Einstellung der `Beta Optionen` im Workbench Projektmenü ermöglicht uns die Darstellung des Netzes und der Ergebnisse als Vollmodell. Diese einmal durchführen und ANSYS neustarten:
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Bedienung">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2"><code>Workbench Projektmenü</code> In der Menüleiste  <code>Tools</code> und <code>Options</code>  auswählen</p>
@@ -46,7 +46,7 @@ Wenn die Geometrie neu erstellt wird kann man natürlich gleich nur die Halb-/Vi
 <!-- --8<-- [start:Symmetrie] -->
 Zur Erstellung der Symmetrie-Randbedingungen:
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Lagerung">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Symmetrieeintrag im Strukturbaum einfügen</p>

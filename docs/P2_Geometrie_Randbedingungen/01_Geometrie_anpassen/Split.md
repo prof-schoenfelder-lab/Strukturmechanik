@@ -25,7 +25,7 @@ Im ersten Beispiel soll eine Fläche im Abstand von 40mm für eine Flächenlast 
     <img src="../images/Flaeche_erstellen.gif" alt="Flächen erstellen mit Split" width="800">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Geometrie">
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Split Tool auswählen und Fläche auswählen</p>
@@ -56,7 +56,7 @@ Jetzt verwenden wir die Ebene um im Abstand von 80mm eine Fläche an einem Lenke
     <img src="../images/Flaechen_erstellen_mit_Split.gif" alt="Flächen erstellen mit Split" width="800">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Geometrie">
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Ebene erstellen</p>

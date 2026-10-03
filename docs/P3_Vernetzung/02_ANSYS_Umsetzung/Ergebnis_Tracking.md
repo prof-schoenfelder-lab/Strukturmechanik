@@ -16,7 +16,7 @@ Mit Hilfe von Screenshots der Ergebnisse und einer Umbenennung entsprechend der 
     <img src="../images/Result_Image.png" alt="Result Image" width="1100">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Auswertung">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Ergebnis auswählen (z.&nbsp;B. von-Mises-Spannung)</p>
@@ -51,7 +51,7 @@ Ein Nachteil ist, dass keine individuelle Benennung (z.&nbsp;B. „Netz 1,5&nbsp
     <img src="../images/Solution_History.png" alt="Solution History" width="400">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Auswertung">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2"><code>Solution Information</code> im Strukturbaum auswählen</p>

@@ -23,7 +23,7 @@ Lagerungen verhindern an definierten Orten der Geometrie eine Bewegungen in eine
     <img src="../images/RB_add.gif" alt="Hinzufügen von Randbedingungen" width="700">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Lagerung, Belastung">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Geometrie auswählen</p>

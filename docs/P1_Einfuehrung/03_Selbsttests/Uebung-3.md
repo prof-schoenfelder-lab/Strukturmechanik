@@ -27,7 +27,7 @@ Stahl
 
 [:material-paperclip: Inbus.scdoc](assets/Inbus.scdoc)
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Geometrie">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Geometrie einladen</p>
@@ -61,7 +61,7 @@ Belastung:
 
 ## Hinweise
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Auswertung, Belastung, Lagerung">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">von-Mises Spannung einfügen</p>

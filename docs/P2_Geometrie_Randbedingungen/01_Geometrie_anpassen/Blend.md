@@ -16,7 +16,7 @@ Will man den Übergang zwischen zwei Profilen erstellen kann man die `Blend` Fun
     <img src="../images/Blend.gif" alt="Übergang mit Blend" width="800">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Geometrie">
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Blend Tool starten</p>

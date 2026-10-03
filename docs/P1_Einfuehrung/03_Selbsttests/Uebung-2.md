@@ -45,7 +45,7 @@ Belastung:
 
 ## Hinweise
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Setup, Lagerung, Belastung">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Neue Analyse anlegen</p>
@@ -120,7 +120,7 @@ An solchen `Singularitäten` dürfen die Spannungen also nicht ausgewertet werde
 
 Um den Unterschied zur `Fixed Support` zu sehen fügen wir eine weitere Analyse hinzu:
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Lagerung">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Neue Analyse anlegen</p>

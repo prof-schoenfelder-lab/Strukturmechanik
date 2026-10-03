@@ -28,7 +28,7 @@ Hier wird dies beispielhaft gezeigt:
     <img src="../images/Koerper_teilen.gif" alt="Körper erstellen mit Split Body" width="800">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Geometrie">
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Split Body Tool auswählen und Körper auswählen</p>
@@ -56,7 +56,7 @@ Als Beispiel verwenden wir ein Bimetall das in der Mitte geteilt werden soll um 
     <img src="../images/Koerper_teilen_Ebene.gif" alt="Körper erstellen mit Split Body" width="800">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Geometrie">
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Ebene erstellen</p>

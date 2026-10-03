@@ -14,7 +14,7 @@ hide:
 
 # ANSYS Installations Anleitung für Version im PC Pool ANSYS2025R2
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Setup">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">VPN-Client installieren und aktivieren</p>

@@ -42,7 +42,7 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung)
 
 Wie im Praktikum&nbsp;2 zur Geometrieanpassung gezeigt, können innenliegende Kanten in <code>SpaceClaim</code> mit Hilfe des <code>Pull</code>-Tools verrundet werden (hier im Beispiel an einer Außenkante!):
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Geometrie">
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Pull-Tool starten</p>
@@ -70,7 +70,7 @@ Wie im Praktikum&nbsp;2 zur Geometrieanpassung gezeigt, können innenliegende Ka
 
 Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wieder auf 3&nbsp;mm</code> und anschließend nur die <code>Verrundung auf 0,5&nbsp;mm</code>.
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Vernetzung">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Globale Netzgröße einstellen</p>

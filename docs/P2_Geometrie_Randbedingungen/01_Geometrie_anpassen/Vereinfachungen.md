@@ -22,7 +22,7 @@ Wir starten in diese Fall mit einer Step Datei eines Fahrradrahmens:
 
 [:material-paperclip: TrekkingRahmen_Original_v2.stp](assets/TrekkingRahmen_Original_v2.stp)
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Setup, Geometrie">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2"><code>Workbench Projektmenü</code>: Neue Strukturmechanische Analyse hinzufügen</p>
@@ -57,7 +57,7 @@ Wir starten in diese Fall mit einer Step Datei eines Fahrradrahmens:
     <img src="../images/Select_same_volume_and_Delete.gif" alt="gleiche Körper entfernen" width="800">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Geometrie">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Volumenkörper (Body) auswählen</p>
@@ -84,7 +84,7 @@ Wir starten in diese Fall mit einer Step Datei eines Fahrradrahmens:
     <img src="../images/Select_same_radius_and_Fill.gif" alt="gleiche Features entfernen" width="800">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Geometrie">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Bohrungsfläche auswählen</p>

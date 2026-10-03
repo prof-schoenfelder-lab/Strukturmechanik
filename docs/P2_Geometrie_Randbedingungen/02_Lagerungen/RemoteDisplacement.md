@@ -46,7 +46,7 @@ Der beste Weg die Entfernung des Punktes einzustellen ist über die Einführung 
     <img src="../images/Remote_Displacement_Koordinatensystem.gif" alt="Koordinatensystem für Remote Displacement erstellen und anwenden" width="700">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Lagerung">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Geometrie auswählen</p>

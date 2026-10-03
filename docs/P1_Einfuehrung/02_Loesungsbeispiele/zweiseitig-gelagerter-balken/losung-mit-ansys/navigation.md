@@ -6,7 +6,7 @@ hide:
 
 Für die nachfolgenden Randbedingungen ist ein kurzer Einschub zur Navigation in `Mechanical` notwendig. Für `SpaceClaim` (das CAD Tool von ANSYS) gilt die gleiche Navigation.
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Bedienung">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Voraussetzung: PAN-Mode Aktiv</p>

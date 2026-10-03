@@ -8,7 +8,7 @@ hide:
 
 Bevor wir mit einer Übung starten müssen wir eine Einstellung vornehmen die uns später ermöglicht das ganze Modell darzustellen:
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Bedienung">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2"><code>Workbench Projektmenü</code> In der Menüleiste  <code>Tools</code> und <code>Options</code>  auswählen</p>

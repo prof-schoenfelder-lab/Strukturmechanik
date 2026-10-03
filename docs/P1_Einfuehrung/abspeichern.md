@@ -17,7 +17,7 @@ Zum Abspeichern gibt es zwei Möglichkeiten. Die erste sollte immer zu Beginn ge
 
 Empfehlung um den Fortschritt während des Praktikums nicht zu verlieren.
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Setup">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Projektdatei (Dateiname.wbpj + Dateinameordner) speichern</p>
@@ -43,7 +43,7 @@ Empfehlung um den Fortschritt während des Praktikums nicht zu verlieren.
 
 Empfehlung zur Mitnahme (erst am Ende!).
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Setup">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Falls noch nicht geschehen, als Projektdatei speichern (Anleitung oben)</p>

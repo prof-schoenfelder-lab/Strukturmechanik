@@ -21,7 +21,7 @@ Da in SpaceClaim davon ausgegangen wird, dass man eine CAD Geometrie z.B. von CA
     <img src="../images/Laenge_aendern.gif" alt="Länge ändern mit Move" width="800">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Geometrie">
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Move Tool starten</p>

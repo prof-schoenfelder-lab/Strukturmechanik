@@ -16,7 +16,7 @@ Körper werden zusammengeführt um das Netz über die Grenzen hinaus zu verwende
     <img src="../images/Koerper_zusammenfuegen.gif" alt="Körper zusammenfügen mit Merge" width="800">
 </figure>
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-kategorie="Geometrie">
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Combine Tool starten</p>
