@@ -293,7 +293,7 @@
     var cw = 0, ch = 0;
     function resize() {
       var w = Math.round(stage.clientWidth) || 560;
-      var h = Math.max(250, Math.min(420, Math.round(w * 0.6)));
+      var h = Math.max(250, Math.min(360, Math.round(w * 0.5)));
       if (w === cw && h === ch) return;
       cw = w; ch = h;
       renderer.setSize(w, h, true);
@@ -450,7 +450,7 @@
       // schmale Bühne (Handy): weiter weg, damit der ganze Balken ins Bild passt,
       // und zur Auswertung tiefer, damit die Legende frei bleibt
       var narrow = Math.max(1, 1.62 / camera.aspect);
-      var r = (10.3 - 0.4 * bend) * narrow;
+      var r = (9.5 - 0.4 * bend) * narrow;
       var ty = 0.06 + 0.34 * bend * narrow * narrow;
       camera.position.set(r * Math.sin(az) * Math.cos(elv), ty + r * Math.sin(elv), r * Math.cos(az) * Math.cos(elv));
       camera.lookAt(0, ty, 0);
