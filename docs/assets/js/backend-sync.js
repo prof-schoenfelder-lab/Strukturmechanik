@@ -79,7 +79,7 @@
   // keine fremden Punkte auf den neuen Account hochgeladen werden.
   function wipeLocalState() {
     try {
-      var prefixes = ['answer_', 'page_claimed', 'player_level'];
+      var prefixes = ['answer_', 'page_claimed', 'player_level', 'kurs_besucht'];
       var doomed = [];
       for (var i = 0; i < localStorage.length; i++) {
         var k = localStorage.key(i);

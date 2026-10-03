@@ -48,7 +48,7 @@ hide:
 <!-- Daten der Praktika: extra.praktika in mkdocs.yml (auch für die Abschluss-Karte am Ende jedes Praktikums) -->
 <div class="prakt-list">
 {%- for p in praktika %}
-  <a class="prakt-row" href="{{ p.link }}">
+  <a class="prakt-row" href="{{ p.link }}" data-nr="{{ p.nr }}">
     <span class="prakt-body">
       <span class="prakt-label">Praktikum {{ p.nr }}</span>
       <span class="prakt-title">{{ p.titel }}</span>

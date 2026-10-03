@@ -2,7 +2,9 @@
   Zurück/Weiter am Ende des Inhalts (ersetzt die Links in der blauen Fußzeile).
   Auf der letzten Seite eines Praktikums (die nächste Seite gehört zu einem
   anderen Praktikum) steht stattdessen eine Abschluss-Karte mit dem nächsten
-  Praktikum aus extra.praktika in mkdocs.yml. Die Startseite bekommt nichts.
+  Praktikum aus extra.praktika in mkdocs.yml. Die Startseite bekommt keine
+  Navigation, sondern die Liste der Praktikumsseiten für den Weiter-Knopf
+  (assets/js/weiter.js).
 -#}
 {%- set prev = page.previous_page -%}
 {%- set next = page.next_page -%}
@@ -54,4 +56,11 @@
       {%- endif %}
     </nav>
   {%- endif -%}
+{%- endif -%}
+{%- if page.is_homepage -%}
+  {%- set ns = namespace(seiten=[]) -%}
+  {%- for p in nav.pages if p.url[:1] == "P" and p.url[2:3] == "_" -%}
+    {%- set ns.seiten = ns.seiten + [[p.url | url, p.title]] -%}
+  {%- endfor %}
+<script type="application/json" id="kurs-seiten">{{ ns.seiten | tojson }}</script>
 {%- endif -%}

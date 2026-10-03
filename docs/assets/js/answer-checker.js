@@ -269,6 +269,7 @@
         .then(function (cat) {
           if (!cat) return;
           localStorage.setItem('ac_qcatalog', JSON.stringify({ t: Date.now(), data: cat }));
+          try { document.dispatchEvent(new CustomEvent('answer-checker:katalog')); } catch (e) { }
           updatePlayerBadge();
           evaluateBadges(false); // Baseline ohne Feuerwerk
           renderZwischenspiele();
