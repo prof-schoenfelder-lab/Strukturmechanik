@@ -53,7 +53,7 @@ Anschließend die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung $u_{\max }$ in mm
 
-<div class="numeric-question" data-answer="1.666" data-tolerance="0.1" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Beim cylindrical Support die tangentiale Richtung freigegeben?">
+<div class="numeric-question" data-answer="1.666" data-tolerance="0.1" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Beim cylindrical Support die tangentiale Richtung freigegeben? Netzgröße 1 mm eingestellt?">
 </div>
 
 ### Betrag der mittleren Verschiebung der elastischen Bettung in z-Richtung $u_{z,}$ in mm
@@ -82,12 +82,12 @@ Anschließend die folgenden Größen berechnen:
 
 </div>
 
-<div class="numeric-question" data-answer="0.5" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Betrag eingegeben? Fläche ausgewählt? in z-Richtung ausgewertet?">
+<div class="numeric-question" data-answer="0.5" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Betrag eingegeben? Fläche ausgewählt? in z-Richtung ausgewertet? Netzgröße 1 mm eingestellt?">
 </div>
 
 ### Die maximale von-Mises Vergleichsspannung $\sigma_{Mises, \max }$ in MPa
 
-<div class="numeric-question" data-answer="27.473" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Einheit auf mm (MPa) gewechselt?">
+<div class="numeric-question" data-answer="27.473" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Einheit auf mm (MPa) gewechselt? Netzgröße 1 mm eingestellt?">
 </div>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->

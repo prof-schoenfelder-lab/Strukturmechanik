@@ -75,7 +75,7 @@ Die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung im Bauteil \(u_\text{max}\) in mm
 
-<div class="numeric-question" data-answer="0.4328" data-tolerance="0.02" data-points="5" data-attempts="5"  data-hints="Material zugeordnet? Dicke auf 0,1mm gestellt? Symmetrie richtig eingestellt? Gewichtskraft in richtige Richtung? Punkte nur in z-Richtung festhalten? (restliche Lagerung macht Symmetrie)">
+<div class="numeric-question" data-answer="0.4328" data-tolerance="0.02" data-points="5" data-attempts="5"  data-hints="Material zugeordnet? Dicke auf 0,1mm gestellt? Symmetrie richtig eingestellt? Gewichtskraft in richtige Richtung? Punkte nur in z-Richtung festhalten? (restliche Lagerung macht Symmetrie) Netzgröße 1 mm eingestellt?">
 </div>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->

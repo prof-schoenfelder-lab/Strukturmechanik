@@ -72,7 +72,7 @@ Rechte Handauflage auf einer Breite von 80mm:<br>
 
 ### Die maximale Durchbiegung $u_{\max }$ in mm
 
-<div class="numeric-question" data-baum="p1-u4" data-answer="17.8" data-tolerance="1.0" data-points="5" data-attempts="5"  data-hints="Material zugeordnet? Kraft jeweils auf beide Handflächen separat mit richtigen Kraftkomponenten?" data-diagnose="6.23 [koerper.material]: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Aluminium (E = 70 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
+<div class="numeric-question" data-baum="p1-u4" data-answer="17.8" data-tolerance="1.0" data-points="5" data-attempts="5"  data-hints="Material zugeordnet? Kraft jeweils auf beide Handflächen separat mit richtigen Kraftkomponenten? Netzgröße 1,5 mm eingestellt?" data-diagnose="6.23 [koerper.material]: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Aluminium (E = 70 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
 </div>
 
 <!---
@@ -82,7 +82,7 @@ RemoteDisp+Frictionless Support (Fläche): 18.24mm
 
 ### Die maximale von-Mises-Spannung in MPa
 
-<div class="numeric-question" data-baum="p1-u4" data-answer="271.05" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Spannung an Singularität? (Oben Tab Result > Maximum) ggf. Randbedingung für fixierte Lagerung überdenken" data-diagnose="288.8 [lager]: Dieser Wert entsteht mit Fixed Support, das Maximum sitzt an der Singularität. Die Klemmung mit Remote Displacement und Frictionless Support umsetzen.">
+<div class="numeric-question" data-baum="p1-u4" data-answer="271.05" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Spannung an Singularität? (Oben Tab Result > Maximum) ggf. Randbedingung für fixierte Lagerung überdenken Netzgröße 1,5 mm eingestellt?" data-diagnose="288.8 [lager]: Dieser Wert entsteht mit Fixed Support, das Maximum sitzt an der Singularität. Die Klemmung mit Remote Displacement und Frictionless Support umsetzen.">
 </div>
 
 <!---

@@ -61,7 +61,7 @@ Anschließend die folgenden Größen berechnen:
 
 ### Die maximale Verschiebung in x-Richtung $u_{x,max}$ in mm
 
-<div class="numeric-question" data-answer="3.1152" data-tolerance="0.25" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Koordinatensystem eingefügt? Kraft in richtige Richtung? Richtige Verschiebungsrichtung ausgewertet?" data-diagnose="1.064: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Aluminium 6061-T6 (E = 68,3 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
+<div class="numeric-question" data-answer="3.1152" data-tolerance="0.25" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Koordinatensystem eingefügt? Kraft in richtige Richtung? Richtige Verschiebungsrichtung ausgewertet? Netzgröße 10 mm eingestellt?" data-diagnose="1.064: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Aluminium 6061-T6 (E = 68,3 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
 </div>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->

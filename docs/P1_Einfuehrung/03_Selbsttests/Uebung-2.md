@@ -62,6 +62,7 @@ Belastung:
     <p class="step-title" role="heading" aria-level="2">Belastung: Kraft auf der oberen Kante</p>
     <p>Die Kraft wird oben am rechten Ende aufgebracht, also auf die <strong>obere Kante</strong> der rechten Stirnseite und nicht auf die Fläche.</p>
     <p>Im Mechanical: <code>Klick</code> auf <code>Kantenauswahl</code> und die obere Kante rechts <code>auswählen</code>, dann im Strukturbaum <code>Rechtsklick</code> auf <code>Static Structural</code> > <code>Insert</code> > <code>Force</code>.</p>
+    <p>Im Detailfenster bei <code>Define By</code> auf <code>Components</code> umstellen und bei <code>Z Component</code> den Wert <code>-3000</code> eintragen (Kraft nach unten, also in negative z-Richtung).</p>
   </div>
 </div>
 

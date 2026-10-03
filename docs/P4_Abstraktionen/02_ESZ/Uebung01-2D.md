@@ -72,12 +72,12 @@ Die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung im Bauteil \(u_\text{max}\) in mm
 
-<div class="numeric-question" data-answer="0.921" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Dicke auf 30mm gestellt? Kraft in negative y-Richtung?">
+<div class="numeric-question" data-answer="0.921" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Dicke auf 30mm gestellt? Kraft in negative y-Richtung? Netzgröße 5 mm eingestellt?">
 </div>
 
 ### Die maximale von-Mises-Vergleichsspannung im Bauteil \(\sigma_\text{von Mises}\) in MPa
 
-<div class="numeric-question" data-answer="27.784" data-tolerance="0.25" data-points="5" data-attempts="5"  data-hints="Dicke auf 30mm gestellt? Kraft in negative y-Richtung?">
+<div class="numeric-question" data-answer="27.784" data-tolerance="0.25" data-points="5" data-attempts="5"  data-hints="Dicke auf 30mm gestellt? Kraft in negative y-Richtung? Netzgröße 5 mm eingestellt?">
 </div>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->
