@@ -265,8 +265,8 @@ def main():
               0.1 < w["anteile"].get("koerper.material", 0) < 0.9
               and abs(sum(w["anteile"].values()) + w["unbekannt"] - 1) < 0.03, str(w))
         # Spiele sind aus, bis sie im Dashboard freigeschaltet werden
-        check("spiele standardmäßig aus",
-              requests.get(BACKEND + "/api/spiele").json() == {"det": False, "hs": False, "kp": False})
+        check("spiele standardmäßig aus, Knackpunkt an",
+              requests.get(BACKEND + "/api/spiele").json() == {"det": False, "hs": False, "kp": True})
         check("ausgeschaltetes Spiel fehlt im Katalog",
               "/T/Det:det0" not in requests.get(BACKEND + "/api/questions").json())
         check("ausgeschaltetes Spiel nicht prüfbar", requests.post(BACKEND + "/api/check", json={
@@ -298,7 +298,8 @@ def main():
         KP = BACKEND + "/api/kp"
         TEIL = "b2u6.abc.wL006.Tt5160u"
         p7, p8 = {"X-Forwarded-For": "10.0.0.7"}, {"X-Forwarded-For": "10.0.0.8"}
-        check("kp: aus, solange nicht freigeschaltet", requests.get(KP, params={"teil": TEIL}).json() == {"an": False})
+        requests.get(BACKEND + "/dashboard-spiel-toggle", params={"key": "test-dashboard-key", "spiel": "kp"})
+        check("kp: aus, wenn im Dashboard ausgeschaltet", requests.get(KP, params={"teil": TEIL}).json() == {"an": False})
         requests.get(BACKEND + "/dashboard-spiel-toggle", params={"key": "test-dashboard-key", "spiel": "kp"})
         r = requests.post(KP, headers=p7, json={"teil": TEIL, "prozent": 41.26, "entwurf": "AB_-"}).json()
         check("kp: Platz ohne Namen", r["liste"] == [{"rang": 1, "anzeige": "N103 Platz 7", "prozent": 41.3, "ich": True}]
@@ -440,6 +441,72 @@ def main():
             # (5+1) q0 + (4+1) mc0 + (5+1) det0
             check("AGS scoreMaximum incl. Bonus", last.get("scoreMaximum") == 17, str(last))
             check("AGS grading complete", last.get("gradingProgress") == "FullyGraded")
+
+        # ---- Sollwert-Korrektur im Dashboard und Nachwertung ---------------
+        # eigene Frage erst jetzt in den Katalog, damit das AGS-Maximum oben stimmt
+        from itsdangerous import URLSafeTimedSerializer
+        ser = URLSafeTimedSerializer(env.get("SECRET_KEY", "dev-secret-change-me"), salt="ac-session")
+
+        def person(sub):
+            return {"Authorization": "Bearer " + ser.dumps({"sub": sub})}
+        QK = "/T/Korr:q0"
+        with open(os.path.join(tmp, "answers.json")) as f:
+            katalog = json.load(f)
+        katalog[QK] = {"answer": 271.05, "tolerance": 0.5, "points": 5, "attempts": 5,
+                       "titel": "Die maximale von-Mises-Spannung in MPa"}
+        with open(os.path.join(tmp, "answers.json"), "w") as f:
+            json.dump(katalog, f)
+
+        def eingabe(h, wert):
+            return requests.post(BACKEND + "/api/check", headers=h, json={"qid": QK, "value": wert}).json()
+
+        def punkte(h):
+            return requests.get(BACKEND + "/api/results", headers=h).json()["results"][QK]["best"]
+        A, B, C = person("test-a"), person("test-b"), person("test-c")
+        for wert in (300, 271.97, 1, 2, 3):  # 2. Versuch passt zum späteren Sollwert, danach nur Falsches
+            eingabe(A, wert)
+        eingabe(B, 271.97)                    # 1. Versuch passt zum späteren Sollwert
+        check("alter Sollwert gilt noch", eingabe(B, 271.05).get("best") == 5)
+        eingabe(C, 10)
+        eingabe(C, 20)
+        eingabe({}, 271.97)                   # Gast: wird nicht gespeichert
+        tdb = sqlite3.connect(os.path.join(tmp, "test.db"))
+        check("eingaben: nur gezählte Versuche mit Login",
+              tdb.execute("SELECT COUNT(*) FROM eingaben WHERE qid=?", (QK,)).fetchone()[0] == 9)
+        K = {"key": "test-dashboard-key"}
+        check("sollwerte brauchen den Schlüssel",
+              requests.get(BACKEND + "/dashboard-sollwerte").status_code == 403
+              and requests.post(BACKEND + "/dashboard-sollwert",
+                                data={"qid": QK, "answer": 1, "tolerance": 1}).status_code == 403)
+        r = requests.get(BACKEND + "/dashboard-sollwerte", params=K)
+        check("sollwerte listen Zahlenfragen mit Titel", r.status_code == 200
+              and "Die maximale von-Mises-Spannung in MPa" in r.text and "271,05 ± 0,5" in r.text)
+        r = requests.get(BACKEND + "/dashboard-sollwerte", params=dict(K, qid=QK, answer="271,97", tolerance="0,5"))
+        check("vorschau: zwei bekommen Punkte, drei Fehlwerte passen",
+              "Bekommen nachträglich Punkte: <b>2 Personen</b>" in r.text and "3 Einträge passend" in r.text)
+        check("vorschau schreibt nichts", tdb.execute("SELECT COUNT(*) FROM korrekturen").fetchone()[0] == 0)
+        r = requests.post(BACKEND + "/dashboard-sollwert", params=K, allow_redirects=False,
+                          data={"qid": QK, "answer": "271.97", "tolerance": "0.5"})
+        check("korrektur gespeichert", r.status_code == 302 and "n=2" in r.headers.get("Location", ""),
+              r.headers.get("Location"))
+        check("nachwertung: 2. Versuch zählt voll, auch wenn danach alles falsch war", punkte(A) == 5)
+        check("nachwertung: 1. Versuch mit Bonus statt der 5 P. aus dem 2.", punkte(B) == 6)
+        check("nachwertung: ohne passende Eingabe unverändert", punkte(C) == 0)
+        check("fehlwert-log bereinigt", tdb.execute(
+            "SELECT COUNT(*) FROM wrong_values WHERE qid=? AND ABS(value - 271.97) <= 0.5", (QK,)).fetchone()[0] == 0)
+        check("korrektur gilt sofort", eingabe(person("test-d"), 271.97).get("correct") is True)
+        r = requests.get(BACKEND + "/dashboard-sollwerte", params=dict(K, ok="gespeichert", qid=QK, n=2, f=3))
+        check("sollwerte zeigen die aktive Korrektur", "Aktive Korrekturen" in r.text
+              and 'data-answer="271.97"' in r.text and "2 Personen nachträglich gewertet" in r.text)
+        check("dashboard verlinkt die Sollwerte",
+              "dashboard-sollwerte?key=" in requests.get(BACKEND + "/dashboard", params=K).text)
+        requests.post(BACKEND + "/dashboard-sollwert-zurueck", params=K, data={"qid": QK})
+        check("zurückgenommen: alter Sollwert gilt wieder, Punkte bleiben",
+              eingabe(person("test-e"), 271.05).get("correct") is True and punkte(A) == 5)
+        requests.post(BACKEND + "/api/reset", headers=A)
+        check("reset löscht die eigenen Eingaben", tdb.execute(
+            "SELECT COUNT(*) FROM eingaben WHERE pseudonym='test-a'").fetchone()[0] == 0)
+        tdb.close()
 
     finally:
         server.terminate()

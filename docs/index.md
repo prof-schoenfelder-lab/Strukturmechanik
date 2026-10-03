@@ -35,7 +35,7 @@ hide:
         <p class="kurs-opal-foot">Außerhalb des HTWK-Netzes nur mit VPN: <a href="https://itsz.htwk-leipzig.de/dienste/vpn-zugriff-auf-das-hochschulnetz/" target="_blank" rel="noopener">Anleitung des ITSZ</a> (mit HTWK-Login).</p>
       </div>
       <div class="kurs-opal-in">
-        <p class="kurs-opal-ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg><span><b>Über OPAL angemeldet:</b> Ihre Punkte werden gespeichert, Stand und Knackpunkt-Plätze sehen Sie unter Mein Fortschritt.</span></p>
+        <p class="kurs-opal-ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg><span><b>Über OPAL angemeldet:</b> Ihre Punkte und Eingaben werden gespeichert, Stand und Knackpunkt-Plätze sehen Sie unter Mein Fortschritt.</span></p>
         <p class="kurs-opal-foot">Außerhalb des HTWK-Netzes braucht der Abgleich das VPN: <a href="https://itsz.htwk-leipzig.de/dienste/vpn-zugriff-auf-das-hochschulnetz/" target="_blank" rel="noopener">Anleitung des ITSZ</a> (mit HTWK-Login).</p>
       </div>
     </div>

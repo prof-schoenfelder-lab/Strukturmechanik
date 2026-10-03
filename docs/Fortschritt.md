@@ -15,6 +15,9 @@ hide:
     Ohne OPAL-Login zeigt diese Seite den lokalen Stand dieses Browsers.
     Nach einem Einstieg über den
     [OPAL-Kurs](https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/18448121873/CourseNode/1784428828536783012){target=_blank}
-    werden die Punkte gespeichert und auf jedem Gerät angezeigt. Alle Übungen
+    werden die Punkte gespeichert und auf jedem Gerät angezeigt, dazu Ihre
+    eingegebenen Zahlenwerte: Wird eine Musterlösung korrigiert, werden Aufgaben
+    damit nachträglich als richtig gewertet. „Fortschritt zurücksetzen“ löscht
+    beides. Alle Übungen
     sind freiwillig und nicht prüfungsrelevant — die Punkte sind zum
     Dranbleiben da, nicht zum Bewerten.

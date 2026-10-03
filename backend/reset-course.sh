@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Kurs-Reset zum Semesterende: sichert die Datenbank und leert danach alle
-# Ergebnisse und Nutzer. Die neue Kohorte startet bei null; beim nächsten
+# Ergebnisse, Eingaben und Nutzer. Die neue Kohorte startet bei null; beim nächsten
 # OPAL-Login werden neue Pseudonyme angelegt.
 # Aufruf auf dem Server:  ~/fem-backend/reset-course.sh
 set -eu
@@ -21,6 +21,7 @@ import sqlite3
 db = sqlite3.connect('data/results.db')
 import secrets
 db.execute('DELETE FROM results')
+db.execute('DELETE FROM eingaben')
 db.execute('DELETE FROM users')
 db.execute("INSERT OR REPLACE INTO meta (key, value) VALUES ('generation', ?)", (secrets.token_urlsafe(8),))
 db.commit()

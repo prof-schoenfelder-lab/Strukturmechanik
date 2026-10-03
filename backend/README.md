@@ -33,6 +33,9 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 | `POST /api/results` | Punktestand speichern (Bearer-Token; Best-Score wird nie verschlechtert) |
 | `GET /api/me` | eigener Punktestand (pseudonym) |
 | `GET /api/stats` | anonyme Aggregatstatistik pro Frage (für Lehr-Analytik) |
+| `GET /dashboard-sollwerte?key=…` | Sollwerte der Zahlenfragen, Korrektur mit Vorschau der Nachwertung |
+| `POST /dashboard-sollwert?key=…` | Sollwert-Korrektur speichern und gespeicherte Eingaben nachwerten |
+| `POST /dashboard-sollwert-zurueck?key=…` | Korrektur zurücknehmen (Wert aus dem Kurstext gilt wieder) |
 
 ## Konfiguration (Umgebungsvariablen)
 
@@ -108,6 +111,19 @@ Pseudonym) in `wrong_values` gespeichert. Das Dashboard zeigt daraus „Häufige
 Fehlwerte" (heute und gesamt); Einträge ohne erkannte Ursache sind Kandidaten
 für neue `data-diagnose`-Werte.
 
+**Sollwert-Korrektur und Nachwertung:** Mit Login speichert `/api/check` jede
+gezählte Zahleneingabe mit Pseudonym und Versuchsnummer (Tabelle `eingaben`).
+Im Dashboard unter „Sollwerte korrigieren“ (`/dashboard-sollwerte`) lässt sich
+ein Sollwert samt Toleranz ändern. Die Korrektur liegt in der Tabelle
+`korrekturen` über `answers.json` und gilt sofort; ein späteres Deploy
+überschreibt sie nicht. Steht derselbe Wert im Kurstext, verschwindet sie beim
+nächsten Öffnen der Seite. Nach jeder Änderung werden die gespeicherten
+Eingaben nachgewertet: Der erste passende Versuch zählt, als wäre er damals
+richtig gewesen (volle Punkte, Bonus im 1. Versuch), die Note geht neu an
+OPAL. Punkte steigen nur, sie sinken nie. Passende Einträge im Fehlwert-Log
+werden entfernt. Vorher zeigt eine Vorschau, wer nachträglich Punkte bekommt.
+„Fortschritt zurücksetzen“ löscht auch die eigenen Eingaben.
+
 **Modell-Detektiv:** Fälle (`content/detektiv/*.json`) laufen wie MC-Fragen
 (qid `:det<i>`). Der Hook legt Fehlerzeile, Begründungen (`explain`) und
 `aufloesung` nur in `answers.json` ab. `/api/check` liefert bei einem Fehlgriff
@@ -154,7 +170,8 @@ entschlüsselt. Ohne `SECRET_KEY` ist keine Re-Identifikation möglich. Mit
 
 `https://<backend-host>/fem/dashboard?key=<DASHBOARD_TOKEN>` zeigt aggregiert
 (pseudonym, keine Namen): Verteilung „wie viele sind wie weit", Fortschritt pro
-Praktikum (begonnen/komplett) und Lösungsquote je Aufgabe. Der Token steht in
+Praktikum (begonnen/komplett) und Lösungsquote je Aufgabe, dazu den Link
+„Sollwerte korrigieren“ (siehe oben). Der Token steht in
 der `.env` auf dem Server. Namentliche Einzelstände gibt es stattdessen direkt
 in OPAL: im Kursbaustein die **Bewertung aktivieren**, dann erscheinen die per
 AGS gemeldeten Punktestände pro Kursmitglied im OPAL-Bewertungswerkzeug.
@@ -162,7 +179,7 @@ AGS gemeldeten Punktestände pro Kursmitglied im OPAL-Bewertungswerkzeug.
 ## Kurs-Reset (Semesterende)
 
 `~/fem-backend/reset-course.sh` auf dem Server ausführen: legt ein Backup an
-und leert danach Ergebnisse und Nutzer — die neue Kohorte startet bei null.
+und leert danach Ergebnisse, Eingaben und Nutzer, die neue Kohorte startet bei null.
 
 **Achtung, eigene Test-Browser:** Geräte, auf denen vorher getestet wurde,
 laden ihren localStorage-Stand beim nächsten Besuch automatisch wieder hoch

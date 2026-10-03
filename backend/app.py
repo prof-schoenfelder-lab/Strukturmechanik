@@ -147,6 +147,22 @@ def init_db():
             value REAL NOT NULL,
             created_at REAL NOT NULL
         );
+        -- gezählte Zahleneingaben je Person: Grundlage der Nachwertung nach einer Sollwert-Korrektur
+        CREATE TABLE IF NOT EXISTS eingaben (
+            pseudonym TEXT NOT NULL,
+            qid TEXT NOT NULL,
+            versuch INTEGER NOT NULL,
+            value REAL NOT NULL,
+            created_at REAL NOT NULL
+        );
+        CREATE INDEX IF NOT EXISTS eingaben_qid ON eingaben (qid);
+        -- Sollwert-Korrekturen aus dem Dashboard: liegen über answers.json, bis der Kurstext nachgezogen ist
+        CREATE TABLE IF NOT EXISTS korrekturen (
+            qid TEXT PRIMARY KEY,
+            answer REAL NOT NULL,
+            tolerance REAL NOT NULL,
+            created_at REAL NOT NULL
+        );
         """
     )
     db.commit()
@@ -156,6 +172,10 @@ def init_db():
         db.execute("INSERT INTO meta (key, value) VALUES ('generation', ?)",
                    (secrets.token_urlsafe(8),))
         db.commit()
+    # seit wann Zahleneingaben je Person gespeichert werden; ältere Versuche lassen sich nicht nachwerten
+    db.execute("INSERT OR IGNORE INTO meta (key, value) VALUES ('eingaben_seit', ?)",
+               (datetime.date.today().strftime("%d.%m.%Y"),))
+    db.commit()
     # Migration für Bestandsdatenbanken
     for stmt in ("ALTER TABLE users ADD COLUMN sub_enc TEXT",
                  "ALTER TABLE users ADD COLUMN name_enc TEXT",
@@ -602,8 +622,9 @@ def post_results():
 _answers_cache = {"mtime": None, "data": {}}
 
 
-def load_answers():
-    """answers.json (vom MkDocs-Hook erzeugt), mit Reload bei Dateiänderung."""
+def load_answers(db=None):
+    """answers.json (vom MkDocs-Hook erzeugt), mit Reload bei Dateiänderung. Mit `db` liegen die
+    Sollwert-Korrekturen aus dem Dashboard (Tabelle korrekturen) über den Werten der Datei."""
     try:
         mtime = os.path.getmtime(ANSWERS_PATH)
     except OSError:
@@ -614,8 +635,16 @@ def load_answers():
                 _answers_cache["data"] = json.load(f)
             _answers_cache["mtime"] = mtime
         except (OSError, ValueError):
-            return _answers_cache["data"]
-    return _answers_cache["data"]
+            pass
+    data = _answers_cache["data"]
+    if db is not None:
+        korrekturen = db.execute("SELECT qid, answer, tolerance FROM korrekturen").fetchall()
+        if korrekturen:
+            data = dict(data)
+            for qid, answer, tolerance in korrekturen:
+                if "answer" in data.get(qid, {}):
+                    data[qid] = dict(data[qid], answer=answer, tolerance=tolerance)
+    return data
 
 
 DIAG_REL = 0.03  # Eingabe passt zu einem Fehlwert bis 3 % Abweichung (mind. Aufgabentoleranz)
@@ -708,7 +737,7 @@ def earned_points(points, attempt_number, attempts_allowed):
 def check_answer():
     payload = request.get_json(silent=True) or {}
     qid = str(payload.get("qid") or "")
-    q = load_answers().get(qid)
+    q = load_answers(get_db()).get(qid)
     if not q:
         return jsonify({"error": "unbekannte Frage"}), 404
     if spieltyp(qid) and not spiele_an(get_db())[spieltyp(qid)]:
@@ -751,6 +780,9 @@ def check_answer():
         exhausted = prev_best <= 0 and attempts >= attempts_allowed
         if prev_best <= 0 and not exhausted:
             attempts += 1
+            if "answer" in q and math.isfinite(val):
+                db.execute("INSERT INTO eingaben (pseudonym, qid, versuch, value, created_at) VALUES (?, ?, ?, ?, ?)",
+                           (pseudonym, qid, attempts, val, time.time()))
         earned = earned_points(q["points"], attempts, attempts_allowed) if (correct and not exhausted) else 0
         best = max(prev_best, earned)
         db.execute(
@@ -797,13 +829,14 @@ def check_answer():
 
 @app.post("/api/reset")
 def reset_eigener_fortschritt():
-    """„Fortschritt zurücksetzen“ auf Mein Fortschritt: alle Ergebnisse der angemeldeten Person löschen;
-    die Kursseite leert danach den Browser. Bestenliste und Spitzname bleiben."""
+    """„Fortschritt zurücksetzen“ auf Mein Fortschritt: alle Ergebnisse und Eingaben der angemeldeten Person
+    löschen; die Kursseite leert danach den Browser. Bestenliste und Spitzname bleiben."""
     pseudonym = current_pseudonym()
     if not pseudonym:
         return jsonify({"error": "nicht angemeldet"}), 401
     db = get_db()
     n = db.execute("DELETE FROM results WHERE pseudonym=?", (pseudonym,)).rowcount
+    db.execute("DELETE FROM eingaben WHERE pseudonym=?", (pseudonym,))
     db.commit()
     push_score_async(pseudonym)
     return jsonify({"geloescht": n})
@@ -1126,7 +1159,7 @@ def spiele_an(db):
 def aktive_answers(db):
     """Fragenkatalog ohne ausgeschaltete Spiele."""
     an = spiele_an(db)
-    return {qid: q for qid, q in load_answers().items() if an.get(spieltyp(qid), True)}
+    return {qid: q for qid, q in load_answers(db).items() if an.get(spieltyp(qid), True)}
 
 
 @app.get("/api/spiele")
@@ -1369,10 +1402,13 @@ def wrong_value_rows(db, answers, since):
     rows = ""
     for (qid, hint, _), vals in sorted(groups.items(), key=lambda kv: -len(kv[1]))[:10]:
         vals.sort()
+        # ohne erkannte Ursache: vielleicht ist der Sollwert falsch, die Vorschau zeigt die Folgen
+        pruefen = "" if hint else ('<a href="dashboard-sollwerte?key=%s&amp;qid=%s&amp;answer=%s">als Sollwert?</a>'
+                                   % (DASHBOARD_TOKEN, urllib.parse.quote(qid), _zahl(vals[len(vals) // 2], False)))
         rows += ('<tr><td title="%s">%s</td><td class="num">%.4g</td><td class="num">%.4g</td>'
-                 '<td class="num">%d</td><td>%s</td></tr>'
+                 '<td class="num">%d</td><td>%s</td><td class="act"><small>%s</small></td></tr>'
                  % (escape(qid), short_qid(qid), vals[len(vals) // 2],
-                    answers[qid]["answer"], len(vals), hint or "<em>unbekannt</em>"))
+                    answers[qid]["answer"], len(vals), hint or "<em>unbekannt</em>", pruefen))
     return rows
 
 
@@ -1461,11 +1497,22 @@ b.done{background:var(--ok);color:#fff}
 b.warn{background:var(--warn-bg);color:var(--warn)}
 b.alarm{background:var(--alarm-bg);color:var(--alarm)}
 b.idle,.pill.off{background:var(--idle-bg);color:var(--idle)}
-a.btn{display:inline-block;padding:.3rem .8rem;border-radius:.5rem;font-size:.85rem;font-weight:600;text-decoration:none;
+a.btn,button.btn{display:inline-block;padding:.3rem .8rem;border-radius:.5rem;font-size:.85rem;font-weight:600;text-decoration:none;
 border:1px solid var(--line2);color:var(--head);background:var(--bg);white-space:nowrap}
-a.btn:hover{background:var(--panel)}
-a.btn.go{background:var(--accent);border-color:var(--accent);color:var(--btn-fg)}
-a.btn.go:hover,a.btn.done:hover{filter:brightness(1.07)}
+button.btn{font-family:inherit;cursor:pointer}
+a.btn:hover,button.btn:hover{background:var(--panel)}
+a.btn.go,button.btn.go{background:var(--accent);border-color:var(--accent);color:var(--btn-fg)}
+a.btn.go:hover,button.btn.go:hover,a.btn.done:hover{filter:brightness(1.07)}
+form.sw{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;justify-content:flex-end;margin:0}
+.vorschau form.sw{justify-content:flex-start}
+input.num{width:6.5rem;padding:.25rem .45rem;border:1px solid var(--line2);border-radius:.4rem;font:inherit;font-size:.9rem;
+background:var(--bg);color:var(--text);font-variant-numeric:tabular-nums}
+input.num.tol{width:4.5rem}
+.card.vorschau{border-color:var(--accent);box-shadow:inset 4px 0 0 var(--accent)}
+.card.ok{border-color:var(--ok-line);box-shadow:inset 4px 0 0 var(--ok)}
+.card.ok h3{color:var(--ok)}
+p.hinweis{color:var(--warn);font-weight:600}
+code{font-size:.82rem;background:var(--panel);border-radius:.3rem;padding:.05rem .3rem;white-space:nowrap}
 a.btn.done{background:var(--ok);border-color:var(--ok);color:#fff}
 .alert{background:var(--alarm-bg);border:1px solid var(--alarm-line);box-shadow:inset 4px 0 0 var(--alarm);border-radius:var(--r-md);
 padding:.8rem 1rem;margin:0 0 1rem}
@@ -1678,6 +1725,9 @@ def dashboard():
                                       "(ein Jahr gültig, zum Weitergeben: Rechtsklick, Link kopieren). Allein spielen überall, "
                                       "Wettkampf im Spiel unter „Mehrspieler“ (HTWK-Netz oder VPN)</p>"
                                       % escape(KNACKPUNKT_URL + "#ticket=" + kp_ticket("Lehrende", 365)), 1)
+    switch_html = switch_html.replace("</section>", '<p><a href="dashboard-sollwerte?key=%s">Sollwerte korrigieren</a>: '
+                                      "gilt sofort, gespeicherte Eingaben werden nachgewertet</p></section>"
+                                      % DASHBOARD_TOKEN, 1)
 
     # Direkt handlungsleitend: wo hingehen?
     help_html = ""
@@ -1724,7 +1774,7 @@ def dashboard():
 
     # Häufige Fehlwerte heute: welcher Fehler passiert gerade vielen? (Ansage an alle)
     wrong_head = ('<tr><th>Aufgabe</th><th>typische Eingabe</th><th>Lösung</th>'
-                  '<th>Anzahl</th><th>erkannte Ursache</th></tr>')
+                  '<th>Anzahl</th><th>erkannte Ursache</th><th></th></tr>')
     wrong_today = wrong_value_rows(db, answers, midnight)
     wrong_html = ""
     if wrong_today:
@@ -1867,8 +1917,229 @@ def dashboard():
 </html>""" % (DASH_LOGO, n, len(answers), datetime.datetime.now().strftime("%d.%m.%Y, %H:%M"),
               live_html, dist_rows, p_rows, q_rows, wrong_head,
               wrong_value_rows(db, answers, 0)
-              or '<tr><td colspan="5"><p class="empty">Noch keine falschen Eingaben.</p></td></tr>')
+              or '<tr><td colspan="6"><p class="empty">Noch keine falschen Eingaben.</p></td></tr>')
     return html
+
+
+# --- Sollwert-Korrektur im Dashboard ------------------------------------------
+# Eine Korrektur gilt sofort und liegt in der Tabelle korrekturen über answers.json, bis der Kurstext
+# nachgezogen ist; dann verschwindet sie beim nächsten Öffnen der Seite. Nach jeder Änderung werden die
+# gespeicherten Eingaben nachgewertet: Der erste Versuch, der zum neuen Sollwert passt, zählt, als wäre er
+# damals richtig gewesen (volle Punkte, Bonus im 1. Versuch). Punkte steigen dabei nur, sie sinken nie.
+
+def _float(v):
+    try:
+        x = float(str(v).strip().replace(",", "."))
+    except (TypeError, ValueError):
+        return None
+    return x if math.isfinite(x) else None
+
+
+def _zahl(x, komma=True):
+    s = format(x, ".10g")
+    return s.replace(".", ",") if komma else s
+
+
+def _anzahl(n, eins, mehr):
+    return "%d %s" % (n, eins if n == 1 else mehr)
+
+
+def _praktikum(qid):
+    teil = qid.replace("/Strukturmechanik/", "").strip("/").split("/")[0]
+    m = re.match(r"P(\d+)_", teil)
+    return "Praktikum " + m.group(1) if m else teil.replace("_", " ")
+
+
+def nachwertung(db, qid, q):
+    """Was eine Nachwertung mit Sollwert q["answer"] ± q["tolerance"] ändert, ohne zu schreiben:
+    gespeicherte Eingaben, Personen, Treffer, {pseudonym: neue Punkte} und passende Fehlwert-Einträge."""
+    tol = q.get("tolerance", 0)
+    erster, eingaben, personen = {}, 0, set()
+    for r in db.execute("SELECT pseudonym, versuch, value FROM eingaben WHERE qid=? ORDER BY versuch", (qid,)):
+        eingaben += 1
+        personen.add(r["pseudonym"])
+        if r["pseudonym"] not in erster and abs(r["value"] - q["answer"]) <= tol:
+            erster[r["pseudonym"]] = r["versuch"]
+    best = dict(db.execute("SELECT pseudonym, best FROM results WHERE qid=?", (qid,)).fetchall())
+    punkte = {p: earned_points(q["points"], v, q.get("attempts", 5)) for p, v in erster.items()}
+    fehlwerte = db.execute("SELECT COUNT(*) FROM wrong_values WHERE qid=? AND ABS(value - ?) <= ?",
+                           (qid, q["answer"], tol)).fetchone()[0]
+    return {"eingaben": eingaben, "personen": len(personen), "treffer": len(erster), "fehlwerte": fehlwerte,
+            "gewinner": {p: n for p, n in punkte.items() if p in best and n > best[p]}}
+
+
+def nachwerten(db, qid, q):
+    """Nachwertung schreiben: höhere Punkte eintragen und Fehlwert-Einträge entfernen, die zum Sollwert passen.
+    updated_at bleibt, sonst stünden alle Nachgewerteten im Dashboard als „heute aktiv“. Der Aufrufer committet."""
+    v = nachwertung(db, qid, q)
+    for p, n in v["gewinner"].items():
+        db.execute("UPDATE results SET best=? WHERE pseudonym=? AND qid=? AND best<?", (n, p, qid, n))
+    db.execute("DELETE FROM wrong_values WHERE qid=? AND ABS(value - ?) <= ?",
+               (qid, q["answer"], q.get("tolerance", 0)))
+    return v
+
+
+def _nachwerten_und_zurueck(db, qid, q, ok):
+    v = nachwerten(db, qid, q)
+    db.commit()
+    for p in v["gewinner"]:
+        push_score_async(p)
+    return redirect("dashboard-sollwerte?" + urllib.parse.urlencode(
+        {"key": DASHBOARD_TOKEN, "ok": ok, "qid": qid, "n": len(v["gewinner"]), "f": v["fehlwerte"]}))
+
+
+@app.post("/dashboard-sollwert")
+def sollwert_setzen():
+    if not DASHBOARD_TOKEN or request.args.get("key") != DASHBOARD_TOKEN:
+        return "Zugriff nur mit gültigem key-Parameter.", 403
+    qid = request.form.get("qid", "")
+    q = load_answers().get(qid)
+    answer, tolerance = _float(request.form.get("answer")), _float(request.form.get("tolerance"))
+    if not q or "answer" not in q or answer is None or tolerance is None or tolerance < 0:
+        return "Ungültige Korrektur.", 400
+    db = get_db()
+    if answer == q["answer"] and tolerance == q.get("tolerance", 0):
+        db.execute("DELETE FROM korrekturen WHERE qid=?", (qid,))  # wieder der Wert aus dem Kurstext
+    else:
+        db.execute("INSERT OR REPLACE INTO korrekturen (qid, answer, tolerance, created_at) VALUES (?, ?, ?, ?)",
+                   (qid, answer, tolerance, time.time()))
+    return _nachwerten_und_zurueck(db, qid, dict(q, answer=answer, tolerance=tolerance), "gespeichert")
+
+
+@app.post("/dashboard-sollwert-zurueck")
+def sollwert_zuruecknehmen():
+    if not DASHBOARD_TOKEN or request.args.get("key") != DASHBOARD_TOKEN:
+        return "Zugriff nur mit gültigem key-Parameter.", 403
+    qid = request.form.get("qid", "")
+    db = get_db()
+    db.execute("DELETE FROM korrekturen WHERE qid=?", (qid,))
+    q = load_answers().get(qid)
+    if not q or "answer" not in q:
+        db.commit()
+        return redirect("dashboard-sollwerte?key=" + DASHBOARD_TOKEN)
+    return _nachwerten_und_zurueck(db, qid, q, "zurueckgenommen")
+
+
+@app.get("/dashboard-sollwerte")
+def sollwerte():
+    """Sollwerte der Zahlenfragen ansehen und korrigieren, mit Vorschau der Nachwertung. Eigene Seite ohne das
+    automatische Neuladen des Dashboards, sonst gingen Eingaben beim Tippen verloren."""
+    if not DASHBOARD_TOKEN or request.args.get("key") != DASHBOARD_TOKEN:
+        return "Zugriff nur mit gültigem key-Parameter.", 403
+    db, key = get_db(), escape(DASHBOARD_TOKEN)
+    datei = load_answers()
+    for r in db.execute("SELECT qid, answer, tolerance FROM korrekturen").fetchall():
+        q = datei.get(r["qid"], {})
+        if q.get("answer") == r["answer"] and q.get("tolerance", 0) == r["tolerance"]:
+            db.execute("DELETE FROM korrekturen WHERE qid=?", (r["qid"],))  # im Kurstext nachgezogen
+    db.commit()
+    korr = {r["qid"]: r for r in db.execute("SELECT qid, answer, tolerance, created_at FROM korrekturen")}
+    answers = load_answers(db)
+    zahl_eingaben = dict(db.execute("SELECT qid, COUNT(*) FROM eingaben GROUP BY qid").fetchall())
+    seit = db.execute("SELECT value FROM meta WHERE key='eingaben_seit'").fetchone()
+
+    def aufgabe(qid):
+        titel = answers.get(qid, {}).get("titel", "")
+        return '%s%s' % (short_qid(qid), ("<br><small>%s</small>" % escape(titel)) if titel else "")
+
+    teile = ['<section class="hero"><p class="kicker">Zahlenfragen</p><h2>Sollwerte prüfen und korrigieren</h2>'
+             '<p>Eine Korrektur gilt sofort, ohne Deploy. Danach werden die gespeicherten Eingaben nachgewertet: '
+             'Wer den neuen Sollwert in einem seiner Versuche eingegeben hat, bekommt die Punkte, als wäre die '
+             'Eingabe damals richtig gewesen. Punkte werden nur erhöht, nie abgezogen.%s</p></section>'
+             % (" Eingaben werden seit %s gespeichert, ältere Versuche lassen sich nicht nachwerten." % escape(seit[0])
+                if seit else "")]
+
+    ok = request.args.get("ok")
+    if ok in ("gespeichert", "zurueckgenommen"):
+        n, f = _float(request.args.get("n")) or 0, _float(request.args.get("f")) or 0
+        teile.append('<div class="card ok"><h3>Korrektur %s</h3><p>%s: %s nachträglich gewertet, %s aus dem '
+                     'Fehlwert-Log entfernt.</p></div>'
+                     % ("gespeichert" if ok == "gespeichert" else "zurückgenommen",
+                        short_qid(request.args.get("qid", "")), _anzahl(int(n), "Person", "Personen"),
+                        _anzahl(int(f), "Eintrag", "Einträge")))
+
+    vq = request.args.get("qid") if not ok else None
+    if vq and "answer" in answers.get(vq, {}) and request.args.get("answer") is not None:
+        alt = answers[vq]
+        neu_a = _float(request.args.get("answer"))
+        neu_t = _float(request.args.get("tolerance", alt.get("tolerance", 0)))
+        if neu_a is None or neu_t is None or neu_t < 0:
+            teile.append('<div class="alert"><h3>Keine gültige Zahl</h3><p>Sollwert und Toleranz als Zahl '
+                         'eingeben, die Toleranz nicht negativ.</p></div>')
+        else:
+            v = nachwertung(db, vq, dict(alt, answer=neu_a, tolerance=neu_t))
+            d = datei.get(vq, {})
+            wie_kurstext = neu_a == d.get("answer") and neu_t == d.get("tolerance", 0)
+            teile.append(
+                '<div class="card vorschau"><p class="kicker">Vorschau</p><h3>%s</h3>'
+                '<p>Sollwert %s ± %s &rarr; <b>%s ± %s</b>%s</p><ul>'
+                '<li>Gespeicherte Eingaben: %d von %s</li>'
+                '<li>Passend zum neuen Sollwert: Eingaben von %s</li>'
+                '<li>Bekommen nachträglich Punkte: <b>%s</b></li>'
+                '<li>Fehlwert-Log: %s passend zum neuen Sollwert, %s entfernt</li></ul>%s'
+                '<form method="post" action="dashboard-sollwert?key=%s" class="sw">'
+                '<input type="hidden" name="qid" value="%s"><input type="hidden" name="answer" value="%s">'
+                '<input type="hidden" name="tolerance" value="%s"><button class="btn go">Übernehmen</button>'
+                '<a class="btn" href="dashboard-sollwerte?key=%s">Abbrechen</a></form></div>'
+                % (aufgabe(vq), _zahl(alt["answer"]), _zahl(alt.get("tolerance", 0)), _zahl(neu_a), _zahl(neu_t),
+                   " (Wert im Kurstext, die Korrektur wird aufgehoben)" if wie_kurstext else "",
+                   v["eingaben"], _anzahl(v["personen"], "Person", "Personen"),
+                   _anzahl(v["treffer"], "Person", "Personen"), _anzahl(len(v["gewinner"]), "Person", "Personen"),
+                   _anzahl(v["fehlwerte"], "Eintrag", "Einträge"), "wird" if v["fehlwerte"] == 1 else "werden",
+                   '<p class="hinweis">Die Toleranz ist größer als 10 % des Sollwerts.</p>'
+                   if neu_t > 0.1 * abs(neu_a) else "",
+                   key, escape(vq), _zahl(neu_a, False), _zahl(neu_t, False), key))
+
+    if korr:
+        zeilen = "".join(
+            '<tr><td title="%s">%s</td><td class="num">%s ± %s</td><td class="num"><b>%s ± %s</b></td><td>%s</td>'
+            '<td><code>data-answer="%s" data-tolerance="%s"</code></td>'
+            '<td class="act"><form method="post" action="dashboard-sollwert-zurueck?key=%s">'
+            '<input type="hidden" name="qid" value="%s"><button class="btn">zurücknehmen</button></form></td></tr>'
+            % (escape(qid), aufgabe(qid), _zahl(datei.get(qid, {}).get("answer", 0)),
+               _zahl(datei.get(qid, {}).get("tolerance", 0)), _zahl(r["answer"]), _zahl(r["tolerance"]),
+               datetime.datetime.fromtimestamp(r["created_at"]).strftime("%d.%m.%Y"),
+               _zahl(r["answer"], False), _zahl(r["tolerance"], False), key, escape(qid))
+            for qid, r in korr.items())
+        teile.append('<section class="card"><h2>Aktive Korrekturen</h2><p class="note">Im Kurstext (Markdown) '
+                     'nachziehen, dann verschwindet die Korrektur hier von selbst. Zurücknehmen stellt den Wert '
+                     'aus dem Kurstext wieder her, vergebene Punkte bleiben.</p><div class="tablewrap"><table>'
+                     '<tr><th>Aufgabe</th><th>Kurstext</th><th>Korrektur</th><th>seit</th><th>im Markdown</th>'
+                     '<th></th></tr>%s</table></div></section>' % zeilen)
+
+    gruppen = {}
+    for qid, q in answers.items():
+        if "answer" in q:
+            gruppen.setdefault(_praktikum(qid), []).append(qid)
+    for name, qids in gruppen.items():
+        zeilen = "".join(
+            '<tr><td title="%s">%s</td><td class="num">%s ± %s%s</td><td class="num">%d</td>'
+            '<td class="act"><form method="get" action="dashboard-sollwerte" class="sw">'
+            '<input type="hidden" name="key" value="%s"><input type="hidden" name="qid" value="%s">'
+            '<input class="num" name="answer" value="%s" aria-label="Sollwert"> ± '
+            '<input class="num tol" name="tolerance" value="%s" aria-label="Toleranz">'
+            '<button class="btn">Vorschau</button></form></td></tr>'
+            % (escape(qid), aufgabe(qid), _zahl(answers[qid]["answer"]), _zahl(answers[qid].get("tolerance", 0)),
+               ' <b class="pill on">korrigiert</b>' if qid in korr else "", zahl_eingaben.get(qid, 0),
+               key, escape(qid), _zahl(answers[qid]["answer"]), _zahl(answers[qid].get("tolerance", 0)))
+            for qid in qids)
+        teile.append('<details class="card"%s><summary>%s: %s</summary><div class="tablewrap"><table>'
+                     '<tr><th>Aufgabe</th><th>Sollwert</th><th>Eingaben</th><th>ändern</th></tr>%s</table></div>'
+                     '</details>' % (" open" if vq in qids else "", name,
+                                     _anzahl(len(qids), "Zahlenfrage", "Zahlenfragen"), zeilen))
+
+    kopf = ('<!doctype html><html lang="de"><meta charset="utf-8">'
+            '<meta name="viewport" content="width=device-width, initial-scale=1">'
+            '<title>FEM-Kurs Sollwerte</title><style>' + DASH_CSS + '</style>')
+    return kopf + """
+<header class="top"><div class="wrap topin">
+<img src="%s" alt="HTWK Leipzig" class="logo">
+<div class="ttl"><b>Angewandte FEM in der Strukturmechanik</b><span class="tag">Sollwerte</span></div>
+<div class="stamp"><a href="dashboard?key=%s">zurück zum Dashboard</a></div>
+</div></header>
+<main class="wrap">%s</main>
+<footer><div class="wrap">Korrekturen gelten sofort. Punkte werden nachträglich nur erhöht, nie abgezogen.</div></footer>
+</html>""" % (DASH_LOGO, key, "\n".join(teile))
 
 
 @app.get("/api/questions")

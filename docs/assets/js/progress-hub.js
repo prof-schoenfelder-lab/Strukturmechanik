@@ -82,7 +82,7 @@
       '<div class="ph-medals">' + badgeHtml + '</div>' +
       '<div id="ph-kp"></div>' +
       '<p class="ph-reset"><button type="button" class="md-button" id="ph-reset">Fortschritt zurücksetzen</button> ' +
-      'Löscht Punkte, Abzeichen und Freischaltungen' + (token ? ', auch auf dem Server.' : ' in diesem Browser.') + '</p>';
+      'Löscht Punkte, Abzeichen und Freischaltungen' + (token ? ', auch auf dem Server (dort samt Ihren Eingaben).' : ' in diesem Browser.') + '</p>';
     document.getElementById('ph-reset').onclick = zuruecksetzen;
     renderKnackpunkt();
   }

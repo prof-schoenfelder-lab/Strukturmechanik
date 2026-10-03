@@ -28,6 +28,7 @@ mit ausgeliefert.
 import json
 import os
 import re
+from html import unescape
 from urllib.parse import urlsplit
 
 _answers = {}
@@ -39,6 +40,15 @@ _SUFFIX = {"numeric-question": ":q", "multiple-choice-question": ":mc",
            "detektiv-fall": ":det", "hotspot-frage": ":hs"}
 _ATTR_RE = re.compile(r'\s*data-(answer|tolerance|correct|diagnose)="([^"]*)"')
 _KOMMENTAR_RE = re.compile(r"<!--.*?-->", re.S)
+_UEBERSCHRIFT_RE = re.compile(r"<h([1-6])[^>]*>(.*?)</h\1>", re.S)
+
+
+def _titel(html):
+    """Überschrift als Text fürs Dashboard: ohne Tags und Ankerzeichen, Formeln lesbar (u_max statt \\(u_{\\max }\\))."""
+    s = unescape(re.sub(r"<[^>]+>", "", re.sub(r'<a class="headerlink".*?</a>', "", html)))
+    s = re.sub(r"\\(?:text|mathrm|mathbf|rm)\s*", "", s.replace("\\(", "").replace("\\)", ""))
+    s = re.sub(r"\\([A-Za-z]+)", r"\1", s)
+    return " ".join(s.replace("{", "").replace("}", "").split())
 
 
 def _attr(tag, name, default=""):
@@ -103,6 +113,7 @@ def on_page_content(html, page, config, files):
     prefix = urlsplit(config["site_url"]).path.rstrip("/")
     page_path = (prefix + "/" + page.url).rstrip("/")
     counters = {cls: 0 for cls in _SUFFIX}
+    kopf = [(k.start(), _titel(k.group(2))) for k in _UEBERSCHRIFT_RE.finditer(html)]
 
     def replace(m):
         tag, cls = m.group(0), m.group(1)
@@ -114,6 +125,9 @@ def on_page_content(html, page, config, files):
             "points": float(_attr(tag, "points", "1") or 1),
             "attempts": int(_attr(tag, "attempts", "5") or 5),
         }
+        titel = [t for pos, t in kopf if pos < m.start()]
+        if titel:
+            entry["titel"] = titel[-1]  # Überschrift über der Frage, für die Sollwerte im Dashboard
         if cls in ("detektiv-fall", "hotspot-frage"):
             root = os.path.dirname(config["config_file_path"])
             if cls == "detektiv-fall":
