@@ -87,23 +87,12 @@
   // Knackpunkt (nur mit Schalter im Dashboard): Freischaltung des ganzen Spiels nach allen Praktika
   // (prüft das Backend, siehe weiter.js) und eigener Platz je gespieltem Bauteil
   function esc(v) { return String(v).replace(/[&<>"']/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; }); }
-  function spielKnopf(href, text, haupt) {
-    return '<a class="md-button' + (haupt ? ' md-button--primary' : '') + '" href="' + esc(href) + '" target="_blank" rel="noopener">' + text + '</a>';
-  }
-  var WETTKAMPF = 'Wettkampf (HTWK-Netz oder VPN)';
   function freigabeHtml(f, token) {
-    var lehrende = null, wk = null;
-    try { lehrende = localStorage.getItem('kurs_lehrende'); } catch (e) { }
-    if (lehrende) {
-      try { wk = JSON.parse(atob(lehrende.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))).wk; } catch (e) { }
-      return '<p><strong>Lehrenden-Zugang:</strong> Das ganze Spiel ist frei. ' +
-        spielKnopf((window.AC_KNACKPUNKT_URL || 'https://fkaule.github.io/Knackpunkt/') + '#ticket=' + lehrende, 'Knackpunkt spielen', true) +
-        (/^https:\/\//.test(wk || '') ? ' ' + spielKnopf(wk + '#ticket=' + lehrende, WETTKAMPF) : '') + '</p>';
-    }
     if (!token) return '<p>Das ganze Spiel schalten Sie mit OPAL-Anmeldung frei, sobald alle Aufgaben aller Praktika bearbeitet sind.</p>';
     if (!f || !f.an) return '';
-    if (f.frei && f.link) return '<p><strong>Das ganze Spiel ist freigeschaltet:</strong> Zufallsbauteile, Baukasten, Herausforderungen und eigene Wettkämpfe. ' +
-      spielKnopf(f.link, 'Knackpunkt spielen', true) + (f.wettkampf ? ' ' + spielKnopf(f.wettkampf, WETTKAMPF) : '') + '</p>';
+    if (f.frei && f.link) return '<p><strong>Das ganze Spiel ist freigeschaltet:</strong> Zufallsbauteile, Baukasten, Herausforderungen und Wettkämpfe ' +
+      '(im Spiel unter „Mehrspieler“, HTWK-Netz oder VPN). ' +
+      '<a class="md-button md-button--primary" href="' + esc(f.link) + '" target="_blank" rel="noopener">Knackpunkt spielen</a></p>';
     return '<p>Das ganze Spiel schalten Sie frei, sobald alle Aufgaben aller Praktika bearbeitet sind (gelöst oder alle Versuche aufgebraucht): ' +
       'noch <strong>' + f.offen + ' von ' + f.aufgaben + '</strong> offen.</p>';
   }

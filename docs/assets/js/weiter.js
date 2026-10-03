@@ -48,39 +48,11 @@
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', holen); else holen();
   }
 
-  // Kollegen-Link (#lehrende=…, aus dem Dashboard) auf jeder Seite merken: Lehrenden-Ticket fürs ganze Spiel,
-  // damit sind auch alle Knackpunkt-Runden im Kurs frei (answer-checker.js). Hier zählt nur die Frist,
-  // die Signatur prüft das Spiel; abgelaufene Tickets fliegen raus.
-  function lehrendenTicket() {
-    var t = null, exp = 0;
-    try {
-      t = localStorage.getItem('kurs_lehrende');
-      if (t) exp = JSON.parse(atob(t.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))).exp;
-    } catch (e) { }
-    if (t && exp > Date.now() / 1000) return { ticket: t, exp: exp };
-    try { localStorage.removeItem('kurs_lehrende'); } catch (e) { }
-    return null;
-  }
-  var linkLehrende = /^#lehrende=([\w-]+\.[\w-]+\.[\w-]+)$/.exec(location.hash);
-  if (linkLehrende) {
-    try { localStorage.setItem('kurs_lehrende', linkLehrende[1]); } catch (e) { }
-    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { }
-  }
-  var lehrende = lehrendenTicket();
-
   // Praktikumsseiten in Navigationsreihenfolge (partials/page-nav.html)
   var daten = document.getElementById('kurs-seiten');
   var knopf = document.querySelector('.kurs-hero a.kurs-btn--primary');
   if (!daten || !knopf) return;
 
-  // Lehrenden-Zugang: in der OPAL-Karte ein Hinweis mit dem ganzen Spiel (Spiel-Adresse aus backend-config.js)
-  document.documentElement.classList.toggle('kurs-lehrende', !!lehrende);
-  if (lehrende) {
-    var bis = document.getElementById('kurs-lehrende-bis'), kpLink = document.getElementById('kurs-kp-lehrende');
-    if (bis) bis.textContent = new Date(lehrende.exp * 1000).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
-    var spielLink = function () { if (kpLink) kpLink.href = (window.AC_KNACKPUNKT_URL || 'https://fkaule.github.io/Knackpunkt/') + '#ticket=' + lehrende.ticket; };
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', spielLink); else spielLink();
-  }
   var liste;
   try { liste = JSON.parse(daten.textContent); } catch (e) { return; }
   var seiten = [], start = {}, nachPfad = {};

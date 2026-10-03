@@ -13,8 +13,6 @@ hide:
 <script>
   // Über OPAL angemeldet (Token gespeichert oder gerade von OPAL zurück): Knopf und Band umschalten
   try { if (localStorage.getItem('ac_backend_token') || /[#&]ac_token=/.test(location.hash)) document.documentElement.classList.add('opal-in'); } catch (e) { }
-  // Kollegen-Link aus dem Dashboard: Lehrenden-Zugang (Frist prüft weiter.js)
-  try { if (localStorage.getItem('kurs_lehrende') || /^#lehrende=/.test(location.hash)) document.documentElement.classList.add('kurs-lehrende'); } catch (e) { }
 </script>
 
 <section class="kurs-hero">
@@ -39,9 +37,6 @@ hide:
       <div class="kurs-opal-in">
         <p class="kurs-opal-ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg><span><b>Über OPAL angemeldet:</b> Ihre Punkte werden gespeichert, Stand und Knackpunkt-Plätze sehen Sie unter Mein Fortschritt.</span></p>
         <p class="kurs-opal-foot">Außerhalb des HTWK-Netzes braucht der Abgleich das VPN: <a href="https://itsz.htwk-leipzig.de/dienste/vpn-zugriff-auf-das-hochschulnetz/" target="_blank" rel="noopener">Anleitung des ITSZ</a> (mit HTWK-Login).</p>
-      </div>
-      <div class="kurs-opal-lehrende">
-        <p class="kurs-opal-ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg><span><b>Lehrenden-Zugang</b> bis <span id="kurs-lehrende-bis"></span>: Alle Knackpunkt-Runden im Kurs sind frei, Ihre Runden zählen nicht für die Bestenliste. <a id="kurs-kp-lehrende" href="https://fkaule.github.io/Knackpunkt/" target="_blank" rel="noopener">Knackpunkt spielen</a></span></p>
       </div>
     </div>
   </div>

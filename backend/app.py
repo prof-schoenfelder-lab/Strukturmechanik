@@ -1317,9 +1317,7 @@ def kp_freigabe():
             "aufgaben": sum(x["n"] for x in stand.values())}
     if resp["frei"]:
         name = db.execute("SELECT name FROM kp_namen WHERE who=?", (pseudonym,)).fetchone()
-        ticket = kp_ticket(name[0] if name else "")
-        resp["link"] = KNACKPUNKT_URL + "#ticket=" + ticket
-        resp["wettkampf"] = KNACKPUNKT_WETTKAMPF_URL + "#ticket=" + ticket
+        resp["link"] = KNACKPUNKT_URL + "#ticket=" + kp_ticket(name[0] if name else "")
     return jsonify(resp)
 
 
@@ -1660,15 +1658,12 @@ def dashboard():
         switch_html = switch_html.replace("</ul></section>", "</ul><p>Spitznamen in der Knackpunkt-Bestenliste: %s</p></section>" % ", ".join(
             '%s <a href="dashboard-kp-name-loeschen?key=%s&amp;name=%s">entfernen</a>'
             % (escape(n), DASHBOARD_TOKEN, urllib.parse.quote(n)) for n in kp_namen), 1)
-    # Knackpunkt für Lehrende und Kollegen: Links mit Lehrenden-Ticket (ein Jahr) ohne Dashboard-Schlüssel, zum Weitergeben
-    ticket = kp_ticket("Lehrende", 365)
-    links = [(KNACKPUNKT_URL + "#ticket=", "Einzelspiel", ""),
-             (KNACKPUNKT_WETTKAMPF_URL + "#ticket=", "Wettkampf", " (eröffnen, HTWK-Netz oder VPN)"),
-             (SITE_URL + "#lehrende=", "Kursseite", " (alle Knackpunkt-Runden frei)")]
-    switch_html = switch_html.replace("</ul>", "</ul><p>Knackpunkt für Lehrende und Kollegen, ein Jahr gültig, zum Weitergeben "
-                                      "(Rechtsklick, Link kopieren): %s</p>" % ", ".join(
-                                          '<a href="%s" target="_blank">%s</a>%s' % (escape(url + ticket), text, zusatz)
-                                          for url, text, zusatz in links), 1)
+    # Knackpunkt für Lehrende und Kollegen: ein Link mit Lehrenden-Ticket (ein Jahr) ohne Dashboard-Schlüssel, zum Weitergeben;
+    # allein überall, den Wettkampf erreicht man im Spiel unter „Mehrspieler“ (Adresse im Ticket)
+    switch_html = switch_html.replace("</ul>", '</ul><p><a href="%s" target="_blank">Knackpunkt für Lehrende und Kollegen</a> '
+                                      "(ein Jahr gültig, zum Weitergeben: Rechtsklick, Link kopieren). Allein spielen überall, "
+                                      "Wettkampf im Spiel unter „Mehrspieler“ (HTWK-Netz oder VPN)</p>"
+                                      % escape(KNACKPUNKT_URL + "#ticket=" + kp_ticket("Lehrende", 365)), 1)
 
     # Direkt handlungsleitend: wo hingehen?
     help_html = ""
