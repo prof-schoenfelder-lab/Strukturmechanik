@@ -13,10 +13,74 @@
   function lesen(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
   function span(cls, text) { var el = document.createElement('span'); el.className = cls; el.textContent = text; return el; }
 
+  // Zweizeilig: oben klein wohin, darunter die Seite (passt neben den OPAL-Knopf); neu: im neuen Tab
+  function setze(text, sub, href, neu) {
+    knopf.href = href;
+    knopf.title = text + ': ' + sub;
+    knopf.setAttribute('aria-label', knopf.title);
+    knopf.target = neu ? '_blank' : ''; knopf.rel = neu ? 'noopener' : '';
+    // „Mein Fortschritt“ (angemeldet) nicht doppelt, wenn der Knopf selbst dorthin führt
+    var zweiter = document.querySelector('.kurs-hero a.kurs-btn--in');
+    if (zweiter) zweiter.style.display = href === 'Fortschritt/' ? 'none' : '';
+    knopf.textContent = '';
+    knopf.classList.add('kurs-btn--weiter');
+    var zeilen = span('kurs-btn-zeilen', '');
+    zeilen.appendChild(span('kurs-btn-kicker', text));
+    zeilen.appendChild(span('kurs-btn-sub', sub));
+    knopf.appendChild(zeilen);
+    knopf.insertAdjacentHTML('beforeend', '<span aria-hidden="true">→</span>');
+  }
+
+  // Alle Praktika abgeschlossen: Das Backend prüft die gespeicherten Ergebnisse und gibt den Link samt Ticket
+  // fürs ganze Spiel Knackpunkt. Erst nach dem Laden, dann steht AC_BACKEND_URL (backend-config.js) fest.
+  function knackpunkt() {
+    var token = null;
+    try { token = localStorage.getItem('ac_backend_token'); } catch (e) { }
+    if (!token || !window.fetch) return;
+    var holen = function () {
+      var base = (window.AC_BACKEND_URL || '').replace(/\/$/, '');
+      if (!base) return;
+      fetch(base + '/api/kp/freigabe', { headers: { Authorization: 'Bearer ' + token } })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) { if (d && d.frei && d.link) setze('Knackpunkt freigeschaltet', 'Jetzt spielen', d.link, true); })
+        .catch(function () { });
+    };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', holen); else holen();
+  }
+
+  // Kollegen-Link (#lehrende=…, aus dem Dashboard) auf jeder Seite merken: Lehrenden-Ticket fürs ganze Spiel,
+  // damit sind auch alle Knackpunkt-Runden im Kurs frei (answer-checker.js). Hier zählt nur die Frist,
+  // die Signatur prüft das Spiel; abgelaufene Tickets fliegen raus.
+  function lehrendenTicket() {
+    var t = null, exp = 0;
+    try {
+      t = localStorage.getItem('kurs_lehrende');
+      if (t) exp = JSON.parse(atob(t.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))).exp;
+    } catch (e) { }
+    if (t && exp > Date.now() / 1000) return { ticket: t, exp: exp };
+    try { localStorage.removeItem('kurs_lehrende'); } catch (e) { }
+    return null;
+  }
+  var linkLehrende = /^#lehrende=([\w-]+\.[\w-]+\.[\w-]+)$/.exec(location.hash);
+  if (linkLehrende) {
+    try { localStorage.setItem('kurs_lehrende', linkLehrende[1]); } catch (e) { }
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { }
+  }
+  var lehrende = lehrendenTicket();
+
   // Praktikumsseiten in Navigationsreihenfolge (partials/page-nav.html)
   var daten = document.getElementById('kurs-seiten');
   var knopf = document.querySelector('.kurs-hero a.kurs-btn--primary');
   if (!daten || !knopf) return;
+
+  // Lehrenden-Zugang: in der OPAL-Karte ein Hinweis mit dem ganzen Spiel (Spiel-Adresse aus backend-config.js)
+  document.documentElement.classList.toggle('kurs-lehrende', !!lehrende);
+  if (lehrende) {
+    var bis = document.getElementById('kurs-lehrende-bis'), kpLink = document.getElementById('kurs-kp-lehrende');
+    if (bis) bis.textContent = new Date(lehrende.exp * 1000).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    var spielLink = function () { if (kpLink) kpLink.href = (window.AC_KNACKPUNKT_URL || 'https://fkaule.github.io/Knackpunkt/') + '#ticket=' + lehrende.ticket; };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', spielLink); else spielLink();
+  }
   var liste;
   try { liste = JSON.parse(daten.textContent); } catch (e) { return; }
   var seiten = [], start = {}, nachPfad = {};
@@ -71,8 +135,7 @@
       ziel = c + 1; text = 'Weiter mit Praktikum ' + ziel; sub = name ? name.textContent : start[ziel].titel; href = start[ziel].href;
     } else if (abgeschlossen(c)) {
       text = 'Alle Praktika geschafft'; sub = 'Mein Fortschritt'; href = 'Fortschritt/';
-      var doppelt = document.querySelector('.kurs-hero a.kurs-btn--in');
-      if (doppelt) doppelt.remove();
+      knackpunkt();
     } else {
       // Ist auf der weitesten Seite alles bearbeitet, geht es auf der nächsten weiter;
       // liegt dahinter nichts mehr im Praktikum, bei der ersten Seite mit offenen Aufgaben
@@ -84,17 +147,7 @@
       }
       ziel = c; text = 'Weiter in Praktikum ' + c; sub = seite.titel; href = seite.href;
     }
-    // Zweizeilig: oben klein wohin, darunter die Seite (passt neben den OPAL-Knopf)
-    knopf.href = href;
-    knopf.title = text + ': ' + sub;
-    knopf.setAttribute('aria-label', knopf.title);
-    knopf.textContent = '';
-    knopf.classList.add('kurs-btn--weiter');
-    var zeilen = span('kurs-btn-zeilen', '');
-    zeilen.appendChild(span('kurs-btn-kicker', text));
-    zeilen.appendChild(span('kurs-btn-sub', sub));
-    knopf.appendChild(zeilen);
-    knopf.insertAdjacentHTML('beforeend', '<span aria-hidden="true">→</span>');
+    setze(text, sub, href);
 
     // Karten: Anteil bearbeiteter Aufgaben, Haken bei 100 %, Marke für hier weiter
     document.querySelectorAll('.prakt-row[data-nr]').forEach(function (row) {

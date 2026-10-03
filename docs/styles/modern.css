@@ -991,3 +991,8 @@ html:root .prakt-stand-bar { display: block; height: 5px; margin-top: .25rem; bo
 html:root .prakt-stand-bar i { display: block; height: 100%; border-radius: inherit; background: var(--kurs-accent); }
 html:root .prakt-row--fertig .prakt-stand-bar i { background: var(--kurs-c-ok); }
 html:root .prakt-row--fertig .prakt-stand-text b { color: var(--kurs-c-ok); }
+
+/* Lehrenden-Zugang (Kollegen-Link, weiter.js): Hinweis mit dem ganzen Spiel statt der OPAL-Karte */
+html:root .kurs-opal-lehrende, html:root.kurs-lehrende .kurs-opal-out, html:root.kurs-lehrende .kurs-opal-in { display: none; }
+html:root.kurs-lehrende .kurs-opal-lehrende { display: block; }
+html:root .md-typeset .kurs-opal-lehrende a { color: var(--kurs-accent-ink); font-weight: 700; }

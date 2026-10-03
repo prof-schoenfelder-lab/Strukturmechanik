@@ -158,7 +158,8 @@ Um Rechenzeit zu sparen, sollte immer versucht werden, das Modell so weit wie m�
   </a>
 </div>
 
-<div class="zwischenspiel" data-praktikum="/P4_Abstraktionen/" data-start="zufall">
+<div class="zwischenspiel" data-praktikum="/P4_Abstraktionen/" data-name="Kragarm (Praktikum 4)" data-teil="teil-1">
 <h2>Zwischenspiel: Knackpunkt</h2>
-<p>Zufallsbauteile: Kragarme, Träger, Rahmen, Masten, Konsolen und mehr, jedes mit eigener Nummer. Nehmen Sie so viel Material weg wie möglich und fordern Sie Ihre Kommilitonen mit demselben Bauteil heraus.</p>
+<p>Zum Schluss der Klassiker unter den Balken: der Kragarm, links eingespannt, rechts belastet. Nehmen Sie so viel Material weg wie möglich, ohne dass er versagt.</p>
+<p>Wer alle vier Praktika abgeschlossen hat, schaltet auf der Startseite das ganze Spiel frei: Zufallsbauteile, Baukasten, Herausforderungen und eigene Wettkämpfe.</p>
 </div>

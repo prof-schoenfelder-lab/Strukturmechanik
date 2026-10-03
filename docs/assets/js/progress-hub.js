@@ -84,28 +84,44 @@
     renderKnackpunkt();
   }
 
-  // Knackpunkt-Bestenliste: eigener Platz je gespieltem Bauteil (nur mit Schalter im Dashboard)
+  // Knackpunkt (nur mit Schalter im Dashboard): Freischaltung des ganzen Spiels nach allen Praktika
+  // (prüft das Backend, siehe weiter.js) und eigener Platz je gespieltem Bauteil
   function esc(v) { return String(v).replace(/[&<>"']/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; }); }
+  function freigabeHtml(f, token) {
+    var lehrende = null;
+    try { lehrende = localStorage.getItem('kurs_lehrende'); } catch (e) { }
+    if (lehrende) return '<p><strong>Lehrenden-Zugang:</strong> Das ganze Spiel ist frei. <a class="md-button md-button--primary" href="' +
+      esc((window.AC_KNACKPUNKT_URL || 'https://fkaule.github.io/Knackpunkt/') + '#ticket=' + lehrende) + '" target="_blank" rel="noopener">Knackpunkt spielen</a></p>';
+    if (!token) return '<p>Das ganze Spiel schalten Sie mit OPAL-Anmeldung frei, sobald alle Aufgaben aller Praktika bearbeitet sind.</p>';
+    if (!f || !f.an) return '';
+    if (f.frei && f.link) return '<p><strong>Das ganze Spiel ist freigeschaltet:</strong> Zufallsbauteile, Baukasten, Herausforderungen und eigene Wettkämpfe. ' +
+      '<a class="md-button md-button--primary" href="' + esc(f.link) + '" target="_blank" rel="noopener">Knackpunkt spielen</a></p>';
+    return '<p>Das ganze Spiel schalten Sie frei, sobald alle Aufgaben aller Praktika bearbeitet sind (gelöst oder alle Versuche aufgebraucht): ' +
+      'noch <strong>' + f.offen + ' von ' + f.aufgaben + '</strong> offen.</p>';
+  }
   function renderKnackpunkt() {
     var box = document.getElementById('ph-kp'), BACKEND = (window.AC_BACKEND_URL || '').replace(/\/$/, '');
     if (!box || !BACKEND) return;
-    var headers = {};
-    try { var t = localStorage.getItem('ac_backend_token'); if (t) headers['Authorization'] = 'Bearer ' + t; } catch (e) { }
-    fetch(BACKEND + '/api/kp/meine', { headers: headers })
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (d) {
+    var headers = {}, token = null;
+    try { token = localStorage.getItem('ac_backend_token'); if (token) headers['Authorization'] = 'Bearer ' + token; } catch (e) { }
+    var json = function (r) { return r.ok ? r.json() : null; };
+    Promise.all([
+      fetch(BACKEND + '/api/kp/meine', { headers: headers }).then(json),
+      token ? fetch(BACKEND + '/api/kp/freigabe', { headers: headers }).then(json).catch(function () { return null; }) : null
+    ]).then(function (res) {
+        var d = res[0];
         if (!d || !d.an) return;
         var rows = d.teile.map(function (t) {
           var titel = t.seite ? '<a href="' + esc(t.seite) + '">' + esc(t.titel) + '</a>' : esc(t.titel);
           return '<li>' + titel + ': <strong>Platz ' + t.rang + '</strong> von ' + t.anzahl + ', ' +
             String(t.prozent).replace('.', ',') + ' % entfernt</li>';
         });
-        box.innerHTML = '<h2>Knackpunkt-Bestenliste</h2>' + (rows.length
+        box.innerHTML = '<h2>Knackpunkt</h2>' + freigabeHtml(res[1], token) + (rows.length
           ? '<ul class="ph-kp">' + rows.join('') + '</ul>' +
             '<p class="ph-kp-name">' + (d.name ? 'Ihr Spitzname: ' + esc(d.name) + '. ' : 'Noch ohne Spitzname. ') +
             'Ändern können Sie ihn unter dem Spiel auf der Übungsseite.</p>'
-          : '<p>Noch keine Runde gespielt. Knackpunkt wird nach <a href="../P1_Einfuehrung/03_Selbsttests/Uebung-2/">Übung 2</a> und ' +
-            '<a href="../P1_Einfuehrung/03_Selbsttests/Uebung-4/">Übung 4</a> in Praktikum 1 freigeschaltet.</p>');
+          : '<p>Noch keine Runde gespielt. Runden gibt es nach <a href="../P1_Einfuehrung/03_Selbsttests/Uebung-2/">Übung 2</a> und ' +
+            '<a href="../P1_Einfuehrung/03_Selbsttests/Uebung-4/">Übung 4</a> in Praktikum 1 und am Ende jedes weiteren Praktikums.</p>');
       })
       .catch(function () { });
   }

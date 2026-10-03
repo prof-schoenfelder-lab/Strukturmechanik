@@ -1694,58 +1694,49 @@
     }
   }
 
-  // Zwischenspiel Knackpunkt am Ende jeder Praktikums-Startseite: spielbar, sobald das
-  // Praktikum komplett gelöst ist (wie das Abzeichen, einmal frei bleibt frei); sonst mit
-  // der Zahl offener Aufgaben. Das Spiel läuft öffentlich auf GitHub Pages, ohne VPN.
-  // Auf Übungsseiten (data-seite, mehrere mit Komma) frei, sobald deren Aufgaben bearbeitet sind: gelöst oder
-  // alle Versuche aufgebraucht (answer_done_), auch ohne Login; data-voraussetzung nennt die Übungen; mit data-teil läuft das Spiel
-  // eingebettet (Kursmodus) mit Bestenliste. Kästen mit .zs-werbung zeigen nur, wo es das Spiel gibt.
+  // Zwischenspiel Knackpunkt: eine eingebettete Runde (Kursmodus, data-teil) mit Bestenliste. Am Ende einer
+  // Praktikums-Startseite (data-praktikum) frei, sobald alle Aufgaben des Praktikums bearbeitet sind (wie der Haken
+  // auf der Startseite; das Abzeichen schaltet auch frei), auf Übungsseiten (data-seite, mehrere mit Komma), sobald
+  // deren Aufgaben bearbeitet sind; data-voraussetzung nennt die Übungen. Bearbeitet heißt gelöst oder alle Versuche
+  // aufgebraucht, auch ohne Login. Das ganze Spiel gibt es erst nach allen Praktika (Ticket vom Backend, weiter.js).
+  // Kästen mit .zs-werbung zeigen nur, wo es das Spiel gibt.
   var KNACKPUNKT_URL = 'https://fkaule.github.io/Knackpunkt/';
+  function bearbeitet(qid, q) {
+    var r = safeJSONParse(localStorage.getItem('answer_best_' + qid));
+    if (r && r.points > 0) return true;
+    try {
+      if (localStorage.getItem('answer_done_' + qid) === '1') return true;
+      return (parseInt(localStorage.getItem('answer_attempts_' + qid), 10) || 0) >= ((q && q.attempts) || ATTEMPTS_ALLOWED);
+    } catch (e) { return false; }
+  }
+  // Kollegen-Link (weiter.js merkt das Ticket, solange es gilt): alle Runden frei, Ergebnisse nicht in die Bestenliste
+  function lehrende() { try { return !!localStorage.getItem('kurs_lehrende'); } catch (e) { return false; } }
   function renderZwischenspiel(el) {
-    if (el.classList.contains('zs-werbung')) return;
+    if (el.classList.contains('zs-werbung') || !el.dataset.teil) return;
     var seite = el.dataset.seite, prefix = el.dataset.praktikum;
+    if (!seite && !prefix) return;
+    var teile = seite ? seite.split(',').map(function (x) { return x.trim() + ':'; }) : [prefix];
     var p = BADGE_PRAKTIKA.filter(function (x) { return x[0] === prefix; })[0];
-    if (!seite && !p) return;
     var frei = false, offen = null, cat = cachedCatalog();
     try { if (p) frei = localStorage.getItem('answer_badge_' + p[1]) === '1'; } catch (e) { }
-    if (seite && cat) {
-      var seiten = seite.split(',').map(function (x) { return x.trim() + ':'; }), n = 0, fertig = 0;
+    if (lehrende()) frei = true;
+    if (!frei && cat) {
+      var n = 0, fertig = 0;
       Object.keys(cat).forEach(function (qid) {
-        if (!seiten.some(function (s) { return qid.indexOf(s) !== -1; })) return;
+        if (!teile.some(function (s) { return qid.indexOf(s) !== -1; })) return;
         n++;
-        var r = safeJSONParse(localStorage.getItem('answer_best_' + qid)), done = false;
-        try { done = localStorage.getItem('answer_done_' + qid) === '1'; } catch (e) { }
-        if ((r && r.points > 0) || done) fertig++;
+        if (bearbeitet(qid, cat[qid])) fertig++;
       });
       if (n > 0 && fertig >= n) frei = true; else if (n > 0) offen = n - fertig;
-    } else if (!frei && cat) {
-      var s = 0, t = 0;
-      Object.keys(cat).forEach(function (qid) {
-        if (qid.indexOf(prefix) === -1) return;
-        t++;
-        var r = safeJSONParse(localStorage.getItem('answer_best_' + qid));
-        if (r && r.points > 0) s++;
-      });
-      if (t > 0 && s >= t) frei = true; else if (t > 0) offen = t - s;
     }
     var box = el.querySelector('.zs-status');
     if (!box) { box = document.createElement('div'); box.className = 'zs-status'; el.appendChild(box); }
     el.classList.toggle('zs-frei', frei);
-    if (frei && el.dataset.teil) { if (!el.querySelector('.zs-spiel')) kursSpiel(el, box); return; }
-    var login = false;
-    try { login = !!localStorage.getItem('ac_backend_token'); } catch (e) { }
-    box.innerHTML = frei
-      ? '<p><a class="md-button md-button--primary" href="' + KNACKPUNKT_URL + '#' + el.dataset.start +
-        '" target="_blank" rel="noopener">Knackpunkt spielen</a></p>' +
-        '<p>Nach einer Runde, die hält, erzeugt „Kommilitonen herausfordern“ einen Link: Wer ihn öffnet, ' +
-        'spielt dasselbe Bauteil und muss Ihr Ergebnis schlagen. Es gibt keine Punkte, nur die Ehre.</p>'
-      : seite
-      ? '<p class="spiel-gesperrt">Wird freigeschaltet, sobald Sie ' + escapeHtml(el.dataset.voraussetzung || 'diese Übung') + ' bearbeitet haben' +
-        (offen ? ' (noch ' + offen + (offen === 1 ? ' Aufgabe' : ' Aufgaben') + ' offen)' : '') +
-        '. Bearbeitet heißt: gelöst oder alle Versuche aufgebraucht.</p>'
-      : '<p class="spiel-gesperrt">Wird freigeschaltet, sobald Sie alle Aufgaben dieses Praktikums gelöst haben' +
-        (offen ? ' (noch ' + offen + (offen === 1 ? ' Aufgabe' : ' Aufgaben') + ' offen)' : '') + '.' +
-        (login ? '' : ' Dafür ist der ' + opalLoginLink() + ' nötig.') + '</p>';
+    if (frei) { if (!el.querySelector('.zs-spiel')) kursSpiel(el, box); return; }
+    box.innerHTML = '<p class="spiel-gesperrt">Wird freigeschaltet, sobald Sie ' +
+      (seite ? escapeHtml(el.dataset.voraussetzung || 'diese Übung') : 'alle Aufgaben dieses Praktikums') + ' bearbeitet haben' +
+      (offen ? ' (noch ' + offen + (offen === 1 ? ' Aufgabe' : ' Aufgaben') + ' offen)' : '') +
+      '. Bearbeitet heißt: gelöst oder alle Versuche aufgebraucht.</p>';
   }
   // Knackpunkt eingebettet: Spiel im Rahmen, gehaltene Runden landen in der Bestenliste des Backends
   function kpUrl() { return window.AC_KNACKPUNKT_URL || KNACKPUNKT_URL; }
@@ -1775,7 +1766,8 @@
       '<p class="zs-name"><label>Spitzname <input class="zs-name-in" maxlength="16" autocomplete="off" placeholder="optional, kein echter Name"></label> ' +
       '<button type="button" class="md-button zs-name-ok">Speichern</button> <span class="zs-platz"></span></p>' +
       '<p class="zs-regel">Es zählt Ihre beste Runde, die hält und ohne Live-Spannungen gespielt wurde. ' +
-      'Angezeigt werden nur Spitzname und Sitzplatz, ohne Spitzname nur der Sitzplatz.</p></div>';
+      'Angezeigt werden nur Spitzname und Sitzplatz, ohne Spitzname nur der Sitzplatz.' +
+      (lehrende() ? ' Mit dem Lehrenden-Zugang zählen Ihre Runden nicht.' : '') + '</p></div>';
     var liste = box.querySelector('.zs-liste'), nameIn = box.querySelector('.zs-name-in');
     function zeige(d) {
       if (!d || !d.an) { liste.innerHTML = '<p>Bestenliste nicht erreichbar (HTWK-Netz oder VPN nötig).</p>'; return; }
@@ -1802,7 +1794,7 @@
     window.addEventListener('message', function (e) {
       if (!frame || e.source !== frame.contentWindow || !e.data) return;
       if (e.data.typ === 'knackpunkt-hoehe') frame.style.height = Math.min(Math.max(+e.data.h || 0, 400), 2400) + 'px';
-      if (e.data.typ === 'knackpunkt-ergebnis' && e.data.teil === key)
+      if (e.data.typ === 'knackpunkt-ergebnis' && e.data.teil === key && !lehrende())
         kpApi('/api/kp', { teil: key, prozent: e.data.prozent, entwurf: e.data.entwurf, titel: el.dataset.name || '', seite: location.pathname }).then(zeige);
     });
   }
