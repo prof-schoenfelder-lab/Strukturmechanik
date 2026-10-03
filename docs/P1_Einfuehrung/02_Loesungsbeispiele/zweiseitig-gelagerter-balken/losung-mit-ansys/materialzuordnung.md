@@ -14,6 +14,10 @@ hide:
 
 Nun starten wir das eigentliche FEM-Programm `Mechanical` und ordnen unserer Geometrie das Material zu.
 
+!!! info "Zwei Abfragen beim ersten Start von Mechanical"
+    - Auch hier fragt Windows nach der Firewall: Sie können mit `Abbrechen` ablehnen, Mechanical funktioniert trotzdem.
+    - Danach fragt Mechanical nach dem Aussehen (`Dark`, `Light` oder `Classic`). Das können Sie frei wählen.
+
 <div class="tutorial-embed"
    data-tutorial="/assets/tutorials/Material_zuordnen"
    style="width:800px">

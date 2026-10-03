@@ -19,6 +19,9 @@ hide:
 
 Wir erstellen die Geometrie mit dem ANSYS eigenen Tool `SpaceClaim`. 
 
+!!! info "Firewall-Abfrage beim ersten Start"
+    Beim ersten Öffnen von `SpaceClaim` fragt Windows, ob die Firewall der App den Zugriff erlauben soll. Sie können die Abfrage mit `Abbrechen` ablehnen, SpaceClaim funktioniert trotzdem.
+
 <div class="tutorial-embed"
    data-tutorial="/assets/tutorials/Geometrie_Erstellen"
    style="width:800px">
