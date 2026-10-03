@@ -1,109 +1,87 @@
-// Weitermachen, wo man aufgehört hat. Jede Praktikumsseite merkt sich ihren Besuch
-// (localStorage, nur in diesem Browser). Die Startseite wertet Besuche und bearbeitete
-// Aufgaben aus (nach OPAL-Anmeldung vom Server übernommen, also auf jedem Gerät) und
-// macht aus „Mit Praktikum 1 starten“ den passenden Weiter-Knopf; die Praktikumskarten
-// zeigen, was abgeschlossen ist und wo es weitergeht.
-// Maßgeblich ist das am weitesten begonnene Praktikum (Seite nach der Praktikums-Startseite
-// besucht oder Aufgabe bearbeitet). Ist es abgeschlossen (letzte Seite erreicht oder alle
-// Aufgaben gelöst bzw. ohne Versuche), geht es mit dem nächsten weiter, sonst auf der
-// zuletzt besuchten oder der letzten Seite mit bearbeiteter Aufgabe, je nachdem welche
-// in der Navigation weiter hinten liegt.
+// Startseite: Weiter-Knopf und Stand je Praktikum. Grundlage sind nur die bearbeiteten
+// Aufgaben (nach OPAL-Anmeldung vom Server übernommen, also auf jedem Rechner gleich).
+// Bearbeitet heißt gelöst oder alle Versuche verbraucht; die Karten zeigen den Anteil je
+// Praktikum, bei 100 % ist es abgeschlossen. Der Knopf führt in das am weitesten begonnene
+// Praktikum: ist es abgeschlossen, zum nächsten, sonst zur Seite nach der weitesten
+// bearbeiteten Übung (oder zu ihr selbst, wenn dort noch etwas offen ist).
 (function () {
   'use strict';
 
-  var KEY = 'kurs_besucht';          // { Seitenpfad: Zeitpunkt des letzten Besuchs }
   var PRAKT = /\/P(\d+)_[^/]+\//;
   var HAKEN = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>';
 
   function lesen(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
-  function seitenpfad(p) { return p.replace(/index\.html$/, '').replace(/([^/])$/, '$1/'); }
   function span(cls, text) { var el = document.createElement('span'); el.className = cls; el.textContent = text; return el; }
 
-  // Jede Praktikumsseite: Besuch merken
-  var hier = seitenpfad(location.pathname);
-  if (PRAKT.test(hier)) {
-    var besucht = lesen(KEY) || {};
-    besucht[hier] = Date.now();
-    try { localStorage.setItem(KEY, JSON.stringify(besucht)); } catch (e) { }
-  }
-
-  // Startseite: Praktikumsseiten in Navigationsreihenfolge (partials/page-nav.html)
+  // Praktikumsseiten in Navigationsreihenfolge (partials/page-nav.html)
   var daten = document.getElementById('kurs-seiten');
   var knopf = document.querySelector('.kurs-hero a.kurs-btn--primary');
   if (!daten || !knopf) return;
   var liste;
   try { liste = JSON.parse(daten.textContent); } catch (e) { return; }
-  var start = {}, letzte = {}, nachPfad = {};
-  liste.forEach(function (s, i) {
+  var seiten = [], start = {}, nachPfad = {};
+  liste.forEach(function (s) {
     var pfad = new URL(s[0], location.href).pathname, m = pfad.match(PRAKT);
     if (!m) return;
-    var seite = { href: s[0], titel: s[1], nr: +m[1], i: i };
+    var seite = { href: s[0], titel: s[1], nr: +m[1], i: seiten.length };
     if (!start[seite.nr]) start[seite.nr] = seite;
-    letzte[seite.nr] = seite;
     nachPfad[pfad] = seite;
+    seiten.push(seite);
   });
+  // Die Aufgaben-ID beginnt mit dem Pfad ihrer Seite
+  function seiteVon(qid) { return nachPfad[qid.split(':')[0].replace(/([^/])$/, '$1/')]; }
 
-  // Aufgabe gelöst oder alle Versuche verbraucht (Lösung wird dann angezeigt)
-  function erledigt(qid, q) {
+  function bearbeitet(qid, versuche) {
     var best = lesen('answer_best_' + qid);
     if (best && best.points > 0) return true;
     try {
       if (localStorage.getItem('answer_done_' + qid) === '1') return true;
-      return (parseInt(localStorage.getItem('answer_attempts_' + qid), 10) || 0) >= (q.attempts || 5);
+      return (parseInt(localStorage.getItem('answer_attempts_' + qid), 10) || 0) >= versuche;
     } catch (e) { return false; }
   }
 
   function auswerten() {
-    var p = {};
-    function stand(nr) { return p[nr] || (p[nr] = { begonnen: false, fertig: false, zuletzt: null, t: 0, aufgabe: null, n: 0, offen: 0 }); }
-
-    // Besuche (die Startseite eines Praktikums zählt nicht als Position)
-    var besucht = lesen(KEY) || {};
-    Object.keys(besucht).forEach(function (pfad) {
-      var s = nachPfad[pfad];
-      if (!s || s === start[s.nr]) return;
-      var x = stand(s.nr);
-      x.begonnen = true;
-      if (besucht[pfad] > x.t) { x.t = besucht[pfad]; x.zuletzt = s; }
-      if (s === letzte[s.nr]) x.fertig = true;
-    });
-
-    // Bearbeitete Aufgaben; die Aufgaben-ID beginnt mit dem Pfad ihrer Seite
+    // Weiteste Seite mit angefangener Aufgabe je Praktikum
+    var weiteste = {}, c = 0;
     for (var k = 0; k < localStorage.length; k++) {
       var m = (localStorage.key(k) || '').match(/^answer_(?:best|attempts|done)_(.+)$/);
-      var s = m && nachPfad[seitenpfad(m[1].split(':')[0])];
+      var s = m && seiteVon(m[1]);
       if (!s) continue;
-      var x = stand(s.nr);
-      x.begonnen = true;
-      if (!x.aufgabe || s.i > x.aufgabe.i) x.aufgabe = s;
+      if (!weiteste[s.nr] || s.i > weiteste[s.nr].i) weiteste[s.nr] = s;
+      if (s.nr > c) c = s.nr;
     }
-
-    // Alle Aufgaben eines Praktikums erledigt? (Fragenkatalog vom Backend, siehe answer-checker.js)
-    var katalog = (lesen('ac_qcatalog') || {}).data || {};
-    Object.keys(katalog).forEach(function (qid) {
-      var s = nachPfad[seitenpfad(qid.split(':')[0])];
-      if (!s) return;
-      var x = stand(s.nr);
-      x.n++;
-      if (!erledigt(qid, katalog[qid])) x.offen++;
-    });
-    Object.keys(p).forEach(function (nr) { if (p[nr].n && !p[nr].offen) p[nr].fertig = true; });
-
-    var c = 0;
-    Object.keys(p).forEach(function (nr) { if (p[nr].begonnen && +nr > c) c = +nr; });
     if (!c) return;                  // neu im Kurs: Knopf bleibt „Mit Praktikum 1 starten“
 
+    // Bearbeitet je Praktikum und offene Aufgaben je Seite (Fragenkatalog, answer-checker.js)
+    var katalog = (lesen('ac_qcatalog') || {}).data || {};
+    var n = {}, fertig = {}, aufSeite = {}, offenAuf = {};
+    Object.keys(katalog).forEach(function (qid) {
+      var s = seiteVon(qid);
+      if (!s) return;
+      n[s.nr] = (n[s.nr] || 0) + 1;
+      aufSeite[s.i] = (aufSeite[s.i] || 0) + 1;
+      if (bearbeitet(qid, katalog[qid].attempts || 5)) fertig[s.nr] = (fertig[s.nr] || 0) + 1;
+      else offenAuf[s.i] = (offenAuf[s.i] || 0) + 1;
+    });
+    function abgeschlossen(nr) { return n[nr] > 0 && fertig[nr] >= n[nr]; }
+
     var ziel = 0, text, sub, href;
-    if (p[c].fertig && start[c + 1]) {
+    if (abgeschlossen(c) && start[c + 1]) {
       var name = document.querySelector('.prakt-row[data-nr="' + (c + 1) + '"] .prakt-title');
       ziel = c + 1; text = 'Weiter mit Praktikum ' + ziel; sub = name ? name.textContent : start[ziel].titel; href = start[ziel].href;
-    } else if (p[c].fertig) {
+    } else if (abgeschlossen(c)) {
       text = 'Alle Praktika geschafft'; sub = 'Mein Fortschritt'; href = 'Fortschritt/';
       var doppelt = document.querySelector('.kurs-hero a.kurs-btn--in');
       if (doppelt) doppelt.remove();
     } else {
-      var seite = p[c].zuletzt, a = p[c].aufgabe;
-      if (!seite || (a && a.i > seite.i)) seite = a;
+      // Ist auf der weitesten Seite alles bearbeitet, geht es auf der nächsten weiter;
+      // liegt dahinter nichts mehr im Praktikum, bei der ersten Seite mit offenen Aufgaben
+      var seite = weiteste[c];
+      if (aufSeite[seite.i] && !offenAuf[seite.i]) {
+        var danach = seiten[seite.i + 1];
+        if (danach && danach.nr === c) seite = danach;
+        else seiten.some(function (s) { return s.nr === c && offenAuf[s.i] && (seite = s); });
+      }
       ziel = c; text = 'Weiter in Praktikum ' + c; sub = seite.titel; href = seite.href;
     }
     // Zweizeilig: oben klein wohin, darunter die Seite (passt neben den OPAL-Knopf)
@@ -118,17 +96,20 @@
     knopf.appendChild(zeilen);
     knopf.insertAdjacentHTML('beforeend', '<span aria-hidden="true">→</span>');
 
-    // Karten: abgeschlossen, hier weiter, begonnen
+    // Karten: Anteil bearbeiteter Aufgaben, Haken bei 100 %, Marke für hier weiter
     document.querySelectorAll('.prakt-row[data-nr]').forEach(function (row) {
-      var nr = +row.getAttribute('data-nr'), x = p[nr] || {};
-      var alt = row.querySelector('.prakt-status');
-      if (alt) alt.remove();
+      var nr = +row.getAttribute('data-nr'), label = row.querySelector('.prakt-label');
+      row.querySelectorAll('.prakt-status, .prakt-stand').forEach(function (el) { el.remove(); });
       row.classList.toggle('prakt-row--weiter', nr === ziel);
-      var art = nr === ziel ? 'weiter' : x.fertig ? 'fertig' : x.begonnen ? 'begonnen' : '';
-      var label = row.querySelector('.prakt-label');
-      if (!art || !label) return;
-      label.insertAdjacentHTML('beforeend', '<span class="prakt-status prakt-status--' + art + '">' +
-        (art === 'fertig' ? HAKEN + 'Abgeschlossen' : art === 'weiter' ? 'Hier weiter' : 'Begonnen') + '</span>');
+      row.classList.toggle('prakt-row--fertig', abgeschlossen(nr));
+      if (label && nr === ziel) label.insertAdjacentHTML('beforeend', '<span class="prakt-status prakt-status--weiter">Hier weiter</span>');
+      else if (label && abgeschlossen(nr)) label.insertAdjacentHTML('beforeend', '<span class="prakt-status prakt-status--fertig">' + HAKEN + 'Abgeschlossen</span>');
+      if (!n[nr]) return;
+      var f = fertig[nr] || 0, pct = Math.floor(100 * f / n[nr]);
+      row.querySelector('.prakt-body').insertAdjacentHTML('beforeend',
+        '<span class="prakt-stand" title="' + f + ' von ' + n[nr] + ' Aufgaben bearbeitet (gelöst oder alle Versuche verbraucht)">' +
+        '<span class="prakt-stand-text"><span>' + f + ' von ' + n[nr] + ' Aufgaben</span><b>' + pct + ' %</b></span>' +
+        '<span class="prakt-stand-bar"><i style="width:' + pct + '%"></i></span></span>');
     });
   }
 
