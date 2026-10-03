@@ -1254,6 +1254,81 @@ def kp_name_loeschen():
     return redirect("dashboard?key=" + DASHBOARD_TOKEN)
 
 
+# --- Knackpunkt-Freischaltung --------------------------------------------------
+# Wer alle Aufgaben aller Praktika bearbeitet hat (gelöst oder alle Versuche
+# verbraucht), bekommt das ganze Spiel: ein persönliches Ticket (JWT, ES256,
+# KP_TICKET_TAGE gültig), das Knackpunkt mit dem öffentlichen Schlüssel prüft.
+# Erneuert wird es über die Kursseite; Lehrende holen sich eins im Dashboard.
+KP_TICKET_PATH = os.environ.get("KP_TICKET_PATH", os.path.join(os.path.dirname(os.path.abspath(DB_PATH)), "kp_ticket_private.pem"))
+KP_TICKET_TAGE = 30
+KNACKPUNKT_URL = os.environ.get("KNACKPUNKT_URL", "https://fkaule.github.io/Knackpunkt/")
+KNACKPUNKT_WETTKAMPF_URL = os.environ.get("KNACKPUNKT_WETTKAMPF_URL", "https://fing-spool.htwk-leipzig.de/knackpunkt/")
+
+
+def kp_ticket_key():
+    """Schlüssel der Tickets (EC P-256); wird beim ersten Aufruf angelegt."""
+    from cryptography.hazmat.primitives.asymmetric import ec
+    if not os.path.exists(KP_TICKET_PATH):
+        key = ec.generate_private_key(ec.SECP256R1())
+        with open(KP_TICKET_PATH, "wb") as f:
+            f.write(key.private_bytes(serialization.Encoding.PEM, serialization.PrivateFormat.PKCS8,
+                                      serialization.NoEncryption()))
+        os.chmod(KP_TICKET_PATH, 0o600)
+    with open(KP_TICKET_PATH, "rb") as f:
+        return serialization.load_pem_private_key(f.read(), None)
+
+
+def kp_ticket(name, tage=KP_TICKET_TAGE):
+    jetzt = int(time.time())
+    return jwt.encode({"aud": "knackpunkt", "name": name, "iat": jetzt, "exp": jetzt + tage * 86400},
+                      kp_ticket_key(), algorithm="ES256")
+
+
+def kurs_stand(db, pseudonym):
+    """Je Praktikum: Zahl der Aufgaben und davon bearbeitet (gelöst oder alle Versuche verbraucht)."""
+    ergebnis = {qid: (best, versuche) for qid, best, versuche in db.execute(
+        "SELECT qid, best, attempts FROM results WHERE pseudonym=?", (pseudonym,))}
+    stand = {}
+    for qid, q in aktive_answers(db).items():
+        m = re.search(r"/P(\d+)_", qid)
+        if not m:
+            continue
+        best, versuche = ergebnis.get(qid, (0, 0))
+        x = stand.setdefault(m.group(1), {"n": 0, "fertig": 0})
+        x["n"] += 1
+        if best > 0 or versuche >= int(q.get("attempts", 5)):
+            x["fertig"] += 1
+    return stand
+
+
+@app.get("/api/kp/freigabe")
+def kp_freigabe():
+    """Ganzes Spiel frei, wenn alle Aufgaben aller Praktika bearbeitet sind; dann mit Link samt Ticket."""
+    db = get_db()
+    if not spiele_an(db)["kp"]:
+        return jsonify({"an": False})
+    pseudonym = current_pseudonym()
+    if not pseudonym:
+        return jsonify({"error": "nicht angemeldet"}), 401
+    stand = kurs_stand(db, pseudonym)
+    offen = sum(x["n"] - x["fertig"] for x in stand.values())
+    resp = {"an": True, "frei": bool(stand) and offen == 0, "offen": offen,
+            "aufgaben": sum(x["n"] for x in stand.values())}
+    if resp["frei"]:
+        name = db.execute("SELECT name FROM kp_namen WHERE who=?", (pseudonym,)).fetchone()
+        resp["link"] = KNACKPUNKT_URL + "#ticket=" + kp_ticket(name[0] if name else "")
+    return jsonify(resp)
+
+
+@app.get("/api/kp/schluessel")
+def kp_schluessel():
+    """Öffentlicher Schlüssel der Tickets als JWK; steht fest im Spiel (src/ticket.js)."""
+    zahlen = kp_ticket_key().public_key().public_numbers()
+    b64 = lambda n: base64.urlsafe_b64encode(n.to_bytes(32, "big")).rstrip(b"=").decode()
+    return jsonify({"kty": "EC", "crv": "P-256", "x": b64(zahlen.x), "y": b64(zahlen.y)})
+
+
+
 @app.get("/dashboard-help-done")
 def help_done():
     if not DASHBOARD_TOKEN or request.args.get("key") != DASHBOARD_TOKEN:
@@ -1563,6 +1638,16 @@ def dashboard():
         switch_html = switch_html.replace("</ul></section>", "</ul><p>Spitznamen in der Knackpunkt-Bestenliste: %s</p></section>" % ", ".join(
             '%s <a href="dashboard-kp-name-loeschen?key=%s&amp;name=%s">entfernen</a>'
             % (escape(n), DASHBOARD_TOKEN, urllib.parse.quote(n)) for n in kp_namen), 1)
+    # Knackpunkt ganz (sonst nur nach allen Praktika), z. B. zum Eröffnen eines Wettkampfs
+    # Knackpunkt für Lehrende und Kollegen: Links mit Lehrenden-Ticket (ein Jahr) ohne Dashboard-Schlüssel, zum Weitergeben
+    ticket = kp_ticket("Lehrende", 365)
+    links = [(KNACKPUNKT_URL + "#ticket=", "Einzelspiel", ""),
+             (KNACKPUNKT_WETTKAMPF_URL + "#ticket=", "Wettkampf", " (eröffnen, HTWK-Netz oder VPN)"),
+             (SITE_URL + "#lehrende=", "Kursseite", " (alle Knackpunkt-Runden frei)")]
+    switch_html = switch_html.replace("</ul>", "</ul><p>Knackpunkt für Lehrende und Kollegen, ein Jahr gültig, zum Weitergeben "
+                                      "(Rechtsklick, Link kopieren): %s</p>" % ", ".join(
+                                          '<a href="%s" target="_blank">%s</a>%s' % (escape(url + ticket), text, zusatz)
+                                          for url, text, zusatz in links), 1)
 
     # Direkt handlungsleitend: wo hingehen?
     help_html = ""

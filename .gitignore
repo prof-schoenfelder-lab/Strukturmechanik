@@ -64,6 +64,7 @@ backend/.venv/
 backend/results.db
 backend/*.log
 backend/lti_private.pem
+backend/kp_ticket_private.pem
 backend/__pycache__/
 answers.json
 site/
