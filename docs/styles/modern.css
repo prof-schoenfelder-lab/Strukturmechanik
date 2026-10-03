@@ -603,6 +603,8 @@ html:root .ph-ring-fg { stroke: var(--kurs-accent); }
 html:root .ph-done .ph-ring-fg { stroke: var(--kurs-c-ok); }
 html:root .ph-level strong, html:root body[data-md-color-scheme="slate"] .ph-level strong { color: var(--kurs-accent-ink); }
 html:root .ph-medal { border-color: var(--kurs-line); border-radius: var(--kurs-radius-md); }
+html:root .md-typeset .ph-reset { margin-top: 2.4rem; font-size: .68rem; color: var(--kurs-text-3); }
+html:root .md-typeset .ph-reset .md-button { font-size: .68rem; padding: .3em .9em; margin-right: .5rem; }
 
 /* ---- Startseite: Kopfbereich, Praktika, Dozenten --------------------------------------------------- */
 html:root .md-typeset .kurs-hero h1 { margin: 0; }

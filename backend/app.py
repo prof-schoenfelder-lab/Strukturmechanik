@@ -795,6 +795,20 @@ def check_answer():
     return jsonify(resp)
 
 
+@app.post("/api/reset")
+def reset_eigener_fortschritt():
+    """„Fortschritt zurücksetzen“ auf Mein Fortschritt: alle Ergebnisse der angemeldeten Person löschen;
+    die Kursseite leert danach den Browser. Bestenliste und Spitzname bleiben."""
+    pseudonym = current_pseudonym()
+    if not pseudonym:
+        return jsonify({"error": "nicht angemeldet"}), 401
+    db = get_db()
+    n = db.execute("DELETE FROM results WHERE pseudonym=?", (pseudonym,)).rowcount
+    db.commit()
+    push_score_async(pseudonym)
+    return jsonify({"geloescht": n})
+
+
 @app.get("/api/results")
 def get_results():
     """Full stored state of the current user — for merging into localStorage."""
