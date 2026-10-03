@@ -676,6 +676,12 @@ html:root .kurs-anim-suplabel .kurs-ov-in {
   font: 700 .64rem/1 var(--kurs-sans); color: var(--kurs-head);
   background: color-mix(in srgb, var(--kurs-surface) 88%, transparent); border: 1px solid var(--kurs-line); border-radius: 999px; padding: .2rem .5rem;
 }
+html:root .kurs-anim-bclabel .kurs-ov-in {
+  font: 700 .66rem/1 var(--kurs-sans); color: #fff;
+  padding: .26rem .6rem; border-radius: 999px; box-shadow: var(--kurs-shadow);
+}
+html:root .kurs-anim-bclabel--hot .kurs-ov-in { background: #e53009; }
+html:root .kurs-anim-bclabel--cold .kurs-ov-in { background: #009ee3; transform: translate(-50%, -100%); }
 html:root .kurs-anim-flag .kurs-ov-in { transform: none; position: relative; }
 html:root .kurs-anim-flag i {
   position: absolute; left: 0; top: 0; width: .42rem; height: .42rem; border-radius: 50%;
@@ -688,6 +694,11 @@ html:root .kurs-anim-flag span {
   font: 600 .7rem/1.2 var(--kurs-sans); color: var(--kurs-head);
 }
 html:root .kurs-anim-flag b { color: #e53009; margin-right: .2rem; }
+html:root .kurs-anim-flag--min i { background: #004699; box-shadow: 0 0 0 3px rgba(0, 70, 153, .22); }
+html:root .kurs-anim-flag--min span { border-left-color: #004699; }
+html:root .kurs-anim-flag--min b { color: #004699; }
+html:root body[data-md-color-scheme="slate"] .kurs-anim-flag--min b { color: #6ea6ff; }
+html:root body[data-md-color-scheme="slate"] .kurs-anim-flag--min span { border-left-color: #6ea6ff; }
 html:root .kurs-anim-legend { left: .1rem; top: 0; font: 500 .58rem/1.25 var(--kurs-sans); color: var(--kurs-text-2); }
 html:root .kurs-anim-legend .kurs-ov-in { transform: none; }
 html:root .kurs-anim-legend b { display: block; font-size: .66rem; font-weight: 700; color: var(--kurs-head); }

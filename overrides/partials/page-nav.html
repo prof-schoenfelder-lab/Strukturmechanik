@@ -9,7 +9,8 @@
 {%- if not page.is_homepage and (prev or next) -%}
   {%- set cur_p = page.url[1:2] if page.url[:1] == "P" and page.url[2:3] == "_" else "" -%}
   {%- set next_p = next.url[1:2] if next and next.url[:1] == "P" and next.url[2:3] == "_" else "" -%}
-  {%- if cur_p and next_p != cur_p -%}
+  {#- Abschluss-Karte nur auf Inhaltsseiten, nicht auf der Startseite eines Praktikums -#}
+  {%- if cur_p and next_p != cur_p and page.url.count('/') > 1 -%}
     {%- set praktika = config.extra.praktika -%}
     {%- set np = (praktika | selectattr("nr", "equalto", next_p | int) | first) if next_p else none -%}
     <section class="kurs-finish" aria-label="Praktikum {{ cur_p }} abgeschlossen">
