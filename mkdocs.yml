@@ -43,6 +43,7 @@ theme:
 hooks:
       - scripts/answers_hook.py
       - scripts/overview_hook.py
+      - scripts/anleitungen_hook.py
 
 plugins:
       - macros

@@ -549,8 +549,12 @@ html:root .md-typeset .tut-chip:hover { color: var(--kurs-text); }
 html:root .md-typeset .tut-chip.active { background: var(--kurs-accent-soft); border-color: transparent; color: var(--kurs-accent-ink); }
 html:root #tut-overview [hidden] { display: none !important; }
 html:root .tut-card-meta { display: flex; gap: .5rem; align-items: center; margin-top: .35rem; }
-html:root :is(.tut-cat, .tut-soft, .tut-count) { font-size: .56rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--kurs-text-3); }
+html:root :is(.tut-cat, .tut-soft, .tut-count, .tut-art) { font-size: .56rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--kurs-text-3); }
 html:root .tut-cat { color: var(--kurs-accent-ink); }
+/* Listen-Anleitungen (Schrittkästen der Kursseiten): Vorschau der Schritte, ohne Bild auf getönter Fläche */
+html:root .tut-card-desc { display: block; font-size: .68rem; line-height: 1.45; color: var(--kurs-text-2); margin-top: .25rem; }
+html:root .md-typeset a.tut-card:not(:has(.tut-thumb)) { background: var(--kurs-panel); }
+html:root .md-typeset .tut-quelle { font-size: .72rem; color: var(--kurs-text-2); margin-top: 1.2rem; }
 html:root .tut-empty { color: var(--kurs-text-2); font-size: .8rem; }
 html:root .md-typeset .tut-back { border: 0; cursor: pointer; background: none; font: 600 .72rem/1.2 var(--kurs-sans); color: var(--kurs-text-2); padding: .2rem 0; margin-bottom: .4rem; }
 html:root .md-typeset .tut-back:hover { color: var(--kurs-accent-ink); }
