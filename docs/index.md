@@ -23,9 +23,10 @@ hide:
         <span class="kurs-opal-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5v3H3v4h7v3zm9 2h-6v2h6c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-6v2h6v14z"/></svg></span>
         <div>
           <p class="kurs-opal-title">Fortschritt mit OPAL sichern</p>
-          <p>Melden Sie sich über den OPAL-Kurs an: Dann werden Ihre Punkte gespeichert und auf jedem Gerät angezeigt, auf dem Sie angemeldet sind. Ohne Anmeldung bleibt Ihr Stand nur in diesem Browser.</p>
-          <p class="kurs-opal-game"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7,6H17A6,6 0 0,1 23,12A6,6 0 0,1 17,18C15.22,18 13.63,17.23 12.53,16H11.47C10.37,17.23 8.78,18 7,18A6,6 0 0,1 1,12A6,6 0 0,1 7,6M6,9V11H4V13H6V15H8V13H10V11H8V9H6M15.5,12A1.5,1.5 0 0,0 14,13.5A1.5,1.5 0 0,0 15.5,15A1.5,1.5 0 0,0 17,13.5A1.5,1.5 0 0,0 15.5,12M18.5,9A1.5,1.5 0 0,0 17,10.5A1.5,1.5 0 0,0 18.5,12A1.5,1.5 0 0,0 20,10.5A1.5,1.5 0 0,0 18.5,9Z"/></svg><span><b>Minispiele:</b> Im Knackpunkt nehmen Sie Material weg, bis das Bauteil bricht, und spielen um die Bestenliste. Die Runde am Ende jedes Praktikums schalten Sie mit der Anmeldung frei.</span></p>
-          <p class="kurs-opal-note">Außerhalb des HTWK-Netzes muss dafür das VPN aktiv sein.</p>
+          <p>Mit OPAL-Anmeldung werden Ihre Punkte gespeichert und sind auf jedem Gerät verfügbar.</p>
+          <p class="kurs-opal-perk"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13,2.05V5.08C16.39,5.57 19,8.47 19,12C19,12.9 18.82,13.75 18.5,14.54L21.12,16.07C21.68,14.83 22,13.45 22,12C22,6.82 18.05,2.55 13,2.05M12,19A7,7 0 0,1 5,12C5,8.47 7.61,5.57 11,5.08V2.05C5.94,2.55 2,6.81 2,12A10,10 0 0,0 12,22C15.3,22 18.23,20.39 20.05,17.91L17.45,16.38C16.17,18 14.21,19 12,19Z"/></svg><span><b>Kursfortschritt:</b> Für jede gelöste Aufgabe gibt es Punkte. Unter Mein Fortschritt sehen Sie Ihren Stand je Praktikum und sammeln Abzeichen.</span></p>
+          <p class="kurs-opal-perk"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7,6H17A6,6 0 0,1 23,12A6,6 0 0,1 17,18C15.22,18 13.63,17.23 12.53,16H11.47C10.37,17.23 8.78,18 7,18A6,6 0 0,1 1,12A6,6 0 0,1 7,6M6,9V11H4V13H6V15H8V13H10V11H8V9H6M15.5,12A1.5,1.5 0 0,0 14,13.5A1.5,1.5 0 0,0 15.5,15A1.5,1.5 0 0,0 17,13.5A1.5,1.5 0 0,0 15.5,12M18.5,9A1.5,1.5 0 0,0 17,10.5A1.5,1.5 0 0,0 18.5,12A1.5,1.5 0 0,0 20,10.5A1.5,1.5 0 0,0 18.5,9Z"/></svg><span><b>Minispiele:</b> Im Knackpunkt nehmen Sie Material weg, bis das Bauteil bricht, und spielen um die Bestenliste. Die Runde am Ende jedes Praktikums schalten Sie mit der Anmeldung frei.</span></p>
+          <p class="kurs-opal-note">Außerhalb des HTWK-Netzes muss dafür das VPN aktiv sein: <a href="https://itsz.htwk-leipzig.de/dienste/vpn-zugriff-auf-das-hochschulnetz/" target="_blank" rel="noopener">Anleitung des ITSZ</a> (mit HTWK-Login).</p>
           <a class="kurs-opal-link" href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/18448121873/CourseNode/1784428828536783012">Über OPAL anmelden →</a>
         </div>
       </div>
@@ -33,8 +34,8 @@ hide:
         <span class="kurs-opal-icon kurs-opal-icon--ok" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></span>
         <div>
           <p class="kurs-opal-title">Über OPAL angemeldet</p>
-          <p>Ihre Punkte werden gespeichert und auf jedem Gerät angezeigt, auf dem Sie angemeldet sind. Ihre Plätze in den Knackpunkt-Bestenlisten finden Sie unter Mein Fortschritt.</p>
-          <p class="kurs-opal-note">Außerhalb des HTWK-Netzes muss für den Abgleich das VPN aktiv sein.</p>
+          <p>Ihre Punkte werden gespeichert und sind auf jedem Gerät verfügbar. Ihre Knackpunkt-Plätze finden Sie unter Mein Fortschritt.</p>
+          <p class="kurs-opal-note">Außerhalb des HTWK-Netzes muss für den Abgleich das VPN aktiv sein: <a href="https://itsz.htwk-leipzig.de/dienste/vpn-zugriff-auf-das-hochschulnetz/" target="_blank" rel="noopener">Anleitung des ITSZ</a> (mit HTWK-Login).</p>
           <a class="kurs-opal-link" href="Fortschritt/">Mein Fortschritt →</a>
         </div>
       </div>
