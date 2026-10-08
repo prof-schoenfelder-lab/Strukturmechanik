@@ -365,6 +365,11 @@ def main():
         check("hilfe: Push-Abo gespeichert", requests.post(BACKEND + "/api/hilfe/abo", headers=HK, json={"abo": abo}).json() == {"ok": True})
         requests.post(BACKEND + "/api/help", headers=p7, json={"page": "/Strukturmechanik/P1_Einfuehrung/03_Selbsttests/Uebung-3"})
         requests.post(BACKEND + "/api/help", headers=p8, json={"page": "/Strukturmechanik/P1_Einfuehrung/03_Selbsttests/Uebung-1"})
+        r = requests.get(BACKEND + "/dashboard", params={"key": "test-dashboard-key"})
+        check("dashboard: Wartende in der Raumkarte wie in der App",
+              "Raum N103" in r.text and '<span class="seat s-next" title="wartet auf Hilfe"><b>7</b>' in r.text
+              and '<sup>1.</sup>' in r.text and '<span class="seat s-hilfe" title="wartet auf Hilfe"><b>8</b>' in r.text
+              and '<sup>2.</sup>' in r.text and "wartet auf Hilfe</b>" in r.text)
         for _ in range(40):
             if len(pushes) >= 2:
                 break

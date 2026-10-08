@@ -1505,7 +1505,7 @@ background:radial-gradient(90% 120% at 100% 0%,var(--accent-soft) 0%,transparent
 .kpi span{display:block;font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-top:.25rem}
 .kpi.good b{color:var(--ok)}
 .kpi.alarm{background:var(--alarm-bg);border-color:var(--alarm-line)}.kpi.alarm b{color:var(--alarm)}
-.pill,b.ok,b.done,b.warn,b.alarm,b.idle{display:inline-block;border-radius:99px;padding:.12rem .55rem;font-size:.7rem;font-weight:700;
+.pill,b.ok,b.done,b.warn,b.alarm,b.idle,b.hilfe,b.next{display:inline-block;border-radius:99px;padding:.12rem .55rem;font-size:.7rem;font-weight:700;
 letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
 b.ok,.pill.on{background:var(--ok-bg);color:var(--ok)}
 b.done{background:var(--ok);color:#fff}
@@ -1542,7 +1542,7 @@ p.spans b{color:var(--head)}
 .room{margin:0}
 .roommap{display:grid;grid-template-columns:repeat(2,6.2rem) 1.1rem repeat(2,6.2rem);gap:.35rem}
 .seat{border:1px solid var(--line);border-radius:var(--r);padding:.25rem .4rem;font-size:.74rem;min-height:2.7rem;
-background:var(--panel);color:var(--text3);font-variant-numeric:tabular-nums}
+background:var(--panel);color:var(--text3);font-variant-numeric:tabular-nums;position:relative}
 .seat b{display:block;font-size:.78rem;color:inherit}
 .seat u{display:block;text-decoration:none;font-weight:600;font-size:.76rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .seat.s-ok{background:var(--ok-bg);border-color:var(--ok-line);color:var(--ok)}
@@ -1550,6 +1550,11 @@ background:var(--panel);color:var(--text3);font-variant-numeric:tabular-nums}
 .seat.s-warn{background:var(--warn-bg);border-color:var(--warn-line);color:var(--warn)}
 .seat.s-alarm{background:var(--alarm-bg);border-color:var(--alarm-line);color:var(--alarm)}
 .seat.s-idle{background:var(--idle-bg);border-style:dashed;color:var(--idle)}
+.seat.s-hilfe{background:#e5007d;border-color:#e5007d;border-style:solid;color:#fff}
+.seat.s-next{background:var(--accent);border-color:var(--accent);border-style:solid;color:var(--btn-fg);box-shadow:inset 0 0 0 2px var(--bg)}
+.seat sup{position:absolute;top:.2rem;right:.3rem;font-size:.72rem;font-weight:800}
+b.hilfe{background:#e5007d;color:#fff}
+b.next{background:var(--accent);color:var(--btn-fg)}
 p.front{font-size:.76rem;color:var(--text3);margin:.5rem 0 0;text-align:center}
 p.legend{display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 1rem}
 .tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -1806,9 +1811,16 @@ def dashboard():
         m = re.match(r"^(N\d{3}) Platz (\d+)$", e["pc"])
         if m and m.group(1) in ROOMS:
             seat_of[(m.group(1), int(m.group(2)))] = e
+    # Hilfe-Warteschlange wie in der Handy-App: der nächste Platz cyan, die übrigen magenta mit Nummer;
+    # der Raum erscheint auch, wenn dort nur jemand wartet
+    warte = {}
+    for i, qr in enumerate(queue_rows, start=1):
+        m = re.match(r"^(N\d{3}) Platz (\d+)$", hilfe_label(qr["who"]))
+        if m and m.group(1) in ROOMS:
+            warte.setdefault((m.group(1), int(m.group(2))), i)
     map_html = ""
     for room in sorted(ROOMS):
-        if not any(k[0] == room for k in seat_of):
+        if not any(k[0] == room for k in list(seat_of) + list(warte)):
             continue
         total_seats = ROOMS[room]
         n_rows = (total_seats + 3) // 4
@@ -1824,15 +1836,22 @@ def dashboard():
                     cells += '<i class="aisle"></i>'
                     continue
                 e = seat_of.get((room, seat))
+                w = warte.get((room, seat))
+                hilfe = (" s-next" if w == 1 else " s-hilfe") if w else ""
+                marke = "<sup>%d.</sup>" % w if w else ""
                 if e:
-                    cells += ('<span class="seat s-%s" title="%s%s · zuletzt %s · vor %d min">'
-                              '<b>%d</b><u>%s</u>%s%d/%d</span>'
-                              % (e["skey"],
+                    cells += ('<span class="seat s-%s%s" title="%s%s · zuletzt %s · vor %d min%s">'
+                              '<b>%d</b><u>%s</u>%s%d/%d%s</span>'
+                              % (e["skey"], hilfe,
                                  escape(e["name"]) + " · " if e["name"] else "", e["pname"],
                                  escape(short_qid(e["qid"])), max(0, round(e["idle"] / 60)),
+                                 " · wartet auf Hilfe" if w else "",
                                  seat, escape(e["name"]) or "&nbsp;",
                                  ("%s " % e["pshort"]) if e["pshort"] else "",
-                                 e["solved"], e["total"]))
+                                 e["solved"], e["total"], marke))
+                elif w:
+                    cells += ('<span class="seat%s" title="wartet auf Hilfe"><b>%d</b><u>wartet</u>%s</span>'
+                              % (hilfe, seat, marke))
                 else:
                     cells += '<span class="seat"><b>%d</b></span>' % seat
         map_html += ('<div class="card room"><h3>Raum %s</h3><div class="roommap">%s</div>'
@@ -1840,7 +1859,8 @@ def dashboard():
     if map_html:
         map_html = ('<div class="rooms">%s</div><p class="legend"><b class="ok">arbeitet</b>'
                     '<b class="done">Praktikum fertig</b><b class="warn">hängt</b><b class="alarm">aufgegeben</b>'
-                    '<b class="idle">pausiert</b></p>' % map_html)
+                    '<b class="idle">pausiert</b>%s</p>'
+                    % (map_html, '<b class="next">als Nächstes</b><b class="hilfe">wartet auf Hilfe</b>' if warte else ""))
 
     person_rows = "".join(
         '<tr><td><b>%s</b></td><td>%s</td><td>%s</td><td class="num">%d/%d</td><td title="%s">%s</td>'
