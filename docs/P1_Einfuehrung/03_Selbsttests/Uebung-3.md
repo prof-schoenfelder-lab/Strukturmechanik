@@ -83,7 +83,7 @@ Belastung:
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Kraft auf die Fläche anbringen</p>
     <p>Zur Erstellung der Geometrieflächen das Klick-Tutorial weiter oben beachten</p> 
-    <p>In Mechanical: Um dann in mehrere Flächen für eine Randbedingung auszuwählen `STRG` gedrückt halten</p> 
+    <p>In Mechanical: Um mehrere Flächen für eine Randbedingung auszuwählen, <code>STRG</code> gedrückt halten</p> 
   </div>
 
   <div class="step">

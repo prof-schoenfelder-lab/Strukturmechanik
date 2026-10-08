@@ -124,7 +124,7 @@ Um den Unterschied zur `Fixed Support` zu sehen fügen wir eine weitere Analyse 
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Neue Analyse anlegen</p>
-    <p>Im Workbench Projektmenü: <code>Static Structural</code> per <code>Drag&Drop</code> auf  <code>Übung 2</code> umbenennen.</p>
+    <p>Im Workbench Projektmenü: <code>Static Structural</code> aus der <code>Toolbox</code> per <code>Drag&Drop</code> auf die Zeile <code>Model</code> der Analyse <strong>Übung 2</strong> ziehen.</p>
   <figure style="text-align:center;">
   <img src="../images/Analyse_auf_Model.png" alt="Analyse auf Model" width="400" class="no-lightbox">
   </figure>
