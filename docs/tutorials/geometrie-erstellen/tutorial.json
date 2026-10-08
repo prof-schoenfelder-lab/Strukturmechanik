@@ -9,68 +9,67 @@
   ],
   "steps": [
     {
-      "caption": "`Rechtsklick` auf Geometry`",
+      "caption": "`Rechtsklick Geometry`",
       "media": [
         "step-0.png"
-      ],
-      "note": "<pre>&nbsp;</pre>"
+      ]
     },
     {
-      "caption": "`Klick` auf `New SpaceClaim Geometry...`",
+      "caption": "`New SpaceClaim Geometry...` anklicken",
       "media": [
         "step-1.png"
       ]
     },
     {
-      "caption": "Links unten ein Hinweis dass `SpaceClaim` gestartet wird",
+      "caption": "Links unten erscheint der Hinweis, dass **SpaceClaim** startet: kurz warten",
       "media": [
         "step-2.png"
       ]
     },
     {
-      "caption": "`Klick` auf `Plane View` (oder `v` drücken)",
+      "caption": "Unten im Grafikfenster `Plane View` anklicken (oder Taste `V`)",
       "media": [
         "step-3.png"
       ]
     },
     {
-      "caption": "`Klick` auf `Rectangle` (im Tab Sketch)",
+      "caption": "Im Reiter `Sketch` auf `Rectangle` klicken",
       "media": [
         "step-4.png"
       ]
     },
     {
-      "caption": "Fläche mit 30x30 Maßen erstellen (siehe Screenshot)",
+      "caption": "Auf den **Koordinatenursprung** klicken und die Maus nach rechts unten bewegen, **nicht klicken**. Dann `Tab` `30` `Tab` `30`, mit `Enter` bestätigen: Rechteck 30 × 30 mm",
       "media": [
         "step-5.png"
       ]
     },
     {
-      "caption": "`Klick` auf `End Sketch Editing`",
+      "caption": "`End Sketch Editing` anklicken",
       "media": [
         "step-6.png"
       ]
     },
     {
-      "caption": "`Klick` auf `Trimetric` (im Tab Design)",
+      "caption": "Im Reiter `Design` auf `Trimetric` klicken: schräge Ansicht",
       "media": [
         "step-7.png"
       ]
     },
     {
-      "caption": "`Klick` auf `Pull` (im Tab Design)",
+      "caption": "`Pull` anklicken",
       "media": [
         "step-8.png"
       ]
     },
     {
-      "caption": "Fläche auf 1000mm extrudieren (siehe Screenshot)",
+      "caption": "Die Fläche **anklicken und gedrückt halten**, nach oben ziehen, `Leertaste` drücken und loslassen, `1000` mm eingeben, mit `Enter` bestätigen",
       "media": [
         "step-9.png"
       ]
     },
     {
-      "caption": "2x `ESC` drücken und Fenster `schließen`",
+      "caption": "2× `Esc` drücken und SpaceClaim schließen",
       "media": [
         "step-10.png"
       ]

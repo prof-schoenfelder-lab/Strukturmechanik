@@ -18,10 +18,7 @@ hide:
 
 Die angegebene Kraft hat die Einheit N (Newton) und soll sich gleichmäßig auf eine Fläche verteilen. Dafür verwenden wir die Randbedingung `Force`.
 
-<div class="tutorial-embed"
-   data-tutorial="/assets/tutorials/Flaechenlast_anbringen"
-   style="width:800px">
-</div>
+<tutorial slug="flaechenlast-anbringen"></tutorial>
 
 Zur finalen Kontrolle der Randbedingung blenden wir durch die Auswahl von `Static Structural` im Strukturbaum eine Übersicht ein:
 

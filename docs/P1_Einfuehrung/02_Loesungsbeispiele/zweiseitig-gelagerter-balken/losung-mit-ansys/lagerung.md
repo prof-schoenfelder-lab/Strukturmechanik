@@ -19,14 +19,8 @@ hide:
 Wir beginnen mit dem Festlager auf der unteren Kante der linken Seite. Wir wollen hier die Verschiebungsfreiheitsgrade in x,y und z Richtung auf Null setzen (also eine Verschiebung verhindern). Dafür gibt es eine spezielle Randbedingungen die `Fixed Support` heißt.
 
 
-<div class="tutorial-embed"
-   data-tutorial="/assets/tutorials/Festlager_anbringen"
-   style="width:800px">
-</div>
+<tutorial slug="festlager-anbringen"></tutorial>
 
 Das Loslager kommt auf die untere Kante der gegenüberliegenden (rechten) Seite. Hier sollen nur die Verschiebungsfreiheitsgrade in x und z Richtung verhindert werden (also auf Null gesetzt). Dafür verwenden wir die Randbedingung `Displacement`.
 
-<div class="tutorial-embed"
-   data-tutorial="/assets/tutorials/Loslager_anbringen"
-   style="width:800px">
-</div>
+<tutorial slug="loslager-anbringen"></tutorial>

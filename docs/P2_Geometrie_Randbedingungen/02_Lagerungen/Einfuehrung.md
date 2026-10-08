@@ -79,7 +79,7 @@ Lagerungen verhindern an definierten Orten der Geometrie eine Bewegungen in eine
 </figure>
 ## Konkret: Festlager anbringen
 
-Die vollständige Klick-Anleitung — dieselbe findest du auch in der
+Die vollständige Klick-Anleitung, dieselbe finden Sie auch in der
 [Anleitungen-Übersicht](../../../tutorials/):
 
 <tutorial slug="festlager-anbringen"></tutorial>

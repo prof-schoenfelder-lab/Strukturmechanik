@@ -8,37 +8,37 @@
   ],
   "steps": [
     {
-      "caption": "`Doppelklick Model`",
+      "caption": "Im Projektmenü `Doppelklick Model`",
       "media": [
         "step-0.png"
       ]
     },
     {
-      "caption": "Nach dem Start das Programm `Mechanical` öffnen",
+      "caption": "Links unten erscheint der Hinweis, dass **Mechanical** startet. Das kann eine Weile dauern",
       "media": [
         "step-1.png"
       ]
     },
     {
-      "caption": "Im Strukturbaum: `Klick` auf `+` neben `Geometry`",
+      "caption": "Im `Strukturbaum` das `+` neben **Geometry** anklicken",
       "media": [
         "step-2.png"
       ]
     },
     {
-      "caption": "`Klick` auf `SYS\\Solid` (unsere vorher erstellte Geometrie)",
+      "caption": "**SYS\\Solid** anklicken (die eben erstellte Geometrie)",
       "media": [
         "step-3.png"
       ]
     },
     {
-      "caption": "Im Detailfenster: `Klick` auf das `Dreieck` neben Structural",
+      "caption": "Im `Detailfenster` unter **Material** bei **Assignment** auf den Pfeil klicken",
       "media": [
         "step-4.png"
       ]
     },
     {
-      "caption": "`Klick` auf `Stahl` (unser vorher definiertes Material)",
+      "caption": "**Stahl** wählen (das vorher angelegte Material)",
       "media": [
         "step-5.png"
       ]

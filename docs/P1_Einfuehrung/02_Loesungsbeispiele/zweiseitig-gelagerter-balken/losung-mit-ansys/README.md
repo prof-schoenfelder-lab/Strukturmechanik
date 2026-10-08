@@ -10,7 +10,4 @@ Falls noch nicht geschehen, nun die Software `ANSYS Workbench 2025R2` öffnen.
 
 Anschließend eine neue Analyse hinzufügen:
 
-<div class="tutorial-embed"
-   data-tutorial="/assets/tutorials/Analyse_hinzufuegen"
-   style="width:800px">
-</div>
+<tutorial slug="analyse-hinzufuegen"></tutorial>

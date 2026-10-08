@@ -18,7 +18,4 @@ Nun starten wir das eigentliche FEM-Programm `Mechanical` und ordnen unserer Geo
     - Auch hier fragt Windows nach der Firewall: Sie können mit `Abbrechen` ablehnen, Mechanical funktioniert trotzdem.
     - Danach fragt Mechanical nach dem Aussehen (`Dark`, `Light` oder `Classic`). Das können Sie frei wählen.
 
-<div class="tutorial-embed"
-   data-tutorial="/assets/tutorials/Material_zuordnen"
-   style="width:800px">
-</div>
+<tutorial slug="material-zuordnen"></tutorial>

@@ -9,61 +9,61 @@
   ],
   "steps": [
     {
-      "caption": "`Klick` auf Reiter `Design` und dann auf `Plane`",
+      "caption": "Im Reiter `Design` auf `Plane` klicken",
       "media": [
         "step-0.png"
       ]
     },
     {
-      "caption": "Stirnfläche `anklicken` (auf der Ebene erzeugt wird)",
+      "caption": "Die **Stirnfläche** anklicken: auf ihr entsteht die Ebene",
       "media": [
         "step-1.png"
       ]
     },
     {
-      "caption": "`Klick` auf `Move`",
+      "caption": "`Move` anklicken",
       "media": [
         "step-2.png"
       ]
     },
     {
-      "caption": "eben erzeugte `Ebene` `anklicken`",
+      "caption": "Die eben erzeugte **Ebene** anklicken",
       "media": [
         "step-3.png"
       ]
     },
     {
-      "caption": "Achse senkrecht zur Ebene `anklicken`",
+      "caption": "Den Pfeil **senkrecht zur Ebene** anklicken",
       "media": [
         "step-4.png"
       ]
     },
     {
-      "caption": "gleiche Achse erneut `anklicken und gedrückt halten` und Mauszeiger nach links ziehen und `Leertaste` drücken und den Wert `10` eingeben und mit `Enter bestätigen`",
+      "caption": "Denselben Pfeil **anklicken und gedrückt halten**, nach links ziehen, `Leertaste` drücken, `10` mm eingeben, mit `Enter` bestätigen",
       "media": [
         "step-5.png"
       ]
     },
     {
-      "caption": "`Klick` auf `Split`",
+      "caption": "Im Reiter `Design` auf `Split` klicken",
       "media": [
         "step-6.png"
       ]
     },
     {
-      "caption": "`STRG` + `A` drücken (alle Flächen auswählen) und `Säge` `anklicken`",
+      "caption": "`Strg + A` (alles auswählen), dann links das Werkzeug mit der `Säge` anklicken",
       "media": [
         "step-7.png"
       ]
     },
     {
-      "caption": "`Ebene` `anklicken` und 2x `ESC` drücken",
+      "caption": "Die **Ebene** anklicken, dann 2× `Esc`",
       "media": [
         "step-8.png"
       ]
     },
     {
-      "caption": "Flächen wurden erzeugt!",
+      "caption": "Fertig: die Flächen sind erzeugt",
       "media": [
         "step-9.png"
       ]

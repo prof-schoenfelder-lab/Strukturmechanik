@@ -42,10 +42,7 @@ Stahl
 
 Die Geometrie beinhaltet noch nicht die Flächen an denen die Randbedingungen angebracht werden. Diese können in `SpaceClaim` so erstellt werden:
 
-<div class="tutorial-embed"
-   data-tutorial="/assets/tutorials/Flaechen_erzeugen_Split_Ebene"
-   style="width:600px">
-</div>
+<tutorial slug="flaechen-erzeugen-split-ebene"></tutorial>
 
 Die Fläche für die Kraft am langen Ende entsteht genauso: eine Ebene auf der Stirnfläche des langen Endes erzeugen, um `30` mm verschieben und die Flächen mit `Split` teilen.
 

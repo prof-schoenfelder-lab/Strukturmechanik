@@ -95,6 +95,7 @@ extra_javascript:
       - "assets/js/backend-sync.js"
       - "assets/js/help-button.js"
       - "assets/js/modern-ui.js"
+      - "assets/js/anleitung.js"
       - "assets/js/tutorials.js"
       - "assets/vendor/three-0.147.0.min.js"
       - "assets/js/course-stats.js"
@@ -107,6 +108,7 @@ extra_css:
       - "styles/steps.css"
       - "styles/grid.css"
       - "assets/styles/answer-checker.css"
+      - "assets/styles/anleitung.css"
       - "styles/modern.css"
 
 # Die vier Praktika: Startseite (Liste) und Abschluss-Karte am Ende jedes Praktikums;

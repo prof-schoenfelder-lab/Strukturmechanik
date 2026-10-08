@@ -9,25 +9,25 @@
   ],
   "steps": [
     {
-      "caption": "`mittlere Maustaste` `gedrückt halten` um Ansicht zu drehen (hinterer Teil des Balkens)",
+      "caption": "Mit gedrückter `mittlerer Maustaste` die Ansicht zur Rückseite des Balkens drehen",
       "media": [
         "step-0.png"
       ]
     },
     {
-      "caption": "`Klick` auf `Kantenauswahl` und anschließend die hintere Kante `auswählen`",
+      "caption": "Die `Kantenauswahl` anklicken, dann die **hintere untere Kante** anklicken",
       "media": [
         "step-1.png"
       ]
     },
     {
-      "caption": "Im Strukturbaum: `Rechtsklick Static Structural → Insert → Displacement`",
+      "caption": "`Rechtsklick Strukturbaum Static Structural → Insert → Displacement`",
       "media": [
         "step-2.png"
       ]
     },
     {
-      "caption": "Im Detailfenster `X` Component und `Z` Component eine `0` eintragen",
+      "caption": "Im `Detailfenster` bei **X Component** und **Z Component** jeweils `0` eintragen",
       "media": [
         "step-3.png"
       ]

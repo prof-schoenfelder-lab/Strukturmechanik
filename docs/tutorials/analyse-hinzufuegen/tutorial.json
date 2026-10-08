@@ -9,13 +9,13 @@
   ],
   "steps": [
     {
-      "caption": "Analyse Hinzufügen durch `Doppelklick Static Structural` (Unter Analysis Systems)",
+      "caption": "In der `Toolbox` unter **Analysis Systems**: `Doppelklick Static Structural`",
       "media": [
         "step-0.png"
       ]
     },
     {
-      "caption": "Analyse umbenennen durch `Doppelklick` auf den Namen `Static Structural` und entsprechenden Namen eingeben z.B. `Loesungsbeispiel` (Umlaute vermeiden!) und mit `Enter` bestätigen",
+      "caption": "`Doppelklick` auf den Namen **Static Structural** unter dem Block, einen eigenen Namen ohne Umlaute eintippen, z. B. **Loesungsbeispiel**, `Enter`",
       "media": [
         "step-1.png"
       ]

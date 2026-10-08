@@ -14,43 +14,43 @@
       ]
     },
     {
-      "caption": "`Klick` auf `Edit...`",
+      "caption": "`Edit...` anklicken",
       "media": [
         "step-1.png"
       ]
     },
     {
-      "caption": "`Klick` auf `Click here to add new Material` und den Materialnamen `Stahl` eingeben",
+      "caption": "In die Zeile *Click here to add a new material* **Stahl** eintippen, `Enter`",
       "media": [
         "step-2.png"
       ]
     },
     {
-      "caption": "`Klick` auf `Stahl`",
+      "caption": "**Stahl** anklicken",
       "media": [
         "step-3.png"
       ]
     },
     {
-      "caption": "`Doppelklick Isotropic Elasticity`",
+      "caption": "In der `Toolbox` links unter **Linear Elastic**: `Doppelklick Isotropic Elasticity`",
       "media": [
         "step-4.png"
       ]
     },
     {
-      "caption": "Im `Properties Fenster` die Einheit von `Young's Modulus` auf `GPa` stellen und den Wert `210` eintragen und anschließend bei `Poisson's Ratio` den Wert `0,3` eintragen",
+      "caption": "Unten bei **Young's Modulus** die Einheit **GPa** wählen und `210` eintragen, bei **Poisson's Ratio** `0,3` eintragen",
       "media": [
         "step-5.png"
       ]
     },
     {
-      "caption": "So müsste es aussehen",
+      "caption": "Prüfen: Young's Modulus **210 GPa**, Poisson's Ratio **0,3**",
       "media": [
         "step-6.png"
       ]
     },
     {
-      "caption": "`Klick` auf den Tab `Project` um zurück ins Projektmenü zu kommen",
+      "caption": "Oben `Reiter Project` anklicken: zurück ins Projektmenü",
       "media": [
         "step-7.png"
       ]

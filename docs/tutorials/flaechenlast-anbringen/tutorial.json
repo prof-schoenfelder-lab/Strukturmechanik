@@ -9,31 +9,31 @@
   ],
   "steps": [
     {
-      "caption": "Ansicht drehen `mittlere Maustaste gedrückt` + `Flächenauswahl` + `Fläche` auswählen",
+      "caption": "Mit gedrückter `mittlerer Maustaste` die Ansicht drehen, die `Flächenauswahl` anklicken, dann die **obere Fläche** anklicken",
       "media": [
         "step-0.png"
       ]
     },
     {
-      "caption": "Im Strukturbaum:  `Rechtsklick Static Strucutral → Insert → Force`",
+      "caption": "`Rechtsklick Strukturbaum Static Structural → Insert → Force`",
       "media": [
         "step-1.png"
       ]
     },
     {
-      "caption": "`Klick` auf `Pfeil` bei Vector (Definied By) und auf `Components`",
+      "caption": "Im `Detailfenster` bei **Define By** auf den Pfeil klicken und **Components** wählen",
       "media": [
         "step-2.png"
       ]
     },
     {
-      "caption": "Bei `Z Component`  den Wert `-1000` (weil Kraft in negative Richtung)",
+      "caption": "Bei **Z Component** `-1000` eintragen (die Kraft zeigt in negative z-Richtung), `Enter`",
       "media": [
         "step-3.png"
       ]
     },
     {
-      "caption": "So muss es final aussehen",
+      "caption": "Prüfen: der Kraftpfeil zeigt nach unten",
       "media": [
         "step-4.png"
       ]

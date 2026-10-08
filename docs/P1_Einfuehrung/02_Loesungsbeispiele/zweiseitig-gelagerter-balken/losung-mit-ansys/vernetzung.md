@@ -15,7 +15,4 @@ hide:
 
 Wir stellen nun eine globale Netzgröße von 15 mm ein. Da unser Standardeinheitensystem auf m (Meter) eingestellt ist, stellen wir dies zu Beginn auf mm (Millimeter) um.
 
-<div class="tutorial-embed"
-   data-tutorial="/assets/tutorials/Vernetzung"
-   style="width:600px">
-</div>
+<tutorial slug="vernetzung"></tutorial>

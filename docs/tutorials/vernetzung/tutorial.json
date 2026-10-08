@@ -9,31 +9,31 @@
   ],
   "steps": [
     {
-      "caption": "In der Leiste rechts unten `Klick` auf `Metric ..` und anschließend auf `Metric (mm,t,...`",
+      "caption": "Unten rechts in der Statusleiste die Einheiten anklicken und **Metric (mm, t, N, s, mV, mA)** wählen",
       "media": [
         "step-0.png"
       ]
     },
     {
-      "caption": "Im Strukturbaum: `Klick` auf `Mesh`",
+      "caption": "`Linksklick Strukturbaum Mesh`",
       "media": [
         "step-1.png"
       ]
     },
     {
-      "caption": "Im Detailfenster `Klick` auf `Default` (neben Element Size) und den Wert `15` eingeben und mit `Enter` bestätigen",
+      "caption": "Im `Detailfenster` bei **Element Size** auf **Default** klicken, `15` mm eingeben, `Enter`",
       "media": [
         "step-2.png"
       ]
     },
     {
-      "caption": "Im Strukturbaum `Rechtsklick Mesh` und auf `Generate Mesh` `klicken`",
+      "caption": "`Rechtsklick Mesh → Generate Mesh`",
       "media": [
         "step-3.png"
       ]
     },
     {
-      "caption": "So sollte es final aussehen",
+      "caption": "Prüfen: der Balken ist vernetzt",
       "media": [
         "step-4.png"
       ]

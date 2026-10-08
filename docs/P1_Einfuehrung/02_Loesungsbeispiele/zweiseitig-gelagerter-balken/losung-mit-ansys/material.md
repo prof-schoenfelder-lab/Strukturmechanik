@@ -14,7 +14,4 @@ hide:
 
 Die Materialdefinition erfolgt im ANSYS Projektmenü.
 
-<div class="tutorial-embed"
-   data-tutorial="/assets/tutorials/Material_hinzufuegen"
-   style="width:800px">
-</div>
+<tutorial slug="material-hinzufuegen"></tutorial>
