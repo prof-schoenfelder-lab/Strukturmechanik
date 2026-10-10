@@ -3,7 +3,6 @@ title: Anleitungen
 icon: material/book-open-variant
 hide:
   - toc
-  - navigation
 ---
 
 # Anleitungen
