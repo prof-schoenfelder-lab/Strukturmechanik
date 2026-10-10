@@ -1,6 +1,8 @@
 {
   "zeit": "09:30 bis 12:45",
   "raum": "NI102-L",
+  "themen": ["Praktikum 1 · Einführung", "Praktikum 2 · Geometrie und Randbedingungen", "Praktikum 3 · Vernetzung",
+             "Praktikum 4 · Abstraktionen", "Praktikum 5", "Prüfungsvorbereitung", "Prüfungsvorbereitung"],
   "gruppen": [
     { "id": "gerade", "name": "Gerade Woche", "seminargruppen": "24MBB-2, 24SMB",
       "termine": ["2026-10-12", "2026-10-26", "2026-11-09", "2026-11-23", "2026-12-07", "2027-01-04", "2027-01-18"] },
