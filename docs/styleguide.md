@@ -83,6 +83,10 @@ didaktischen Farbe.
 !!! info
     Neutrale Zusatzinfo ohne didaktische Farbe.
 
+!!! merke "Singularitäten nicht auswerten"
+    Merke-Kasten für Erkenntnisse aus dem Praktikum: Darunter erscheint „+ Zum Spickzettel“,
+    Titel und Text werden zum Eintrag auf „Mein Spickzettel“.
+
 ??? tip "Kurzanleitung: Beispiel mit nummerierten Schritten"
     1. Mit dem **Flächenauswahltool** die Fläche wählen
     2. `Reiter Environment → Temperature` anklicken

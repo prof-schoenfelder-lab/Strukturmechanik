@@ -341,68 +341,6 @@
   }
   try { window.acEvaluateBadges = function (cat) { return evaluateBadges(false, cat); }; } catch (e) { }
 
-  // --- Per-page reset button (hidden by default) ---
-  function createPerPageResetIfAllowed() {
-    try {
-      var allow = (document.body && document.body.dataset && document.body.dataset.showReset === '1') || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-      if (!allow) return;
-      var header = document.querySelector('.md-header__inner'); if (!header) return;
-      var id = 'answer-reset-page-btn'; if (document.getElementById(id)) return;
-      var btn = document.createElement('button'); btn.id = id; btn.className = 'answer-reset-page'; btn.type = 'button'; btn.textContent = 'Reset Ergebnisse (Seite)';
-      btn.addEventListener('click', function () {
-        if (!confirm('Alle lokalen Ergebnisse für diese Seite entfernen? Diese Aktion ist lokal und unwiderruflich.')) return;
-        var path = location.pathname || location.href;
-        var pathEnc = encodeURIComponent(path);
-        var pathNoSlash = (path && path.length > 1 && path.endsWith('/')) ? path.slice(0, -1) : path;
-        var removed = 0; var keys = Object.keys(localStorage);
-        // prepare backup
-        var backup = {};
-        keys.forEach(function (k) {
-          try {
-            if (!k) return;
-            // match keys that are answer_* and reference this page by either raw or encoded path
-            if (k.indexOf('answer_') === 0 && (k.indexOf(path) !== -1 || k.indexOf(pathEnc) !== -1 || k.indexOf(pathNoSlash) !== -1)) {
-              backup[k] = localStorage.getItem(k);
-            }
-          } catch (e) { }
-        });
-        // store backup (if any)
-        try {
-          var ts = Date.now();
-          var bkey = 'answer_backup_' + encodeURIComponent(path) + '_' + ts;
-          if (Object.keys(backup).length > 0) { try { localStorage.setItem(bkey, JSON.stringify(backup)); } catch (e) { } }
-        } catch (e) { console.warn('Could not save backup', e); }
-        // remove keys (same matching as backup)
-        keys.forEach(function (k) {
-          try {
-            if (!k) return;
-            if (k.indexOf('answer_') === 0 && (k.indexOf(path) !== -1 || k.indexOf(pathEnc) !== -1 || k.indexOf(pathNoSlash) !== -1)) {
-              localStorage.removeItem(k); removed++;
-            }
-          } catch (e) { }
-        });
-        // also remove the page-claimed marker so the nav icon is unset
-        try {
-          var pid = pidForStorage(path);
-          var claimKey = pageClaimKeyFor(path);
-          if (localStorage.getItem(claimKey)) { try { localStorage.removeItem(claimKey); } catch (e) { } }
-          try { var shownk2 = 'page_claimed_shown_' + pid; localStorage.removeItem(shownk2); } catch (e) { }
-          // reset stars for this page (do not change nav icons)
-          try { updateStarsForPage(pid); } catch (e) { }
-        } catch (e) { }
-        // also reset global player progress so the player level/rank returns to zero
-        try {
-          if (localStorage.getItem('player_level')) { try { localStorage.removeItem('player_level'); } catch (e) { } }
-          if (localStorage.getItem('player_icon')) { try { localStorage.removeItem('player_icon'); } catch (e) { } }
-        } catch (e) { }
-        /* removed debug logs */
-        location.reload();
-      });
-      // place to the right in header
-      header.appendChild(btn);
-    } catch (e) { }
-  }
-
   // --- Debug panel for authors: show localStorage and per-question state ---
   // debug panel removed
 
@@ -1878,8 +1816,6 @@
     // Check if solution images should be shown (on page load)
     try { showSolutionImages(); } catch (e) { }
 
-    // create reset UI for authors/local testing if allowed
-    try { createPerPageResetIfAllowed(); } catch (e) { }
     try { ensureNavObserver(); } catch (e) { }
     try { ensureLevelUpStyles(); } catch (e) { }
 

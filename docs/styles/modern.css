@@ -145,13 +145,6 @@ html:root .md-header .md-search__input::placeholder { color: var(--kurs-header-f
 html:root .md-header .md-search__input ~ .md-search__icon,
 html:root .md-header .md-search__icon { color: var(--kurs-header-fg-2); }
 html:root .md-header .md-source { color: var(--kurs-header-fg-2); }
-html:root .md-header .answer-reset-page {
-  background: transparent; color: var(--kurs-header-fg-2);
-  border: 1px solid var(--kurs-header-line); border-radius: var(--kurs-radius);
-  font: 600 .56rem/1.2 var(--kurs-sans); padding: .3rem .55rem;
-}
-html:root .md-header .answer-reset-page:hover { color: var(--kurs-header-fg); box-shadow: none; }
-@media (max-width: 44em) { html:root .md-header .answer-reset-page { display: none !important; } }
 
 /* ---- Reiter (obere Navigation) ------------------------------------------- */
 html:root .md-tabs {
