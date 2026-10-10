@@ -7,6 +7,8 @@ hide:
 
 # Mein Fortschritt
 
+<div id="kurs-gruppe"></div>
+
 <div id="progress-hub">
   <p class="progress-hub-loading">Fortschritt wird geladen …</p>
 </div>

@@ -503,6 +503,70 @@
     else holen().then(markieren);
   }
 
+  // ---- Praktikumsgruppe (Mein Fortschritt) und nächster Termin (Startseite) -------------------------------
+  // Die Gruppe wählt jeder selbst; sie liegt im selben Stand wie der Spickzettel (stand.gruppe) und wird
+  // deshalb nach OPAL-Login genauso abgeglichen. Termine: assets/termine.json
+  var termine = null;
+  var TAGE = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+
+  function datum(iso) {
+    var d = new Date(iso + 'T00:00:00');
+    return TAGE[d.getDay()] + ' ' + ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2) + '.';
+  }
+  function heute() { var d = new Date(); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+  function meineGruppe() { return termine && termine.gruppen.filter(function (g) { return g.id === stand.gruppe; })[0]; }
+  function naechster(g) { return g.termine.filter(function (t) { return t >= heute(); })[0]; }
+
+  function gruppeZeigen() {
+    var box = document.getElementById('kurs-gruppe'), hinweis = document.getElementById('kurs-termin');
+    if (!termine) return;
+    var g = meineGruppe(), n = g && naechster(g);
+    if (box) {
+      box.innerHTML = '<div class="kg-kopf"><strong>Meine Praktikumsgruppe</strong>' +
+        '<span class="kg-wahl" role="group" aria-label="Praktikumsgruppe">' + termine.gruppen.map(function (x) {
+          return '<button type="button" data-gruppe="' + x.id + '" aria-pressed="' + (x === g) + '"' + (x === g ? ' class="kg-an"' : '') + '>' +
+            esc(x.name) + ' <small>' + esc(x.seminargruppen) + '</small></button>';
+        }).join('') + '</span></div>' +
+        (g ? '<p class="kg-naechster">' + (n ? 'Nächster Termin: <strong>' + (n === heute() ? 'heute' : datum(n)) + ', ' +
+          esc(termine.zeit) + ', ' + esc(termine.raum) + '</strong>' : 'Alle Termine sind vorbei.') + '</p>' +
+          '<p class="kg-liste">' + g.termine.map(function (t) {
+            return '<span class="' + (t < heute() ? 'kg-vorbei' : t === n ? 'kg-jetzt' : '') + '">' + datum(t) + '</span>';
+          }).join('') + '</p>'
+          : '<p class="kg-naechster">Wählen Sie Ihre Gruppe, dann sehen Sie Ihre Termine hier und auf der Startseite.</p>');
+    }
+    if (hinweis) {
+      hinweis.hidden = !!(g && !n);
+      hinweis.innerHTML = g ? 'Ihr nächster Praktikumstermin: <strong>' + (n === heute() ? 'heute' : datum(n)) + ', ' +
+        esc(termine.zeit.split(' ')[0]) + ' Uhr, ' + esc(termine.raum) + '</strong> <a href="' + BASE + 'Fortschritt/">ändern</a>'
+        : '<a href="' + BASE + 'Fortschritt/">Praktikumsgruppe wählen</a>, um Ihren nächsten Termin hier zu sehen.';
+    }
+  }
+
+  function gruppe() {
+    var box = document.getElementById('kurs-gruppe');
+    if (!box && !document.getElementById('kurs-termin')) return;
+    fetch(BASE + 'assets/termine.json')
+      .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
+      .then(function (t) {
+        termine = t;
+        gruppeZeigen();
+        var nachAnmeldung = function () { holen().then(gruppeZeigen); };
+        if (window.AC_ANGEMELDET) nachAnmeldung(); else document.addEventListener('kurs:angemeldet', nachAnmeldung);
+      })
+      .catch(function () { });
+    if (box) box.addEventListener('click', function (ev) {
+      var b = ev.target.closest('button[data-gruppe]');
+      if (!b) return;
+      holen().then(function () {
+        stand.gruppe = b.dataset.gruppe;
+        stand.stand = Date.now();
+        try { localStorage.setItem(KEY, JSON.stringify(stand)); } catch (x) { }
+        if (angemeldet) senden();
+        gruppeZeigen();
+      });
+    });
+  }
+
   // Symbol im Seitenkopf: von jeder Seite schnell zum Spickzettel
   function kopfSymbol() {
     var suche = document.querySelector('.md-header__inner .md-search');
@@ -520,6 +584,7 @@
     var box = document.getElementById('spickzettel');
     try { token = localStorage.getItem('ac_backend_token'); } catch (e) { }
     kopfSymbol();
+    gruppe();
     if (!box) { kursseite(); return; }
     info = document.getElementById('sz-info');
     box.addEventListener('click', klick);

@@ -24,6 +24,7 @@ hide:
       <a class="kurs-btn kurs-btn--opal kurs-btn--out" href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/18448121873/CourseNode/1784428828536783012"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5v3H3v4h7v3zm9 2h-6v2h6c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-6v2h6v14z"/></svg> Über OPAL anmelden</a>
       <a class="kurs-btn kurs-btn--in" href="Fortschritt/">Mein Fortschritt</a>
     </div>
+    <p id="kurs-termin" class="kurs-termin" hidden></p>
     <div class="kurs-opal">
       <div class="kurs-opal-out">
         <p class="kurs-opal-title">Mit OPAL-Anmeldung:</p>
