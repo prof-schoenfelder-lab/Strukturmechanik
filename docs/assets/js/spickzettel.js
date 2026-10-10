@@ -519,16 +519,33 @@
   // Thema eines Termins: themen[i] gehört zum i-ten Termin jeder Gruppe
   function thema(g, t) { return (termine.themen || [])[g.termine.indexOf(t)] || ''; }
 
+  // Orientierung für die Wahl, unabhängig von gerade/ungerade KW (passt im Januar nicht mehr):
+  // wer heute dran ist, sonst welche Gruppe den nächsten Termin hat
+  function werIstDran() {
+    var h = heute(), naechste = null;
+    termine.gruppen.forEach(function (x) {
+      var n = naechster(x);
+      if (n && (!naechste || n < naechste.t)) naechste = { g: x, t: n };
+    });
+    // mit gewählter Gruppe nur, wenn heute die andere Gruppe dran ist (dann ist die Wahl vielleicht falsch)
+    var g = meineGruppe();
+    if (!naechste || (g && (naechste.g === g || naechste.t !== h))) return '';
+    var wer = '<strong>' + esc(naechste.g.name) + '</strong> (' + esc(naechste.g.seminargruppen) + ')';
+    return naechste.t === h ? 'Heute ist Praktikum für ' + wer + '.' : 'Nächstes Praktikum: ' + datum(naechste.t) + ' für ' + wer + '.';
+  }
+
   function gruppeZeigen() {
     var box = document.getElementById('kurs-gruppe'), hinweis = document.getElementById('kurs-termin');
     if (!termine) return;
     var g = meineGruppe(), n = g && naechster(g);
+    var dran = werIstDran();
     if (box) {
       box.innerHTML = '<div class="kg-kopf"><strong>Meine Praktikumsgruppe</strong>' +
         '<span class="kg-wahl" role="group" aria-label="Praktikumsgruppe">' + termine.gruppen.map(function (x) {
           return '<button type="button" data-gruppe="' + x.id + '" aria-pressed="' + (x === g) + '"' + (x === g ? ' class="kg-an"' : '') + '>' +
             esc(x.name) + ' <small>' + esc(x.seminargruppen) + '</small></button>';
         }).join('') + '</span></div>' +
+        (dran ? '<p class="kg-dran">' + dran + '</p>' : '') +
         (g ? '<p class="kg-naechster">' + (n ? 'Nächster Termin: <strong>' + (n === heute() ? 'heute' : datum(n)) + ', ' +
           esc(termine.zeit) + ', ' + esc(termine.raum) + '</strong>' + (thema(g, n) ? ': ' + esc(thema(g, n)) : '')
           : 'Alle Termine sind vorbei.') + '</p>' +
@@ -543,7 +560,7 @@
       hinweis.innerHTML = g ? 'Nächster Termin: <strong>' + (n === heute() ? 'heute' : datum(n)) + ', ' +
         esc(termine.zeit.split(' ')[0]) + ' Uhr, ' + esc(termine.raum) + '</strong>' +
         (n && thema(g, n) ? ': ' + esc(thema(g, n).split(' · ')[0]) : '') + ' <a href="' + BASE + 'Fortschritt/">ändern</a>'
-        : '<a href="' + BASE + 'Fortschritt/">Praktikumsgruppe wählen</a>, um Ihren nächsten Termin hier zu sehen.';
+        : (dran ? dran + ' ' : '') + '<a href="' + BASE + 'Fortschritt/">Praktikumsgruppe wählen</a>';
     }
   }
 

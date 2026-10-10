@@ -143,6 +143,7 @@ mark.sz-markiert:hover { background: rgba(0, 158, 227, .16); }
 .kg-wahl button.kg-an { background: var(--kurs-accent); color: #fff; }
 .kg-wahl button.kg-an small { color: rgba(255, 255, 255, .8); }
 .md-typeset .kg-naechster { margin: .6rem 0 .3rem; }
+.md-typeset .kg-dran { margin: .6rem 0 0; padding-left: .55rem; border-left: 3px solid var(--kurs-accent); }
 .md-typeset ol.kg-liste { margin: 0; padding: 0; list-style: none; columns: 2 16rem; column-gap: 1.5rem; color: var(--kurs-text-2); }
 [dir] .md-typeset ol.kg-liste li { margin: 0 0 .15rem; }
 .kg-liste li span { display: inline-block; min-width: 4.2rem; }
