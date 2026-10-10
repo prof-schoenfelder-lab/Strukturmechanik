@@ -533,6 +533,19 @@ def main():
         check("Abgleich mit aktueller Generation geht", requests.post(
             BACKEND + "/api/results", headers=R, json=dict(stand, generation=neu)).status_code == 200)
 
+        # ---- Mein Spickzettel: je Person gespeichert -----------------------------------------
+        S1, S2 = person("test-s1"), person("test-s2")
+        check("Spickzettel ohne Anmeldung abgelehnt", requests.get(BACKEND + "/api/spickzettel").status_code == 401)
+        check("Spickzettel anfangs leer", requests.get(BACKEND + "/api/spickzettel", headers=S1).json()["daten"] is None)
+        zettel = {"stand": 1, "kern": {"kern-p1-x": "lang"}, "check": {}, "notizen": {"P1": "Einheiten prüfen"}}
+        check("Spickzettel speichern", requests.post(BACKEND + "/api/spickzettel", headers=S1,
+                                                     json={"daten": zettel}).status_code == 200)
+        check("Spickzettel zurück", requests.get(BACKEND + "/api/spickzettel", headers=S1).json()["daten"] == zettel)
+        check("Spickzettel nur für die eigene Person",
+              requests.get(BACKEND + "/api/spickzettel", headers=S2).json()["daten"] is None)
+        check("Spickzettel zu groß abgelehnt", requests.post(BACKEND + "/api/spickzettel", headers=S1,
+              json={"daten": {"notizen": {"P1": "x" * 60000}}}).status_code == 400)
+
     finally:
         server.terminate()
         jwks_srv.shutdown()

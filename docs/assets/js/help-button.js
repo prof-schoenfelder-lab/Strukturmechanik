@@ -24,7 +24,7 @@
   var btn = document.createElement('button');
   btn.id = 'help-fab';
   btn.type = 'button';
-  btn.textContent = '🙋 Hilfe';
+  btn.textContent = '🙋 Hand heben';
   btn.title = 'Der Praktikumsleitung Bescheid geben, dass hier Hilfe gebraucht wird';
 
   var toastEl = document.createElement('div');
@@ -54,7 +54,7 @@
       btn.textContent = '🙋 Nr. ' + state.position + ' in der Warteschlange — Klick zieht zurück';
     } else {
       btn.classList.remove('active');
-      btn.textContent = '🙋 Hilfe';
+      btn.textContent = '🙋 Hand heben';
     }
   }
 

@@ -1,0 +1,49 @@
+/* "Mein Spickzettel" (assets/js/spickzettel.js) */
+.sz-laden, .sz-hinweis { color: var(--kurs-text-2); font-size: .75rem; }
+.sz-gruppe { margin: 1.4rem 0; }
+.sz-gruppe h2 { margin: 0 0 .5rem; font-size: 1rem; }
+.md-typeset ul.sz-kerne, .md-typeset ul.sz-checks { list-style: none; margin: 0 0 .6rem; padding: 0; }
+[dir] .md-typeset ul.sz-kerne li, [dir] .md-typeset ul.sz-checks li { margin: 0; }
+.sz-kern {
+  display: flex; gap: 1rem; align-items: flex-start; justify-content: space-between;
+  padding: .55rem 0; border-bottom: 1px solid var(--kurs-line);
+}
+.sz-kern-text { flex: 1; min-width: 0; }
+.sz-kern-lang { display: block; color: var(--kurs-text-2); font-size: .72rem; margin-top: .15rem; }
+.sz-quelle { font-size: .68rem; white-space: nowrap; }
+.sz-wahl { display: inline-flex; flex-shrink: 0; border: 1px solid var(--kurs-line-2); border-radius: var(--kurs-radius); overflow: hidden; }
+.sz-wahl button {
+  border: 0; background: transparent; color: var(--kurs-text-2); font: inherit; font-size: .68rem;
+  padding: .25rem .6rem; cursor: pointer; min-width: 2rem;
+}
+.sz-wahl button + button { border-left: 1px solid var(--kurs-line-2); }
+.sz-wahl button.sz-an { background: var(--kurs-accent); color: #fff; }
+.sz-checks label { display: flex; gap: .5rem; align-items: baseline; padding: .3rem 0; cursor: pointer; }
+.sz-notiz { display: block; margin-top: .4rem; }
+.sz-notiz span { display: block; font-size: .72rem; color: var(--kurs-text-2); margin-bottom: .2rem; }
+.sz-notiz textarea {
+  width: 100%; box-sizing: border-box; font: inherit; font-size: .75rem; padding: .45rem .55rem;
+  border: 1px solid var(--kurs-line-2); border-radius: var(--kurs-radius); background: var(--kurs-surface);
+  color: var(--kurs-text); resize: vertical;
+}
+.sz-notiz textarea:focus { outline: 2px solid var(--kurs-accent-soft); border-color: var(--kurs-accent); }
+
+.sz-ergebnis { border-top: 2px solid var(--kurs-line); padding-top: 1rem; }
+.sz-fuell { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; margin-bottom: .6rem; }
+.sz-fuell-leiste { flex: 1 1 12rem; height: .55rem; background: var(--kurs-panel); border-radius: 1rem; overflow: hidden; }
+#sz-balken { height: 100%; width: 0; background: var(--kurs-accent); transition: width .3s; }
+.sz-voll #sz-balken { background: var(--kurs-c-warn); }
+#sz-pct { font-size: .72rem; color: var(--kurs-text-2); }
+.sz-blatt {
+  column-count: 2; column-gap: 1.2rem; padding: 1rem 1.2rem; background: var(--kurs-panel);
+  border: 1px solid var(--kurs-line); border-radius: var(--kurs-radius-md); font-size: .68rem; line-height: 1.35;
+}
+.sz-blatt section { break-inside: avoid-column; margin-bottom: .6rem; }
+.md-typeset .sz-blatt section h2 { font-size: .74rem; margin: 0 0 .2rem; }
+.md-typeset .sz-blatt ul { margin: 0 0 .25rem; padding-left: 1rem; }
+.md-typeset .sz-blatt li, .md-typeset .sz-blatt p { margin: 0 0 .15rem; }
+.sz-blatt .notiz { white-space: pre-wrap; }
+@media (max-width: 40rem) {
+  .sz-kern { flex-direction: column; gap: .4rem; }
+  .sz-blatt { column-count: 1; }
+}

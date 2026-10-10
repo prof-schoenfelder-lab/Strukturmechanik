@@ -11,7 +11,7 @@ In diesem Praktikum wurden die ersten strukturmechanischen Analysen mit ANSYS Wo
 
 Hier noch mal die wichtigsten Kernaussagen des ersten Praktikums:
 
-<div class="steps" markdown="1">
+<div class="steps" markdown="1" data-spickzettel="ja">
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Ablauf in ANSYS</p>

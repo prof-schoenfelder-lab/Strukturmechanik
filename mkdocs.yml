@@ -44,6 +44,7 @@ hooks:
       - scripts/answers_hook.py
       - scripts/overview_hook.py
       - scripts/anleitungen_hook.py
+      - scripts/spickzettel_hook.py
 
 plugins:
       - macros
@@ -100,6 +101,7 @@ extra_javascript:
       - "assets/vendor/three-0.147.0.min.js"
       - "assets/js/course-stats.js"
       - "assets/js/progress-hub.js"
+      - "assets/js/spickzettel.js"
       - "assets/js/hero-anim.js"
 
 extra_css:
@@ -110,6 +112,7 @@ extra_css:
       - "assets/styles/answer-checker.css"
       - "assets/styles/anleitung.css"
       - "styles/modern.css"
+      - "assets/styles/spickzettel.css"
 
 # Die vier Praktika: Startseite (Liste) und Abschluss-Karte am Ende jedes Praktikums;
 # knackpunkt: Runde über der Abschluss-Karte (Bauteil, Name in der Bestenliste, Absätze)
@@ -254,10 +257,13 @@ nav:
                       - Übung 4: P4_Abstraktionen/05_Flaechenstrukturen/Uebung04.md
               - Modell-Detektiv: P4_Abstraktionen/Modell_Detektiv.md
       # <<< AUTO-NAV
-      - ANLEITUNGEN: tutorials.md
-      - MEIN FORTSCHRITT: Fortschritt.md
-      - FAQ:
-              - 00_FAQ/index.md
-              - 00_FAQ/ANSYS_Install.md
-              - 00_FAQ/Fenster_weg.md
-              - 00_FAQ/Fehler_checkliste.md
+      - HILFE:
+              - Anleitungen: tutorials.md
+              - FAQ:
+                      - 00_FAQ/index.md
+                      - 00_FAQ/ANSYS_Install.md
+                      - 00_FAQ/Fenster_weg.md
+                      - 00_FAQ/Fehler_checkliste.md
+      - MEIN BEREICH:
+              - Fortschritt.md
+              - Spickzettel.md

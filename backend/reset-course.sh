@@ -22,6 +22,8 @@ db = sqlite3.connect('data/results.db')
 import secrets
 db.execute('DELETE FROM results')
 db.execute('DELETE FROM eingaben')
+db.execute('CREATE TABLE IF NOT EXISTS spickzettel (pseudonym TEXT PRIMARY KEY, daten TEXT NOT NULL, updated_at REAL)')
+db.execute('DELETE FROM spickzettel')
 db.execute("DELETE FROM meta WHERE key LIKE 'reset:%'")
 db.execute('DELETE FROM users')
 db.execute("INSERT OR REPLACE INTO meta (key, value) VALUES ('generation', ?)", (secrets.token_urlsafe(8),))
