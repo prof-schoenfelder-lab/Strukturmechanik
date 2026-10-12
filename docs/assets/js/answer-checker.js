@@ -1639,7 +1639,7 @@
   // Praktikums (data-praktikum, über der Abschluss-Karte, partials/page-nav.html) frei, sobald alle Aufgaben des Praktikums bearbeitet sind (wie der Haken
   // auf der Startseite; das Abzeichen schaltet auch frei), auf Übungsseiten (data-seite, mehrere mit Komma), sobald
   // deren Aufgaben bearbeitet sind; data-voraussetzung nennt die Übungen. Bearbeitet heißt gelöst oder alle Versuche
-  // aufgebraucht, auch ohne Login. Das ganze Spiel gibt es erst nach allen Praktika (Ticket vom Backend, weiter.js).
+  // aufgebraucht, auch ohne Login. Schwachstelle und Modell-Detektiv sind dafür freiwillig. Das ganze Spiel gibt es erst nach allen Praktika (Ticket vom Backend, weiter.js).
   // Kästen mit .zs-werbung zeigen nur, wo es das Spiel gibt.
   var KNACKPUNKT_URL = 'https://fkaule.github.io/Knackpunkt/';
   function bearbeitet(qid, q) {
@@ -1656,14 +1656,14 @@
     if (!seite && !prefix) return;
     var teile = seite ? seite.split(',').map(function (x) { return x.trim() + ':'; }) : [prefix];
     var p = BADGE_PRAKTIKA.filter(function (x) { return x[0] === prefix; })[0];
-    var frei = false, offen = null, cat = cachedCatalog();
+    var frei = false, offen = null, liste = [], cat = cachedCatalog();
     try { if (p) frei = localStorage.getItem('answer_badge_' + p[1]) === '1'; } catch (e) { }
     if (!frei && cat) {
       var n = 0, fertig = 0;
       Object.keys(cat).forEach(function (qid) {
-        if (!teile.some(function (s) { return qid.indexOf(s) !== -1; })) return;
+        if (!teile.some(function (s) { return qid.indexOf(s) !== -1; }) || /:(hs|det)\d+$/.test(qid)) return;
         n++;
-        if (bearbeitet(qid, cat[qid])) fertig++;
+        if (bearbeitet(qid, cat[qid])) fertig++; else liste.push(offeneAufgabe(qid, cat[qid]));
       });
       if (n > 0 && fertig >= n) frei = true; else if (n > 0) offen = n - fertig;
     }
@@ -1674,7 +1674,28 @@
     box.innerHTML = '<p class="spiel-gesperrt">Wird freigeschaltet, sobald Sie ' +
       (seite ? escapeHtml(el.dataset.voraussetzung || 'diese Übung') : 'alle Aufgaben dieses Praktikums') + ' bearbeitet haben' +
       (offen ? ' (noch ' + offen + (offen === 1 ? ' Aufgabe' : ' Aufgaben') + ' offen)' : '') +
-      '. Bearbeitet heißt: gelöst oder alle Versuche aufgebraucht.</p>';
+      '. Bearbeitet heißt: gelöst oder alle Versuche aufgebraucht.</p>' +
+      (liste.length ? '<p class="spiel-gesperrt">Noch offen: ' + liste.join(', ') + '</p>' : '');
+  }
+  // Link auf eine Aufgabe dieser Seite: hinscrollen statt neu laden
+  document.addEventListener('click', function (ev) {
+    var a = ev.target.closest && ev.target.closest('a[data-ziel]');
+    var ziel = a && document.querySelector('[data-qid="' + a.dataset.ziel.replace(/"/g, '\\"') + '"]');
+    if (!ziel) return;
+    ev.preventDefault();
+    ziel.scrollIntoView({ block: 'center' });
+  });
+  // Offene Aufgabe als Link mit Versuchsstand, z. B. „Übung 2, Aufgabe 3 (2 von 5 Versuchen)“
+  function offeneAufgabe(qid, q) {
+    var i = qid.lastIndexOf(':'), pfad = qid.slice(0, i), art = qid.slice(i + 1);
+    var seite = (pfad.split('/').pop() || '').replace(/-/g, ' ').replace('Uebung', 'Übung');
+    var m = /^(?:q|mc)(\d+)$/.exec(art);
+    var name = 'Aufgabe ' + (m ? +m[1] + 1 : art);
+    var versuche = 0;
+    try { versuche = parseInt(localStorage.getItem('answer_attempts_' + qid), 10) || 0; } catch (e) { }
+    var href = pfad === location.pathname.replace(/\/$/, '') ? '#' : pfad + '/';
+    return '<a href="' + escapeHtml(href) + '" data-ziel="' + escapeHtml(qid) + '">' + escapeHtml(seite + ', ' + name) + '</a> (' +
+      versuche + ' von ' + ((q && q.attempts) || ATTEMPTS_ALLOWED) + ' Versuchen)';
   }
   // Knackpunkt eingebettet: Spiel im Rahmen, gehaltene Runden landen in der Bestenliste des Backends
   function kpUrl() { return window.AC_KNACKPUNKT_URL || KNACKPUNKT_URL; }
