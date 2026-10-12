@@ -393,6 +393,27 @@ def main():
         check("hilfe: erledigt, Platz 8 ist der nächste", [x["platz"] for x in r["eintraege"]] == [8], str(r))
         requests.post(BACKEND + "/api/help", headers=p8, json={"page": "x"})
         check("hilfe: kein zweiter Push für offene Anfrage", len(pushes) == 2)
+        # Beschreibung nachreichen, Einschätzung, schnelle Fälle rücken vor
+        requests.post(BACKEND + "/api/help", headers=p8, json={"page": "x", "text": " Spannung passt nicht,\nWert zu groß "})
+        r = requests.post(BACKEND + "/api/help", headers=p7, json={"page": "y", "text": "ANSYS stürzt ab"})
+        p9 = {"X-Forwarded-For": "10.0.0.9"}
+        requests.post(BACKEND + "/api/help", headers=p9, json={"page": "z", "text": "Wo finde ich die Lagerung?"})
+        e = requests.get(BACKEND + "/api/hilfe", headers=HK).json()["eintraege"]
+        check("hilfe: Beschreibung gesäubert", e[0]["text"] == "Spannung passt nicht, Wert zu groß", str(e))
+        check("hilfe: Einschätzung und Reihenfolge",
+              [(x["label"], x["art"], x["schnell"], x["vorgezogen"]) for x in e]
+              == [("N103 Platz 8", "Ergebnis passt nicht", True, False), ("10.0.0.9", "Bedienung", True, True),
+                  ("N103 Platz 7", "Technik", False, False)], str(e))
+        for _ in range(40):
+            if len(pushes) >= 5:
+                break
+            time.sleep(0.25)
+        check("hilfe: Push auch für nachgereichte Beschreibung", len(pushes) == 5, str(len(pushes)))
+        r = requests.get(BACKEND + "/dashboard", params={"key": "test-dashboard-key"})
+        check("dashboard: Beschreibung und Einschätzung", "„ANSYS stürzt ab“" in r.text and "Bedienung</b>, meist schnell" in r.text)
+        for x in e:
+            if x["platz"] != 8:
+                requests.post(BACKEND + "/api/hilfe/erledigt", headers=HK, json={"id": x["id"]})
         import sqlite3
         tdb = sqlite3.connect(os.path.join(tmp, "test.db"))
         tdb.execute("INSERT INTO results (pseudonym, qid, best, max, attempts, updated_at) VALUES (?, ?, 0, 5, 5, ?)",

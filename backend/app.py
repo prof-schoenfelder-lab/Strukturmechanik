@@ -194,7 +194,8 @@ def init_db():
     for stmt in ("ALTER TABLE users ADD COLUMN sub_enc TEXT",
                  "ALTER TABLE users ADD COLUMN name_enc TEXT",
                  "ALTER TABLE kp_scores ADD COLUMN titel TEXT",
-                 "ALTER TABLE kp_scores ADD COLUMN seite TEXT"):
+                 "ALTER TABLE kp_scores ADD COLUMN seite TEXT",
+                 "ALTER TABLE help_requests ADD COLUMN text TEXT"):
         try:
             db.execute(stmt)
             db.commit()
@@ -952,6 +953,52 @@ def stats():
 # Client-IP (im Pool = Sitzplatz). Tickets verfallen automatisch.
 
 HELP_OPEN_MAX_AGE = 3 * 3600      # offene Tickets nach 3 h automatisch schließen
+HELP_TEXT_MAX = 200               # kurze Beschreibung des Problems (freiwillig)
+# Einschätzung einer Anfrage aus der Beschreibung (Stichwörter, erste passende Art gilt) und dem Stand bei der
+# zuletzt bearbeiteten Aufgabe. Schnelle Fälle rücken in der Hilfe-App um HELP_VORZUG nach vorn; wer länger als
+# HELP_VORN wartet, bleibt in Meldereihenfolge vorn.
+HELP_ARTEN = [
+    ("Technik", False, ("absturz", "abgestürzt", "stürzt", "lizenz", "startet nicht", "friert", "hängt sich",
+                        "fehlermeldung", "error", "öffnet nicht", "speicher", "datei", "login", "opal", "rechner")),
+    ("Ergebnis passt nicht", True, ("wert", "ergebnis", "passt nicht", "stimmt nicht", "falsch", "abweich",
+                                    "einheit", "mpa", "mm", "faktor", "lösung")),
+    ("Bedienung", True, ("wo finde", "wo ist", "finde nicht", "wie mache", "wie geht", "wie kann", "knopf",
+                         "button", "menü", "auswählen", "klick", "einstellen")),
+    ("Verständnis", False, ("verstehe", "warum", "wieso", "weshalb", "erklär", "unklar", "was bedeutet", "was ist")),
+]
+HELP_VORZUG = 5 * 60
+HELP_VORN = 10 * 60
+
+
+def help_zeile(db, qr):
+    """Dashboard: Beschreibung und Einschätzung einer Meldung."""
+    e = help_einschaetzung(db, qr["who"], qr["text"])
+    return "<br><small><b>%s</b>%s%s%s</small>" % (
+        escape(e["art"]), ", meist schnell" if e["schnell"] else "",
+        (" · " + escape(e["kontext"])) if e["kontext"] else "", ("<br>„%s“" % escape(qr["text"])) if qr["text"] else "")
+
+
+def help_text_sauber(v):
+    return re.sub(r"[\x00-\x1f\x7f]+", " ", str(v or "")).strip()[:HELP_TEXT_MAX]
+
+
+def help_einschaetzung(db, who, text):
+    """{art, schnell, kontext}: Art aus der Beschreibung; ohne passende Beschreibung aus den Fehlversuchen."""
+    t = (text or "").lower()
+    art = next(((a, schnell) for a, schnell, woerter in HELP_ARTEN if any(w in t for w in woerter)), None)
+    kontext = ""
+    if who and not who.startswith("ip:"):
+        midnight = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).timestamp()
+        r = db.execute("SELECT qid, best, attempts FROM results WHERE pseudonym=? AND updated_at > ? "
+                       "ORDER BY updated_at DESC LIMIT 1", (who, midnight)).fetchone()
+        if r and r["best"] <= 0 and r["attempts"] > 0:
+            kontext = "%s: %d %s" % (unescape(short_qid(r["qid"])), r["attempts"],
+                                     "Fehlversuch" if r["attempts"] == 1 else "Fehlversuche")
+            if not art:
+                art = ("Ergebnis passt nicht", True)
+    if not art:
+        art = ("Verständnis" if t else "ohne Beschreibung", False)
+    return {"art": art[0], "schnell": art[1], "kontext": kontext}
 HELP_DONE_KEEP = 24 * 3600        # erledigte nach einem Tag löschen
 
 
@@ -1006,14 +1053,25 @@ def help_request():
         db.execute("UPDATE help_requests SET done_at=? WHERE who=? AND done_at IS NULL",
                    (time.time(), who))
         db.commit()
-    elif not db.execute("SELECT id FROM help_requests WHERE who=? AND done_at IS NULL",
-                        (who,)).fetchone():
-        db.execute("INSERT INTO help_requests (who, page, created_at) VALUES (?, ?, ?)",
-                   (who, str(payload.get("page") or "")[:200], time.time()))
+    elif db.execute("SELECT id FROM help_requests WHERE who=? AND done_at IS NULL", (who,)).fetchone():
+        if "text" in payload:   # Beschreibung zur offenen Meldung nachreichen oder ändern
+            beschreibung = help_text_sauber(payload.get("text"))
+            db.execute("UPDATE help_requests SET text=? WHERE who=? AND done_at IS NULL", (beschreibung or None, who))
+            db.commit()
+            if beschreibung:
+                e = help_einschaetzung(db, who, beschreibung)
+                threading.Thread(target=hilfe_push, args=("Hilfe: " + hilfe_label(who),
+                                 "%s: %s" % (e["art"], beschreibung)), daemon=True).start()
+    else:
+        beschreibung = help_text_sauber(payload.get("text"))
+        db.execute("INSERT INTO help_requests (who, page, created_at, text) VALUES (?, ?, ?, ?)",
+                   (who, str(payload.get("page") or "")[:200], time.time(), beschreibung or None))
         db.commit()
         offen = db.execute("SELECT COUNT(*) FROM help_requests WHERE done_at IS NULL").fetchone()[0]
         titel = "Hilfe: " + hilfe_label(who)
         text = short_page(str(payload.get("page") or "")) + ("" if offen == 1 else " · %d warten" % offen)
+        if beschreibung:
+            text += " · " + beschreibung
         threading.Thread(target=hilfe_push, args=(titel, text), daemon=True).start()
     return help_status()
 
@@ -1105,13 +1163,19 @@ def hilfe_liste():
     _help_cleanup(db)
     now_ts = time.time()
     eintraege = []
-    for r in db.execute("SELECT id, who, page, created_at FROM help_requests WHERE done_at IS NULL "
+    for r in db.execute("SELECT id, who, page, created_at, text FROM help_requests WHERE done_at IS NULL "
                         "ORDER BY created_at").fetchall():
         label = hilfe_label(r["who"])
         m = re.match(r"^(N\d{3}) Platz (\d+)$", label)
         eintraege.append({"id": r["id"], "label": label, "raum": m.group(1) if m else None,
                           "platz": int(m.group(2)) if m else None, "seite": short_page(r["page"] or ""),
-                          "wartet": int(now_ts - r["created_at"])})
+                          "wartet": int(now_ts - r["created_at"]), "text": r["text"] or "",
+                          **help_einschaetzung(db, r["who"], r["text"])})
+    # Reihenfolge: wer lange wartet, zuerst; sonst rücken schnelle Fälle etwas vor
+    fifo = [e["id"] for e in eintraege]
+    eintraege.sort(key=lambda e: (e["wartet"] <= HELP_VORN, -(e["wartet"] + (HELP_VORZUG if e["schnell"] else 0))))
+    for i, e in enumerate(eintraege):
+        e["vorgezogen"] = fifo.index(e["id"]) > i
     empfohlen = []
     # Es ist immer nur ein Raum belegt: der mit den meisten in der letzten halben Stunde Aktiven,
     # sonst der mit den meisten Anfragen
@@ -1802,7 +1866,7 @@ def dashboard():
     _help_cleanup(db)
     h_on = help_enabled(db)
     queue_rows = db.execute(
-        "SELECT id, who, page, created_at FROM help_requests WHERE done_at IS NULL "
+        "SELECT id, who, page, created_at, text FROM help_requests WHERE done_at IS NULL "
         "ORDER BY created_at").fetchall()
     items = ""
     for i, qr in enumerate(queue_rows, start=1):
@@ -1810,10 +1874,10 @@ def dashboard():
         who_name = "" if qr["who"].startswith("ip:") else names.get(qr["who"], "")
         wait_min = max(0, round((now_ts - qr["created_at"]) / 60))
         items += ('<tr><td class="num"><b>%d.</b></td><td><b>%s</b>%s</td>'
-                  '<td>%s<br><small>wartet %d min</small></td>'
+                  '<td>%s<br><small>wartet %d min</small>%s</td>'
                   '<td class="act"><a class="btn done" href="dashboard-help-done?key=%s&amp;id=%d">erledigt</a></td></tr>'
                   % (i, escape(label), ("<br><small>%s</small>" % escape(who_name)) if who_name else "",
-                     escape(short_page(qr["page"] or "")), wait_min, DASHBOARD_TOKEN, qr["id"]))
+                     escape(short_page(qr["page"] or "")), wait_min, help_zeile(db, qr), DASHBOARD_TOKEN, qr["id"]))
     if items:
         queue_body = ('<div class="tablewrap"><table><tr><th></th><th>Platz</th><th>Seite</th><th></th></tr>%s'
                       '</table></div>' % items)

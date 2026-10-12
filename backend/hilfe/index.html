@@ -29,6 +29,10 @@ button { font: inherit; cursor: pointer; border-radius: 10px; border: 0; }
 .next .wo { font-size: 44px; line-height: 1.05; font-weight: 800; margin: 6px 0 4px; }
 .next .was { color: var(--ink2); font-size: 18px; }
 .next.leer { border-color: var(--rule); }
+.next .art, ol.queue .art { display: inline-block; font-size: 14px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: var(--rule); margin-top: 8px; }
+.next .art.schnell, ol.queue .art.schnell { background: var(--cyan); color: #fff; }
+.next .text { font-size: 20px; margin-top: 8px; }
+ol.queue .t q { display: block; color: var(--ink); }
 .next.leer .wo { font-size: 28px; color: var(--ink2); }
 .big { display: block; width: 100%; margin-top: 16px; padding: 18px; background: var(--cyan); color: #fff; font-size: 20px; font-weight: 800; }
 .big:active { filter: brightness(0.9); }
@@ -141,6 +145,13 @@ function raumkarte(raeume, plaetze) {
   }).join('');
 }
 
+// Einschätzung des Backends: Art, ob meist schnell, Stand bei der Aufgabe; vorgezogen = vor früher Gemeldeten
+function einschaetzung(x) {
+  if (!x.art) return '';
+  return `<div><span class="art${x.schnell ? ' schnell' : ''}">${esc(x.art)}${x.schnell ? ', meist schnell' : ''}</span>` +
+    (x.vorgezogen ? ' <small>vorgezogen</small>' : '') + (x.kontext ? `<br><small>${esc(x.kontext)}</small>` : '') + '</div>';
+}
+
 function zeigen() {
   const d = daten, e = d.eintraege, emp = d.empfohlen || [];
   const s = $('schalter');
@@ -161,9 +172,11 @@ function zeigen() {
   else if (!e.length) h = '<div class="next leer"><div class="lbl">Als Nächstes</div><div class="wo">Niemand wartet</div></div>';
   else h = `<div class="next"><div class="lbl">Als Nächstes${e.length > 1 ? ' · ' + e.length + ' warten' : ''}</div>
     <div class="wo">${esc(e[0].label)}</div><div class="was">${esc(e[0].seite || 'ohne Seite')} · ${dauer(e[0].wartet)}</div>
+    ${einschaetzung(e[0])}${e[0].text ? `<div class="text">„${esc(e[0].text)}“</div>` : ''}
     <button class="big" data-id="${e[0].id}">Erledigt, nächster</button></div>`;
   if (e.length > 1) h += '<h2>Danach</h2><ol class="queue">' + e.slice(1).map((x, i) =>
-    `<li><span class="nr">${i + 2}</span><span class="t"><b>${esc(x.label)}</b><small>${esc(x.seite || 'ohne Seite')} · ${dauer(x.wartet)}</small></span>` +
+    `<li><span class="nr">${i + 2}</span><span class="t"><b>${esc(x.label)}</b><small>${esc(x.seite || 'ohne Seite')} · ${dauer(x.wartet)}</small>` +
+    `${einschaetzung(x)}${x.text ? `<q>${esc(x.text)}</q>` : ''}</span>` +
     `<button data-id="${x.id}">erledigt</button></li>`).join('') + '</ol>';
   const karte = raumkarte(d.raeume, e.map((x, i) => ({ raum: x.raum, platz: x.platz, cls: i ? 'w' : 'n', marke: (i + 1) + '.' })));
   if (karte) h += '<h2>Raumkarte</h2><div class="rooms">' + karte + '</div>';
