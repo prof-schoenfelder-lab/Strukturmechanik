@@ -31,8 +31,8 @@
     knopf.insertAdjacentHTML('beforeend', '<span aria-hidden="true">→</span>');
   }
 
-  // Alle Praktika abgeschlossen: Das Backend prüft die gespeicherten Ergebnisse und gibt den Link samt Ticket
-  // fürs ganze Spiel Knackpunkt. Erst nach dem Laden, dann steht AC_BACKEND_URL (backend-config.js) fest.
+  // Praktikum abgeschlossen (dann bis zum nächsten Termin) oder alle: Das Backend prüft die gespeicherten Ergebnisse
+  // und gibt den Link samt Ticket fürs ganze Spiel Knackpunkt. Erst nach dem Laden, dann steht AC_BACKEND_URL (backend-config.js) fest.
   function knackpunkt() {
     var token = null;
     try { token = localStorage.getItem('ac_backend_token'); } catch (e) { }
@@ -42,7 +42,11 @@
       if (!base) return;
       fetch(base + '/api/kp/freigabe', { headers: { Authorization: 'Bearer ' + token } })
         .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (d) { if (d && d.frei && d.link) setze('Knackpunkt freigeschaltet', 'Jetzt spielen', d.link, true); })
+        .then(function (d) {
+          if (!d || !d.frei || !d.link) return;
+          var t = String(d.bis || '').split('-');
+          setze('Knackpunkt freigeschaltet' + (t.length === 3 ? ' bis ' + t[2] + '.' + t[1] + '.' : ''), 'Jetzt spielen', d.link, true);
+        })
         .catch(function () { });
     };
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', holen); else holen();

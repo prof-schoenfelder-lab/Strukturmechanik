@@ -90,14 +90,17 @@
   // Knackpunkt (nur mit Schalter im Dashboard): Freischaltung des ganzen Spiels nach allen Praktika
   // (prüft das Backend, siehe weiter.js) und eigener Platz je gespieltem Bauteil
   function esc(v) { return String(v).replace(/[&<>"']/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; }); }
+  // bis: Freischaltung nur bis zum nächsten Praktikumstermin (Datum JJJJ-MM-TT)
+  function bisText(bis) { var t = String(bis).split('-'); return t.length === 3 ? t[2] + '.' + t[1] + '.' : esc(bis); }
   function freigabeHtml(f, token) {
-    if (!token) return '<p>Das ganze Spiel schalten Sie mit OPAL-Anmeldung frei, sobald alle Aufgaben aller Praktika bearbeitet sind.</p>';
+    if (!token) return '<p>Das ganze Spiel schalten Sie mit OPAL-Anmeldung frei: nach jedem abgeschlossenen Praktikum bis zum nächsten Praktikumstermin, ' +
+      'nach allen Praktika ohne diese Frist.</p>';
     if (!f || !f.an) return '';
-    if (f.frei && f.link) return '<p><strong>Das ganze Spiel ist freigeschaltet:</strong> Zufallsbauteile, Baukasten, Herausforderungen und Wettkämpfe ' +
-      '(im Spiel unter „Mehrspieler“, HTWK-Netz oder VPN). ' +
+    if (f.frei && f.link) return '<p><strong>Das ganze Spiel ist freigeschaltet' + (f.bis ? ' bis zum nächsten Praktikum (' + bisText(f.bis) + ', 9:30 Uhr)' : '') +
+      ':</strong> Zufallsbauteile, Baukasten, Herausforderungen und Wettkämpfe (im Spiel unter „Mehrspieler“, HTWK-Netz oder VPN). ' +
       '<a class="md-button md-button--primary" href="' + esc(f.link) + '" target="_blank" rel="noopener">Knackpunkt spielen</a></p>';
-    return '<p>Das ganze Spiel schalten Sie frei, sobald alle Aufgaben aller Praktika bearbeitet sind (gelöst oder alle Versuche aufgebraucht): ' +
-      'noch <strong>' + f.offen + ' von ' + f.aufgaben + '</strong> offen.</p>';
+    return '<p>Das ganze Spiel gibt es nach jedem abgeschlossenen Praktikum bis zum nächsten Praktikumstermin (abgeschlossen: alle Aufgaben ' +
+      'gelöst oder alle Versuche aufgebraucht)' + (f.praktikum ? ': in Praktikum ' + f.praktikum.nr + ' noch <strong>' + f.praktikum.offen + '</strong> offen.' : '.') + '</p>';
   }
   function renderKnackpunkt() {
     var box = document.getElementById('ph-kp'), BACKEND = (window.AC_BACKEND_URL || '').replace(/\/$/, '');

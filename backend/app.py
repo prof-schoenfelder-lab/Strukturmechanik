@@ -130,6 +130,14 @@ def init_db():
             updated_at REAL,
             PRIMARY KEY (who, teil)
         );
+        -- Knackpunkt im Kurs: begonnene Versuche je Person und Bauteil (höchstens KP_VERSUCHE)
+        CREATE TABLE IF NOT EXISTS kp_versuche (
+            who TEXT NOT NULL,
+            teil TEXT NOT NULL,
+            n INTEGER NOT NULL,
+            updated_at REAL,
+            PRIMARY KEY (who, teil)
+        );
         -- Hilfe-App: Push-Abos der Geräte (nur Dozent, per Dashboard-Schlüssel)
         CREATE TABLE IF NOT EXISTS push_abos (
             endpoint TEXT PRIMARY KEY,
@@ -1237,6 +1245,7 @@ KP_ENTWURF_RE = re.compile(r"^[A-Za-z0-9_-]{1,2000}$")
 KP_PLATZ_RE = re.compile(r"^N\d{3} Platz \d+$")
 KP_SEITE_RE = re.compile(r"^/[A-Za-z0-9_/.-]{1,200}$")
 KP_TOP = 10
+KP_VERSUCHE = 5  # je Runde im Kurs: einmal spielbar mit so vielen Versuchen, danach gilt das beste gehaltene Ergebnis
 
 
 def kp_name_sauber(v, n=16):
@@ -1262,9 +1271,11 @@ def kp_liste(db, teil, who):
         if i < KP_TOP:
             liste.append(eintrag)
     name = db.execute("SELECT name FROM kp_namen WHERE who=?", (who,)).fetchone() if who else None
+    versuche = db.execute("SELECT n FROM kp_versuche WHERE who=? AND teil=?", (who, teil)).fetchone() if who else None
     platz = host_label(client_ip())
     return jsonify({"an": True, "liste": liste, "ich": ich, "anzahl": len(rows),
                     "name": name[0] if name else "",
+                    "versuche": versuche[0] if versuche else 0, "max_versuche": KP_VERSUCHE,
                     "platz": platz if KP_PLATZ_RE.match(platz or "") else ""})
 
 
@@ -1320,6 +1331,23 @@ def kp_meine():
     return jsonify({"an": True, "teile": teile, "name": name[0] if name else ""})
 
 
+@app.post("/api/kp/versuch")
+def kp_versuch():
+    """Ein Versuch der Runde hat begonnen (erste Änderung am Bauteil); zählt bis KP_VERSUCHE."""
+    db = get_db()
+    if not spiele_an(db)["kp"]:
+        return jsonify({"an": False})
+    who = _help_identity()
+    teil = str((request.get_json(silent=True) or {}).get("teil", ""))
+    if not who or not KP_TEIL_RE.match(teil):
+        return jsonify({"error": "ungültig"}), 400
+    alt = db.execute("SELECT n FROM kp_versuche WHERE who=? AND teil=?", (who, teil)).fetchone()
+    db.execute("INSERT OR REPLACE INTO kp_versuche (who, teil, n, updated_at) VALUES (?, ?, ?, ?)",
+               (who, teil, min(KP_VERSUCHE, (alt[0] if alt else 0) + 1), time.time()))
+    db.commit()
+    return kp_liste(db, teil, who)
+
+
 @app.post("/api/kp/name")
 def kp_name_setzen():
     db = get_db()
@@ -1352,9 +1380,18 @@ def kp_name_loeschen():
 # Wer alle Aufgaben aller Praktika bearbeitet hat (gelöst oder alle Versuche
 # verbraucht), bekommt das ganze Spiel: ein persönliches Ticket (JWT, ES256,
 # KP_TICKET_TAGE gültig), das Knackpunkt mit dem öffentlichen Schlüssel prüft.
+# Zwischendurch gilt: Praktikum N komplett bearbeitet, dann das ganze Spiel bis zum
+# Beginn von Termin N+1 der eigenen Gruppe (Wahl auf „Mein Fortschritt“, liegt im
+# Spickzettel-Stand; ohne Wahl der spätere der beiden Termine).
 # Erneuert wird es über die Kursseite; Lehrende holen sich eins im Dashboard.
 KP_TICKET_PATH = os.environ.get("KP_TICKET_PATH", os.path.join(os.path.dirname(os.path.abspath(DB_PATH)), "kp_ticket_private.pem"))
 KP_TICKET_TAGE = 30
+# Termine wie docs/assets/termine.json (Termin i ist Praktikum i, Beginn 9:30); bei Änderungen beide pflegen
+KP_TERMINE = {
+    "gerade": ["2026-10-12", "2026-10-26", "2026-11-09", "2026-11-23", "2026-12-07", "2027-01-04", "2027-01-18"],
+    "ungerade": ["2026-10-19", "2026-11-02", "2026-11-16", "2026-11-30", "2026-12-14", "2027-01-11", "2027-01-25"],
+}
+KP_TERMIN_BEGINN = (9, 30)
 KNACKPUNKT_URL = os.environ.get("KNACKPUNKT_URL", "https://fkaule.github.io/Knackpunkt/")
 KNACKPUNKT_WETTKAMPF_URL = os.environ.get("KNACKPUNKT_WETTKAMPF_URL", "https://fing-spool.htwk-leipzig.de/knackpunkt/")
 
@@ -1372,10 +1409,11 @@ def kp_ticket_key():
         return serialization.load_pem_private_key(f.read(), None)
 
 
-def kp_ticket(name, tage=KP_TICKET_TAGE):
-    """wk: Wettkampf-Server; damit führt das Spiel auf GitHub Pages unter „Mehrspieler“ dorthin."""
+def kp_ticket(name, tage=KP_TICKET_TAGE, bis=None):
+    """wk: Wettkampf-Server; damit führt das Spiel auf GitHub Pages unter „Mehrspieler“ dorthin.
+    bis: Ablauf als Zeitstempel (bis zum nächsten Praktikum), sonst tage."""
     jetzt = int(time.time())
-    return jwt.encode({"aud": "knackpunkt", "name": name, "iat": jetzt, "exp": jetzt + tage * 86400,
+    return jwt.encode({"aud": "knackpunkt", "name": name, "iat": jetzt, "exp": int(bis) if bis else jetzt + tage * 86400,
                        "wk": KNACKPUNKT_WETTKAMPF_URL}, kp_ticket_key(), algorithm="ES256")
 
 
@@ -1396,9 +1434,31 @@ def kurs_stand(db, pseudonym):
     return stand
 
 
+def kp_bis_naechstem(db, pseudonym, stand, jetzt=None):
+    """Zeitstempel, bis zu dem das ganze Spiel nach dem zuletzt abgeschlossenen Praktikum gilt, oder None."""
+    from zoneinfo import ZoneInfo
+    fertig = [int(p) for p, x in stand.items() if x["n"] and x["fertig"] >= x["n"]]
+    if not fertig:
+        return None
+    k = max(fertig)  # Praktikum k fertig: frei bis zum Beginn von Termin k+1 (Index k)
+    gruppe = None
+    row = db.execute("SELECT daten FROM spickzettel WHERE pseudonym=?", (pseudonym,)).fetchone()
+    try:
+        gruppe = (json.loads(row[0]) or {}).get("gruppe") if row else None
+    except (ValueError, AttributeError):
+        pass
+    termine = [t[k] for g, t in KP_TERMINE.items() if (gruppe not in KP_TERMINE or g == gruppe) and k < len(t)]
+    if not termine:
+        return None
+    tag = datetime.date.fromisoformat(max(termine))
+    ende = datetime.datetime(tag.year, tag.month, tag.day, *KP_TERMIN_BEGINN, tzinfo=ZoneInfo("Europe/Berlin")).timestamp()
+    return ende if ende > (jetzt or time.time()) else None
+
+
 @app.get("/api/kp/freigabe")
 def kp_freigabe():
-    """Ganzes Spiel frei, wenn alle Aufgaben aller Praktika bearbeitet sind; dann mit Link samt Ticket."""
+    """Ganzes Spiel frei, wenn alle Aufgaben aller Praktika bearbeitet sind, oder bis zum nächsten Praktikum,
+    wenn das letzte abgeschlossen ist; dann mit Link samt Ticket (bis: Datum, solange es nur bis dahin gilt)."""
     db = get_db()
     if not spiele_an(db)["kp"]:
         return jsonify({"an": False})
@@ -1407,11 +1467,18 @@ def kp_freigabe():
         return jsonify({"error": "nicht angemeldet"}), 401
     stand = kurs_stand(db, pseudonym)
     offen = sum(x["n"] - x["fertig"] for x in stand.values())
-    resp = {"an": True, "frei": bool(stand) and offen == 0, "offen": offen,
+    alle = bool(stand) and offen == 0
+    bis = None if alle else kp_bis_naechstem(db, pseudonym, stand)
+    naechstes = [p for p in sorted(stand, key=int) if stand[p]["fertig"] < stand[p]["n"]]
+    resp = {"an": True, "frei": alle or bool(bis), "offen": offen,
             "aufgaben": sum(x["n"] for x in stand.values())}
+    if naechstes:
+        resp["praktikum"] = {"nr": int(naechstes[0]), "offen": stand[naechstes[0]]["n"] - stand[naechstes[0]]["fertig"]}
     if resp["frei"]:
         name = db.execute("SELECT name FROM kp_namen WHERE who=?", (pseudonym,)).fetchone()
-        resp["link"] = KNACKPUNKT_URL + "#ticket=" + kp_ticket(name[0] if name else "")
+        resp["link"] = KNACKPUNKT_URL + "#ticket=" + kp_ticket(name[0] if name else "", bis=bis)
+        if bis:
+            resp["bis"] = datetime.datetime.fromtimestamp(bis).strftime("%Y-%m-%d")
     return jsonify(resp)
 
 

@@ -328,6 +328,14 @@ def main():
               and r["teile"][1]["seite"] == "/Strukturmechanik/P1/Uebung-2/", str(r))
         r = requests.post(KP, headers=p8, json={"teil": "f0", "prozent": 5, "entwurf": "A", "seite": "javascript:alert(1)"}).json()
         check("kp: unsichere Seite verworfen", requests.get(KP + "/meine", headers=p8).json()["teile"][1]["seite"] is None)
+        # Kursrunde einmal mit 5 Versuchen: zählt je Person und Bauteil, höchstens 5
+        r = requests.post(KP + "/versuch", headers=p7, json={"teil": TEIL}).json()
+        check("kp: Versuch gezählt", r["versuche"] == 1 and r["max_versuche"] == 5, str(r))
+        for _ in range(6):
+            r = requests.post(KP + "/versuch", headers=p7, json={"teil": TEIL}).json()
+        check("kp: höchstens 5 Versuche", r["versuche"] == 5 and requests.get(KP, headers=p7, params={"teil": TEIL}).json()["versuche"] == 5, str(r))
+        check("kp: Versuche je Person", requests.get(KP, headers=p8, params={"teil": TEIL}).json()["versuche"] == 0)
+        check("kp: Versuch ungültig abgelehnt", requests.post(KP + "/versuch", headers=p7, json={"teil": "x"}).status_code == 400)
         r = requests.get(BACKEND + "/dashboard", params={"key": "test-dashboard-key"})
         check("kp: Spitzname im Dashboard", "bAda/b1234567890 <a href" in r.text)
         requests.get(BACKEND + "/dashboard-kp-name-loeschen", params={"key": "test-dashboard-key", "name": "bAda/b1234567890"})

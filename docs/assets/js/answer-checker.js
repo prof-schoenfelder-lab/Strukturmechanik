@@ -1696,17 +1696,43 @@
   function escapeHtml(v) {
     return String(v).replace(/[&<>"']/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; });
   }
+  // Jede Runde ist einmal spielbar, mit KP_VERSUCHE Versuchen. Ein Versuch beginnt mit der ersten Änderung am
+  // Bauteil (meldet das Spiel, auch Neuladen verbraucht ihn); gezählt im Backend, im Browser als Rückfall ohne VPN.
+  var KP_VERSUCHE = 5;
+  function kpVersucheLokal(key, n) {
+    try {
+      if (n != null) localStorage.setItem('kp_versuche_' + key, String(n));
+      return parseInt(localStorage.getItem('kp_versuche_' + key), 10) || 0;
+    } catch (e) { return n || 0; }
+  }
   function kursSpiel(el, box) {
-    var key = kpKey(el.dataset.teil), frame = null;
+    var key = kpKey(el.dataset.teil), frame = null, versuche = 0, letzte = null;
     if (!key) return;
+    versuche = kpVersucheLokal(key);
     box.innerHTML = '<div class="zs-spiel"><p><button type="button" class="md-button md-button--primary zs-start">Knackpunkt hier spielen</button></p></div>' +
       '<div class="zs-board"><h3>Bestenliste</h3><div class="zs-liste"><p>Lädt …</p></div>' +
       '<p class="zs-name"><label>Spitzname <input class="zs-name-in" maxlength="16" autocomplete="off" placeholder="optional, kein echter Name"></label> ' +
       '<button type="button" class="md-button zs-name-ok">Speichern</button> <span class="zs-platz"></span></p>' +
-      '<p class="zs-regel">Es zählt Ihre beste Runde, die hält und ohne Live-Spannungen gespielt wurde. ' +
+      '<p class="zs-regel">Sie haben ' + KP_VERSUCHE + ' Versuche. Ein Versuch beginnt mit der ersten Änderung am Bauteil, auch Neuladen verbraucht ihn. ' +
+      'Es zählt Ihre beste Runde, die hält und ohne Live-Spannungen gespielt wurde. ' +
       'Angezeigt werden nur Spitzname und Sitzplatz, ohne Spitzname nur der Sitzplatz.</p></div>';
     var liste = box.querySelector('.zs-liste'), nameIn = box.querySelector('.zs-name-in');
+    // Knopf mit den übrigen Versuchen; sind alle gespielt, das Ergebnis statt des Knopfs (nicht, solange das Spiel offen ist)
+    function startZeigen() {
+      if (frame) return;
+      var spiel = box.querySelector('.zs-spiel'), knopf = box.querySelector('.zs-start');
+      if (versuche >= KP_VERSUCHE) {
+        var ich = letzte && letzte.ich;
+        spiel.innerHTML = '<p class="zs-fertig"><strong>Ihre ' + KP_VERSUCHE + ' Versuche sind gespielt.</strong> ' +
+          (ich ? 'Ihr bestes Ergebnis: ' + String(ich.prozent).replace('.', ',') + ' %, Platz ' + ich.rang + '.' : 'Keine Ihrer Runden hat gehalten.') + '</p>';
+      } else if (knopf) {
+        knopf.textContent = 'Knackpunkt hier spielen (' + (versuche ? 'noch ' + (KP_VERSUCHE - versuche) + ' von ' + KP_VERSUCHE + ' Versuchen' : KP_VERSUCHE + ' Versuche') + ')';
+      }
+    }
     function zeige(d) {
+      if (d && d.an && typeof d.versuche === 'number' && d.versuche > versuche) versuche = kpVersucheLokal(key, d.versuche);
+      if (d && d.an) letzte = d;
+      startZeigen();
       if (!d || !d.an) { liste.innerHTML = '<p>Bestenliste nicht erreichbar (HTWK-Netz oder VPN nötig).</p>'; return; }
       var rows = d.liste.map(function (e) {
         return '<li class="' + (e.ich ? 'zs-ich' : '') + '" value="' + e.rang + '">' + escapeHtml(e.anzeige) +
@@ -1719,18 +1745,24 @@
       if (document.activeElement !== nameIn) nameIn.value = d.name || '';
       box.querySelector('.zs-platz').textContent = d.platz ? 'Ihr Platz: ' + d.platz : '';
     }
+    startZeigen();
     kpApi('/api/kp?teil=' + encodeURIComponent(key)).then(zeige);
     box.querySelector('.zs-name-ok').onclick = function () { kpApi('/api/kp/name', { teil: key, name: nameIn.value }).then(zeige); };
     box.querySelector('.zs-start').onclick = function () {
+      if (versuche >= KP_VERSUCHE) return startZeigen();
       frame = document.createElement('iframe');
       frame.className = 'zs-frame';
       frame.title = 'Knackpunkt';
-      frame.src = kpUrl() + '?kurs=' + encodeURIComponent(el.dataset.name || '') + '#' + el.dataset.teil;
+      frame.src = kpUrl() + '?kurs=' + encodeURIComponent(el.dataset.name || '') + '&versuche=' + (KP_VERSUCHE - versuche) + '#' + el.dataset.teil;
       box.querySelector('.zs-spiel').replaceChildren(frame);
     };
     window.addEventListener('message', function (e) {
       if (!frame || e.source !== frame.contentWindow || !e.data) return;
       if (e.data.typ === 'knackpunkt-hoehe') frame.style.height = Math.min(Math.max(+e.data.h || 0, 400), 2400) + 'px';
+      if (e.data.typ === 'knackpunkt-versuch' && e.data.teil === key) {
+        versuche = kpVersucheLokal(key, Math.min(KP_VERSUCHE, versuche + 1));
+        kpApi('/api/kp/versuch', { teil: key }).then(zeige);
+      }
       if (e.data.typ === 'knackpunkt-ergebnis' && e.data.teil === key)
         kpApi('/api/kp', { teil: key, prozent: e.data.prozent, entwurf: e.data.entwurf, titel: el.dataset.name || '', seite: location.pathname }).then(zeige);
     });
