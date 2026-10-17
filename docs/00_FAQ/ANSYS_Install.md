@@ -26,7 +26,7 @@ Alle zehn Dateien zusammen sind 91,3 GB groß.
 
 !!! tip "Wenig Speicherplatz? Paket für Paket"
 
-    Laden Sie nicht alles auf einmal herunter, sondern ein Paket nach dem anderen: herunterladen, installieren, Dateien wieder löschen, dann das nächste Paket. Am meisten Platz braucht die Grundinstallation (ca. 56 GB für die ISO-Dateien plus Platz für die Installation). Beim Entpacken eines ZIP brauchen Sie kurz etwa doppelt so viel Platz wie das ZIP groß ist, löschen Sie das ZIP deshalb gleich nach dem Entpacken.
+    Laden Sie nicht alles auf einmal herunter, sondern ein Paket nach dem anderen: herunterladen, installieren, Dateien wieder löschen, dann das nächste Paket. Am meisten Platz brauchen die Grundinstallation (ca. 56 GB für die ISO-Dateien) und das Entpacken des Service Packs (kurz etwa 60 GB, weil ZIP und entpackter Ordner gleichzeitig da sind), jeweils plus Platz für die Installation selbst. Löschen Sie jedes ZIP gleich nach dem Entpacken.
 
 <div class="steps" markdown="1" data-kategorie="Setup">
 
