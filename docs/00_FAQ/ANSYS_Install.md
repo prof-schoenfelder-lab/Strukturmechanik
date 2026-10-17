@@ -18,13 +18,15 @@ Für das Praktikum brauchen Sie nur **Mechanical** und **SpaceClaim**. In OPAL l
 
 | Paket | Datei in OPAL | Größe |
 |---|---|---|
-| Grundinstallation | 8 ISO-Dateien (DISK1 bis DISK8) | je ca. 8 GB, zusammen ca. 64 GB |
-| SpaceClaim | ZIP | 3,9 GB |
-| Service Pack 05 | ZIP | 31,1 GB |
+| Grundinstallation | `ANSYS2025R2_WINX64_DISK1.iso` bis `…_DISK8.iso` | je 6,2 bis 7,3 GB, zusammen ca. 56 GB |
+| SpaceClaim | `SPACECLAIM_2025R2_WINX64.zip` | 3,9 GB |
+| Service Pack 05 | `ANSYS_2025R2.05_WINX64.zip` | 31,1 GB |
+
+Alle zehn Dateien zusammen sind 91,3 GB groß.
 
 !!! tip "Wenig Speicherplatz? Paket für Paket"
 
-    Laden Sie nicht alles auf einmal herunter, sondern ein Paket nach dem anderen: herunterladen, installieren, Dateien wieder löschen, dann das nächste Paket. Am meisten Platz braucht die Grundinstallation (ca. 64 GB für die ISO-Dateien plus Platz für die Installation). Beim Entpacken eines ZIP brauchen Sie kurz etwa doppelt so viel Platz wie das ZIP groß ist, löschen Sie das ZIP deshalb gleich nach dem Entpacken.
+    Laden Sie nicht alles auf einmal herunter, sondern ein Paket nach dem anderen: herunterladen, installieren, Dateien wieder löschen, dann das nächste Paket. Am meisten Platz braucht die Grundinstallation (ca. 56 GB für die ISO-Dateien plus Platz für die Installation). Beim Entpacken eines ZIP brauchen Sie kurz etwa doppelt so viel Platz wie das ZIP groß ist, löschen Sie das ZIP deshalb gleich nach dem Entpacken.
 
 <div class="steps" markdown="1" data-kategorie="Setup">
 
