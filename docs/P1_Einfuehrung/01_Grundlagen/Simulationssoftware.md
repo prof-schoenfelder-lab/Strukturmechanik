@@ -18,7 +18,7 @@ Die Software die wir zur Finite-Elemente Simulation benutzen lautet **ANSYS Work
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Start von ANSYS Workbench</p>
-    <p>Im Windows Start Menü unter Lehre auf <code>ANSYS Workbench 2025R2</code> drücken</p>
+    <p>Im Windows-Startmenü nach <code>Workbench 2025 R2</code> suchen und starten</p>
   </div>
 
 </div>
