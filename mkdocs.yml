@@ -1,6 +1,6 @@
 site_name: Angewandte FEM in der Strukturmechanik
 site_url: https://prof-schoenfelder-lab.github.io/Strukturmechanik
-copyright: Copyright &copy; 2026 Felix Kaule & Stephan Schönfelder<br>Die Inhalte stammen von den Autoren und werden von ihnen fachlich geprüft. Grafische Gestaltung, interaktive Funktionen und sprachliche Überarbeitung entstanden mit Unterstützung von KI.
+copyright: "Copyright &copy; 2026 Felix Kaule & Stephan Schönfelder<br>Hinweis zur KI-Nutzung: Bei der didaktischen Gestaltung dieser Lehrinhalte wurden Methoden der generativen künstlichen Intelligenz eingesetzt. Der Lehrende hat die Inhalte anschließend geprüft, angepasst und trägt die Verantwortung für sie."
 repo_name: prof-schoenfelder-lab/Strukturmechanik
 repo_url: https://github.com/prof-schoenfelder-lab/Strukturmechanik
 edit_uri: edit/main/docs/
