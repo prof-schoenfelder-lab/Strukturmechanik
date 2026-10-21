@@ -53,7 +53,7 @@ Anschließend die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung $u_{\max }$ in mm
 
-<div class="numeric-question" data-answer="1.666" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Beim cylindrical Support die tangentiale Richtung freigegeben? Netzgröße 1 mm eingestellt?">
+<div class="numeric-question" data-answer="1.666" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Beim cylindrical Support die tangentiale Richtung freigegeben? Netzgröße 1 mm eingestellt?" data-diagnose="1.749: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Stahl (E = 210 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
 </div>
 
 ### Betrag der mittleren Verschiebung der elastischen Bettung in z-Richtung $u_{z,}$ in mm
