@@ -22,6 +22,8 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz,Lagerung und B
 
 [:material-paperclip: Uebung-02.wbpz](assets/Uebung-02.wbpz)
 
+Wie das Archiv importiert wird, steht in [Übung 1](Uebung-1.md#archiv-importieren).
+
 ## Aufgabenstellung
 
 Nach dem Import der Archivdatei die Geometrie mit SpaceClaim öffnen und wie folgt ändern:

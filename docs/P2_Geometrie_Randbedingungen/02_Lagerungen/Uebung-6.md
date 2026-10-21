@@ -40,6 +40,8 @@ Stahl
 
 [:material-paperclip: Uebung-06.wbpz](assets/Uebung-06.wbpz)
 
+Wie das Archiv importiert wird, steht in [Übung 1](../01_Geometrie_anpassen/Uebung-1.md#archiv-importieren).
+
 ### Randbedingungen
 
 Lagerung im Bereich des Kopfes:

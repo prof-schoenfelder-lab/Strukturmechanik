@@ -22,6 +22,8 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung)
 
 [:material-paperclip: Uebung-03.wbpz](assets/Uebung-03.wbpz)
 
+Wie das Archiv importiert wird, steht in [Übung 1](../01_Geometrie_anpassen/Uebung-1.md#archiv-importieren).
+
 ## Aufgabenstellung
 
 Nach dem Import der Archivdatei in Mechanical die Lagerung wie folgt ergänzen:
