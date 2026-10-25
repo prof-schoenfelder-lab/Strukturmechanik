@@ -1442,8 +1442,8 @@ def kp_name_loeschen():
 
 # --- Knackpunkt-Freischaltung --------------------------------------------------
 # Wer alle Aufgaben aller Praktika bearbeitet hat (gelöst oder alle Versuche
-# verbraucht), bekommt das ganze Spiel: ein persönliches Ticket (JWT, ES256,
-# KP_TICKET_TAGE gültig), das Knackpunkt mit dem öffentlichen Schlüssel prüft.
+# verbraucht; Schwachstelle und Modell-Detektiv sind freiwillig), bekommt das
+# ganze Spiel: ein persönliches Ticket (JWT, ES256, KP_TICKET_TAGE gültig), das Knackpunkt mit dem öffentlichen Schlüssel prüft.
 # Zwischendurch gilt: Praktikum N komplett bearbeitet, dann das ganze Spiel bis zum
 # Beginn von Termin N+1 der eigenen Gruppe (Wahl auf „Mein Fortschritt“, liegt im
 # Spickzettel-Stand; ohne Wahl der spätere der beiden Termine).
@@ -1482,13 +1482,14 @@ def kp_ticket(name, tage=KP_TICKET_TAGE, bis=None):
 
 
 def kurs_stand(db, pseudonym):
-    """Je Praktikum: Zahl der Aufgaben und davon bearbeitet (gelöst oder alle Versuche verbraucht)."""
+    """Je Praktikum: Zahl der Aufgaben und davon bearbeitet (gelöst oder alle Versuche verbraucht).
+    Schwachstelle und Modell-Detektiv sind freiwillig und zählen nicht mit."""
     ergebnis = {qid: (best, versuche) for qid, best, versuche in db.execute(
         "SELECT qid, best, attempts FROM results WHERE pseudonym=?", (pseudonym,))}
     stand = {}
     for qid, q in aktive_answers(db).items():
         m = re.search(r"/P(\d+)_", qid)
-        if not m:
+        if not m or spieltyp(qid):
             continue
         best, versuche = ergebnis.get(qid, (0, 0))
         x = stand.setdefault(m.group(1), {"n": 0, "fertig": 0})
