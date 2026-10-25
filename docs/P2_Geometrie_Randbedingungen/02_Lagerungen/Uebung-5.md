@@ -117,3 +117,7 @@ Anschließend die folgenden Größen berechnen:
 
 </div>
 
+<div class="zwischenspiel" data-seite="/P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-4,/P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-5" data-voraussetzung="Übung 4 und 5" data-name="Bremshebel (Übung 5)" data-teil="bau-26i.PPPPPPPP__88888888.fB301lR551.R3h1014">
+<h2>Zwischenspiel: Knackpunkt</h2>
+<p>Der Bremshebel aus dieser Übung: unten drehbar gelagert (Festlager), oben zieht der Seilzug. Der Bremsklotz hält den Hebel nur quer, im Spiel ist er deshalb ein Loslager. Der Hebel ist 180 mm lang, gekröpft wie in der Übung und eine 10 mm dicke Platte aus Stahl S235, der Seilzug zieht mit 4 kN. Wie viel Material darf weg, bevor der Hebel versagt?</p>
+</div>

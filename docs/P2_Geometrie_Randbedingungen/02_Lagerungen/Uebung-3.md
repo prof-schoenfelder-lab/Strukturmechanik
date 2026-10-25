@@ -59,3 +59,7 @@ Anschließend die folgenden Größen berechnen:
 
 </div>
 
+<div class="zwischenspiel" data-seite="/P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Uebung-1,/P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Uebung-2,/P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-3" data-voraussetzung="Übung 1 bis 3" data-name="Lineal (Übung 3)" data-teil="bau-2l4.______________.lB601fTk31.T031628">
+<h2>Zwischenspiel: Knackpunkt</h2>
+<p>Das Lineal aus dieser Übung: 210 mm lang, es liegt 60 mm vom freien Ende auf der Tischkante auf und ist am anderen Ende geklemmt. Die Tischkante ist ein Loslager, das nur nach oben drückt, die Klemmung ein Festlager. Im Spiel ist das Lineal 40 mm hoch und eine 10 mm dicke Platte aus Stahl S235, am freien Ende drücken 8 kN. Nehmen Sie so viel Material weg wie möglich, ohne dass es versagt.</p>
+</div>
