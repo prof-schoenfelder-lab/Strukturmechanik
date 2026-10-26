@@ -1529,13 +1529,13 @@ def kp_ticket(name, tage=KP_TICKET_TAGE, bis=None):
 
 def kurs_stand(db, pseudonym):
     """Je Praktikum: Zahl der Aufgaben und davon bearbeitet (gelöst oder alle Versuche verbraucht).
-    Schwachstelle und Modell-Detektiv sind freiwillig und zählen nicht mit."""
+    Schwachstelle, Modell-Detektiv und Zusatzübungen (optional) sind freiwillig und zählen nicht mit."""
     ergebnis = {qid: (best, versuche) for qid, best, versuche in db.execute(
         "SELECT qid, best, attempts FROM results WHERE pseudonym=?", (pseudonym,))}
     stand = {}
     for qid, q in aktive_answers(db).items():
         m = re.search(r"/P(\d+)_", qid)
-        if not m or spieltyp(qid):
+        if not m or spieltyp(qid) or q.get("optional"):
             continue
         best, versuche = ergebnis.get(qid, (0, 0))
         x = stand.setdefault(m.group(1), {"n": 0, "fertig": 0})
@@ -1695,10 +1695,15 @@ _QTYP = {"q": "Frage", "mc": "Frage", "det": "Fall", "hs": "Runde"}
 
 
 def short_page(path):
-    """'P1_Einfuehrung/03_Selbsttests/Uebung-3' -> 'P1 Übung 3'."""
+    """'P1_Einfuehrung/03_Selbsttests/Uebung-3' -> 'P1 Übung 3'. Steht der Titel der Seite in answers.json
+    (Frontmatter title), gilt er: Die Dateinamen bleiben beim Umnummerieren, damit Ergebnisse erhalten bleiben."""
     parts = [x for x in path.replace("/Strukturmechanik/", "").strip("/").split("/") if x]
     if not parts:
         return ""
+    titel = {qid.replace("/Strukturmechanik/", "").strip("/").rpartition(":")[0]: q["seite"]
+             for qid, q in load_answers().items() if q.get("seite")}.get("/".join(parts))
+    if titel and len(parts) > 1:
+        return "%s %s" % (parts[0].split("_")[0], titel)
     name = parts[-1].replace("Modell_Detektiv", "Modell-Detektiv")
     m = re.match(r"Uebung-?0*(\d+)-?(.*)$", name)
     name = ("Übung %s %s" % m.groups()).strip() if m else name.replace("_", " ")
@@ -2462,6 +2467,8 @@ def questions():
     out = {}
     for qid, q in aktive_answers(get_db()).items():
         out[qid] = {"points": q.get("points", 1), "attempts": q.get("attempts", 5)}
+        if q.get("optional"):
+            out[qid]["optional"] = True
     return jsonify(out)
 
 

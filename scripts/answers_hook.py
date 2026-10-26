@@ -129,6 +129,10 @@ def on_page_content(html, page, config, files):
         if titel:
             entry["titel"] = titel[-1]  # Überschrift über der Frage, für die Sollwerte im Dashboard
         entry["quelle"] = page.file.src_uri  # Markdown-Datei, damit Korrekturen aus dem Dashboard zurückfinden
+        if page.meta.get("title"):
+            entry["seite"] = str(page.meta["title"])  # angezeigter Name der Seite (Dashboard, Hilfe-App)
+        if page.meta.get("freiwillig"):
+            entry["optional"] = True  # Zusatzübung: zählt nicht für Freischaltungen
         if cls in ("detektiv-fall", "hotspot-frage"):
             root = os.path.dirname(config["config_file_path"])
             if cls == "detektiv-fall":

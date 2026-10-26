@@ -6,7 +6,7 @@
       "extern": "P2_Geometrie_Randbedingungen/index.md"
     },
     {
-      "gruppe": "GEOMETRIEANPASSUNGEN",
+      "gruppe": "GEOMETRIE VORBEREITEN",
       "kinder": [
         {
           "titel": "Längen & Positionen",
@@ -33,10 +33,6 @@
           "extern": "P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Blend.md"
         },
         {
-          "titel": "Übung 2",
-          "extern": "P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Uebung-2.md"
-        },
-        {
           "titel": "Vereinfachungen",
           "extern": "P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Vereinfachungen.md"
         },
@@ -58,7 +54,7 @@
           "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/Displacement.md"
         },
         {
-          "titel": "Übung 3",
+          "titel": "Übung 2",
           "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-3.md"
         },
         {
@@ -66,7 +62,7 @@
           "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/RemoteDisplacement.md"
         },
         {
-          "titel": "Übung 4",
+          "titel": "Übung 3",
           "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-4.md"
         },
         {
@@ -78,11 +74,7 @@
           "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/Elastic.md"
         },
         {
-          "titel": "Übung 5",
-          "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-5.md"
-        },
-        {
-          "titel": "Übung 6",
+          "titel": "Übung 4",
           "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-6.md"
         }
       ]
@@ -103,7 +95,7 @@
           "extern": "P2_Geometrie_Randbedingungen/03_Belastungen/RemoteForce.md"
         },
         {
-          "titel": "Übung 7",
+          "titel": "Übung 5",
           "extern": "P2_Geometrie_Randbedingungen/03_Belastungen/Uebung-7.md"
         },
         {
@@ -113,6 +105,23 @@
         {
           "titel": "Beschleunigungen",
           "extern": "P2_Geometrie_Randbedingungen/03_Belastungen/Beschleunigungen.md"
+        }
+      ]
+    },
+    {
+      "gruppe": "ZUSATZÜBUNG",
+      "kinder": [
+        {
+          "titel": "Zusatzübung",
+          "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-5.md"
+        }
+      ]
+    },
+    {
+      "gruppe": "ZUSAMMENFASSUNG",
+      "kinder": [
+        {
+          "extern": "P2_Geometrie_Randbedingungen/Zusammenfassung.md"
         }
       ]
     }

@@ -2,7 +2,7 @@
 hide:
     - toc
 sektion: Lagerungen
-title: Übung 6
+title: Übung 4
 order: 180
 kurz: Vergleich verschiedener Lagerungsbedingungen am Beispiel des Inbus
 thumb: images/Uebung-06.png
@@ -94,6 +94,15 @@ Hinweis: Wird die Körperauswahl verwendet und der Inbus der jeweiligen Randbedi
 <iframe title="maximale Spannungen (MPa)" aria-label="Balken" id="datawrapper-chart-ZVQD6" src="https://datawrapper.dwcdn.net/ZVQD6/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="185" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
 
 <iframe title="maximale Spannungen (MPa)" aria-label="Bar Chart" id="datawrapper-chart-pQGBH" src="https://datawrapper.dwcdn.net/pQGBH/3/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="185" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
+
+<h3>Warum liegen zwei Lagerungen nah am Schraubkopf?</h3>
+<p>Im echten Schraubkopf gibt die Auflagefläche ein wenig nach: Der Inbus kann sich dort verformen, die Last verteilt sich über die ganze Fläche.</p>
+<ul>
+<li><code>Fixed Support</code>: Jeder Knoten der Fläche steht fest, die Fläche kann sich gar nicht verformen. Das ist steifer als in Wirklichkeit, und am Rand der Einspannung entsteht eine Singularität: Die Spannung dort hängt vom Netz ab, nicht von der Lagerung.</li>
+<li><code>Remote Displacement (rigid)</code>: Die Fläche darf sich nur als Ganzes bewegen, bleibt aber starr. Für die Fläche wirkt das fast wie eine feste Einspannung, mit derselben Spannungsspitze am Rand.</li>
+<li><code>Remote Displacement (deformable)</code>: Gesperrt ist nur die Bewegung des Bezugspunkts, die Fläche selbst darf sich verformen. So verteilt sich die Last wie im Schraubkopf.</li>
+<li><code>Elastic Support</code>: Die Fläche liegt auf Federn mit der Bettungssteifigkeit k und gibt nach wie im Schraubkopf. Wie nah das Ergebnis an der Wirklichkeit liegt, hängt von k ab. Prüffrage: Woher kommt der Wert für k, und wie stark ändert sich das Ergebnis, wenn k doppelt oder halb so groß ist?</li>
+</ul>
 
 </div>
 

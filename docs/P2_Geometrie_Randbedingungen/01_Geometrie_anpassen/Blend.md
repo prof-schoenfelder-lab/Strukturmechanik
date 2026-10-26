@@ -2,7 +2,7 @@
 icon: material/arrow-expand-horizontal
 hide:
   - toc
-sektion: Geometrieanpassungen
+sektion: Geometrie vorbereiten
 title: Übergänge erstellen
 order: 60
 thumb: images/Blend.gif

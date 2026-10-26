@@ -2,7 +2,7 @@
 icon: material/rhombus-split
 hide:
   - toc
-sektion: Geometrieanpassungen
+sektion: Geometrie vorbereiten
 title: Körper teilen
 order: 50
 thumb: images/Koerper_teilen.gif

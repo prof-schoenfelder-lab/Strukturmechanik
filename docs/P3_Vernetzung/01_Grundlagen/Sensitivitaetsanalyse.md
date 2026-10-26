@@ -32,12 +32,12 @@ Bei <code>festen Einspannungen</code> und <code>Einzelkräften</code> können di
 Feste Einspannungen können außerdem durch andere Lagerungsbedingungen (z. B. Elastic Support oder Remote Displacement) ersetzt werden. Gerade bei Remote Displacement ist jedoch zu prüfen, ob die resultierende Verformungsform noch der realen Situation entspricht. 
 
 
-!!! tip "Vertiefung: Lagerungen in Übung 6 aus Praktikum 2"
+!!! tip "Vertiefung: Lagerungen in Übung 4 aus Praktikum 2"
 
-    In **Übung 6 / Praktikum 2** hatten wir die unterschiedliche Lagerungsarten (feste Einspannung, Elastic Support, Remote Displacement) am Beispiel des Inbus systematisch durchgespielt.
+    In **Übung 4 / Praktikum 2** hatten wir die unterschiedliche Lagerungsarten (feste Einspannung, Elastic Support, Remote Displacement) am Beispiel des Inbus systematisch durchgespielt.
 
     <figure style="text-align:center;">
-        <img src="../../../P2_Geometrie_Randbedingungen/02_Lagerungen/images/Uebung-06.png" alt="Lagerungen in Übung 6" width="700">
+        <img src="../../../P2_Geometrie_Randbedingungen/02_Lagerungen/images/Uebung-06.png" alt="Lagerungen in Übung 4" width="700">
         <figcaption>Beispiel: Randbedingungen in Übung&nbsp;2 (Übung&nbsp;6)</figcaption>
     </figure>
 

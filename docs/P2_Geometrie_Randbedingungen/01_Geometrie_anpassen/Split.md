@@ -2,7 +2,7 @@
 icon: material/arrow-split-vertical
 hide:
   - toc
-sektion: Geometrieanpassungen
+sektion: Geometrie vorbereiten
 title: Flächen teilen für Randbedingungen
 order: 40
 thumb: images/Flaeche_erstellen.gif

@@ -2,7 +2,7 @@
 hide:
  - toc
 sektion: Lagerungen
-title: Übung 3
+title: Übung 2
 order: 120
 kurz: Lagerungsbeispiel Lineal über Kante belastet
 thumb: images/Lagerungsbeispiel_Lineal.png
@@ -10,7 +10,7 @@ thumb: images/Lagerungsbeispiel_Lineal.png
 
 # Lagerungsbeispiel Lineal über Kante belastet
 
-Im dritten Beispiel versuchen wir Lagerungsbedingungen aus einem realen Beispiel (Lineal über Kante) in Randbedingungen in ANSYS zu übertragen:
+Im zweiten Beispiel versuchen wir Lagerungsbedingungen aus einem realen Beispiel (Lineal über Kante) in Randbedingungen in ANSYS zu übertragen:
 
 <figure style="text-align:center;">
   <img src="../images/Lagerungsbeispiel_Lineal.png" alt="Lineal" width="500" class="no-lightbox">
@@ -59,7 +59,7 @@ Anschließend die folgenden Größen berechnen:
 
 </div>
 
-<div class="zwischenspiel" data-seite="/P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Uebung-1,/P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Uebung-2,/P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-3" data-voraussetzung="Übung 1 bis 3" data-name="Lineal (Übung 3)" data-teil="bau-2l4.______________.lB601fTk31.T031628">
+<div class="zwischenspiel" data-seite="/P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Uebung-1,/P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-3" data-voraussetzung="Übung 1 und 2" data-name="Lineal (Übung 2)" data-teil="bau-2l4.______________.lB601fTk31.T031628">
 <h2>Zwischenspiel: Knackpunkt</h2>
 <p>Das Lineal aus dieser Übung: 210 mm lang, es liegt 60 mm vom freien Ende auf der Tischkante auf und ist am anderen Ende geklemmt. Die Tischkante ist ein Loslager, das nur nach oben drückt, die Klemmung ein Festlager. Im Spiel ist das Lineal 40 mm hoch und eine 10 mm dicke Platte aus Stahl S235, am freien Ende drücken 8 kN. Nehmen Sie so viel Material weg wie möglich, ohne dass es versagt.</p>
 </div>

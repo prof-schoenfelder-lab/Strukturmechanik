@@ -2,7 +2,7 @@
 hide:
  - toc
 sektion: Belastungen
-title: Übung 7
+title: Übung 5
 order: 220
 kurz: Lenkkopfsteifigkeit Fahrradrahmen
 thumb: images/Uebung-07.excalidraw.png
@@ -10,7 +10,7 @@ thumb: images/Uebung-07.excalidraw.png
 
 # Lenkkopfsteifigkeit Fahrradrahmen
 
-Im siebten Beispiel verwenden wir erneut den vereinfachten Fahrradrahmen. Wer dies in dem vorherigen Teil nicht gemacht hat, kann auch die gegebene Geometrie verwenden. 
+Im fünften Beispiel verwenden wir erneut den vereinfachten Fahrradrahmen. Wer dies in dem vorherigen Teil nicht gemacht hat, kann auch die gegebene Geometrie verwenden. 
 
 <figure style="text-align:center;">
   <img src="../images/Uebung-07.excalidraw.png" alt="Fahrradrahmen mit externen Kräften" width="700" class="no-lightbox">

@@ -1,16 +1,20 @@
 ---
 hide:
  - toc
-sektion: Lagerungen
-title: Übung 5
-order: 170
+sektion: Zusatzübung
+title: Zusatzübung
+order: 300
+freiwillig: ja
 kurz: vereinfachte Fahrradbremse (V-Brake)
 thumb: images/Uebung-05.png
 ---
 
 # vereinfachte Fahrradbremse (V-Brake)
 
-Im fünften Beispiel schauen wir uns ein Teil einer stark vereinfachten Fahrradbremse an die drehbar gelagert wird und an der Stelle wo normalerweise die Bremsbeläge sind gehalten werden soll und mit einer Zugkraft beaufschlagt wird.
+!!! info "Freiwillige Zusatzübung"
+    Diese Übung ist freiwillig: Sie zählt nicht für die Knackpunkt-Runde am Ende des Praktikums und nicht für das ganze Spiel. Wer Zeit hat, übt hier zylindrische und elastische Lager und bekommt dafür eine eigene Runde Knackpunkt.
+
+In dieser Zusatzübung schauen wir uns ein Teil einer stark vereinfachten Fahrradbremse an die drehbar gelagert wird und an der Stelle wo normalerweise die Bremsbeläge sind gehalten werden soll und mit einer Zugkraft beaufschlagt wird.
 
 
 <figure style="text-align:center;">
@@ -117,7 +121,7 @@ Anschließend die folgenden Größen berechnen:
 
 </div>
 
-<div class="zwischenspiel" data-seite="/P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-4,/P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-5" data-voraussetzung="Übung 4 und 5" data-name="Bremshebel (Übung 5)" data-teil="bau-26i.PPPPPPPP__88888888.fB301lR551.R3h1014">
+<div class="zwischenspiel" data-seite="/P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-5" data-voraussetzung="die Zusatzübung" data-name="Bremshebel (Zusatzübung)" data-teil="bau-26i.PPPPPPPP__88888888.fB301lR551.R3h1014">
 <h2>Zwischenspiel: Knackpunkt</h2>
-<p>Der Bremshebel aus dieser Übung: unten drehbar gelagert (Festlager), oben zieht der Seilzug. Der Bremsklotz hält den Hebel nur quer, im Spiel ist er deshalb ein Loslager. Der Hebel ist 180 mm lang, gekröpft wie in der Übung und eine 10 mm dicke Platte aus Stahl S235, der Seilzug zieht mit 4 kN. Wie viel Material darf weg, bevor der Hebel versagt?</p>
+<p>Der Bremshebel aus dieser Zusatzübung: unten drehbar gelagert (Festlager), oben zieht der Seilzug. Der Bremsklotz hält den Hebel nur quer, im Spiel ist er deshalb ein Loslager. Der Hebel ist 180 mm lang, gekröpft wie in der Übung und eine 10 mm dicke Platte aus Stahl S235, der Seilzug zieht mit 4 kN. Wie viel Material darf weg, bevor der Hebel versagt?</p>
 </div>

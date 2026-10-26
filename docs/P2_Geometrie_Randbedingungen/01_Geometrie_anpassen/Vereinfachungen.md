@@ -2,7 +2,7 @@
 icon: material/close-circle
 hide:
   - toc
-sektion: Geometrieanpassungen
+sektion: Geometrie vorbereiten
 title: Vereinfachungen
 order: 80
 thumb: images/Select_same_volume_and_Delete.gif

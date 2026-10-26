@@ -1639,7 +1639,7 @@
   // Praktikums (data-praktikum, über der Abschluss-Karte, partials/page-nav.html) frei, sobald alle Aufgaben des Praktikums bearbeitet sind (wie der Haken
   // auf der Startseite; das Abzeichen schaltet auch frei), auf Übungsseiten (data-seite, mehrere mit Komma), sobald
   // deren Aufgaben bearbeitet sind; data-voraussetzung nennt die Übungen. Bearbeitet heißt gelöst oder alle Versuche
-  // aufgebraucht, auch ohne Login. Schwachstelle und Modell-Detektiv sind dafür freiwillig. Das ganze Spiel gibt es erst nach allen Praktika (Ticket vom Backend, weiter.js).
+  // aufgebraucht, auch ohne Login. Schwachstelle und Modell-Detektiv zählen dafür nicht, Zusatzübungen (freiwillig: ja) nur für ihre eigene Runde. Das ganze Spiel gibt es erst nach allen Praktika (Ticket vom Backend, weiter.js).
   // Kästen mit .zs-werbung zeigen nur, wo es das Spiel gibt.
   var KNACKPUNKT_URL = 'https://fkaule.github.io/Knackpunkt/';
   function bearbeitet(qid, q) {
@@ -1661,7 +1661,7 @@
     if (!frei && cat) {
       var n = 0, fertig = 0;
       Object.keys(cat).forEach(function (qid) {
-        if (!teile.some(function (s) { return qid.indexOf(s) !== -1; }) || /:(hs|det)\d+$/.test(qid)) return;
+        if (!teile.some(function (s) { return qid.indexOf(s) !== -1; }) || /:(hs|det)\d+$/.test(qid) || (!seite && cat[qid].optional)) return;
         n++;
         if (bearbeitet(qid, cat[qid])) fertig++; else liste.push(offeneAufgabe(qid, cat[qid]));
       });

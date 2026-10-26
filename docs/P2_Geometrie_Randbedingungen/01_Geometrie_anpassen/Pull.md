@@ -2,7 +2,7 @@
 icon: material/diameter-variant
 hide:
   - toc
-sektion: Geometrieanpassungen
+sektion: Geometrie vorbereiten
 title: Radius ändern
 order: 20
 thumb: images/Radius_aendern.gif

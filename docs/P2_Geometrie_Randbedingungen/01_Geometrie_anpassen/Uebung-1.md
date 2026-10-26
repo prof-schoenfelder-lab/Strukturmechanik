@@ -1,7 +1,7 @@
 ---
 hide:
  - toc
-sektion: Geometrieanpassungen
+sektion: Geometrie vorbereiten
 title: Übung 1
 order: 30
 kurz: L-Profil verlängern und verrunden

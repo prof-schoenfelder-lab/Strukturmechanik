@@ -11,8 +11,8 @@ hide:
 !!! abstract "Lernziele"
 
 
-    - [ ] Kennenlernen der grundlegenden Methoden zur Veränderung und Vereinfachung von CAD Geometrien mit SpaceClaim 
-    - [ ] Kennenlernen der möglichen Lagerungs- und Belastungsmethoden in ANSYS Mechanical
+    - [ ] Geometrien mit SpaceClaim anpassen und für die Simulation vereinfachen
+    - [ ] Lagerungen und Lasten in ANSYS Mechanical anbringen, vor allem `Remote Displacement` und `Remote Force`: was sie tun und wann man sie einsetzt
 
 <!-- uebersicht -->
 

@@ -2,7 +2,7 @@
 hide:
  - toc
 sektion: Lagerungen
-title: Übung 4
+title: Übung 3
 order: 140
 kurz: Externe Lagerung am Fahrradrahmen
 thumb: images/Uebung-04.excalidraw.png
@@ -10,7 +10,7 @@ thumb: images/Uebung-04.excalidraw.png
 
 # Externe Lagerung am Fahrradrahmen
 
-Im vierten Beispiel verwenden wir den vereinfachten Fahrradrahmen. Wer dies in dem vorherigen Teil nicht gemacht hat, kann auch die gegebene Geometrie verwenden. 
+Im dritten Beispiel verwenden wir den vereinfachten Fahrradrahmen. Wer dies in dem vorherigen Teil nicht gemacht hat, kann auch die gegebene Geometrie verwenden. 
 
 Es sollen zwei externe Lager laut folgender Abbildung und eine Kraft im Tretlager angebracht werden:
 
