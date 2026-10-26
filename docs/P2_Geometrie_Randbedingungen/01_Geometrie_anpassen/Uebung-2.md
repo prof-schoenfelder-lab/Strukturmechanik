@@ -87,5 +87,5 @@ Anschließend die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung $u_{\max }$ in mm
 
-<div class="numeric-question" data-answer="11.305" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt?">
+<div class="numeric-question" data-answer="12.609" data-tolerance="0.5" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt?">
 </div>
