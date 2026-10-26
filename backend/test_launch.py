@@ -543,6 +543,38 @@ def main():
             "SELECT COUNT(*) FROM eingaben WHERE pseudonym='test-a'").fetchone()[0] == 0)
         tdb.close()
 
+        # ---- Sollwert-Verdacht: viele versuchen, keiner richtig, mehrere geben dasselbe ein ----------
+        QV = "/T/Verd:q0"
+        with open(os.path.join(tmp, "answers.json")) as f:
+            katalog = json.load(f)
+        katalog[QV] = {"answer": 11.305, "tolerance": 0.5, "points": 5, "attempts": 5,
+                       "diagnose": [{"value": 18.1, "hint": "Wand nicht aufgedickt?"}]}
+        with open(os.path.join(tmp, "answers.json"), "w") as f:
+            json.dump(katalog, f)
+        threading.Thread(target=sink.serve_forever, daemon=True).start()   # Push-Empfänger von oben wieder an
+        vorher = len(pushes)
+        for i, wert in enumerate((12.61, 18.1, 12.6)):
+            requests.post(BACKEND + "/api/check", headers=person("test-v%d" % i), json={"qid": QV, "value": wert})
+        time.sleep(0.5)
+        check("verdacht: unter 4 Personen kein Push", len(pushes) == vorher, str(len(pushes) - vorher))
+        requests.post(BACKEND + "/api/check", headers=person("test-v3"), json={"qid": QV, "value": 12.58})
+        for _ in range(40):
+            if len(pushes) > vorher:
+                break
+            time.sleep(0.25)
+        check("verdacht: Push an die Hilfe-App", len(pushes) == vorher + 1, str(len(pushes) - vorher))
+        r = requests.get(BACKEND + "/dashboard", params=K).text
+        check("verdacht: Kasten im Dashboard mit Kandidat",
+              "Sollwert prüfen?" in r and "4 Personen, keine richtig (Soll 11,305). 3 geben etwa 12,6 ein." in r
+              and "answer=12.6" in r, r[r.find("Sollwert prüfen?"):][:400])
+        requests.post(BACKEND + "/api/check", headers=person("test-v4"), json={"qid": QV, "value": 12.6})
+        time.sleep(0.5)
+        check("verdacht: nur ein Push je Tag", len(pushes) == vorher + 1, str(len(pushes) - vorher))
+        requests.post(BACKEND + "/api/check", headers=person("test-v5"), json={"qid": QV, "value": 11.3})
+        check("verdacht: weg, sobald einer richtig liegt",
+              "Sollwert prüfen?" not in requests.get(BACKEND + "/dashboard", params=K).text)
+        sink.shutdown()
+
         # ---- Zurücksetzen: alter Stand aus einem anderen Browser wird abgelehnt -------------
         R = person("test-r")
         alt = requests.get(BACKEND + "/api/me", headers=R).json()["generation"]

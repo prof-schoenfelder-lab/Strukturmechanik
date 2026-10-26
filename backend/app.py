@@ -815,6 +815,8 @@ def check_answer():
             (pseudonym, qid, best, q["points"], attempts, time.time()),
         )
         db.commit()
+        if not correct and "answer" in q and math.isfinite(val):
+            verdacht_melden(db, qid, q)
         if best > prev_best:
             push_score_async(pseudonym)
         resp = {"authed": True, "correct": correct, "earned": earned, "best": best,
@@ -1567,6 +1569,58 @@ def help_done():
     return redirect("dashboard?key=" + DASHBOARD_TOKEN)
 
 
+# --- Sollwert-Verdacht ------------------------------------------------------------
+# Haben heute mindestens VERDACHT_PERSONEN Personen eine Zahlenaufgabe versucht und keine davon war richtig,
+# stimmt vielleicht der Sollwert nicht. Kandidat ist ein Wert, den mindestens VERDACHT_GLEICH Personen
+# unabhängig voneinander eingeben (innerhalb der Toleranz) und den keine Diagnose erklärt. Das Dashboard
+# zeigt den Verdacht oben, die Hilfe-App bekommt je Aufgabe und Tag einen Push. Nur Zahlen, keine Personen.
+VERDACHT_PERSONEN = 4
+VERDACHT_GLEICH = 3
+
+
+def sollwert_verdacht(db, qid, q, since):
+    """{"personen": n, "kandidat": Wert oder None, "gleich": n} seit `since`, oder None ohne Verdacht."""
+    if "answer" not in q:
+        return None
+    werte = {}
+    for p, v in db.execute("SELECT pseudonym, value FROM eingaben WHERE qid=? AND created_at > ?", (qid, since)):
+        werte.setdefault(p, []).append(v)
+    tol = q.get("tolerance", 0)
+    if len(werte) < VERDACHT_PERSONEN or any(abs(v - q["answer"]) <= tol for vs in werte.values() for v in vs):
+        return None
+    tol = tol or abs(q["answer"]) * 0.01
+    kandidat, gleich = None, 0
+    for c in {v for vs in werte.values() for v in vs if not diagnose(q, v)}:
+        nah = sorted(min(vs, key=lambda v: abs(v - c)) for vs in werte.values() if any(abs(v - c) <= tol for v in vs))
+        if len(nah) > gleich:
+            gleich, kandidat = len(nah), nah[len(nah) // 2]
+    if gleich < VERDACHT_GLEICH:
+        kandidat, gleich = None, 0
+    return {"personen": len(werte), "kandidat": kandidat, "gleich": gleich}
+
+
+def verdacht_text(q, v):
+    text = "%d Personen, keine richtig (Soll %s)." % (v["personen"], _zahl(q["answer"]))
+    if v["kandidat"] is not None:
+        text += " %d geben etwa %s ein." % (v["gleich"], _zahl(round(v["kandidat"], 4)))
+    return text
+
+
+def verdacht_melden(db, qid, q):
+    """Nach einer falschen Eingabe: neuer Verdacht heute? Dann einmal Push an die Hilfe-App."""
+    heute = datetime.date.today().isoformat()
+    if (db.execute("SELECT value FROM meta WHERE key=?", ("verdacht:" + qid,)).fetchone() or [None])[0] == heute:
+        return
+    seit = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).timestamp()
+    v = sollwert_verdacht(db, qid, q, seit)
+    if not v:
+        return
+    db.execute("INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)", ("verdacht:" + qid, heute))
+    db.commit()
+    threading.Thread(target=hilfe_push, args=("Sollwert prüfen: " + unescape(short_qid(qid)), verdacht_text(q, v)),
+                     daemon=True).start()
+
+
 def wrong_value_rows(db, answers, since):
     """Häufigste falsche Eingaben seit `since`: gruppiert nach erkannter Ursache,
     ohne Diagnose nach dem auf 2 Stellen gerundeten Wert (Kandidaten für data-diagnose)."""
@@ -1961,6 +2015,18 @@ def dashboard():
     wrong_head = ('<tr><th>Aufgabe</th><th>typische Eingabe</th><th>Lösung</th>'
                   '<th>Anzahl</th><th>erkannte Ursache</th><th></th></tr>')
     wrong_today = wrong_value_rows(db, answers, midnight)
+    verdacht = []
+    for (qid,) in db.execute("SELECT DISTINCT qid FROM eingaben WHERE created_at > ?", (midnight,)).fetchall():
+        v = qid in answers and sollwert_verdacht(db, qid, answers[qid], midnight)
+        if v:
+            pruefen = "dashboard-sollwerte?key=%s&amp;qid=%s" % (DASHBOARD_TOKEN, urllib.parse.quote(qid))
+            if v["kandidat"] is not None:
+                pruefen += "&amp;answer=" + _zahl(round(v["kandidat"], 4), False)
+            verdacht.append('<li><b>%s</b>: %s <a href="%s">Sollwert prüfen</a></li>'
+                            % (short_qid(qid), escape(verdacht_text(answers[qid], v)), pruefen))
+    verdacht_html = ('<section class="card queue busy"><h2>Sollwert prüfen?</h2><p class="note">Heute hat niemand '
+                     'den richtigen Wert eingegeben, vielleicht stimmt der Sollwert nicht.</p><ul>%s</ul></section>'
+                     % "".join(verdacht)) if verdacht else ""
     wrong_html = ""
     if wrong_today:
         wrong_html = ('<div class="card"><h3>Häufige Fehlwerte heute</h3><div class="tablewrap"><table>%s%s'
@@ -2034,7 +2100,8 @@ def dashboard():
            max(0, round(e["idle"] / 60)), e["status"])
         for e in entries[:60])
     live_html = (
-        '<div class="row2">' + queue_html + switch_html + "</div>"
+        verdacht_html
+        + '<div class="row2">' + queue_html + switch_html + "</div>"
         + '<section class="hero"><p class="kicker">Praktikum heute</p><h2>Wer ist wie weit?</h2>' + kpi_html + "</section>"
         + help_html
         + multi_html

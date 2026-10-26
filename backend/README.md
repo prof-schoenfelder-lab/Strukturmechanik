@@ -125,6 +125,14 @@ OPAL. Punkte steigen nur, sie sinken nie. Passende Einträge im Fehlwert-Log
 werden entfernt. Vorher zeigt eine Vorschau, wer nachträglich Punkte bekommt.
 „Fortschritt zurücksetzen“ löscht auch die eigenen Eingaben.
 
+**Sollwert-Verdacht:** Haben an einem Tag mindestens 4 Personen eine
+Zahlenfrage versucht und keine lag richtig, zeigt das Dashboard oben den
+Kasten „Sollwert prüfen?“ mit Link zur Vorschau. Geben dabei mindestens 3
+Personen denselben Wert ein (innerhalb der Toleranz, ohne erkannte Ursache),
+steht er als Kandidat dabei. Die Hilfe-App bekommt je Frage und Tag einen Push.
+Sobald jemand richtig liegt oder der Sollwert korrigiert ist, verschwindet der
+Kasten.
+
 **Modell-Detektiv:** Fälle (`content/detektiv/*.json`) laufen wie MC-Fragen
 (qid `:det<i>`). Der Hook legt Fehlerzeile, Begründungen (`explain`) und
 `aufloesung` nur in `answers.json` ab. `/api/check` liefert bei einem Fehlgriff
