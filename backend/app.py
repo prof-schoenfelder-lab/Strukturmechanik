@@ -1205,6 +1205,50 @@ def hilfe_liste():
                     "raeume": HILFE_RAEUME, "raum_aktiv": raum_aktiv, "vapid": vapid_public()})
 
 
+# Lösungen fürs Handy: je Praktikum die Aufgaben mit Sollwert (samt Korrektur aus dem Dashboard), richtigen
+# Antworten oder Auflösung, typischen Fehlwerten und dem heutigen Sollwert-Verdacht. Nur mit Schlüssel.
+# aktuell: das Praktikum mit den meisten Eingaben heute, sonst das des nächsten Termins.
+def _aufgabe_reihenfolge(qid):
+    m = re.search(r"/P(\d+)_.*?(\d*):([a-z]+)(\d+)$", qid)
+    return (int(m.group(1)), qid.rpartition(":")[0].rsplit("/", 1)[0], int(m.group(2) or 0), m.group(3), int(m.group(4))) if m else (99, qid)
+
+
+@app.get("/api/hilfe/loesungen")
+def hilfe_loesungen():
+    if not hilfe_key_ok():
+        return jsonify({"error": "Schlüssel falsch"}), 403
+    db = get_db()
+    answers = aktive_answers(db)
+    korr = {r[0] for r in db.execute("SELECT qid FROM korrekturen")}
+    seit = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0).timestamp()
+    heute = dict(db.execute("SELECT qid, COUNT(DISTINCT pseudonym) FROM eingaben WHERE created_at > ? GROUP BY qid",
+                            (seit,)).fetchall())
+    aufgaben, zaehler = [], {}
+    for qid in sorted(answers, key=_aufgabe_reihenfolge):
+        q, m = answers[qid], re.search(r"/P(\d+)_", qid)
+        nr = int(m.group(1)) if m else 0
+        zaehler[nr] = zaehler.get(nr, 0) + heute.get(qid, 0)
+        a = {"praktikum": nr, "seite": short_page(qid.rpartition(":")[0]), "frage": unescape(short_qid(qid)).split(" · ")[-1],
+             "titel": q.get("titel", ""), "korrigiert": qid in korr}
+        if "answer" in q:
+            a.update(soll=_zahl(q["answer"]), toleranz=_zahl(q.get("tolerance", 0)),
+                     fehlwerte=[{"wert": _zahl(d["value"]), "hinweis": d.get("hint", "")} for d in q.get("diagnose", [])])
+            v = qid in heute and sollwert_verdacht(db, qid, q, seit)
+            if v:
+                a["verdacht"] = verdacht_text(q, v)
+        elif "aufloesung" in q:
+            a["aufloesung"] = q["aufloesung"]
+        else:
+            a["richtig"] = ", ".join(q.get("correct", []))
+        aufgaben.append(a)
+    aktuell = max(zaehler, key=lambda p: zaehler[p]) if any(zaehler.values()) else None
+    if aktuell is None:
+        tag = datetime.date.today().isoformat()
+        kommend = [i for t in KP_TERMINE.values() for i, d in enumerate(t) if d >= tag]
+        aktuell = min(kommend) + 1 if kommend else 1
+    return jsonify({"aktuell": aktuell, "aufgaben": aufgaben})
+
+
 @app.post("/api/hilfe/erledigt")
 def hilfe_erledigt():
     if not hilfe_key_ok():

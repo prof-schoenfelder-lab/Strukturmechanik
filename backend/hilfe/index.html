@@ -59,7 +59,7 @@ ol.queue button { background: transparent; color: var(--ink); border: 2px solid 
 input { font: inherit; width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--rule); background: var(--bg); color: var(--ink); margin: 8px 0; }
 .stand { color: var(--ink2); font-size: 13px; margin-top: 18px; text-align: center; }
 .fehler { color: #ffb3a6; }
-.tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: var(--card); padding: 4px; border-radius: 12px; margin-bottom: 14px; }
+.tabs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; background: var(--card); padding: 4px; border-radius: 12px; margin-bottom: 14px; }
 .tabs button { background: transparent; color: var(--ink2); padding: 10px 6px; font-weight: 700; font-size: 16px; }
 .tabs button[aria-pressed="true"] { background: var(--cyan); color: #fff; }
 .tabs .z { display: inline-block; min-width: 22px; padding: 0 6px; margin-left: 4px; border-radius: 11px; background: var(--rule); color: #fff; font-size: 13px; }
@@ -71,6 +71,17 @@ input { font: inherit; width: 100%; padding: 12px; border-radius: 10px; border: 
 .raumwahl button { background: transparent; color: var(--ink2); border: 1.5px solid var(--rule); padding: 4px 10px; font-size: 13px; font-weight: 700; }
 .raumwahl button[aria-pressed="true"] { border-color: var(--cyan); color: #fff; }
 .seat.auf { background: #E53009; border-color: #E53009; color: #fff; font-weight: 800; }
+.loes { list-style: none; margin: 0; padding: 0; }
+.loes li { padding: 10px 0; border-bottom: 1px solid var(--rule); }
+.loes .titel { color: var(--ink2); font-size: 15px; }
+.loes .soll { font-size: 26px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.loes .soll small { font-size: 16px; color: var(--ink2); font-weight: 600; }
+.loes .text { font-size: 15px; margin-top: 4px; }
+.loes details { margin-top: 4px; font-size: 14px; color: var(--ink2); }
+.loes summary { cursor: pointer; }
+.loes details p { margin: 6px 0 0; }
+.chip.korr { background: var(--cyan); color: #fff; }
+.verdacht { background: #E53009; color: #fff; border-radius: 8px; padding: 6px 10px; margin-top: 6px; font-size: 15px; font-weight: 600; }
 </style>
 </head>
 <body>
@@ -81,6 +92,7 @@ input { font: inherit; width: 100%; padding: 12px; border-radius: 10px; border: 
 <nav class="tabs" id="tabs" hidden>
   <button id="t-anfragen" aria-pressed="true">Anfragen <span class="z" id="z-anfragen">0</span></button>
   <button id="t-empfohlen" aria-pressed="false">Hilfe empfohlen <span class="z" id="z-empfohlen">0</span></button>
+  <button id="t-loesungen" aria-pressed="false">Lösungen</button>
 </nav>
 <main id="app"></main>
 <div class="stand" id="stand"></div>
@@ -161,11 +173,13 @@ function zeigen() {
   $('tabs').hidden = false;
   $('t-anfragen').setAttribute('aria-pressed', String(ansicht === 'anfragen'));
   $('t-empfohlen').setAttribute('aria-pressed', String(ansicht === 'empfohlen'));
+  $('t-loesungen').setAttribute('aria-pressed', String(ansicht === 'loesungen'));
   $('z-anfragen').textContent = e.length;
   const offenEmp = emp.filter(x => besucht.indexOf(besuchtKey(x)) === -1);
   $('z-empfohlen').textContent = offenEmp.length;
   $('z-empfohlen').className = 'z' + (offenEmp.some(x => x.aufgegeben) ? ' rot' : '');
   if (ansicht === 'empfohlen') return zeigenEmpfohlen(emp);
+  if (ansicht === 'loesungen') return zeigenLoesungen();
   let h;
   if (!d.an) h = '<div class="next leer"><div class="lbl">Hilfe-Knopf ist aus</div><div class="wo">Niemand kann sich melden</div>' +
     '<div class="was">Oben einschalten, wenn das Praktikum beginnt.</div></div>';
@@ -219,7 +233,45 @@ function zeigenEmpfohlen(alle) {
   };
 }
 
+// Lösungen je Praktikum; neu gezeichnet nur, wenn sich etwas ändert (sonst klappen offene Fehlwerte zu)
+let loesungen = null, loesungenZeit = 0, loesungenGezeigt = '', praktikumWahl = 0;   // 0 = das von heute
+async function loesungenLaden() {
+  if (loesungen && Date.now() - loesungenZeit < 60000) return;
+  loesungenZeit = Date.now();
+  try { loesungen = await api('/loesungen'); } catch (e) { fehler(e); }
+  if (ansicht === 'loesungen') zeigen();
+}
+function zeigenLoesungen() {
+  if (!loesungen) { loesungenLaden(); if (!loesungenGezeigt) fertig('<p class="hint">Lösungen werden geladen …</p>'); return; }
+  const p = praktikumWahl || loesungen.aktuell, alle = loesungen.aufgaben;
+  const nrn = [...new Set(alle.map(a => a.praktikum))];
+  let h = '<div class="raumwahl">' + nrn.map(n =>
+    `<button data-praktikum="${n}" aria-pressed="${n === p}">P${n}${n === loesungen.aktuell ? ' (heute)' : ''}</button>`).join('') + '</div>';
+  let seite = '';
+  for (const a of alle.filter(a => a.praktikum === p)) {
+    if (a.seite !== seite) { h += (seite ? '</ul>' : '') + `<h2>${esc(a.seite)}</h2><ul class="loes">`; seite = a.seite; }
+    h += `<li><div class="titel">${esc(a.frage)}${a.titel ? ': ' + esc(a.titel) : ''}${a.korrigiert ? ' <span class="chip korr">korrigiert</span>' : ''}</div>`;
+    if (a.soll != null) h += `<div class="soll">${esc(a.soll)} <small>± ${esc(a.toleranz)}</small></div>`;
+    else if (a.richtig) h += `<div class="soll">${esc(a.richtig)}</div>`;
+    else if (a.aufloesung) h += `<div class="text">${esc(a.aufloesung)}</div>`;
+    if (a.verdacht) h += `<div class="verdacht">Sollwert prüfen: ${esc(a.verdacht)}</div>`;
+    if (a.fehlwerte && a.fehlwerte.length) h += `<details><summary>${a.fehlwerte.length} typische${a.fehlwerte.length === 1 ? 'r' : ''} Fehlwert${a.fehlwerte.length === 1 ? '' : 'e'}</summary>` +
+      a.fehlwerte.map(f => `<p><b>${esc(f.wert)}</b>: ${esc(f.hinweis)}</p>`).join('') + '</details>';
+    h += '</li>';
+  }
+  h += seite ? '</ul>' : '<p class="hint">Keine Aufgaben in diesem Praktikum.</p>';
+  if (h === loesungenGezeigt && $('app').querySelector('.loes, .hint'))
+    return void ($('stand').textContent = 'Stand ' + new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+  loesungenGezeigt = h;
+  fertig(h);
+  for (const b of document.querySelectorAll('[data-praktikum]')) b.onclick = () => {
+    praktikumWahl = +b.dataset.praktikum;
+    zeigen();
+  };
+}
+
 function fertig(h) {
+  if (ansicht !== 'loesungen') loesungenGezeigt = '';
   $('app').innerHTML = h;
   for (const b of document.querySelectorAll('[data-id]')) b.onclick = () => erledigt(+b.dataset.id, b);
   const pb = $('push'); if (pb) pb.onclick = pushAn;
@@ -272,7 +324,7 @@ async function erledigt(id, b) {
   b.disabled = true;
   try { daten = await api('/erledigt', { id }); zeigen(); } catch (e) { fehler(e); }
 }
-for (const [id, a] of [['t-anfragen', 'anfragen'], ['t-empfohlen', 'empfohlen']])
+for (const [id, a] of [['t-anfragen', 'anfragen'], ['t-empfohlen', 'empfohlen'], ['t-loesungen', 'loesungen']])
   $(id).onclick = () => { ansicht = a; try { localStorage.setItem('hilfe_ansicht', a); } catch (e) { } if (daten) zeigen(); };
 $('schalter').onclick = async () => {
   if (!daten) return;
@@ -288,6 +340,7 @@ function fehler(e) {
 async function laden() {
   if (!key) return anmelden(false);
   try { daten = await api(''); zeigen(); } catch (e) { fehler(e); }
+  if (ansicht === 'loesungen') loesungenLaden();
 }
 function takt() {
   clearInterval(timer);

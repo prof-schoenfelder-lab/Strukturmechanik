@@ -570,6 +570,13 @@ def main():
         requests.post(BACKEND + "/api/check", headers=person("test-v4"), json={"qid": QV, "value": 12.6})
         time.sleep(0.5)
         check("verdacht: nur ein Push je Tag", len(pushes) == vorher + 1, str(len(pushes) - vorher))
+        check("lösungen: nur mit Schlüssel", requests.get(BACKEND + "/api/hilfe/loesungen").status_code == 403)
+        r = requests.get(BACKEND + "/api/hilfe/loesungen", headers=HK).json()
+        lv = [x for x in r["aufgaben"] if x["seite"] == "T Verd"]
+        check("lösungen: Sollwert, Fehlwert und Verdacht", len(lv) == 1 and lv[0]["soll"] == "11,305" and lv[0]["toleranz"] == "0,5"
+              and lv[0]["fehlwerte"] == [{"wert": "18,1", "hinweis": "Wand nicht aufgedickt?"}]
+              and lv[0]["verdacht"].startswith("5 Personen, keine richtig"), str(lv))
+        check("lösungen: MC mit richtigen Antworten", any(x.get("richtig") == "a, c" for x in r["aufgaben"]), str(r["aufgaben"])[:300])
         requests.post(BACKEND + "/api/check", headers=person("test-v5"), json={"qid": QV, "value": 11.3})
         check("verdacht: weg, sobald einer richtig liegt",
               "Sollwert prüfen?" not in requests.get(BACKEND + "/dashboard", params=K).text)
