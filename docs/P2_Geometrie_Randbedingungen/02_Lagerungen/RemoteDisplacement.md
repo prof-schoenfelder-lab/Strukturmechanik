@@ -98,3 +98,38 @@ Beim Verformungsverhalten gibt es mehrere Optionen. Wir beschränken uns in dem 
 <figure style="text-align:center;">
     <img src="../images/Remote_Displacement_Verformungsverhalten.png" alt="FreiheitsgradeDetailfenster" width="250">
 </figure>
+
+### `rigid` oder `deformable`: Was ist der Unterschied?
+
+<figure style="text-align:center;">
+<svg viewBox="0 0 640 250" width="640" style="max-width:100%;height:auto" role="img" aria-label="Remote Displacement rigid und deformable im Vergleich">
+  <g font-family="Source Sans Pro, sans-serif" font-size="14" fill="#2E3639" text-anchor="middle">
+    <text x="160" y="22" font-weight="700" fill="#022541">rigid (starr)</text>
+    <rect x="120" y="50" width="150" height="110" fill="#F2F6F9" stroke="#2E3639"/>
+    <line x1="120" y1="50" x2="120" y2="160" stroke="#022541" stroke-width="5"/>
+    <g stroke="#022541" stroke-width="2.5"><line x1="120" y1="55" x2="50" y2="105"/><line x1="120" y1="80" x2="50" y2="105"/><line x1="120" y1="105" x2="50" y2="105"/><line x1="120" y1="130" x2="50" y2="105"/><line x1="120" y1="155" x2="50" y2="105"/></g>
+    <circle cx="50" cy="105" r="6" fill="#fff" stroke="#009EE3" stroke-width="3"/>
+    <text x="160" y="190">Fläche bleibt eben und bewegt sich</text>
+    <text x="160" y="208">nur als Ganzes, wie ein starres Teil</text>
+    <text x="160" y="232" fill="#009EE3">z. B. Achse im Ausfallende, Gabelschaft</text>
+    <text x="480" y="22" font-weight="700" fill="#022541">deformable (verformbar)</text>
+    <rect x="440" y="50" width="150" height="110" fill="#F2F6F9" stroke="#2E3639"/>
+    <path d="M440,50 C455,85 455,125 440,160" fill="none" stroke="#009EE3" stroke-width="3" stroke-dasharray="6 4"/>
+    <g stroke="#2E3639" stroke-width="1.2" stroke-dasharray="3 3"><line x1="440" y1="55" x2="370" y2="105"/><line x1="447" y1="80" x2="370" y2="105"/><line x1="451" y1="105" x2="370" y2="105"/><line x1="447" y1="130" x2="370" y2="105"/><line x1="440" y1="155" x2="370" y2="105"/></g>
+    <circle cx="370" cy="105" r="6" fill="#fff" stroke="#009EE3" stroke-width="3"/>
+    <text x="480" y="190">Fläche darf sich verformen, festgelegt</text>
+    <text x="480" y="208">ist nur die Bewegung des Punkts (Mittel)</text>
+    <text x="480" y="232" fill="#009EE3">z. B. Schraubkopf am Inbus (Übung 4)</text>
+  </g>
+</svg>
+</figure>
+
+- **`rigid`:** Die Fläche wird mit dem Punkt starr verbunden. Sie bleibt eben und kann sich nur als Ganzes verschieben oder drehen, so weit die Freiheitsgrade es erlauben. Das Modell wird dort zusätzlich versteift, am Rand der Fläche kann wie beim `Fixed Support` eine Spannungsspitze entstehen.
+- **`deformable`:** Festgelegt ist nur die Bewegung des Punkts, also im Mittel die der Fläche. Die Fläche selbst darf sich verformen, die Last verteilt sich weicher.
+
+!!! question "Wann ist was sinnvoll? Prüffrage"
+    Was sitzt in Wirklichkeit an dieser Fläche, und ist es deutlich steifer als das Bauteil?
+
+    - **Ja**, ein steifes Teil hält die Fläche in Form (Achse mit Schnellspanner in den Ausfallenden, Gabelschaft im Steuerrohr, eingepresster Bolzen): `rigid`.
+    - **Nein** oder ähnlich steif, die Fläche verformt sich in Wirklichkeit mit (Schraubkopf auf dem Inbus, Einspannung ohne Singularität aus Praktikum 1): `deformable`.
+    - **Unklar:** beide rechnen und an der Stelle vergleichen, die ausgewertet wird. Ändert sich dort kaum etwas, ist die Wahl unkritisch.
