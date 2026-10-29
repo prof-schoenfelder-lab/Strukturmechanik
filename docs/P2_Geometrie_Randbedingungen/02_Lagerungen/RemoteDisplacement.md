@@ -101,7 +101,7 @@ Die Skizze zeigt nur, welche Bewegung das Lager zulässt. Mit diesem einen Lager
     - **Die echte Verbindung:** Die Fläche ist fest angebunden, sie kann weder abheben noch rutschen. Wie sich die Kraft über die Fläche verteilt, legt die Einstellung `rigid` oder `deformable` fest, nicht wie die Bauteile in Wirklichkeit aufeinander drücken.
     - **Die Masse des Bauteils:** Sie fehlt, sobald Eigengewicht oder [Beschleunigungen](../03_Belastungen/Beschleunigungen.md) wirken.
 
-    Spannungen direkt an der Anschlussfläche sind deshalb nicht aussagekräftig. Mit etwas Abstand zur Fläche spielt die genaue Verteilung der Kraft kaum noch eine Rolle (Prinzip von Saint-Venant). Dort sind die Ergebnisse brauchbar, wenn die drei Punkte oben zutreffen. Wie groß der Unterschied trotzdem sein kann, sehen Sie in Übung 3.
+    Spannungen direkt an der Anschlussfläche sind deshalb nicht aussagekräftig. Mit etwas Abstand zur Fläche spielt die genaue Verteilung der Kraft kaum noch eine Rolle. Dort sind die Ergebnisse brauchbar, wenn die drei Punkte oben zutreffen. Wie groß der Unterschied trotzdem sein kann, sehen Sie in Übung 3.
 
 Eine Alternative mit demselben Gedanken: das Bauteil im Modell lassen und auf starr setzen (unter `Geometry` am Körper `Stiffness Behavior` = `Rigid`). Dann verformt es sich nicht mehr, Geometrie und Masse bleiben aber im Modell.
 
