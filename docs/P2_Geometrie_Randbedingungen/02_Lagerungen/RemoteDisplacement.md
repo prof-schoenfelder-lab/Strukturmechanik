@@ -144,13 +144,6 @@ Unter `Behavior` legen Sie fest, wie sich die gekoppelte Fläche verhält. Im Pr
 - **`rigid`:** Die Fläche wird mit dem Punkt starr verbunden. Sie behält ihre Form und kann sich nur als Ganzes verschieben oder drehen, so weit die Freiheitsgrade es erlauben. Sind alle sechs gesperrt, wirkt das wie ein `Fixed Support`. Das Modell wird dort zusätzlich versteift, am Rand der Fläche kann wie beim `Fixed Support` eine Spannungsspitze entstehen.
 - **`deformable`:** Festgelegt ist nur die Bewegung des Punkts, also im Mittel die der Fläche. Die Fläche selbst darf sich verformen, die Last verteilt sich weicher.
 
-!!! question "Wann ist was sinnvoll? Prüffrage"
-    Hält das, was in Wirklichkeit an dieser Fläche sitzt, die Fläche in Form?
-
-    - **Ja**, ein steifes Teil ist fest mit der Fläche verbunden und hält sie in Form (Achse mit Schnellspanner in den Ausfallenden, Gabelschaft im Steuerrohr, eingepresster Bolzen): `rigid`.
-    - **Nein** oder ähnlich steif, die Fläche verformt sich in Wirklichkeit mit (Schraubkopf auf dem Inbus, Einspannung ohne Singularität aus Praktikum 1): `deformable`.
-    - **Unklar:** beide rechnen und vergleichen, nicht nur den Maximalwert, sondern auch das Verformungsbild an der Fläche (wie in Übung 3). Ändert sich dort kaum etwas, ist die Wahl unkritisch.
-
 ## Spart Remote Displacement Rechenzeit?
 
 Nicht automatisch. Sicher ist: Das Modell wird einfacher, denn das ersetzte Bauteil braucht keine Geometrie, kein Netz und keine Verbindung zum Rest.
