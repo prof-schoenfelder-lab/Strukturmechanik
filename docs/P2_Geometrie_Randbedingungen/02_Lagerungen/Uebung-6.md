@@ -58,6 +58,20 @@ Belastung:
 
 ## Gesucht
 
+### Verformung
+
+Werten Sie bei jeder Variante die Gesamtverformung des Inbus aus (`Total Deformation`).
+
+### Die maximale Gesamtverformung mit `Fixed Support` in mm
+
+<div class="numeric-question" data-answer="1.9867" data-tolerance="0.03" data-points="5" data-attempts="5" data-hints="Fixed Support auf den Flächen am Kopf? Kraft 200 N in negative y-Richtung? Einheit mm?" data-diagnose="2.1307: Das ist der Wert mit Remote Displacement (deformable). Gefragt ist hier die Variante mit Fixed Support.">
+</div>
+
+### Die maximale Gesamtverformung mit `Remote Displacement` (deformable) in mm
+
+<div class="numeric-question" data-answer="2.1307" data-tolerance="0.03" data-points="5" data-attempts="5" data-hints="Alle sechs Freiheitsgrade gesperrt? Behavior auf Deformable?" data-diagnose="1.9867: Dieser Wert entsteht mit Behavior Rigid oder mit Fixed Support. Steht Behavior auf Deformable?">
+</div>
+
 ### Spannungen
 
 Welche Lagerung führt zur ähnlichen Spannung wie die Variante mit dem Schraubkopf?
@@ -86,6 +100,48 @@ Hinweis: Wird die Körperauswahl verwendet und der Inbus der jeweiligen Randbedi
 </div>
 
 
+### Woher kommt der Unterschied in der Verformung?
+
+Zeigen Sie bei `Fixed Support` und bei `Remote Displacement` (deformable) die Gesamtverformung nur an den Flächen der Lagerung an: Flächen auswählen, dann `Rechtsklick Strukturbaum Solution → Insert → Deformation → Total`.
+
+<div class="multiple-choice-question" data-correct="A" data-points="5" data-attempts="2">
+  <div class="mc-options">
+    <div class="mc-option" data-value="A">
+      <input type="checkbox" id="q4u_a" name="q4u">
+      <label for="q4u_a">Mit deformable verschiebt sich die Lagerfläche selbst ein wenig. Der Inbus verformt sich in beiden Fällen gleich und wird nur mitgenommen.</label>
+    </div>
+    <div class="mc-option" data-value="B">
+      <input type="checkbox" id="q4u_b" name="q4u">
+      <label for="q4u_b">Mit deformable ist der Inbus selbst weicher.</label>
+    </div>
+    <div class="mc-option" data-value="C">
+      <input type="checkbox" id="q4u_c" name="q4u">
+      <label for="q4u_c">Mit deformable wirkt eine größere Kraft auf den Inbus.</label>
+    </div>
+  </div>
+</div>
+
+### Reicht hier ein `Fixed Support`?
+
+Kreuzen Sie alle Aufgabenstellungen an, für die ein `Fixed Support` am Kopf ausreicht.
+
+<div class="multiple-choice-question" data-correct="A" data-points="5" data-attempts="2">
+  <div class="mc-options">
+    <div class="mc-option" data-value="A">
+      <input type="checkbox" id="q4f_a" name="q4f">
+      <label for="q4f_a">Ich will die Spannung im langen Schenkel wissen, weit weg vom Kopf.</label>
+    </div>
+    <div class="mc-option" data-value="B">
+      <input type="checkbox" id="q4f_b" name="q4f">
+      <label for="q4f_b">Ich will die Verformung an der Last genau vorhersagen.</label>
+    </div>
+    <div class="mc-option" data-value="C">
+      <input type="checkbox" id="q4f_c" name="q4f">
+      <label for="q4f_c">Ich will die Spannung direkt am Kopf wissen.</label>
+    </div>
+  </div>
+</div>
+
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->
 <div class="solution-images">
 
@@ -95,13 +151,34 @@ Hinweis: Wird die Körperauswahl verwendet und der Inbus der jeweiligen Randbedi
 
 <iframe title="maximale Spannungen (MPa)" aria-label="Bar Chart" id="datawrapper-chart-pQGBH" src="https://datawrapper.dwcdn.net/pQGBH/3/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="185" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
 
+<h3>Verformung je Lagerung</h3>
+
+<table>
+<thead><tr><th>Lagerung</th><th>max. Gesamtverformung</th><th>gegenüber Schraubkopf</th></tr></thead>
+<tbody>
+<tr><td>a) Schraubkopf (Referenz)</td><td>2,066 mm</td><td></td></tr>
+<tr><td>b) <code>Fixed Support</code></td><td>1,987 mm</td><td>-4 %</td></tr>
+<tr><td>c) <code>Remote Displacement</code> (rigid)</td><td>1,987 mm</td><td>-4 %</td></tr>
+<tr><td>d) <code>Remote Displacement</code> (deformable)</td><td>2,131 mm</td><td>+3 %</td></tr>
+<tr><td>e) <code>Elastic Support</code></td><td>2,304 mm</td><td>+12 %</td></tr>
+</tbody>
+</table>
+
+<ul>
+<li><code>Fixed Support</code> und <code>Remote Displacement</code> (rigid) mit allen Freiheitsgraden gesperrt sind dasselbe: Die Lagerfläche kann sich in beiden Fällen nicht bewegen.</li>
+<li>Der Inbus selbst verformt sich in allen Varianten gleich, außer direkt an der Lagerung. Die Unterschiede kommen nur daher, wie stark die Lagerung nachgibt.</li>
+<li>Der echte Schraubkopf gibt etwas nach: mehr als ein <code>Fixed Support</code>, weniger als <code>deformable</code> annimmt.</li>
+<li>Der <code>Elastic Support</code> ist mit k = 20 000 N/mm³ hier weicher als der Schraubkopf. Mit einem größeren k läge er näher an der Referenz.</li>
+<li>Ein <code>Fixed Support</code> reicht deshalb, wenn Spannungen weit weg von der Lagerung gefragt sind. Für die Verformung an der Last ist er etwas zu steif, für Spannungen direkt am Kopf nicht aussagekräftig.</li>
+</ul>
+
 <h3>Warum liegen zwei Lagerungen nah am Schraubkopf?</h3>
 <p>Im echten Schraubkopf gibt die Auflagefläche ein wenig nach: Der Inbus kann sich dort verformen, die Last verteilt sich über die ganze Fläche.</p>
 <ul>
 <li><code>Fixed Support</code>: Jeder Knoten der Fläche steht fest, die Fläche kann sich gar nicht verformen. Das ist steifer als in Wirklichkeit, und am Rand der Einspannung entsteht eine Singularität: Die Spannung dort hängt vom Netz ab, nicht von der Lagerung.</li>
-<li><code>Remote Displacement (rigid)</code>: Die Fläche darf sich nur als Ganzes bewegen, bleibt aber starr. Für die Fläche wirkt das fast wie eine feste Einspannung, mit derselben Spannungsspitze am Rand.</li>
+<li><code>Remote Displacement (rigid)</code>: Die Fläche darf sich nur als Ganzes bewegen. Mit allen Freiheitsgraden gesperrt ist das genau eine feste Einspannung, mit derselben Spannungsspitze am Rand.</li>
 <li><code>Remote Displacement (deformable)</code>: Gesperrt ist nur die Bewegung des Bezugspunkts, die Fläche selbst darf sich verformen. So verteilt sich die Last wie im Schraubkopf.</li>
-<li><code>Elastic Support</code>: Die Fläche liegt auf Federn mit der Bettungssteifigkeit k und gibt nach wie im Schraubkopf. Wie nah das Ergebnis an der Wirklichkeit liegt, hängt von k ab. Prüffrage: Woher kommt der Wert für k, und wie stark ändert sich das Ergebnis, wenn k doppelt oder halb so groß ist?</li>
+<li><code>Elastic Support</code>: Die Fläche liegt auf Federn mit der Bettungssteifigkeit k und gibt nach wie im Schraubkopf. Wie nah das Ergebnis an der Wirklichkeit liegt, hängt von k ab.</li>
 </ul>
 
 </div>

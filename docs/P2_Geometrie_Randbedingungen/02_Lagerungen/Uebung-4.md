@@ -200,7 +200,7 @@ Vergleichen Sie A, B und C: den Maximalwert, aber auch, **wo** das Maximum liegt
 </div>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->
-<div class="solution-images">
+<div class="solution-images" markdown="1">
 
 🎯 <strong>Lösung</strong>
 
