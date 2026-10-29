@@ -233,6 +233,3 @@ Vergleichen Sie A, B und C: den Maximalwert, aber auch, **wo** das Maximum liegt
 - Dass `rigid` etwas steifer rechnet, liegt daran, dass die Dummies in A selbst etwas nachgeben, das starre Remote Displacement aber nicht.
 
 </div>
-
-!!! question "Prüffrage für eigene Modelle"
-    Was sitzt in Wirklichkeit an der Fläche, und hält es die Fläche in Form? Wenn ja: `rigid`. Wenn unklar: beide Varianten rechnen und das **Verformungsbild an der Fläche** vergleichen, nicht nur den Maximalwert.
