@@ -16,6 +16,7 @@ Im Rahmenprüfstand des bikelab der HTWK steht der Fahrradrahmen nicht auf Räde
 <svg viewBox="0 0 2000 1711" width="700" style="max-width:100%;height:auto" role="img" aria-label="Fahrradrahmen im Prüfstand mit Bezeichnungen: Steuerrohr, Gabel-Dummy, Tretlager, Ausfallenden, Hinterrad-Dummy">
   <image href="../images/Pruefstand_Rahmen.webp" x="0" y="0" width="2000" height="1711"/>
   <g fill="#2f9e44" fill-opacity="0.45" stroke="#2f9e44" stroke-width="4" stroke-linejoin="round">
+    <polygon points="1427,92 1457,82 1478,97 1478,112 1482,118 1490,160 1442,175 1430,133 1417,122 1415,112"/>
     <polygon points="1500,345 1545,345 1570,435 1520,440"/>
     <polygon points="1552,440 1605,432 1700,727 1652,737"/>
     <polygon points="1668,737 1700,730 1755,830 1720,840"/>
