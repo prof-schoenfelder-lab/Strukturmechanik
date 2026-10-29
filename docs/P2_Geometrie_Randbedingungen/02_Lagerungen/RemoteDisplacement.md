@@ -73,10 +73,17 @@ Wichtig wird die Lage des Punkts, sobald ein Freiheitsgrad frei ist: Eine freie 
     <img src="../images/RemoteDisplacement_Fahrradbeispiel.excalidraw.png" alt="Remote Displacement am Fahrradrahmen" width="600">
 </figure>
 
-!!! question "Darf ich das Bauteil weglassen? Prüffrage"
-    Zwischen Punkt und Fläche verformt sich im Modell nichts mehr: Das weggelassene Bauteil wirkt wie unendlich steif. Das ist nur sinnvoll, wenn es im Vergleich zum berechneten Bauteil **quasi starr** ist. Fragen Sie sich: Verformt sich das Bauteil, das ich weglasse, deutlich weniger als mein Bauteil? Wenn nicht, gehört es ins Modell.
+!!! info "Was beim Ersetzen vereinfacht wird"
+    Remote Displacement ersetzt das Bauteil durch eine ideale Verbindung zwischen Punkt und Fläche. Dabei fallen drei Dinge weg:
 
-    Auch seine Masse fehlt dann im Modell. Das spielt eine Rolle, sobald Eigengewicht oder [Beschleunigungen](../03_Belastungen/Beschleunigungen.md) wirken.
+    - **Die Verformung des Bauteils:** Es wirkt wie unendlich steif. Das passt nur, wenn es sich deutlich weniger verformt als das berechnete Bauteil.
+    - **Der echte Kontakt:** Die Fläche ist fest angebunden, sie kann weder abheben noch rutschen. Wie sich die Kraft über die Fläche verteilt, legt die Einstellung `rigid` oder `deformable` fest, nicht der tatsächliche Kontaktdruck.
+    - **Die Masse des Bauteils:** Sie fehlt, sobald Eigengewicht oder [Beschleunigungen](../03_Belastungen/Beschleunigungen.md) wirken.
+
+    Spannungen direkt an der Anschlussfläche sind deshalb nicht aussagekräftig. Mit etwas Abstand zur Fläche spielt die genaue Verteilung der Kraft kaum noch eine Rolle (Prinzip von Saint-Venant). Dort sind die Ergebnisse brauchbar, wenn die drei Punkte oben zutreffen. Wie groß der Unterschied trotzdem sein kann, sehen Sie in Übung 3.
+
+!!! question "Prüffrage"
+    Will ich direkt an der Anschlussfläche etwas auswerten, oder kann das Bauteil dort in Wirklichkeit abheben oder rutschen? Dann gehört es mit seiner Verbindung (Kontakt) ins Modell.
 
 Eine Alternative mit demselben Gedanken: das Bauteil im Modell lassen und auf starr setzen (unter `Geometry` am Körper `Stiffness Behavior` = `Rigid`). Dann verformt es sich nicht mehr, Geometrie und Masse bleiben aber im Modell.
 
