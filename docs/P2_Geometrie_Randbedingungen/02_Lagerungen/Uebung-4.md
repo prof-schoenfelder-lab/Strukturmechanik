@@ -30,7 +30,7 @@ Im Rahmenprüfstand des bikelab der HTWK steht der Fahrradrahmen nicht auf Räde
     <line x1="430" y1="900" x2="470" y2="950" stroke="#2f9e44" stroke-width="5"/><circle cx="470" cy="950" r="12" fill="#2f9e44"/><rect x="20" y="854" width="410" height="64" rx="8" fill="#ffffff" fill-opacity="0.9" stroke="#2f9e44" stroke-width="3"/><text x="225" y="886" fill="#2f9e44">Hinterrad-Dummy</text>
   </g>
 </svg>
-<figcaption>Der Rahmen aus der Übung im Rahmenprüfstand des bikelab. Auf dem Foto greift die Last am Sattel an, in der Übung am Tretlager.</figcaption>
+<figcaption>Der Rahmen aus der Übung im Rahmenprüfstand des bikelab. Auf dem Foto greift die Kraft am Satteldummy an, in der Übung am Tretlager.</figcaption>
 </figure>
 
 !!! info "Begriffe am Rahmen"
@@ -224,4 +224,4 @@ Vergleichen Sie A, B und C: den Maximalwert, aber auch, **wo** das Maximum liegt
 !!! question "Prüffrage für eigene Modelle"
     Was sitzt in Wirklichkeit an der Fläche, und hält es die Fläche in Form? Wenn ja: `rigid`. Wenn unklar: beide Varianten rechnen und das **Verformungsbild an der Fläche** vergleichen, nicht nur den Maximalwert.
 
-Auf dem Foto vom Prüfstand greift die Last nicht am Tretlager an, sondern am Sattel, also oberhalb des Sitzrohrs und außerhalb der Rahmengeometrie. Wie man eine Kraft an einem Punkt außerhalb der Geometrie anbringt, zeigt [Übung 5](../03_Belastungen/Uebung-7.md) mit `Remote Force`.
+Auf dem Foto vom Prüfstand greift die Kraft nicht am Tretlager an, sondern am Satteldummy, also oberhalb des Sitzrohrs und außerhalb der Rahmengeometrie. Wie man eine Kraft an einem Punkt außerhalb der Geometrie anbringt, zeigt [Übung 5](../03_Belastungen/Uebung-7.md) mit `Remote Force`.
