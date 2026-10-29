@@ -90,7 +90,8 @@ Die Skizze zeigt nur, welche Bewegung das Lager zulässt. Mit diesem einen Lager
 **Der Punkt darf aber auch außerhalb liegen.** Dann bildet er ein entferntes Lager ab: Die Freiheitsgrade dieses Punkts werden auf die gewählte Fläche übertragen, und das Bauteil dazwischen muss nicht modelliert werden.
 
 <figure style="text-align:center;">
-    <img src="../images/RemoteDisplacement_Fahrradbeispiel.excalidraw.png" alt="Remote Displacement am Fahrradrahmen" width="600">
+    <img src="../images/Uebung-04-Dummies.excalidraw.png" alt="Rahmen im Prüfstand mit Dummies (A) und mit Remote Displacement statt Dummies (B)" width="700" class="no-lightbox">
+    <figcaption>Prüfstand aus Übung 3: In B werden die Festlager in den Drehpunkten der Dummies per Remote Displacement auf Ausfallenden und Steuerrohr übertragen.</figcaption>
 </figure>
 
 !!! info "Was beim Ersetzen vereinfacht wird"
