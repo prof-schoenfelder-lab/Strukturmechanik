@@ -49,45 +49,13 @@ Im Rahmenprüfstand des bikelab der HTWK steht der Fahrradrahmen nicht auf Räde
     - **Sitzstreben:** die beiden Rohre vom Sitzrohr schräg nach unten zu den Ausfallenden
     - **Tretlager:** das quer liegende Rohr unten, in dem die Kurbel gelagert ist
 
-Die Dummies lassen sich mitmodellieren, aber sie kosten Geometrie, Joints und Elemente. In dieser Übung vergleichen Sie den Rahmen **mit** Dummies mit dem Rahmen, bei dem jeder Dummy durch ein `Remote Displacement` ersetzt ist. Der Vergleich zeigt, was Remote Displacement eigentlich tut: Es ersetzt ein Bauteil, das man nicht modellieren will.
+Die Dummies sind extrem steif gegenüber dem Rahmen, daher können diese durch Remote Displacement ersetzt werden. Mitmodelliert kosten sie Geometrie, Joints und Elemente. In dieser Übung vergleichen Sie den Rahmen **mit** Dummies mit dem Rahmen, bei dem jeder Dummy durch ein `Remote Displacement` ersetzt ist. Der Vergleich zeigt, was Remote Displacement eigentlich tut: Es ersetzt ein Bauteil, das man nicht modellieren will.
 
 <figure style="text-align:center;">
-<svg viewBox="0 0 760 260" width="760" style="max-width:100%;height:auto" role="img" aria-label="Rahmen mit Dummies und Rahmen mit Remote Displacement">
-  <g font-family="Source Sans Pro, sans-serif" font-size="14" fill="#2E3639" text-anchor="middle">
-    <text x="180" y="20" font-weight="700" fill="#022541">A: Mit Dummies</text>
-    <g stroke="#004699" stroke-width="5" stroke-linecap="round" fill="none">
-      <line x1="140" y1="70" x2="260" y2="70"/><line x1="140" y1="70" x2="165" y2="150"/><line x1="260" y1="70" x2="165" y2="150"/>
-      <line x1="140" y1="70" x2="80" y2="140"/><line x1="80" y1="140" x2="165" y2="150"/>
-    </g>
-    <path d="M258,62 L270,66 L300,196 L288,200 Z" fill="#BEC3C6" stroke="#2E3639"/>
-    <rect x="74" y="140" width="12" height="60" fill="#BEC3C6" stroke="#2E3639"/>
-    <circle cx="294" cy="205" r="5" fill="#fff" stroke="#2E3639" stroke-width="2"/>
-    <path d="M294,210 L284,226 L304,226 z" fill="none" stroke="#2E3639" stroke-width="1.5"/>
-    <circle cx="80" cy="205" r="5" fill="#fff" stroke="#2E3639" stroke-width="2"/>
-    <path d="M80,210 L70,226 L90,226 z" fill="none" stroke="#2E3639" stroke-width="1.5"/>
-    <text x="312" y="140" text-anchor="start" font-size="13">Gabel-Dummy</text>
-    <text x="20" y="250" text-anchor="start" font-size="13">Hinterrad-Dummy, Drehpunkt</text>
-    <text x="265" y="250" text-anchor="start" font-size="13">Drehpunkt</text>
-    <line x1="165" y1="110" x2="165" y2="144" stroke="#E53009" stroke-width="2.5"/><path d="M160,138 L165,148 L170,138 z" fill="#E53009"/>
-    <text x="178" y="120" fill="#E53009" text-anchor="start">F</text>
-
-    <text x="560" y="20" font-weight="700" fill="#022541">B und C: Dummies ersetzt</text>
-    <g stroke="#004699" stroke-width="5" stroke-linecap="round" fill="none">
-      <line x1="520" y1="70" x2="640" y2="70"/><line x1="520" y1="70" x2="545" y2="150"/><line x1="640" y1="70" x2="545" y2="150"/>
-      <line x1="520" y1="70" x2="460" y2="140"/><line x1="460" y1="140" x2="545" y2="150"/>
-    </g>
-    <line x1="644" y1="66" x2="674" y2="200" stroke="#009EE3" stroke-width="2" stroke-dasharray="6 4"/>
-    <line x1="460" y1="140" x2="460" y2="200" stroke="#009EE3" stroke-width="2" stroke-dasharray="6 4"/>
-    <circle cx="674" cy="205" r="6" fill="#fff" stroke="#009EE3" stroke-width="3"/>
-    <circle cx="460" cy="205" r="6" fill="#fff" stroke="#009EE3" stroke-width="3"/>
-    <text x="690" y="140" text-anchor="start" font-size="13" fill="#009EE3">Remote</text>
-    <text x="690" y="156" text-anchor="start" font-size="13" fill="#009EE3">Displacement</text>
-    <text x="420" y="250" text-anchor="start" font-size="13" fill="#009EE3">Punkt im Drehpunkt des Dummys</text>
-    <line x1="545" y1="110" x2="545" y2="144" stroke="#E53009" stroke-width="2.5"/><path d="M540,138 L545,148 L550,138 z" fill="#E53009"/>
-    <text x="558" y="120" fill="#E53009" text-anchor="start">F</text>
-  </g>
-</svg>
+  <img src="../images/Uebung-04-Dummies.excalidraw.png" alt="Rahmen mit Dummies (A) und mit Remote Displacement statt Dummies (B und C)" width="700" class="no-lightbox">
 </figure>
+
+**So arbeitet Remote Displacement hier:** Die Verformung der gewählten Geometrie, zum Beispiel der Innenflächen des Steuerrohrs, wird auf einen externen Punkt bezogen, hier den Drehpunkt des Festlagers. Für diesen Punkt geben Sie dann die Randbedingung an: nicht verschiebbar, nur drehbar um eine Achse.
 
 ## Gegeben
 
