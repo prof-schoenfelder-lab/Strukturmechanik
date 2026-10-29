@@ -151,16 +151,16 @@ Kreuzen Sie alle Aufgabenstellungen an, für die ein `Fixed Support` am Kopf aus
 
 <iframe title="maximale Spannungen (MPa)" aria-label="Bar Chart" id="datawrapper-chart-pQGBH" src="https://datawrapper.dwcdn.net/pQGBH/3/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="185" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>
 
-<h3>Verformung je Lagerung</h3>
+<h3>Verformung und Spannung je Lagerung</h3>
 
 <table>
-<thead><tr><th>Lagerung</th><th>max. Gesamtverformung</th><th>gegenüber Schraubkopf</th></tr></thead>
+<thead><tr><th>Lagerung</th><th>max. Gesamtverformung</th><th>gegenüber Schraubkopf</th><th>max. Vergleichsspannung</th><th>gegenüber Schraubkopf</th></tr></thead>
 <tbody>
-<tr><td>a) Schraubkopf (Referenz)</td><td>2,066 mm</td><td></td></tr>
-<tr><td>b) <code>Fixed Support</code></td><td>1,987 mm</td><td>-4 %</td></tr>
-<tr><td>c) <code>Remote Displacement</code> (rigid)</td><td>1,987 mm</td><td>-4 %</td></tr>
-<tr><td>d) <code>Remote Displacement</code> (deformable)</td><td>2,131 mm</td><td>+3 %</td></tr>
-<tr><td>e) <code>Elastic Support</code></td><td>2,304 mm</td><td>+12 %</td></tr>
+<tr><td>a) Schraubkopf (Referenz)</td><td>2,066 mm</td><td></td><td>353,7 MPa</td><td></td></tr>
+<tr><td>b) <code>Fixed Support</code></td><td>1,987 mm</td><td>-4 %</td><td>405,2 MPa</td><td>+15 %</td></tr>
+<tr><td>c) <code>Remote Displacement</code> (rigid)</td><td>1,987 mm</td><td>-4 %</td><td>405,2 MPa</td><td>+15 %</td></tr>
+<tr><td>d) <code>Remote Displacement</code> (deformable)</td><td>2,131 mm</td><td>+3 %</td><td>353,0 MPa</td><td>-0,2 %</td></tr>
+<tr><td>e) <code>Elastic Support</code></td><td>2,304 mm</td><td>+12 %</td><td>354,2 MPa</td><td>+0,1 %</td></tr>
 </tbody>
 </table>
 
@@ -169,7 +169,8 @@ Kreuzen Sie alle Aufgabenstellungen an, für die ein `Fixed Support` am Kopf aus
 <li>Der Inbus selbst verformt sich in allen Varianten gleich, außer direkt an der Lagerung. Die Unterschiede kommen nur daher, wie stark die Lagerung nachgibt.</li>
 <li>Der echte Schraubkopf gibt etwas nach: mehr als ein <code>Fixed Support</code>, weniger als <code>deformable</code> annimmt.</li>
 <li>Der <code>Elastic Support</code> ist mit k = 20 000 N/mm³ hier weicher als der Schraubkopf. Mit einem größeren k läge er näher an der Referenz.</li>
-<li>Ein <code>Fixed Support</code> reicht deshalb, wenn Spannungen weit weg von der Lagerung gefragt sind. Für die Verformung an der Last ist er etwas zu steif, für Spannungen direkt am Kopf nicht aussagekräftig.</li>
+<li>Bei der Spannung ist es anders: <code>deformable</code> und <code>Elastic Support</code> liegen weniger als 1 % neben dem Schraubkopf, <code>Fixed Support</code> und <code>rigid</code> 15 % darüber. Dort entsteht am Rand der Lagerung eine Singularität.</li>
+<li>Ob eine Lagerung als Ersatz taugt, hängt also davon ab, was gefragt ist: Für die Spannung passen hier <code>deformable</code> und <code>Elastic Support</code>, für die Verformung keine der Varianten ganz genau. Ein <code>Fixed Support</code> reicht, wenn Spannungen weit weg von der Lagerung gefragt sind.</li>
 </ul>
 
 <h3>Warum liegen zwei Lagerungen nah am Schraubkopf?</h3>
