@@ -10,7 +10,7 @@ thumb: images/Pruefstand_Rahmen.webp
 
 # Prüfstands-Dummies durch Remote Displacement ersetzen
 
-Im Prüfstand der HTWK steht der Fahrradrahmen nicht auf Rädern, sondern auf zwei **Dummies**, also Ersatzteilen aus Stahl: Vorne steckt statt der Gabel der **Gabel-Dummy** im Steuerrohr, hinten sitzt statt des Hinterrads der **Hinterrad-Dummy** zwischen den Ausfallenden. Beide Dummies stehen unten in einem **Festlager**: Sie können sich dort um ihren Drehpunkt drehen, aber nicht verschieben.
+Im Rahmenprüfstand des bikelab der HTWK steht der Fahrradrahmen nicht auf Rädern, sondern auf zwei **Dummies**, also Ersatzteilen aus Stahl: Vorne steckt statt der Gabel der **Gabel-Dummy** im Steuerrohr, hinten sitzt statt des Hinterrads der **Hinterrad-Dummy** zwischen den Ausfallenden. Beide Dummies stehen unten in einem **Festlager**: Sie können sich dort um ihren Drehpunkt drehen, aber nicht verschieben.
 
 <figure style="text-align:center;">
 <svg viewBox="0 0 2000 1711" width="700" style="max-width:100%;height:auto" role="img" aria-label="Fahrradrahmen im Prüfstand mit Bezeichnungen: Steuerrohr, Gabel-Dummy, Tretlager, Ausfallenden, Hinterrad-Dummy">
@@ -41,7 +41,7 @@ Im Prüfstand der HTWK steht der Fahrradrahmen nicht auf Rädern, sondern auf zw
     <text x="58" y="902">Hinterrad-Dummy</text>
   </g>
 </svg>
-<figcaption>Der Rahmen aus der Übung im Prüfstand. Auf dem Foto greift die Last am Sattel an, in der Übung am Tretlager.</figcaption>
+<figcaption>Der Rahmen aus der Übung im Rahmenprüfstand des bikelab. Auf dem Foto greift die Last am Sattel an, in der Übung am Tretlager.</figcaption>
 </figure>
 
 !!! info "Begriffe am Rahmen"
