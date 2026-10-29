@@ -82,36 +82,29 @@ Im Archiv sind zwei Analysen vorbereitet:
 
 ### 2. Dummies durch Remote Displacement ersetzen
 
-In Analyse B ersetzen Sie jeden Dummy durch ein `Remote Displacement`. Es sitzt auf denselben Flächen, an denen der Dummy mit dem Rahmen verbunden war, und sein Punkt liegt im Drehpunkt des Dummys.
+In Analyse B ersetzen Sie jeden Dummy durch ein `Remote Displacement`: auf denselben Flächen, an denen der Dummy mit dem Rahmen verbunden war, mit dem Punkt im Drehpunkt des Dummys. Die Koordinatensysteme `Hinterrad-Drehpunkt` und `Gabel-Drehpunkt` sind schon angelegt und beide Dummies unterdrückt. **Sie legen nur noch je Dummy ein `Remote Displacement` an.**
 
-Ein Bauteil durch `Remote Displacement` zu ersetzen, geht in vier Schritten. **In Analyse B sind die ersten drei schon erledigt**, die Bilder zeigen sie am Beispiel des Gabel-Dummys, damit Sie sehen, wie B entstanden ist.
+??? info "<code>ZUSATZINFO</code>: So wurde Analyse B vorbereitet (schon erledigt, klicken zum Aufklappen)"
 
-<div class="steps" markdown="1" data-kategorie="Randbedingungen" data-titel="So ist Analyse B vorbereitet">
+    **Das ist in Analyse B bereits gemacht. Sie müssen hier nichts tun.** Die Schritte zeigen nur, wie die Koordinatensysteme entstanden sind, hier am Beispiel des Gabel-Dummys. So gehen Sie vor, wenn Sie das später in einem eigenen Modell brauchen.
 
-  <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Koordinatensystem in den Drehpunkt legen (erledigt)</p>
-    <p>Am Dummy die Fläche der Gelenkbohrung auswählen, dann <code>Rechtsklick Strukturbaum Coordinate Systems → Insert → Coordinate System</code>. Der Ursprung liegt damit auf der Drehachse.</p>
-    <figure style="text-align:center;"><img src="../images/RD-Sequenz-01-KOS-einfuegen.webp" alt="Coordinate System an der Gelenkbohrung des Gabel-Dummys einfügen" width="700"></figure>
-  </div>
+    **1. Koordinatensystem in den Drehpunkt legen:** Am Dummy die Fläche der Gelenkbohrung auswählen, dann `Rechtsklick Strukturbaum Coordinate Systems → Insert → Coordinate System`. Der Ursprung liegt damit auf der Drehachse.
 
-  <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Bezug zur Geometrie lösen (erledigt)</p>
-    <p>Im Detailfenster unter <code>Origin</code> bei <code>Define By</code> von <code>Geometry Selection</code> auf <code>Global Coordinates</code> umstellen. Der Ursprung bleibt, wo er ist, hängt aber nicht mehr an der Fläche des Dummys, der im nächsten Schritt unterdrückt wird. Die Achsen zeigen wie die globalen Achsen, die Drehachse der Dummies ist x.</p>
-    <figure style="text-align:center;"><img src="../images/RD-Sequenz-02-KOS-Geometrie-Referenz-entfernen.webp" alt="Define By auf Global Coordinates umstellen" width="450"></figure>
-  </div>
+    <figure style="text-align:center;">
+    <img src="../images/RD-Sequenz-01-KOS-einfuegen.webp" alt="Coordinate System an der Gelenkbohrung des Gabel-Dummys einfügen" width="700" class="no-lightbox">
+    </figure>
 
-  <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Dummy unterdrücken (erledigt)</p>
-    <p>Im Strukturbaum unter <code>Geometry</code> den Dummy anklicken, dann <code>Rechtsklick → Suppress Body</code>. Das Koordinatensystem bleibt erhalten, Lager und Joints am Dummy wirken danach nicht mehr.</p>
-    <figure style="text-align:center;"><img src="../images/RD-Sequenz-03-Dummy-unterdruecken.webp" alt="Gabel-Dummy mit Suppress Body unterdrücken" width="450"></figure>
-  </div>
+    **2. Bezug zur Geometrie lösen:** Im Detailfenster unter `Origin` bei `Define By` von `Geometry Selection` auf `Global Coordinates` umstellen. Der Ursprung bleibt, wo er ist, hängt aber nicht mehr an der Fläche des Dummys, der im nächsten Schritt unterdrückt wird. Die Achsen zeigen wie die globalen Achsen, die Drehachse der Dummies ist x.
 
-</div>
+    <figure style="text-align:center;">
+    <img src="../images/RD-Sequenz-02-KOS-Geometrie-Referenz-entfernen.webp" alt="Define By auf Global Coordinates umstellen" width="450" class="no-lightbox">
+    </figure>
 
-**Schritt 4 ist Ihre Aufgabe:** je Dummy ein `Remote Displacement` anlegen.
+    **3. Dummy unterdrücken:** Im Strukturbaum unter `Geometry` den Dummy anklicken, dann `Rechtsklick → Suppress Body`. Das Koordinatensystem bleibt erhalten, Lager und Joints am Dummy wirken danach nicht mehr.
 
-!!! tip "Welche Flächen?"
-    In Analyse A unter `Connections` die Joints anklicken: `General - SYS\Hinterrad-Dummy To SYS\Rahmen` markiert die Flächen an den **Ausfallenden**, `General - SYS\Gabel-Dummy To SYS\Rahmen` die Flächen im **Steuerrohr**. Genau diese Flächen am Rahmen wählen Sie in B für das Remote Displacement aus.
+    <figure style="text-align:center;">
+    <img src="../images/RD-Sequenz-03-Dummy-unterdruecken.webp" alt="Gabel-Dummy mit Suppress Body unterdrücken" width="450" class="no-lightbox">
+    </figure>
 
 <div class="steps" markdown="1" data-kategorie="Randbedingungen" data-titel="Remote Displacement im Drehpunkt eines Dummys anlegen">
 
@@ -122,7 +115,7 @@ Ein Bauteil durch `Remote Displacement` zu ersetzen, geht in vier Schritten. **I
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Flächen zuweisen</p>
-    <p>Die Flächen am Rahmen auswählen, an denen der Dummy angebunden war, und unter <code>Geometry</code> mit <code>Apply</code> bestätigen</p>
+    <p>Überlegen Sie, an welchen Flächen des Rahmens der Dummy angebunden war. Diese Flächen auswählen und unter <code>Geometry</code> mit <code>Apply</code> bestätigen.</p>
   </div>
 
   <div class="step">
@@ -143,13 +136,13 @@ Ein Bauteil durch `Remote Displacement` zu ersetzen, geht in vier Schritten. **I
 
 </div>
 
-- [ ] Remote Displacement `Hinterrad` auf den Ausfallenden mit `Hinterrad-Drehpunkt` anlegen
-- [ ] Remote Displacement `Gabel` im Steuerrohr mit `Gabel-Drehpunkt` anlegen
+- [ ] Remote Displacement für den Hinterrad-Dummy mit `Hinterrad-Drehpunkt` anlegen
+- [ ] Remote Displacement für den Gabel-Dummy mit `Gabel-Drehpunkt` anlegen
 - [ ] Analyse B rechnen und die Gesamtverformung des Rahmens (`Total Deformation`) ansehen
 
 ### Die maximale Gesamtverformung des Rahmens mit Remote Displacement (deformable) in mm
 
-<div class="numeric-question" data-answer="0.45212" data-tolerance="0.01" data-points="5" data-attempts="5" data-hints="Beide Remote Displacements auf den Flächen am Rahmen, mit den Koordinatensystemen Hinterrad-Drehpunkt und Gabel-Drehpunkt? X, Y und Z Coordinate auf 0? Nur Rotation X frei? Behavior Deformable?">
+<div class="numeric-question" data-answer="0.45212" data-tolerance="0.01" data-points="5" data-attempts="5" data-hints="Richtige Flächen gewählt? Gemeint sind die Flächen am Rahmen, an denen die Dummies angebunden waren. Wo genau, zeigen in Analyse A unter Connections die Joints General - SYS\Hinterrad-Dummy To SYS\Rahmen und General - SYS\Gabel-Dummy To SYS\Rahmen.|Koordinatensysteme Hinterrad-Drehpunkt und Gabel-Drehpunkt gewählt und X, Y und Z Coordinate auf 0 gesetzt? Nur Rotation X frei? Behavior Deformable?">
 </div>
 
 ### Was passiert in Analyse B an den Ausfallenden?
