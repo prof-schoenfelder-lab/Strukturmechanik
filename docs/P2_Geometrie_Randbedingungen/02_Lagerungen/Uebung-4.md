@@ -69,7 +69,7 @@ Im Archiv sind zwei Analysen vorbereitet:
 
 - **A: `Rahmen mit Dummies`** ist fertig aufgebaut:
     - Rahmen aus Aluminium, Dummies aus Stahl (`Structural Steel`)
-    - Dummies sind über `Joints` (Verbindung) mit dem Rahmen verbunden. Dabei können zwei Geometrien auch über feste Freiheitsgrade verbunden werden, um z.B. Drehbewegungen zu ermöglichen. **Annahme:** Die Verbindung vom Hinterrad-Dummy zur Hinterachse ist starr, sie gibt nicht nach.
+    - Dummies sind über `Joints` (Verbindung) mit dem Rahmen verbunden. Dabei können zwei Geometrien auch über feste Freiheitsgrade verbunden werden, um z.B. Drehbewegungen zu ermöglichen.
     - Die Festlager in den Dummies werden über `Cylindrical Support` festgelegt (drehbar in tangentialer Richtung, der Rest ist fest)
     - Kraft am Tretlager
 - **B: `Rahmen mit Remote Displacement (Deformable)`** hat dieselbe Geometrie und dieselbe Kraft, aber:
@@ -227,7 +227,6 @@ Vergleichen Sie A, B und C: den Maximalwert, aber auch, **wo** das Maximum liegt
 - Beide Varianten liegen etwa 10 % neben A. Der Maximalwert allein entscheidet hier also nicht.
 - Mit `deformable` hält nichts die Ausfallenden zusammen, sie biegen sich auseinander und das Maximum wandert dorthin. Im Prüfstand verbindet der Hinterrad-Dummy beide Seiten.
 - Mit `rigid` bleibt die Form der Flächen erhalten, das Verformungsbild gleicht dem mit Dummies.
-- In A ist die Verbindung vom Hinterrad-Dummy zur Hinterachse starr angenommen. Genau das bildet `rigid` ab.
 - Dass `rigid` etwas steifer rechnet, liegt daran, dass die Dummies in A selbst etwas nachgeben, das starre Remote Displacement aber nicht.
 
 </div>
