@@ -41,7 +41,7 @@ Im Prüfstand der HTWK steht der Fahrradrahmen nicht auf Rädern, sondern auf zw
     <text x="58" y="902">Hinterrad-Dummy</text>
   </g>
 </svg>
-<figcaption>Rahmen im Prüfstand (hier ein anderer Rahmen als in der Übung)</figcaption>
+<figcaption>Der Rahmen aus der Übung im Prüfstand. Auf dem Foto greift die Last am Sattel an, in der Übung am Tretlager.</figcaption>
 </figure>
 
 !!! info "Begriffe am Rahmen"
@@ -268,4 +268,4 @@ Vergleichen Sie A, B und C: den Maximalwert, aber auch, **wo** das Maximum liegt
 !!! question "Prüffrage für eigene Modelle"
     Was sitzt in Wirklichkeit an der Fläche, und hält es die Fläche in Form? Wenn ja: `rigid`. Wenn unklar: beide Varianten rechnen und das **Verformungsbild an der Fläche** vergleichen, nicht nur den Maximalwert.
 
-Im Prüfstand sitzt die Last nicht immer am Tretlager, sondern zum Beispiel am Sattel, also oberhalb und hinter dem Sitzrohr. Wie man eine Kraft an einem Punkt außerhalb der Geometrie anbringt, zeigt [Übung 5](../03_Belastungen/Uebung-7.md) mit `Remote Force`.
+Auf dem Foto vom Prüfstand greift die Last nicht am Tretlager an, sondern am Sattel, also oberhalb des Sitzrohrs und außerhalb der Rahmengeometrie. Wie man eine Kraft an einem Punkt außerhalb der Geometrie anbringt, zeigt [Übung 5](../03_Belastungen/Uebung-7.md) mit `Remote Force`.
