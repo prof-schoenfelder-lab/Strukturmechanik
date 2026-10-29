@@ -15,30 +15,29 @@ Im Rahmenprüfstand des bikelab der HTWK steht der Fahrradrahmen nicht auf Räde
 <figure style="text-align:center;">
 <svg viewBox="0 0 2000 1711" width="700" style="max-width:100%;height:auto" role="img" aria-label="Fahrradrahmen im Prüfstand mit Bezeichnungen: Steuerrohr, Gabel-Dummy, Tretlager, Ausfallenden, Hinterrad-Dummy">
   <image href="../images/Pruefstand_Rahmen.webp" x="0" y="0" width="2000" height="1711"/>
-  <g font-family="Source Sans Pro, sans-serif" font-size="46" font-weight="700" fill="#022541">
+  <g font-family="Source Sans Pro, sans-serif" font-size="46" font-weight="700" fill="#022541" text-anchor="middle" dominant-baseline="central">
     <g stroke="#009EE3" stroke-width="5">
-      <line x1="1640" y1="120" x2="1505" y2="290"/>
-      <line x1="1760" y1="560" x2="1640" y2="620"/>
-      <line x1="1120" y1="960" x2="1010" y2="835"/>
-      <line x1="380" y1="660" x2="470" y2="780"/>
-      <line x1="400" y1="910" x2="470" y2="950"/>
+      <line x1="1640" y1="128" x2="1505" y2="290"/>
+      <line x1="1720" y1="564" x2="1640" y2="620"/>
+      <line x1="1120" y1="940" x2="1010" y2="835"/>
+      <line x1="374" y1="660" x2="470" y2="780"/>
+      <line x1="430" y1="900" x2="470" y2="950"/>
     </g>
     <g fill="#009EE3">
-      <circle cx="1505" cy="290" r="12"/><circle cx="1640" cy="620" r="12"/><circle cx="1010" cy="835" r="12"/>
-      <circle cx="470" cy="780" r="12"/><circle cx="470" cy="950" r="12"/>
+      <circle cx="1505" cy="290" r="12"/><circle cx="1640" cy="620" r="12"/><circle cx="1010" cy="835" r="12"/><circle cx="470" cy="780" r="12"/><circle cx="470" cy="950" r="12"/>
     </g>
     <g fill="#ffffff" fill-opacity="0.9" stroke="#009EE3" stroke-width="3">
-      <rect x="1600" y="64" width="270" height="64" rx="8"/>
-      <rect x="1700" y="500" width="290" height="64" rx="8"/>
-      <rect x="1100" y="940" width="220" height="64" rx="8"/>
-      <rect x="80" y="604" width="300" height="64" rx="8"/>
-      <rect x="40" y="854" width="370" height="64" rx="8"/>
+      <rect x="1600" y="64" width="262" height="64" rx="8"/>
+      <rect x="1660" y="500" width="330" height="64" rx="8"/>
+      <rect x="1100" y="940" width="226" height="64" rx="8"/>
+      <rect x="70" y="604" width="304" height="64" rx="8"/>
+      <rect x="20" y="854" width="410" height="64" rx="8"/>
     </g>
-    <text x="1620" y="112">Steuerrohr</text>
-    <text x="1718" y="548">Gabel-Dummy</text>
-    <text x="1118" y="988">Tretlager</text>
-    <text x="98" y="652">Ausfallenden</text>
-    <text x="58" y="902">Hinterrad-Dummy</text>
+    <text x="1731" y="96">Steuerrohr</text>
+    <text x="1825" y="532">Gabel-Dummy</text>
+    <text x="1213" y="972">Tretlager</text>
+    <text x="222" y="636">Ausfallenden</text>
+    <text x="225" y="886">Hinterrad-Dummy</text>
   </g>
 </svg>
 <figcaption>Der Rahmen aus der Übung im Rahmenprüfstand des bikelab. Auf dem Foto greift die Last am Sattel an, in der Übung am Tretlager.</figcaption>
