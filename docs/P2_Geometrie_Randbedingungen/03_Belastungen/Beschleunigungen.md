@@ -64,7 +64,7 @@ Beschleunigungen wirken nicht auf eine Fläche, sondern auf das ganze Volumen: J
 
 Im Strukturbaum: `Rechtsklick` auf `Static Structural` > `Insert` > `Standard Earth Gravity`, dann im Detailfenster die Richtung wählen, zum Beispiel `-Y Direction`. ANSYS setzt $g = 9{,}81\,\mathrm{m/s^2}$ an, die Gewichtskraft ist $F = m \cdot g$.
 
-Prüffrage: Spielt das Eigengewicht neben den äußeren Lasten überhaupt eine Rolle? Vergleichen Sie $m \cdot g$ mit den angreifenden Kräften. Ist es deutlich kleiner, ändert es das Ergebnis kaum.
+Ob das Eigengewicht neben den äußeren Lasten eine Rolle spielt, zeigt der Vergleich von $m \cdot g$ mit den angreifenden Kräften: Ist es deutlich kleiner, ändert es das Ergebnis kaum.
 
 ## Beschleunigung mit `Acceleration`
 
@@ -72,7 +72,7 @@ Wird ein Bauteil beschleunigt, etwa beim Anfahren, Bremsen oder in einer Kurve, 
 
 Im Strukturbaum: `Rechtsklick` auf `Static Structural` > `Insert` > `Acceleration`, dann Betrag und Richtung im Detailfenster eingeben.
 
-Prüffrage nach der Rechnung: Zeigt die Verformung in die Richtung, in die die Trägheitskräfte wirken? Wenn nicht, ist das Vorzeichen der Beschleunigung vertauscht.
+Nach der Rechnung sollte die Verformung in die Richtung zeigen, in die die Trägheitskräfte wirken. Sonst ist das Vorzeichen der Beschleunigung vertauscht.
 
 ## Drehung mit `Rotational Velocity`
 
