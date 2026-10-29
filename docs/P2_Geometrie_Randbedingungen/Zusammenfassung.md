@@ -20,7 +20,7 @@ Hier noch mal die wichtigsten Kernaussagen des zweiten Praktikums:
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Geometrie vereinfachen</p>
-    <p>Kleinteile und Features wie Bohrungen oder kleine Radien kosten Elemente und Rechenzeit. Prüffrage vor dem Löschen: Liegt das Detail im Lastpfad oder dort, wo Sie auswerten? Dann bleibt es drin, sonst darf es weg. Gleiche Körper oder Flächen wählt <code>Select</code> in einem Schritt aus.</p>
+    <p>Kleinteile und Features wie Bohrungen oder kleine Radien kosten Elemente und Rechenzeit. Liegt ein Detail im Lastpfad oder dort, wo Sie auswerten, bleibt es drin, sonst darf es weg. Gleiche Körper oder Flächen wählt <code>Select</code> in einem Schritt aus.</p>
   </div>
 
   <div class="step">
@@ -31,6 +31,11 @@ Hier noch mal die wichtigsten Kernaussagen des zweiten Praktikums:
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Remote Displacement: Lager an einem Punkt außerhalb</p>
     <p>Die Knoten der gewählten Fläche werden auf einen Punkt bezogen: standardmäßig ihren Schwerpunkt, über ein eigenes Koordinatensystem auch einen Punkt außerhalb der Geometrie. Vorgegeben ist nur die Bewegung dieses Punkts, nicht die jedes Knotens. Mit <code>deformable</code> kann sich die Fläche dabei verformen, mit <code>rigid</code> bleibt sie starr. Sinnvoll, wenn das Lager außerhalb des Modells liegt und das Bauteil dazwischen quasi starr ist (die Dummies im Prüfstand in Übung 3) oder wenn eine Einspannung ohne die Singularität eines <code>Fixed Support</code> gebraucht wird. Bei sehr vielen Knoten steigt die Rechenzeit.</p>
+  </div>
+
+  <div class="step">
+    <p class="step-title" role="heading" aria-level="2">Fixed Support oder Remote Displacement?</p>
+    <p><code>Fixed Support</code> und <code>Remote Displacement</code> (rigid) mit allen Freiheitsgraden gesperrt sind dasselbe. Ob eine Lagerung als Ersatz taugt, hängt davon ab, was gefragt ist: Ein <code>Fixed Support</code> reicht, wenn Spannungen weit weg von der Lagerung gefragt sind. Für die Verformung und für Spannungen direkt an der Lagerung ist er zu steif.</p>
   </div>
 
   <div class="step">
