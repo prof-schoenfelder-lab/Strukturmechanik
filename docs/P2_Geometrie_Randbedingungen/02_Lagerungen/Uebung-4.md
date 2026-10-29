@@ -166,8 +166,8 @@ Drehen Sie die Ansicht so, dass Sie von hinten auf die beiden Ausfallenden schau
 
 ### 3. Zum Vergleich: rigid
 
-- [ ] In Analyse B: `Rechtsklick Strukturbaum Static Structural → Duplicate`. Die Kopie heißt C.
-- [ ] In C bei beiden Remote Displacements `Behavior` = `Rigid` einstellen
+- [ ] Im Projektschema aus der Toolbox ein neues `Static Structural` auf die Zelle `Model` von Analyse B ziehen. Beide Analysen nutzen dann dasselbe Modell (Geometrie, Netz), in Mechanical erscheint ein zweiter Eintrag `Static Structural` im Strukturbaum. Nur Randbedingungen und Lösung sind eigene. Diese neue Analyse heißt C.
+- [ ] In C die Kraft und die beiden Remote Displacements anlegen wie in B, aber mit `Behavior` = `Rigid`
 - [ ] Analyse C rechnen
 
 !!! question "Was ändert `rigid`?"
@@ -175,7 +175,7 @@ Drehen Sie die Ansicht so, dass Sie von hinten auf die beiden Ausfallenden schau
 
 ### Die maximale Gesamtverformung des Rahmens mit Remote Displacement (rigid) in mm
 
-<div class="numeric-question" data-answer="0.37357" data-tolerance="0.01" data-points="5" data-attempts="5" data-hints="In der Kopie C bei beiden Remote Displacements Behavior Rigid eingestellt und neu gerechnet?">
+<div class="numeric-question" data-answer="0.37357" data-tolerance="0.01" data-points="5" data-attempts="5" data-hints="In Analyse C die Kraft und beide Remote Displacements angelegt, bei beiden Behavior Rigid? X, Y und Z Coordinate auf 0, nur Rotation X frei?">
 </div>
 
 ### Welche Einstellung bildet die Dummies besser ab?
