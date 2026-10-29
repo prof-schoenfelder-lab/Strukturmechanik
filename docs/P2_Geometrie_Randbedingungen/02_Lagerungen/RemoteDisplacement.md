@@ -44,55 +44,35 @@ Wo der Punkt liegt, legt ein eigenes Koordinatensystem fest. Je nachdem, ob das 
 
 #### Bauteil ist im Modell: Koordinatensystem in den Drehpunkt legen
 
-So gehen Sie in [Übung 3](Uebung-4.md) vor: Der Hinterrad-Dummy ist als Körper im Modell und soll durch ein Remote Displacement ersetzt werden.
+So würden Sie in [Übung 3](Uebung-4.md) vorgehen, hier am Beispiel des Gabel-Dummys: Er ist als Körper im Modell und soll durch ein Remote Displacement ersetzt werden.
 
-<figure style="text-align:center;">
-<svg viewBox="0 0 720 250" width="720" style="max-width:100%;height:auto" role="img" aria-label="Drei Schritte: Koordinatensystem in den Drehpunkt legen, Bauteil unterdrücken, Remote Displacement anlegen">
-  <defs>
-    <marker id="kx" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E53009"/></marker>
-    <marker id="ky" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#00964E"/></marker>
-  </defs>
-  <g font-family="Source Sans Pro, sans-serif" font-size="14" fill="#2E3639" text-anchor="middle">
-    <!-- 1 -->
-    <text x="120" y="22" font-weight="700" fill="#022541">1. KOS in den Drehpunkt</text>
-    <line x1="40" y1="60" x2="120" y2="80" stroke="#004699" stroke-width="8" stroke-linecap="round"/>
-    <circle cx="120" cy="80" r="11" fill="#F2F6F9" stroke="#004699" stroke-width="3"/>
-    <rect x="112" y="80" width="16" height="100" fill="#BEC3C6" stroke="#2E3639"/>
-    <circle cx="120" cy="180" r="8" fill="#fff" stroke="#2E3639" stroke-width="2"/>
-    <line x1="120" y1="180" x2="160" y2="180" stroke="#E53009" stroke-width="2.5" marker-end="url(#kx)"/>
-    <line x1="120" y1="180" x2="120" y2="140" stroke="#00964E" stroke-width="2.5" marker-end="url(#ky)"/>
-    <text x="165" y="172" font-size="12" fill="#E53009" text-anchor="start">x</text>
-    <text x="128" y="146" font-size="12" fill="#00964E" text-anchor="start">y</text>
-    <text x="120" y="212">Bohrung des Gelenks wählen,</text>
-    <text x="120" y="230">Coordinate System einfügen</text>
-    <!-- 2 -->
-    <text x="360" y="22" font-weight="700" fill="#022541">2. Bauteil unterdrücken</text>
-    <line x1="280" y1="60" x2="360" y2="80" stroke="#004699" stroke-width="8" stroke-linecap="round"/>
-    <circle cx="360" cy="80" r="11" fill="#F2F6F9" stroke="#004699" stroke-width="3"/>
-    <rect x="352" y="80" width="16" height="100" fill="none" stroke="#BEC3C6" stroke-width="1.5" stroke-dasharray="5 4"/>
-    <circle cx="360" cy="180" r="8" fill="none" stroke="#BEC3C6" stroke-width="1.5" stroke-dasharray="3 3"/>
-    <line x1="360" y1="180" x2="400" y2="180" stroke="#E53009" stroke-width="2.5" marker-end="url(#kx)"/>
-    <line x1="360" y1="180" x2="360" y2="140" stroke="#00964E" stroke-width="2.5" marker-end="url(#ky)"/>
-    <text x="360" y="212">Suppress Body,</text>
-    <text x="360" y="230">das KOS bleibt stehen</text>
-    <!-- 3 -->
-    <text x="600" y="22" font-weight="700" fill="#022541">3. Remote Displacement</text>
-    <line x1="520" y1="60" x2="600" y2="80" stroke="#004699" stroke-width="8" stroke-linecap="round"/>
-    <circle cx="600" cy="80" r="11" fill="#F2F6F9" stroke="#009EE3" stroke-width="4"/>
-    <g stroke="#009EE3" stroke-width="1.5" stroke-dasharray="5 4"><line x1="591" y1="86" x2="600" y2="180"/><line x1="609" y1="86" x2="600" y2="180"/></g>
-    <circle cx="600" cy="180" r="7" fill="#fff" stroke="#009EE3" stroke-width="3"/>
-    <path d="M600,187 L588,206 L612,206 z" fill="none" stroke="#2E3639" stroke-width="1.5"/>
-    <line x1="582" y1="210" x2="618" y2="210" stroke="#2E3639" stroke-width="1.5"/>
-    <text x="640" y="84" font-size="12" fill="#009EE3" text-anchor="start">Anschluss-</text>
-    <text x="640" y="98" font-size="12" fill="#009EE3" text-anchor="start">fläche</text>
-    <text x="600" y="230">auf die Anschlussfläche, mit diesem KOS</text>
-  </g>
-</svg>
-</figure>
+<div class="steps" markdown="1" data-kategorie="Lagerung" data-titel="Bauteil durch Remote Displacement ersetzen">
 
-1. **Koordinatensystem in den Drehpunkt legen:** Am Bauteil die Fläche der Gelenkbohrung auswählen, dann `Rechtsklick Strukturbaum Coordinate Systems → Insert → Coordinate System` und umbenennen. Der Ursprung liegt damit auf der Drehachse. Prüfen Sie, welche Achse des neuen Koordinatensystems in Richtung der Drehachse zeigt: Um genau diese Achse wird die Rotation später freigegeben.
-2. **Bauteil unterdrücken:** Im Strukturbaum unter `Geometry` den Körper anklicken, dann `Rechtsklick → Suppress Body`. Das Koordinatensystem bleibt erhalten. Lager und Joints am Bauteil wirken danach nicht mehr.
-3. **Remote Displacement anlegen:** auf die Flächen, an denen das Bauteil angebunden war, unter `Coordinate System` das neue Koordinatensystem wählen. Die Koordinaten bleiben 0, der Punkt liegt damit im Drehpunkt. Die Freiheitsgrade werden so gesetzt wie das Lager des Bauteils.
+  <div class="step">
+    <p class="step-title" role="heading" aria-level="2">Koordinatensystem in den Drehpunkt legen</p>
+    <p>Am Dummy die Fläche der Gelenkbohrung auswählen, dann <code>Rechtsklick Strukturbaum Coordinate Systems → Insert → Coordinate System</code>. Der Ursprung liegt damit auf der Drehachse.</p>
+    <figure style="text-align:center;"><img src="../images/RD-Sequenz-01-KOS-einfuegen.webp" alt="Coordinate System an der Gelenkbohrung des Gabel-Dummys einfügen" width="700"></figure>
+  </div>
+
+  <div class="step">
+    <p class="step-title" role="heading" aria-level="2">Bezug zur Geometrie lösen</p>
+    <p>Im Detailfenster unter <code>Origin</code> bei <code>Define By</code> von <code>Geometry Selection</code> auf <code>Global Coordinates</code> umstellen. Der Ursprung bleibt, wo er ist, hängt aber nicht mehr an der Fläche des Dummys, der im nächsten Schritt unterdrückt wird. Die Achsen zeigen wie die globalen Achsen (<code>Principal Axis</code>: <code>Global X Axis</code>), die Drehachse ist hier x.</p>
+    <figure style="text-align:center;"><img src="../images/RD-Sequenz-02-KOS-Geometrie-Referenz-entfernen.webp" alt="Define By auf Global Coordinates umstellen" width="450"></figure>
+  </div>
+
+  <div class="step">
+    <p class="step-title" role="heading" aria-level="2">Bauteil unterdrücken</p>
+    <p>Im Strukturbaum unter <code>Geometry</code> den Dummy anklicken, dann <code>Rechtsklick → Suppress Body</code>. Das Koordinatensystem bleibt erhalten, Lager und Joints am Dummy wirken danach nicht mehr.</p>
+    <figure style="text-align:center;"><img src="../images/RD-Sequenz-03-Dummy-unterdruecken.webp" alt="Gabel-Dummy mit Suppress Body unterdrücken" width="450"></figure>
+  </div>
+
+  <div class="step">
+    <p class="step-title" role="heading" aria-level="2">Remote Displacement anlegen</p>
+    <p>Die Flächen am Rahmen auswählen, an denen der Dummy angebunden war (hier die Innenfläche des Steuerrohrs), dann <code>Rechtsklick Strukturbaum Static Structural → Insert → Remote Displacement</code>. Unter <code>Coordinate System</code> das neue Koordinatensystem wählen, damit liegt der Punkt im Drehpunkt. Die Freiheitsgrade so setzen wie das Lager des Dummys: Verschiebungen 0, <code>Rotation X</code> = <code>Free</code>, die anderen Rotationen 0. <code>Behavior</code> hier <code>Rigid</code>.</p>
+    <figure style="text-align:center;"><img src="../images/RD-Sequenz-04-RemoteDisplacement-Einstellungen.webp" alt="Remote Displacement im Steuerrohr mit dem neuen Koordinatensystem" width="700"></figure>
+  </div>
+
+</div>
 
 Der Vorteil: Sie müssen keinen Abstand ausmessen, und die Achsen des Koordinatensystems passen zum Gelenk.
 

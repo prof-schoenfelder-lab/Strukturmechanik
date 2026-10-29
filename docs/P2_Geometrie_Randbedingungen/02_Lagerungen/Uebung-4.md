@@ -84,11 +84,12 @@ Im Archiv sind zwei Analysen vorbereitet:
 
 In Analyse B ersetzen Sie jeden Dummy durch ein `Remote Displacement`. Es sitzt auf denselben Flächen, an denen der Dummy mit dem Rahmen verbunden war, und sein Punkt liegt im Drehpunkt des Dummys.
 
-Der Ablauf hat drei Schritte, beschrieben auf der Seite [Externe Lager](RemoteDisplacement.md#bauteil-ist-im-modell-koordinatensystem-in-den-drehpunkt-legen). In B sind die ersten beiden schon erledigt:
+Der Ablauf hat vier Schritte, beschrieben auf der Seite [Externe Lager](RemoteDisplacement.md#bauteil-ist-im-modell-koordinatensystem-in-den-drehpunkt-legen). In B sind die ersten drei schon erledigt:
 
 1. Koordinatensystem in den Drehpunkt legen: `Hinterrad-Drehpunkt` und `Gabel-Drehpunkt` sind schon da
-2. Dummy unterdrücken: schon erledigt
-3. Remote Displacement anlegen: **das ist Ihre Aufgabe**
+2. Bezug zur Geometrie lösen (`Define By` = `Global Coordinates`): schon erledigt
+3. Dummy unterdrücken: schon erledigt
+4. Remote Displacement anlegen: **das ist Ihre Aufgabe**
 
 !!! tip "Welche Flächen?"
     In Analyse A unter `Connections` die Joints anklicken: `General - SYS\Hinterrad-Dummy To SYS\Rahmen` markiert die Flächen an den **Ausfallenden**, `General - SYS\Gabel-Dummy To SYS\Rahmen` die Flächen im **Steuerrohr**. Genau diese Flächen am Rahmen wählen Sie in B für das Remote Displacement aus.
@@ -112,7 +113,7 @@ Der Ablauf hat drei Schritte, beschrieben auf der Seite [Externe Lager](RemoteDi
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Freiheitsgrade wie beim Cylindrical Support</p>
-    <p><code>X Component</code>, <code>Y Component</code>, <code>Z Component</code> = 0. Bei den Rotationen nur die um die Drehachse des Dummys auf <code>Free</code>, die beiden anderen = 0. Welche Achse das ist, sehen Sie am Koordinatensystem im Grafikfenster.</p>
+    <p><code>X Component</code>, <code>Y Component</code>, <code>Z Component</code> = 0, <code>Rotation X</code> = <code>Free</code> (die Drehachse der Dummies ist x), <code>Rotation Y</code> und <code>Rotation Z</code> = 0</p>
   </div>
 
   <div class="step">
@@ -128,7 +129,7 @@ Der Ablauf hat drei Schritte, beschrieben auf der Seite [Externe Lager](RemoteDi
 
 ### Die maximale Gesamtverformung des Rahmens mit Remote Displacement (deformable) in mm
 
-<div class="numeric-question" data-answer="0.45212" data-tolerance="0.01" data-points="5" data-attempts="5" data-hints="Beide Remote Displacements auf den Flächen am Rahmen, mit den Koordinatensystemen Hinterrad-Drehpunkt und Gabel-Drehpunkt? Nur die Rotation um die Drehachse frei? Behavior Deformable?">
+<div class="numeric-question" data-answer="0.45212" data-tolerance="0.01" data-points="5" data-attempts="5" data-hints="Beide Remote Displacements auf den Flächen am Rahmen, mit den Koordinatensystemen Hinterrad-Drehpunkt und Gabel-Drehpunkt? Nur Rotation X frei? Behavior Deformable?">
 </div>
 
 ### Was passiert in Analyse B an den Ausfallenden?
