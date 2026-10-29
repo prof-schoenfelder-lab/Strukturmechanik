@@ -97,7 +97,7 @@ Der Ablauf hat drei Schritte, beschrieben auf der Seite [Externe Lager](RemoteDi
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Remote Displacement einfügen</p>
-    <p>Im Strukturbaum: <code>Rechtsklick</code> auf <code>Static Structural</code> > <code>Insert</code> > <code>Remote Displacement</code></p>
+    <p><code>Rechtsklick Strukturbaum Static Structural → Insert → Remote Displacement</code></p>
   </div>
 
   <div class="step">
@@ -154,7 +154,7 @@ Drehen Sie die Ansicht so, dass Sie von hinten auf die beiden Ausfallenden schau
 
 ### 3. Zum Vergleich: rigid
 
-- [ ] In Mechanical: `Rechtsklick` auf `Static Structural` von Analyse B > `Duplicate`. Die Kopie heißt C.
+- [ ] In Analyse B: `Rechtsklick Strukturbaum Static Structural → Duplicate`. Die Kopie heißt C.
 - [ ] In C bei beiden Remote Displacements `Behavior` = `Rigid` einstellen
 - [ ] Analyse C rechnen
 

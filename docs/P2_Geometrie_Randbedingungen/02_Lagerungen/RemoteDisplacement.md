@@ -90,8 +90,8 @@ So gehen Sie in [Übung 3](Uebung-4.md) vor: Der Hinterrad-Dummy ist als Körper
 </svg>
 </figure>
 
-1. **Koordinatensystem in den Drehpunkt legen:** Am Bauteil die Fläche der Gelenkbohrung auswählen, dann im Strukturbaum `Rechtsklick` auf `Coordinate Systems` > `Insert` > `Coordinate System` und umbenennen. Der Ursprung liegt damit auf der Drehachse. Prüfen Sie, welche Achse des neuen Koordinatensystems in Richtung der Drehachse zeigt: Um genau diese Achse wird die Rotation später freigegeben.
-2. **Bauteil unterdrücken:** Unter `Geometry` `Rechtsklick` auf den Körper > `Suppress Body`. Das Koordinatensystem bleibt erhalten. Lager und Joints am Bauteil wirken danach nicht mehr.
+1. **Koordinatensystem in den Drehpunkt legen:** Am Bauteil die Fläche der Gelenkbohrung auswählen, dann `Rechtsklick Strukturbaum Coordinate Systems → Insert → Coordinate System` und umbenennen. Der Ursprung liegt damit auf der Drehachse. Prüfen Sie, welche Achse des neuen Koordinatensystems in Richtung der Drehachse zeigt: Um genau diese Achse wird die Rotation später freigegeben.
+2. **Bauteil unterdrücken:** Im Strukturbaum unter `Geometry` den Körper anklicken, dann `Rechtsklick → Suppress Body`. Das Koordinatensystem bleibt erhalten. Lager und Joints am Bauteil wirken danach nicht mehr.
 3. **Remote Displacement anlegen:** auf die Flächen, an denen das Bauteil angebunden war, unter `Coordinate System` das neue Koordinatensystem wählen. Die Koordinaten bleiben 0, der Punkt liegt damit im Drehpunkt. Die Freiheitsgrade werden so gesetzt wie das Lager des Bauteils.
 
 Der Vorteil: Sie müssen keinen Abstand ausmessen, und die Achsen des Koordinatensystems passen zum Gelenk.
@@ -114,8 +114,8 @@ Ist das Bauteil gar nicht modelliert, zum Beispiel die Gabel am Fahrradrahmen, l
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Koordinatensystem einfügen</p>
-    <p>Im Strukturbaum: <code>Rechtsklick</code> auf <code>Coordinate Systems</code> > <code>Insert</code> > <code>New Coordinate System</code> </p>
-    <p>Neues Koordinatensystem mit <code>Rechtsklick</code> > <code>Rename</code> umbenennen.
+    <p><code>Rechtsklick Strukturbaum Coordinate Systems → Insert → New Coordinate System</code></p>
+    <p>Neues Koordinatensystem mit <code>Rechtsklick → Rename</code> umbenennen.
   </div>
 
   <div class="step">
@@ -126,7 +126,7 @@ Ist das Bauteil gar nicht modelliert, zum Beispiel die Gabel am Fahrradrahmen, l
 
  <div class="step">
     <p class="step-title" role="heading" aria-level="2">Remote Displacement einfügen</p>
-    <p>Im Strukturbaum: <code>Rechtsklick</code> auf <code>Static Structural</code> > <code>Insert</code> > <code>Remote Displacement</code> </p>
+    <p><code>Rechtsklick Strukturbaum Static Structural → Insert → Remote Displacement</code></p>
   </div>
 
  <div class="step">
