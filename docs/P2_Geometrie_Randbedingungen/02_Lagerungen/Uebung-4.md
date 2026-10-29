@@ -52,7 +52,7 @@ Im Rahmenprüfstand des bikelab der HTWK steht der Fahrradrahmen nicht auf Räde
 Die Dummies sind extrem steif gegenüber dem Rahmen, daher können diese durch Remote Displacement ersetzt werden. Mitmodelliert kosten sie Geometrie, Joints und Elemente. In dieser Übung vergleichen Sie den Rahmen **mit** Dummies mit dem Rahmen, bei dem jeder Dummy durch ein `Remote Displacement` ersetzt ist. Der Vergleich zeigt, was Remote Displacement eigentlich tut: Es ersetzt ein Bauteil, das man nicht modellieren will.
 
 <figure style="text-align:center;">
-  <img src="../images/Uebung-04-Dummies.excalidraw.png" alt="Rahmen mit Dummies (A) und mit Remote Displacement statt Dummies (B und C)" width="700" class="no-lightbox">
+  <img src="../images/Uebung-04-Dummies.excalidraw.png" alt="Rahmen mit Dummies (A) und mit Remote Displacement statt Dummies (B)" width="700" class="no-lightbox">
 </figure>
 
 **So arbeitet Remote Displacement hier:** Die Verformung der gewählten Geometrie, zum Beispiel der Innenflächen des Steuerrohrs, wird auf einen externen Punkt bezogen, hier den Drehpunkt des Festlagers. Für diesen Punkt geben Sie dann die Randbedingung an: nicht verschiebbar, nur drehbar um eine Achse.
