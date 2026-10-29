@@ -20,7 +20,7 @@ Im zweiten Beispiel versuchen wir Lagerungsbedingungen aus einem realen Beispiel
 
 Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung):
 
-[:material-paperclip: Uebung-03.wbpz](assets/Uebung-03.wbpz)
+[:material-paperclip: Uebung-02.wbpz](assets/Uebung-02.wbpz)
 
 Wie das Archiv importiert wird, steht in [Übung 1](../01_Geometrie_anpassen/Uebung-1.md#archiv-importieren).
 

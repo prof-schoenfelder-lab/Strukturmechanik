@@ -50,7 +50,7 @@ Die Dummies sind extrem steif gegenüber dem Rahmen, daher können diese durch `
 
 ### Archiv mit Rahmen, Dummies, Material, Netz und Belastung
 
-[:material-paperclip: Rahmen_RemoteDisplacement.wbpz](assets/Rahmen_RemoteDisplacement.wbpz)
+[:material-paperclip: Uebung-03.wbpz](assets/Uebung-03.wbpz)
 
 Wie das Archiv importiert wird, steht in [Übung 1](../01_Geometrie_anpassen/Uebung-1.md#archiv-importieren).
 

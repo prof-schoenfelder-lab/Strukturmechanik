@@ -38,7 +38,7 @@ Stahl
 
 ### Archivdatei mit Material, Geometrie, Netz und Belastung
 
-[:material-paperclip: Uebung-06.wbpz](assets/Uebung-06.wbpz)
+[:material-paperclip: Uebung-04.wbpz](assets/Uebung-04.wbpz)
 
 Wie das Archiv importiert wird, steht in [Übung 1](../01_Geometrie_anpassen/Uebung-1.md#archiv-importieren).
 
