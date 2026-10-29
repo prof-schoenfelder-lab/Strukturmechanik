@@ -20,7 +20,7 @@ Im Rahmenprüfstand des bikelab der HTWK steht der Fahrradrahmen nicht auf Räde
     <polygon points="1500,345 1545,345 1570,435 1520,440"/>
     <polygon points="1552,440 1605,432 1700,727 1652,737"/>
     <polygon points="1668,737 1700,730 1755,830 1720,840"/>
-    <polygon points="440,785 470,760 498,760 497,1100 472,1100"/>
+    <polygon points="440,785 470,760 498,760 497,1100 502,1122 502,1130 497,1140 497,1215 477,1215 477,1140 465,1130 465,1122 472,1100"/>
   </g>
   <g font-family="Source Sans Pro, sans-serif" font-size="46" font-weight="700" text-anchor="middle" dominant-baseline="central">
     <line x1="1640" y1="128" x2="1505" y2="290" stroke="#009EE3" stroke-width="5"/><circle cx="1505" cy="290" r="12" fill="#009EE3"/><rect x="1600" y="64" width="262" height="64" rx="8" fill="#ffffff" fill-opacity="0.9" stroke="#009EE3" stroke-width="3"/><text x="1731" y="96" fill="#022541">Steuerrohr</text>
