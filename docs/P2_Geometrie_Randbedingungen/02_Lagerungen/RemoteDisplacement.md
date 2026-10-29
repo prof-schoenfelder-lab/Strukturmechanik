@@ -89,10 +89,6 @@ Die Skizze zeigt nur, welche Bewegung das Lager zulässt. Mit diesem einen Lager
 
 **Der Punkt darf aber auch außerhalb liegen.** Dann bildet er ein entferntes Lager ab: Die Freiheitsgrade dieses Punkts werden auf die gewählte Fläche übertragen, und das Bauteil dazwischen muss nicht modelliert werden.
 
-!!! Info inline end
-
-    Durch Remote Displacement können Lagerungsbedingungen angebracht werden ohne dass die notwendige Geometrie mit erstellt werden muss (hier am Beispiel also keine Fahrradgabel und kein Reifen).
-
 <figure style="text-align:center;">
     <img src="../images/RemoteDisplacement_Fahrradbeispiel.excalidraw.png" alt="Remote Displacement am Fahrradrahmen" width="600">
 </figure>
