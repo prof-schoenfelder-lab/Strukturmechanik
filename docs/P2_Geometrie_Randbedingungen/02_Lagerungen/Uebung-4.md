@@ -49,7 +49,7 @@ Im Rahmenprüfstand des bikelab der HTWK steht der Fahrradrahmen nicht auf Räde
     - **Sitzstreben:** die beiden Rohre vom Sitzrohr schräg nach unten zu den Ausfallenden
     - **Tretlager:** das quer liegende Rohr unten, in dem die Kurbel gelagert ist
 
-Die Dummies sind extrem steif gegenüber dem Rahmen, daher können diese durch Remote Displacement ersetzt werden. Mitmodelliert kosten sie Geometrie, Joints und Elemente. In dieser Übung vergleichen Sie den Rahmen **mit** Dummies mit dem Rahmen, bei dem jeder Dummy durch ein `Remote Displacement` ersetzt ist. Der Vergleich zeigt, was Remote Displacement eigentlich tut: Es ersetzt ein Bauteil, das man nicht modellieren will.
+Die Dummies sind extrem steif gegenüber dem Rahmen, daher können diese durch `Remote Displacement` ersetzt werden, um Rechenzeit zu sparen. In dieser Übung vergleichen Sie den Rahmen **mit** Dummies mit dem Rahmen, bei dem jeder Dummy durch ein `Remote Displacement` ersetzt ist. Der Vergleich zeigt eine Funktion von Remote Displacement: Übertragung von Freiheitsgraden von einem externen Punkt (die beiden Festlager) auf eine Geometrie (in diesem Fall am Ausfallende bzw. im Steuerrohr).
 
 <figure style="text-align:center;">
   <img src="../images/Uebung-04-Dummies.excalidraw.png" alt="Rahmen mit Dummies (A) und mit Remote Displacement statt Dummies (B)" width="700" class="no-lightbox">
