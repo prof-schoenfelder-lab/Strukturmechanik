@@ -34,7 +34,7 @@ Im Rahmenprüfstand des bikelab der HTWK steht der Fahrradrahmen nicht auf Räde
 <figcaption>Der Rahmen aus der Übung im Rahmenprüfstand des bikelab. Auf dem Foto greift die Kraft am Satteldummy an, in der Übung am Tretlager.</figcaption>
 </figure>
 
-Die Dummies sind extrem steif gegenüber dem Rahmen, daher können diese durch `Remote Displacement` ersetzt werden, um Rechenzeit zu sparen. In dieser Übung vergleichen Sie den Rahmen **mit** Dummies mit dem Rahmen, bei dem jeder Dummy durch ein `Remote Displacement` ersetzt ist. Der Vergleich zeigt eine Funktion von Remote Displacement: Übertragung von Freiheitsgraden von einem externen Punkt (die beiden Festlager) auf eine Geometrie (in diesem Fall am Ausfallende bzw. im Steuerrohr).
+Die Dummies sind extrem steif gegenüber dem Rahmen, daher können diese durch `Remote Displacement` ersetzt werden, um das Modell zu vereinfachen. In dieser Übung vergleichen Sie den Rahmen **mit** Dummies mit dem Rahmen, bei dem jeder Dummy durch ein `Remote Displacement` ersetzt ist. Der Vergleich zeigt eine Funktion von Remote Displacement: Übertragung von Freiheitsgraden von einem externen Punkt (die beiden Festlager) auf eine Geometrie (in diesem Fall am Ausfallende bzw. im Steuerrohr).
 
 <figure style="text-align:center;">
   <img src="../images/Uebung-04-Dummies.excalidraw.png" alt="Rahmen mit Dummies (A) und mit Remote Displacement statt Dummies (B)" width="700" class="no-lightbox">
