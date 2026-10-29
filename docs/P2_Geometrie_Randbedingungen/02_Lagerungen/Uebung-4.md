@@ -13,7 +13,7 @@ thumb: images/Pruefstand_Rahmen.webp
 Im Rahmenprüfstand des bikelab der HTWK steht der Fahrradrahmen nicht auf Rädern, sondern auf zwei **Dummies**, also Ersatzteilen aus Stahl: Vorne steckt statt der Gabel der **Gabel-Dummy** im Steuerrohr, hinten sitzt statt des Hinterrads der **Hinterrad-Dummy** zwischen den Ausfallenden. Beide Dummies stehen unten in einem **Festlager**: Sie können sich dort um ihren Drehpunkt drehen, aber nicht verschieben.
 
 <figure style="text-align:center;">
-<svg viewBox="0 0 2000 1711" width="700" style="max-width:100%;height:auto" role="img" aria-label="Fahrradrahmen im Prüfstand mit Bezeichnungen: Steuerrohr, Gabel-Dummy, Tretlager, Ausfallenden, Hinterrad-Dummy">
+<svg viewBox="0 0 2000 1711" width="700" style="max-width:100%;height:auto" role="img" aria-label="Fahrradrahmen im Prüfstand mit Bezeichnungen: Satteldummy, Steuerrohr, Gabel-Dummy, Tretlager, Ausfallenden, Hinterrad-Dummy">
   <image href="../images/Pruefstand_Rahmen.webp" x="0" y="0" width="2000" height="1711"/>
   <g fill="#2f9e44" fill-opacity="0.45" stroke="#2f9e44" stroke-width="4" stroke-linejoin="round">
     <polygon points="1427,92 1457,82 1478,97 1478,112 1482,118 1490,160 1442,175 1430,133 1417,122 1415,112"/>
@@ -24,6 +24,7 @@ Im Rahmenprüfstand des bikelab der HTWK steht der Fahrradrahmen nicht auf Räde
   </g>
   <g font-family="Source Sans Pro, sans-serif" font-size="46" font-weight="700" text-anchor="middle" dominant-baseline="central">
     <line x1="1640" y1="128" x2="1505" y2="290" stroke="#009EE3" stroke-width="5"/><circle cx="1505" cy="290" r="12" fill="#009EE3"/><rect x="1600" y="64" width="262" height="64" rx="8" fill="#ffffff" fill-opacity="0.9" stroke="#009EE3" stroke-width="3"/><text x="1731" y="96" fill="#022541">Steuerrohr</text>
+    <line x1="595" y1="72" x2="730" y2="110" stroke="#009EE3" stroke-width="5"/><circle cx="730" cy="110" r="12" fill="#009EE3"/><rect x="280" y="40" width="315" height="64" rx="8" fill="#ffffff" fill-opacity="0.9" stroke="#009EE3" stroke-width="3"/><text x="437" y="72" fill="#022541">Satteldummy</text>
     <line x1="1720" y1="564" x2="1640" y2="620" stroke="#2f9e44" stroke-width="5"/><circle cx="1640" cy="620" r="12" fill="#2f9e44"/><rect x="1660" y="500" width="330" height="64" rx="8" fill="#ffffff" fill-opacity="0.9" stroke="#2f9e44" stroke-width="3"/><text x="1825" y="532" fill="#2f9e44">Gabel-Dummy</text>
     <line x1="1120" y1="940" x2="1000" y2="877" stroke="#009EE3" stroke-width="5"/><circle cx="1000" cy="877" r="12" fill="#009EE3"/><rect x="1100" y="940" width="226" height="64" rx="8" fill="#ffffff" fill-opacity="0.9" stroke="#009EE3" stroke-width="3"/><text x="1213" y="972" fill="#022541">Tretlager</text>
     <line x1="374" y1="660" x2="470" y2="780" stroke="#009EE3" stroke-width="5"/><circle cx="470" cy="780" r="12" fill="#009EE3"/><rect x="70" y="604" width="304" height="64" rx="8" fill="#ffffff" fill-opacity="0.9" stroke="#009EE3" stroke-width="3"/><text x="222" y="636" fill="#022541">Ausfallenden</text>
