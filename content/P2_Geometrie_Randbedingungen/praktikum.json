@@ -58,16 +58,16 @@
           "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-3.md"
         },
         {
+          "titel": "Zylindrische Lager",
+          "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/Cylindrical.md"
+        },
+        {
           "titel": "Externe Lager",
           "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/RemoteDisplacement.md"
         },
         {
           "titel": "Übung 3",
           "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-4.md"
-        },
-        {
-          "titel": "Zylindrische Lager",
-          "extern": "P2_Geometrie_Randbedingungen/02_Lagerungen/Cylindrical.md"
         },
         {
           "titel": "elastische Lagerung",

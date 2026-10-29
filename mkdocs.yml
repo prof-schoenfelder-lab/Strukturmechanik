@@ -204,9 +204,9 @@ nav:
                       - Einführung: P2_Geometrie_Randbedingungen/02_Lagerungen/Einfuehrung.md
                       - Lager: P2_Geometrie_Randbedingungen/02_Lagerungen/Displacement.md
                       - Übung 2: P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-3.md
+                      - Zylindrische Lager: P2_Geometrie_Randbedingungen/02_Lagerungen/Cylindrical.md
                       - Externe Lager: P2_Geometrie_Randbedingungen/02_Lagerungen/RemoteDisplacement.md
                       - Übung 3: P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-4.md
-                      - Zylindrische Lager: P2_Geometrie_Randbedingungen/02_Lagerungen/Cylindrical.md
                       - elastische Lagerung: P2_Geometrie_Randbedingungen/02_Lagerungen/Elastic.md
                       - Übung 4: P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-6.md
               - BELASTUNGEN:

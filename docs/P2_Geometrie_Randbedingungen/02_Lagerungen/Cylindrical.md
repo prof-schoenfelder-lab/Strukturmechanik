@@ -4,7 +4,7 @@ hide:
   - toc
 sektion: Lagerungen
 title: zylindrische Lager
-order: 150
+order: 125
 thumb: images/Radial_Axial_Tangential.excalidraw.png
 ---
 
