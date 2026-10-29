@@ -180,3 +180,7 @@ Kreuzen Sie alle Aufgabenstellungen an, für die ein `Fixed Support` am Kopf aus
 
 </div>
 
+<div class="zwischenspiel" data-seite="/P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-4,/P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-6" data-voraussetzung="Übung 3 und 4" data-name="Inbus (Übung 4)" data-teil="bau-2o9.8AAA8AAA8AAA8AAA8AAA________________.wB004.Tn8160k">
+<h2>Zwischenspiel: Knackpunkt</h2>
+<p>Der Inbus aus dieser Übung, vereinfacht als ebenes L: Der lange Schenkel ist 240 mm lang, der kurze 90 mm, beide sind 40 mm breit, eine 10 mm dicke Platte aus Stahl S235. Der kurze Schenkel ist unten eingespannt wie im Schraubkopf, am Ende des langen Schenkels drücken 2 kN nach unten. Nehmen Sie so viel Material weg wie möglich, ohne dass er versagt.</p>
+</div>
