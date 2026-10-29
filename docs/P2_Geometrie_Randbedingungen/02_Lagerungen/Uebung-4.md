@@ -46,8 +46,6 @@ Die Dummies sind extrem steif gegenüber dem Rahmen, daher können diese durch `
   <img src="../images/Uebung-04-Dummies.excalidraw.png" alt="Rahmen mit Dummies (A) und mit Remote Displacement statt Dummies (B)" width="700" class="no-lightbox">
 </figure>
 
-**So arbeitet Remote Displacement hier:** Die Verformung der gewählten Geometrie, zum Beispiel der Innenflächen des Steuerrohrs, wird auf einen externen Punkt bezogen, hier den Drehpunkt des Festlagers. Für diesen Punkt geben Sie dann die Randbedingung an: nicht verschiebbar, nur drehbar um eine Achse.
-
 ## Gegeben
 
 ### Archiv mit Rahmen, Dummies, Material, Netz und Belastung
