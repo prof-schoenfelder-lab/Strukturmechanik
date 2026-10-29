@@ -84,12 +84,31 @@ Im Archiv sind zwei Analysen vorbereitet:
 
 In Analyse B ersetzen Sie jeden Dummy durch ein `Remote Displacement`. Es sitzt auf denselben Flächen, an denen der Dummy mit dem Rahmen verbunden war, und sein Punkt liegt im Drehpunkt des Dummys.
 
-Der Ablauf hat vier Schritte, beschrieben auf der Seite [Externe Lager](RemoteDisplacement.md#bauteil-ist-im-modell-koordinatensystem-in-den-drehpunkt-legen). In B sind die ersten drei schon erledigt:
+Ein Bauteil durch `Remote Displacement` zu ersetzen, geht in vier Schritten. **In Analyse B sind die ersten drei schon erledigt**, die Bilder zeigen sie am Beispiel des Gabel-Dummys, damit Sie sehen, wie B entstanden ist.
 
-1. Koordinatensystem in den Drehpunkt legen: `Hinterrad-Drehpunkt` und `Gabel-Drehpunkt` sind schon da
-2. Bezug zur Geometrie lösen (`Define By` = `Global Coordinates`): schon erledigt
-3. Dummy unterdrücken: schon erledigt
-4. Remote Displacement anlegen: **das ist Ihre Aufgabe**
+<div class="steps" markdown="1" data-kategorie="Randbedingungen" data-titel="So ist Analyse B vorbereitet">
+
+  <div class="step">
+    <p class="step-title" role="heading" aria-level="2">Koordinatensystem in den Drehpunkt legen (erledigt)</p>
+    <p>Am Dummy die Fläche der Gelenkbohrung auswählen, dann <code>Rechtsklick Strukturbaum Coordinate Systems → Insert → Coordinate System</code>. Der Ursprung liegt damit auf der Drehachse.</p>
+    <figure style="text-align:center;"><img src="../images/RD-Sequenz-01-KOS-einfuegen.webp" alt="Coordinate System an der Gelenkbohrung des Gabel-Dummys einfügen" width="700"></figure>
+  </div>
+
+  <div class="step">
+    <p class="step-title" role="heading" aria-level="2">Bezug zur Geometrie lösen (erledigt)</p>
+    <p>Im Detailfenster unter <code>Origin</code> bei <code>Define By</code> von <code>Geometry Selection</code> auf <code>Global Coordinates</code> umstellen. Der Ursprung bleibt, wo er ist, hängt aber nicht mehr an der Fläche des Dummys, der im nächsten Schritt unterdrückt wird. Die Achsen zeigen wie die globalen Achsen, die Drehachse der Dummies ist x.</p>
+    <figure style="text-align:center;"><img src="../images/RD-Sequenz-02-KOS-Geometrie-Referenz-entfernen.webp" alt="Define By auf Global Coordinates umstellen" width="450"></figure>
+  </div>
+
+  <div class="step">
+    <p class="step-title" role="heading" aria-level="2">Dummy unterdrücken (erledigt)</p>
+    <p>Im Strukturbaum unter <code>Geometry</code> den Dummy anklicken, dann <code>Rechtsklick → Suppress Body</code>. Das Koordinatensystem bleibt erhalten, Lager und Joints am Dummy wirken danach nicht mehr.</p>
+    <figure style="text-align:center;"><img src="../images/RD-Sequenz-03-Dummy-unterdruecken.webp" alt="Gabel-Dummy mit Suppress Body unterdrücken" width="450"></figure>
+  </div>
+
+</div>
+
+**Schritt 4 ist Ihre Aufgabe:** je Dummy ein `Remote Displacement` anlegen.
 
 !!! tip "Welche Flächen?"
     In Analyse A unter `Connections` die Joints anklicken: `General - SYS\Hinterrad-Dummy To SYS\Rahmen` markiert die Flächen an den **Ausfallenden**, `General - SYS\Gabel-Dummy To SYS\Rahmen` die Flächen im **Steuerrohr**. Genau diese Flächen am Rahmen wählen Sie in B für das Remote Displacement aus.
@@ -108,12 +127,13 @@ Der Ablauf hat vier Schritte, beschrieben auf der Seite [Externe Lager](RemoteDi
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Punkt in den Drehpunkt legen</p>
-    <p>Unter <code>Coordinate System</code> das Koordinatensystem <code>Hinterrad-Drehpunkt</code> bzw. <code>Gabel-Drehpunkt</code> wählen. Der Punkt des Remote Displacements springt damit in den Drehpunkt.</p>
+    <p>Unter <code>Coordinate System</code> das Koordinatensystem <code>Hinterrad-Drehpunkt</code> bzw. <code>Gabel-Drehpunkt</code> wählen, dann <code>X Coordinate</code>, <code>Y Coordinate</code> und <code>Z Coordinate</code> auf 0 setzen. Erst dann liegt der Punkt des Remote Displacements im Ursprung des Koordinatensystems, also im Drehpunkt.</p>
   </div>
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Freiheitsgrade wie beim Cylindrical Support</p>
     <p><code>X Component</code>, <code>Y Component</code>, <code>Z Component</code> = 0, <code>Rotation X</code> = <code>Free</code> (die Drehachse der Dummies ist x), <code>Rotation Y</code> und <code>Rotation Z</code> = 0</p>
+    <figure style="text-align:center;"><img src="../images/RD-Sequenz-04-RemoteDisplacement-Einstellungen.webp" alt="Remote Displacement im Steuerrohr mit dem Koordinatensystem im Drehpunkt" width="700"></figure>
   </div>
 
   <div class="step">
@@ -129,7 +149,7 @@ Der Ablauf hat vier Schritte, beschrieben auf der Seite [Externe Lager](RemoteDi
 
 ### Die maximale Gesamtverformung des Rahmens mit Remote Displacement (deformable) in mm
 
-<div class="numeric-question" data-answer="0.45212" data-tolerance="0.01" data-points="5" data-attempts="5" data-hints="Beide Remote Displacements auf den Flächen am Rahmen, mit den Koordinatensystemen Hinterrad-Drehpunkt und Gabel-Drehpunkt? Nur Rotation X frei? Behavior Deformable?">
+<div class="numeric-question" data-answer="0.45212" data-tolerance="0.01" data-points="5" data-attempts="5" data-hints="Beide Remote Displacements auf den Flächen am Rahmen, mit den Koordinatensystemen Hinterrad-Drehpunkt und Gabel-Drehpunkt? X, Y und Z Coordinate auf 0? Nur Rotation X frei? Behavior Deformable?">
 </div>
 
 ### Was passiert in Analyse B an den Ausfallenden?
@@ -160,7 +180,7 @@ Drehen Sie die Ansicht so, dass Sie von hinten auf die beiden Ausfallenden schau
 - [ ] Analyse C rechnen
 
 !!! question "Was ändert `rigid`?"
-    Mit `deformable` dürfen sich die Flächen am Rahmen frei verformen, mit `rigid` bleiben sie in ihrer Form, als wäre dort ein unendlich steifes Bauteil angeschraubt. Mehr dazu auf der Seite [Externe Lager](RemoteDisplacement.md#rigid-oder-deformable-was-ist-der-unterschied).
+    Mit `deformable` dürfen sich die Flächen am Rahmen frei verformen, mit `rigid` bleiben sie in ihrer Form, als wäre dort ein unendlich steifes Bauteil angeschraubt. Mehr dazu auf der Seite [Externe Lager](RemoteDisplacement.md#starr-oder-verformbar).
 
 ### Die maximale Gesamtverformung des Rahmens mit Remote Displacement (rigid) in mm
 
