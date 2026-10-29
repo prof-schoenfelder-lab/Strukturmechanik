@@ -108,7 +108,7 @@ Die Skizze zeigt nur, welche Bewegung das Lager zulässt. Mit diesem einen Lager
 
 Eine Alternative mit demselben Gedanken: das Bauteil im Modell lassen und auf starr setzen (unter `Geometry` am Körper `Stiffness Behavior` = `Rigid`). Dann verformt es sich nicht mehr, Geometrie und Masse bleiben aber im Modell.
 
-Wo der Punkt liegen soll, legen Sie in ANSYS über ein eigenes Koordinatensystem fest: im Remote Displacement unter `Coordinate System` auswählen und `X Coordinate`, `Y Coordinate`, `Z Coordinate` auf 0 setzen. Erst dann liegt der Punkt im Ursprung dieses Koordinatensystems. Wie das Schritt für Schritt geht, wenn das Bauteil im Modell ist, zeigt [Übung 3](Uebung-4.md#2-dummies-durch-remote-displacement-ersetzen) mit den Prüfstands-Dummies. Wie man den Punkt über einen Abstand festlegt, steht unten unter [Punkt über einen Abstand festlegen](#punkt-uber-einen-abstand-festlegen).
+Wo der Punkt liegen soll, legen Sie in ANSYS über ein eigenes Koordinatensystem fest: im Remote Displacement unter `Coordinate System` auswählen und `X Coordinate`, `Y Coordinate`, `Z Coordinate` auf 0 setzen. Erst dann liegt der Punkt im Ursprung dieses Koordinatensystems. Wie das Schritt für Schritt geht, wenn das Bauteil im Modell ist, zeigt [Übung 3](Uebung-4.md#2-dummies-durch-remote-displacement-ersetzen) mit den Prüfstands-Dummies.
 
 ## Starr oder verformbar?
 
@@ -151,43 +151,3 @@ Nicht automatisch. Sicher ist: Das Modell wird einfacher, denn das ersetzte Baut
 !!! danger "Viele gekoppelte Knoten kosten Rechenzeit"
 
     Pro Knoten der Fläche und gesperrtem Freiheitsgrad kommen zusätzliche Gleichungen dazu. Rechenzeit sparen Sie deshalb nur, wenn das weggelassene Bauteil viele Elemente gehabt hätte und die angekoppelte Fläche wenige Knoten hat. `rigid` ist dabei in der Regel günstiger als `deformable`.
-
-## Punkt über einen Abstand festlegen
-
-Ist das Bauteil gar nicht modelliert, zum Beispiel die Gabel am Fahrradrahmen, legen Sie das Koordinatensystem in die Fläche, an der das Bauteil angreifen würde (hier das Steuerrohr), und geben im Remote Displacement die Koordinaten des Lagerpunkts in diesem Koordinatensystem ein. So gehen Sie in [Übung 5](../03_Belastungen/Uebung-7.md) bei der `Remote Force` vor.
-
-<figure style="text-align:center;">
-    <img src="../images/Remote_Displacement_Koordinatensystem.gif" alt="Koordinatensystem für Remote Displacement erstellen und anwenden" width="700">
-</figure>
-
-<div class="steps" markdown="1" data-kategorie="Lagerung">
-
-  <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Geometrie auswählen</p>
-    <p>Je nach Geometrie das jeweilige <code>Selektionstool anklicken</code> (Punkt/Kante/Fläche/Körper) und die <code>Geometrie selektrieren</code></p>
-    <p>Mehrere Geometrien mit <code>STRG</code> gedrückt halten auswählen</p>
-  </div>
-
-  <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Koordinatensystem einfügen</p>
-    <p><code>Rechtsklick Strukturbaum Coordinate Systems → Insert → New Coordinate System</code></p>
-    <p>Neues Koordinatensystem mit <code>Rechtsklick → Rename</code> umbenennen.
-  </div>
-
-  <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Geometrie erneut auswählen</p>
-    <p>Je nach Geometrie das jeweilige <code>Selektionstool anklicken</code> (Punkt/Kante/Fläche/Körper) und die <code>Geometrie selektrieren</code></p>
-    <p>Mehrere Geometrien mit <code>STRG</code> gedrückt halten auswählen</p>
-  </div>
-
- <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Remote Displacement einfügen</p>
-    <p><code>Rechtsklick Strukturbaum Static Structural → Insert → Remote Displacement</code></p>
-  </div>
-
- <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Koordinatensystem auswählen</p>
-    <p>Im Detailfenster: Unter <code>Coordinate System</code> das neue Koordinatensystem auswählen und die <code>Koordianten eingeben</code>.</p>
-  </div>
-
-</div>
