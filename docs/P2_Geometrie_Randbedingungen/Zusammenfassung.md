@@ -30,7 +30,7 @@ Hier noch mal die wichtigsten Kernaussagen des zweiten Praktikums:
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Remote Displacement: Lager an einem Punkt außerhalb</p>
-    <p>Die Knoten der gewählten Fläche werden auf einen Punkt bezogen: standardmäßig ihren Schwerpunkt, über ein eigenes Koordinatensystem auch einen Punkt außerhalb der Geometrie. Vorgegeben ist nur die Bewegung dieses Punkts, nicht die jedes Knotens. Mit <code>deformable</code> kann sich die Fläche dabei verformen, mit <code>rigid</code> bleibt sie starr. Sinnvoll, wenn das Lager außerhalb des Modells liegt (Achse, Gabel, Reifen) oder wenn eine Einspannung ohne die Singularität eines <code>Fixed Support</code> gebraucht wird. Bei sehr vielen Knoten steigt die Rechenzeit.</p>
+    <p>Die Knoten der gewählten Fläche werden auf einen Punkt bezogen: standardmäßig ihren Schwerpunkt, über ein eigenes Koordinatensystem auch einen Punkt außerhalb der Geometrie. Vorgegeben ist nur die Bewegung dieses Punkts, nicht die jedes Knotens. Mit <code>deformable</code> kann sich die Fläche dabei verformen, mit <code>rigid</code> bleibt sie starr. Sinnvoll, wenn das Lager außerhalb des Modells liegt und das Bauteil dazwischen quasi starr ist (die Dummies im Prüfstand in Übung 3) oder wenn eine Einspannung ohne die Singularität eines <code>Fixed Support</code> gebraucht wird. Bei sehr vielen Knoten steigt die Rechenzeit.</p>
   </div>
 
   <div class="step">
