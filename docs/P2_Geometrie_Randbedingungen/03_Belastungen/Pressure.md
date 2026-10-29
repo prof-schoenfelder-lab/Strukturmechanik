@@ -5,6 +5,7 @@ hide:
 sektion: Belastungen
 title: Druck
 order: 230
+thumb: images/Druck_senkrecht.excalidraw.png
 ---
 
 # Druck mit `Pressure`

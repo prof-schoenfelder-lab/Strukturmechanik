@@ -34,12 +34,6 @@ Im Rahmenprüfstand des bikelab der HTWK steht der Fahrradrahmen nicht auf Räde
 <figcaption>Der Rahmen aus der Übung im Rahmenprüfstand des bikelab. Auf dem Foto greift die Kraft am Satteldummy an, in der Übung am Tretlager.</figcaption>
 </figure>
 
-!!! info "Begriffe am Rahmen"
-    - **Steuerrohr:** das kurze vordere Rohr, in dem sonst der Gabelschaft steckt
-    - **Ausfallenden:** die beiden Platten am Ende des Hinterbaus, in die sonst die Hinterradachse eingespannt wird
-    - **Sitzstreben:** die beiden Rohre vom Sitzrohr schräg nach unten zu den Ausfallenden
-    - **Tretlager:** das quer liegende Rohr unten, in dem die Kurbel gelagert ist
-
 Die Dummies sind extrem steif gegenüber dem Rahmen, daher können diese durch `Remote Displacement` ersetzt werden, um Rechenzeit zu sparen. In dieser Übung vergleichen Sie den Rahmen **mit** Dummies mit dem Rahmen, bei dem jeder Dummy durch ein `Remote Displacement` ersetzt ist. Der Vergleich zeigt eine Funktion von Remote Displacement: Übertragung von Freiheitsgraden von einem externen Punkt (die beiden Festlager) auf eine Geometrie (in diesem Fall am Ausfallende bzw. im Steuerrohr).
 
 <figure style="text-align:center;">
@@ -167,7 +161,7 @@ Drehen Sie die Ansicht so, dass Sie von hinten auf die beiden Ausfallenden schau
 ### 3. Zum Vergleich: rigid
 
 - [ ] Im Projektschema aus der Toolbox ein neues `Static Structural` auf die Zelle `Model` von Analyse B ziehen. Beide Analysen nutzen dann dasselbe Modell (Geometrie, Netz), in Mechanical erscheint ein zweiter Eintrag `Static Structural` im Strukturbaum. Nur Randbedingungen und Lösung sind eigene. Diese neue Analyse heißt C.
-- [ ] In C die Kraft und die beiden Remote Displacements anlegen wie in B, aber mit `Behavior` = `Rigid`
+- [ ] Kraft und beide Remote Displacements im Strukturbaum von B auf `Static Structural` von C ziehen, das kopiert sie. Dann in C bei beiden Remote Displacements `Behavior` = `Rigid` einstellen
 - [ ] Analyse C rechnen
 
 !!! question "Was ändert `rigid`?"
@@ -175,7 +169,7 @@ Drehen Sie die Ansicht so, dass Sie von hinten auf die beiden Ausfallenden schau
 
 ### Die maximale Gesamtverformung des Rahmens mit Remote Displacement (rigid) in mm
 
-<div class="numeric-question" data-answer="0.37357" data-tolerance="0.01" data-points="5" data-attempts="5" data-hints="In Analyse C die Kraft und beide Remote Displacements angelegt, bei beiden Behavior Rigid? X, Y und Z Coordinate auf 0, nur Rotation X frei?">
+<div class="numeric-question" data-answer="0.37357" data-tolerance="0.01" data-points="5" data-attempts="5" data-hints="Kraft und beide Remote Displacements aus B nach C gezogen? In C bei beiden Behavior Rigid eingestellt und neu gerechnet?">
 </div>
 
 ### Welche Einstellung bildet die Dummies besser ab?
@@ -206,7 +200,7 @@ Vergleichen Sie A, B und C: den Maximalwert, aber auch, **wo** das Maximum liegt
 
 <figure style="text-align:center;">
   <img src="../images/Uebung-04-Loesung-Dummies.webp" alt="Gesamtverformung des Rahmens mit Dummies" width="700">
-  <figcaption>A: mit Dummies, Maximum an den Sitzstreben</figcaption>
+  <figcaption>A: mit Dummies, Maximum am Hinterbau oberhalb der Ausfallenden</figcaption>
 </figure>
 
 <figure style="text-align:center;">
@@ -221,9 +215,9 @@ Vergleichen Sie A, B und C: den Maximalwert, aber auch, **wo** das Maximum liegt
 
 | Analyse | max. Gesamtverformung | gegenüber A | Maximum liegt |
 |---|---|---|---|
-| A: mit Dummies | 0,416 mm | | an den Sitzstreben |
+| A: mit Dummies | 0,416 mm | | am Hinterbau oberhalb der Ausfallenden |
 | B: deformable | 0,452 mm | +9 % | am Ausfallende |
-| C: rigid | 0,374 mm | -10 % | an den Sitzstreben |
+| C: rigid | 0,374 mm | -10 % | wie bei A |
 
 **Warum rigid, obwohl deformable beim Maximalwert näher liegt?**
 

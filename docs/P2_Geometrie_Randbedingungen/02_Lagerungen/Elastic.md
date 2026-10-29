@@ -5,6 +5,7 @@ hide:
 sektion: Lagerungen
 title: elastische Lager
 order: 160
+thumb: images/Elastic_Support.excalidraw.png
 ---
 
 # elastische Lagerung `Elastic Support`

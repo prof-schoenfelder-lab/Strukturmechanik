@@ -5,6 +5,7 @@ hide:
 sektion: Belastungen
 title: Beschleunigungen
 order: 240
+thumb: images/Beschleunigungen.excalidraw.png
 ---
 
 # Beschleunigungen

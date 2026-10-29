@@ -5,6 +5,7 @@ hide:
 sektion: Belastungen
 title: Kräfte
 order: 200
+thumb: images/Kraft_verteilt.excalidraw.png
 ---
 
 # Kräfte mit `Force`
