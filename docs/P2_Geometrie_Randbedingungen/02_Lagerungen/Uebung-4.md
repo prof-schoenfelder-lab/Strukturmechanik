@@ -69,8 +69,8 @@ Im Archiv sind zwei Analysen vorbereitet:
 
 - **A: `Rahmen mit Dummies`** ist fertig aufgebaut:
     - Rahmen aus Aluminium, Dummies aus Stahl (`Structural Steel`)
-    - Dummies über Joints mit dem Rahmen verbunden. **Annahme:** Die Verbindung vom Hinterrad-Dummy zur Hinterachse ist starr, sie gibt nicht nach.
-    - Dummies unten mit `Cylindrical Support` gelagert: das Festlager, um den Drehpunkt drehbar
+    - Dummies sind über `Joints` (Verbindung) mit dem Rahmen verbunden. Dabei können zwei Geometrien auch über feste Freiheitsgrade verbunden werden, um z.B. Drehbewegungen zu ermöglichen. **Annahme:** Die Verbindung vom Hinterrad-Dummy zur Hinterachse ist starr, sie gibt nicht nach.
+    - Die Festlager in den Dummies werden über `Cylindrical Support` festgelegt (drehbar in tangentialer Richtung, der Rest ist fest)
     - Kraft am Tretlager
 - **B: `Rahmen mit Remote Displacement (Deformable)`** hat dieselbe Geometrie und dieselbe Kraft, aber:
     - die beiden Dummies sind unterdrückt (`Suppress`)
