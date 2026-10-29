@@ -236,5 +236,3 @@ Vergleichen Sie A, B und C: den Maximalwert, aber auch, **wo** das Maximum liegt
 
 !!! question "Prüffrage für eigene Modelle"
     Was sitzt in Wirklichkeit an der Fläche, und hält es die Fläche in Form? Wenn ja: `rigid`. Wenn unklar: beide Varianten rechnen und das **Verformungsbild an der Fläche** vergleichen, nicht nur den Maximalwert.
-
-Auf dem Foto vom Prüfstand greift die Kraft nicht am Tretlager an, sondern am Satteldummy, also oberhalb des Sitzrohrs und außerhalb der Rahmengeometrie. Wie man eine Kraft an einem Punkt außerhalb der Geometrie anbringt, zeigt [Übung 5](../03_Belastungen/Uebung-7.md) mit `Remote Force`.
