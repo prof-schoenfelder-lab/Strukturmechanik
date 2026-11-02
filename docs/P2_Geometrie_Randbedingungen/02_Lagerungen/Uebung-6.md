@@ -46,11 +46,15 @@ Wie das Archiv importiert wird, steht in [Übung 1](../01_Geometrie_anpassen/Ueb
 
 Lagerung im Bereich des Kopfes:
 
-- a) Verbund mit Schraubenkopf (Ende Schraubenkopf mit `Fixed Support` gelagert) 
+- a) Verbund mit Schraubenkopf, der Schraubenkopf ist an seiner Unterseite fest eingespannt (`Fixed Support` nur auf die Unterseite des Schraubenkopfes)
 - b) feste Einspannung mit `Fixed Support` 
 - c) feste Einspannung mit `Remote Displacement alle Freiheitsgrade gesperrt (rigid)` 
 - d) feste Einspannung mit `Remote Displacement alle Freiheitsgrade gesperrt (deformable)` 
 - e) elastische Bettung mit `Elastic Support` mit $k=20000\,N/mm^3$ + `Frictionless Support` auf der Stirnseite
+
+!!! warning "Referenz a): nur die Unterseite des Schraubenkopfes einspannen"
+    - Der `Fixed Support` gehört nur auf die Unterseite des Schraubenkopfes, also die Fläche, mit der der Kopf aufliegt.
+    - Sitzt er zusätzlich auf weiteren Flächen des Kopfes, ist die Referenz steifer als nötig, und der Vergleich mit den anderen Lagerungen stimmt nicht mehr.
 
 Belastung:
 
@@ -78,7 +82,7 @@ Welche Lagerung führt zur ähnlichen Spannung wie die Variante mit dem Schraubk
 
 Hinweis: Wird die Körperauswahl verwendet und der Inbus der jeweiligen Randbedingung ausgewählt bevor die Spannung eingefügt wird, lässt sich auch nur die Spannung des jeweiligen Bauteils anzeigen.
 
-<div class="multiple-choice-question" data-correct="D,E" data-points="5" data-attempts="3">
+<div class="multiple-choice-question" data-correct="D,E" data-points="5" data-attempts="3" data-hints="Ist die Referenz a) richtig gelagert? Der Fixed Support gehört nur auf die Unterseite des Schraubenkopfes, sonst ist sie steifer als nötig.">
   <div class="mc-options">
     <div class="mc-option" data-value="B">
       <input type="checkbox" id="q1b" name="q1">
