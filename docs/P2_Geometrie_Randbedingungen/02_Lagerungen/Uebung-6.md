@@ -78,23 +78,23 @@ Welche Lagerung führt zur ähnlichen Spannung wie die Variante mit dem Schraubk
 
 Hinweis: Wird die Körperauswahl verwendet und der Inbus der jeweiligen Randbedingung ausgewählt bevor die Spannung eingefügt wird, lässt sich auch nur die Spannung des jeweiligen Bauteils anzeigen.
 
-<div class="multiple-choice-question" data-correct="C,D" data-points="5" data-attempts="3">
+<div class="multiple-choice-question" data-correct="D,E" data-points="5" data-attempts="3">
   <div class="mc-options">
-    <div class="mc-option" data-value="A">
-      <input type="checkbox" id="q1a" name="q1">
-      <label for="q1a">Fixed Support</label>
-    </div>
     <div class="mc-option" data-value="B">
       <input type="checkbox" id="q1b" name="q1">
-      <label for="q1b">Remote Displacement (rigid)</label>
+      <label for="q1b">b) Fixed Support</label>
     </div>
     <div class="mc-option" data-value="C">
       <input type="checkbox" id="q1c" name="q1">
-      <label for="q1c">Remote Displacement (deformable)</label>
+      <label for="q1c">c) Remote Displacement (rigid)</label>
     </div>
     <div class="mc-option" data-value="D">
       <input type="checkbox" id="q1d" name="q1">
-      <label for="q1d">Elastic Support</label>
+      <label for="q1d">d) Remote Displacement (deformable)</label>
+    </div>
+    <div class="mc-option" data-value="E">
+      <input type="checkbox" id="q1e" name="q1">
+      <label for="q1e">e) Elastic Support</label>
     </div>
   </div>
 </div>
