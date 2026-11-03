@@ -46,15 +46,16 @@ Wie das Archiv importiert wird, steht in [Übung 1](../01_Geometrie_anpassen/Ueb
 
 Lagerung im Bereich des Kopfes:
 
-- a) Verbund mit Schraubenkopf, der Schraubenkopf ist an seiner Unterseite fest eingespannt (`Fixed Support` nur auf die Unterseite des Schraubenkopfes)
+- a) Verbund mit Schraubenkopf, der Schraubenkopf ist nur an seiner unteren Stirnseite fest eingespannt (`Fixed Support`), nicht an der Außenseite
 - b) feste Einspannung mit `Fixed Support` 
 - c) feste Einspannung mit `Remote Displacement alle Freiheitsgrade gesperrt (rigid)` 
 - d) feste Einspannung mit `Remote Displacement alle Freiheitsgrade gesperrt (deformable)` 
 - e) elastische Bettung mit `Elastic Support` mit $k=20000\,N/mm^3$ + `Frictionless Support` auf der Stirnseite
 
-!!! warning "Referenz a): nur die Unterseite des Schraubenkopfes einspannen"
-    - Der `Fixed Support` gehört nur auf die Unterseite des Schraubenkopfes, also die Fläche, mit der der Kopf aufliegt.
-    - Sitzt er zusätzlich auf weiteren Flächen des Kopfes, ist die Referenz steifer als nötig, und der Vergleich mit den anderen Lagerungen stimmt nicht mehr.
+!!! warning "Referenz a): nur die untere Stirnseite des Schraubenkopfes einspannen"
+    - Fest eingespannt wird nur die untere Stirnseite des Schraubenkopfes.
+    - Wird auch die Außenseite des Kopfes eingespannt, ist die Referenz steifer als nötig, und am Schraubenkopf entsteht eine Spannungsüberhöhung.
+    - Dann stimmt der Vergleich mit den anderen Lagerungen nicht mehr.
 
 Belastung:
 
@@ -78,11 +79,15 @@ Werten Sie bei jeder Variante die Gesamtverformung des Inbus aus (`Total Deforma
 
 ### Spannungen
 
-Welche Lagerung führt zur ähnlichen Spannung wie die Variante mit dem Schraubkopf?
+Werten Sie bei jeder Variante die maximale Vergleichsspannung **nur im Inbus** aus, nicht im Schraubenkopf.
 
 Hinweis: Wird die Körperauswahl verwendet und der Inbus der jeweiligen Randbedingung ausgewählt bevor die Spannung eingefügt wird, lässt sich auch nur die Spannung des jeweiligen Bauteils anzeigen.
 
-<div class="multiple-choice-question" data-correct="D,E" data-points="5" data-attempts="3" data-hints="Ist die Referenz a) richtig gelagert? Der Fixed Support gehört nur auf die Unterseite des Schraubenkopfes, sonst ist sie steifer als nötig.">
+Zur Kontrolle: Die Referenz a) liegt im Inbus bei rund 354 MPa. Liegt Ihr Wert deutlich darüber, ist der Schraubenkopf vermutlich auch an der Außenseite eingespannt.
+
+**Bei welchen Lagerungen liegt die maximale Spannung im Inbus nahe an der Referenz a)?**
+
+<div class="multiple-choice-question" data-correct="D,E" data-points="5" data-attempts="3" data-hints="Ist die Referenz a) richtig gelagert? Fest eingespannt wird nur die untere Stirnseite des Schraubenkopfes, nicht die Außenseite. Und nur den Inbus auswerten, nicht den Schraubenkopf.">
   <div class="mc-options">
     <div class="mc-option" data-value="B">
       <input type="checkbox" id="q1b" name="q1">
