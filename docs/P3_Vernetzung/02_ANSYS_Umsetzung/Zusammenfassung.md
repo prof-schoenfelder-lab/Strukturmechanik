@@ -125,6 +125,16 @@ Empfehlung:
 
 ---
 
+## 7. Vorgehen zur Bestimmung der geeigneten Netzgröße
+
+Aus den Schritten dieses Praktikums ergibt sich das vollständige Vorgehen. Neu gegenüber den Zwischenständen ist nur Lösung 2, die andere Lagerung, wie Sie sie aus Übung 3 (Kurbelarm) und aus Praktikum 2 kennen.
+
+<figure style="text-align:center;">
+  <img src="../images/Vorgehen_Gesamt.excalidraw.png" alt="Vollständiges Vorgehen zur Bestimmung der Netzgröße" width="900">
+</figure>
+
+---
+
 !!! info "Kurzfassung"
 
     - Netzgröße schrittweise verfeinern, bis sich die relevanten Spannungen

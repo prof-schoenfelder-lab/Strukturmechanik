@@ -135,6 +135,11 @@ Wurde somit eine Konvergenz erreicht mit einer lokalen Netzgröße von 0,25&nbsp
   </div>
 </div>
 
+Unser Vorgehen wächst erneut: Wenn die maximale Spannung an einer scharfen Kante liegt, verrunden wir die Kante und verfeinern das Netz nur dort.
+
+<figure style="text-align:center;">
+  <img src="../images/Vorgehen_Stufe3.excalidraw.png" alt="Vorgehen mit Kantenverrundung und lokaler Netzgröße" width="800">
+</figure>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->
 <div class="solution-images">
