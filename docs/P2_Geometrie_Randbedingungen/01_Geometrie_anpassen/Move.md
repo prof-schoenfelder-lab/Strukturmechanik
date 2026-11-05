@@ -25,7 +25,7 @@ Da in SpaceClaim davon ausgegangen wird, dass man eine CAD Geometrie z.B. von CA
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Move Tool starten</p>
-    <p>Im Reiter Sketch (oder Design) das <code>Move-Tool</code> auswählen</p>
+    <p><code>Reiter Sketch</code> (oder <code>Reiter Design</code>): <code>Move-Tool</code> auswählen</p>
   </div>
 
   <div class="step" >

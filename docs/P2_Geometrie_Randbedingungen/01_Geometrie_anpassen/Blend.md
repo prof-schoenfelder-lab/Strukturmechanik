@@ -20,7 +20,7 @@ Will man den Übergang zwischen zwei Profilen erstellen kann man die `Blend` Fun
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Blend Tool starten</p>
-    <p>Im Reiter Sketch (oder Design) das <code>Blend-Tool</code> auswählen</p>
+    <p><code>Reiter Sketch</code> (oder <code>Reiter Design</code>): <code>Blend-Tool</code> auswählen</p>
   </div>
 
   <div class="step" >

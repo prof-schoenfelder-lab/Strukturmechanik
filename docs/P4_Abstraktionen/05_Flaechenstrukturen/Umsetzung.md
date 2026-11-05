@@ -36,15 +36,15 @@ Diese Option ist besonders praktisch wenn man bereits viele Flächenstrukturen h
   </div>
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Im Reiter <code>Prepare</code> auf <code>Midsurface</code> klicken</p>
+    <p class="step-title" role="heading" aria-level="2"><code>Reiter Prepare → Midsurface</code> klicken</p>
   </div>
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Im Detailfenster <code>Use Range</code> auswählen und Dickenbereich des Bauteils angeben</p>
+    <p class="step-title" role="heading" aria-level="2"><code>Detailfenster → Use Range</code> auswählen und Dickenbereich des Bauteils angeben</p>
   </div>
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Im Strukturbaum <code>Volumenkörper</code> auswählen (ggf. mehrere) und im Grafikfenster mit <code>OK</code> bestätigen</p>
+    <p class="step-title" role="heading" aria-level="2"><code>Strukturbaum → Volumenkörper</code> auswählen (ggf. mehrere) und im <code>Grafikfenster</code> mit <code>OK</code> bestätigen</p>
   </div>
 
 </div>
@@ -55,7 +55,7 @@ Diese Option ist besonders praktisch wenn man bereits viele Flächenstrukturen h
 ## Dicke einstellen
 
 <!-- --8<-- [start:Dicke_einstellen] -->
-In Mechanical im Strukturbaum die jeweilige <code>Fläche (Surface)</code> auswählen und im Detailfenster unter <code>Thickness</code> die Dicke einstellen.
+In Mechanical im <code>Strukturbaum</code> die jeweilige <code>Fläche (Surface)</code> auswählen und unter <code>Detailfenster → Thickness</code> die Dicke einstellen.
 
 <figure style="text-align:left;">
     <img src="../images/Dicke.png" alt="Einstellung Mechanical Dicke" width="400">
@@ -67,7 +67,7 @@ In Mechanical im Strukturbaum die jeweilige <code>Fläche (Surface)</code> ausw�
 <!-- --8<-- [start:Elementdarstellung] -->
 Analog zum BEAM Element können wir hier auch die Darstellung einstellen:
 
-In Mechanical im Strukturbaum `Mesh` auswählen und in der Menüleiste oben im Reiter <code>Display</code> den Eintrag <code>Thick Shells and Beams</code> auswählen.
+In Mechanical `Strukturbaum → Mesh` auswählen und in der Menüleiste oben `Reiter Display → Thick Shells and Beams` auswählen.
 
 <figure style="text-align:left;">
     <img src="../images/ThickShells.png" alt="Thick Shells and Beams" width="700">
@@ -89,5 +89,5 @@ Außerdem muss ggf. mit dem Lagerungstyp `Fixed Rotation` darauf geachtet werden
     <img src="../../04_Linienstrukturen/images/FixedRotation.png" alt="Fixed Rotation" width="500">
 </figure>
 
-Im Detailfenster können dort die entsprechenden Rotationsachsen wieder freigegeben werden wenn gewünscht.
+Im `Detailfenster` können dort die entsprechenden Rotationsachsen wieder freigegeben werden wenn gewünscht.
 <!-- --8<-- [end:Randbedingungen] -->

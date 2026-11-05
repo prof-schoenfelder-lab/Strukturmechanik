@@ -33,12 +33,12 @@ Lagerungen verhindern an definierten Orten der Geometrie eine Bewegungen in eine
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Randbedingungen hinzufügen</p>
-    <p>Im Strukturbaum: <code>Rechtsklick</code> auf <code>Static Structural</code> > <code>Insert</code> und dann die jeweilige Randbedingung auswählen</p>
+    <p><code>Rechtsklick Strukturbaum Static Structural → Insert</code> und dann die jeweilige Randbedingung auswählen</p>
   </div>
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Randbedingungen Details bearbeiten</p>
-    <p>Im Detailfenster: Details bearbeiten wie z.B. den Wert der Verschiebungen in die jeweilige Achse</p>
+    <p>Im <code>Detailfenster</code>: Details bearbeiten wie z.B. den Wert der Verschiebungen in die jeweilige Achse</p>
   </div>
 
 </div>

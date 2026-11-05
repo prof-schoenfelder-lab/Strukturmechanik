@@ -32,7 +32,7 @@ Hier wird dies beispielhaft gezeigt:
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Split Body Tool auswählen und Körper auswählen</p>
-    <p>Im Reiter Design das <code>Split Body</code> Tool auswählen und auf den <code>Körper</code> klicken der geteilt werden soll.</p>
+    <p><code>Reiter Design → Split Body</code> auswählen und auf den <code>Körper</code> klicken, der geteilt werden soll.</p>
   </div>
 
   <div class="step" >
@@ -60,7 +60,7 @@ Als Beispiel verwenden wir ein Bimetall das in der Mitte geteilt werden soll um 
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Ebene erstellen</p>
-    <p>Im Reiter Design das <code>Ebenen</code> Tool auswählen und auf die <code>Fläche</code> klicken auf der die <code>Ebene</code> erzeugt werden soll.</p>
+    <p><code>Reiter Design → Ebenen-Tool</code> auswählen und auf die <code>Fläche</code> klicken, auf der die <code>Ebene</code> erzeugt werden soll.</p>
   </div>
 
   <div class="step" >

@@ -27,7 +27,7 @@ thumb: images/Radius_aendern.gif
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Pull Tool starten</p>
-    <p>Im Reiter Sketch (oder Design) das <code>Pull-Tool</code> auswählen</p>
+    <p><code>Reiter Sketch</code> (oder <code>Reiter Design</code>): <code>Pull-Tool</code> auswählen</p>
   </div>
 
   <div class="step" >
@@ -61,7 +61,7 @@ Wenn eine Verrundung noch nicht vorhanden ist kann diese mit dem `Pull` Tool auc
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Pull Tool starten</p>
-    <p>Im Reiter Sketch (oder Design) das <code>Pull-Tool</code> auswählen</p>
+    <p><code>Reiter Sketch</code> (oder <code>Reiter Design</code>): <code>Pull-Tool</code> auswählen</p>
   </div>
 
   <div class="step" >

@@ -23,7 +23,7 @@ Mit Hilfe von Screenshots der Ergebnisse und einer Umbenennung entsprechend der 
   </div>
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Reiter <code>Result</code> auswählen</p>
+    <p class="step-title" role="heading" aria-level="2"><code>Reiter Result</code> auswählen</p>
   </div>
 
   <div class="step">
@@ -36,7 +36,7 @@ Mit Hilfe von Screenshots der Ergebnisse und einer Umbenennung entsprechend der 
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2"><code>Image</code> umbenennen</p>
-    <p>Mit <code>Rechtsklick</code> auf <code>Image</code> und <code>Rename</code> einen aussagekräftigen Namen vergeben, z.&nbsp;B. die verwendete Elementgröße.</p>
+    <p>Mit <code>Rechtsklick Strukturbaum Image → Rename</code> einen aussagekräftigen Namen vergeben, z.&nbsp;B. die verwendete Elementgröße.</p>
   </div>
 
 </div>
@@ -54,11 +54,11 @@ Ein Nachteil ist, dass keine individuelle Benennung (z.&nbsp;B. „Netz 1,5&nbsp
 <div class="steps" markdown="1" data-kategorie="Auswertung">
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2"><code>Solution Information</code> im Strukturbaum auswählen</p>
+    <p class="step-title" role="heading" aria-level="2"><code>Strukturbaum → Solution Information</code> auswählen</p>
   </div>
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Im Detailfenster das Dropdown-Menü <code>Solution Output</code> öffnen</p>
+    <p class="step-title" role="heading" aria-level="2">Unter <code>Detailfenster → Solution Output</code> das Dropdown-Menü öffnen</p>
   </div>
 
   <div class="step">

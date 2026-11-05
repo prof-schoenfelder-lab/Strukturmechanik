@@ -46,7 +46,7 @@ Wie im Praktikum&nbsp;2 zur Geometrieanpassung gezeigt, können innenliegende Ka
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Pull-Tool starten</p>
-    <p>In SpaceClaim im Reiter <code>Sketch</code> (oder <code>Design</code>) das <code>Pull-Tool</code> auswählen.</p>
+    <p>In SpaceClaim: <code>Reiter Sketch</code> (oder <code>Reiter Design</code>): <code>Pull-Tool</code> auswählen.</p>
   </div>
 
   <div class="step" >
@@ -61,7 +61,7 @@ Wie im Praktikum&nbsp;2 zur Geometrieanpassung gezeigt, können innenliegende Ka
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Geometrie aktualisieren</p>
-    <p>In Mechanical im Strukturbaum <code>Rechtsklick</code> auf <code>Geometry</code> und <code>Update Geometry from Source</code> auswählen.</p>
+    <p>In Mechanical: <code>Rechtsklick Strukturbaum Geometry → Update Geometry from Source</code></p>
   </div>
 
 </div>
@@ -74,8 +74,8 @@ Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wi
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Globale Netzgröße einstellen</p>
-    <p>(1) Im Strukturbaum <code>Mesh</code> auswählen.</p>
-    <p>(2) Im Detailfenster unter <code>Element Size</code> den Wert <code>3</code> eingeben (Einheit auf mm!).</p>
+    <p>(1) <code>Strukturbaum → Mesh</code> auswählen.</p>
+    <p>(2) <code>Detailfenster → Element Size: 3 mm</code> eingeben (Einheit auf mm!).</p>
     <figure style="text-align:center;">
         <img src="../images/Lokale_Netzverfeinerung1.png" alt="Lokale Netzverfeinerung" width="700">
     </figure>
@@ -85,7 +85,7 @@ Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wi
     <p class="step-title" role="heading" aria-level="2">Lokale Netzverfeinerung einfügen</p>
     <p>(1) <code>Flächenauswahltool</code> auswählen.</p>
     <p>(2) Die <code>Fläche</code> der Verrundung auswählen.</p>
-    <p>Im Strukturbaum (3) <code>Rechtsklick</code> auf <code>Mesh</code> und dann (4) <code>Insert</code> &gt; (5) <code>Sizing</code> auswählen.</p>
+    <p>(3) bis (5) <code>Rechtsklick Strukturbaum Mesh → Insert → Sizing</code></p>
     <figure style="text-align:center;">
         <img src="../images/Lokale_Netzverfeinerung2.png" alt="Lokale Netzverfeinerung" width="700">
     </figure>
@@ -93,8 +93,8 @@ Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wi
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Lokale Netzgröße einstellen</p>
-    <p>(1) Die lokale Netzverfeinerung (Sizing) auswählen.</p>
-    <p>(2) Im Detailfenster unter <code>Sizing</code> den Wert <code>0,5</code> einstellen (Einheit auf mm!).</p>
+    <p>(1) Die lokale Netzverfeinerung auswählen: <code>Strukturbaum → Mesh → Face Sizing</code></p>
+    <p>(2) <code>Detailfenster → Element Size: 0,5 mm</code> einstellen (Einheit auf mm!).</p>
     <figure style="text-align:center;">
         <img src="../images/Lokale_Netzverfeinerung3.png" alt="Lokale Netzverfeinerung 2" width="300">
     </figure>
@@ -102,7 +102,7 @@ Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wi
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Netz generieren</p>
-    <p>Im Strukturbaum <code>Rechtsklick</code> auf <code>Mesh</code> und dann <code>Generate Mesh</code> auswählen.</p>
+    <p><code>Rechtsklick Strukturbaum Mesh → Generate Mesh</code></p>
     <figure style="text-align:center;">
         <img src="../images/Lokale_Netzverfeinerung4.png" alt="Lokale Netzverfeinerung 3" width="500">
     </figure>

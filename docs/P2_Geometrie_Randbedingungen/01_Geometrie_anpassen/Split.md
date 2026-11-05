@@ -29,7 +29,7 @@ Im ersten Beispiel soll eine Fläche im Abstand von 40mm für eine Flächenlast 
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Split Tool auswählen und Fläche auswählen</p>
-    <p>Im Reiter Design das <code>Split</code> Tool auswählen und auf die <code>Fläche</code> klicken die geteilt werden soll.</p>
+    <p><code>Reiter Design → Split-Tool</code> auswählen und auf die <code>Fläche</code> klicken, die geteilt werden soll.</p>
     <p>Mit <code>STRG</code> gedrückt halten könnte man hier auch auch mehrere Flächen auswählen.</p>
   </div>
 
@@ -60,7 +60,7 @@ Jetzt verwenden wir die Ebene um im Abstand von 80mm eine Fläche an einem Lenke
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Ebene erstellen</p>
-    <p>Im Reiter Design das <code>Ebenen</code> Tool auswählen und auf die <code>Fläche</code> klicken auf der die <code>Ebene</code> erzeugt werden soll.</p>
+    <p><code>Reiter Design → Ebenen-Tool</code> auswählen und auf die <code>Fläche</code> klicken, auf der die <code>Ebene</code> erzeugt werden soll.</p>
   </div>
 
   <div class="step" >

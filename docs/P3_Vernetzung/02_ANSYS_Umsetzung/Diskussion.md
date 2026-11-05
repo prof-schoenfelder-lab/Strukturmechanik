@@ -67,7 +67,7 @@ Hier nun alle Werte für unser Beispiel:
 
     Wenn sich die der rote Bereich der Spannung über mehrere Elemente erstreckt, ist der Spannungsgradient im Element meist klein genug.
 
-    Die Darstellung der Elemente im Spannungsplot kann man einstellen, wenn im Strukturbaum ein Ergebnis ausgewählt ist: Im Reiter `Result` unter `Edges`:`Show Elements`
+    Die Darstellung der Elemente im Spannungsplot kann man einstellen, wenn im `Strukturbaum` ein Ergebnis ausgewählt ist: `Reiter Result → Edges → Show Elements`
 
     <figure style="text-align:center;">
         <img src="../images/Show_Elements.png" alt="Averaged vs NodalFraction" width="800">

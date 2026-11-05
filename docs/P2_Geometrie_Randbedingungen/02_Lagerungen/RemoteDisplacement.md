@@ -23,7 +23,7 @@ Ein Bauteil kann sich im Raum auf sechs Arten bewegen: in x, y und z **verschieb
     <img src="../images/FixedSupport_vs_RemoteDisplacement.excalidraw.png" alt="Fixed Suppor vs. Remote Displacement" width="700">
 </figure>
 
-Im Detailfenster stellen Sie für den Punkt jeden der sechs Freiheitsgrade einzeln ein:
+Im `Detailfenster` stellen Sie für den Punkt jeden der sechs Freiheitsgrade einzeln ein:
 
 <figure style="text-align:center;">
     <img src="../images/RemoteDisplacement_Freiheitsgrade.png" alt="FreiheitsgradeDetailfenster" width="250">

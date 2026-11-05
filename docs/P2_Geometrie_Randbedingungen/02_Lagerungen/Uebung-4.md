@@ -86,13 +86,13 @@ In Analyse B ersetzen Sie jeden Dummy durch ein `Remote Displacement`: auf dense
     <img src="../images/RD-Sequenz-01-KOS-einfuegen.webp" alt="Coordinate System an der Gelenkbohrung des Gabel-Dummys einfügen" width="700" class="no-lightbox">
     </figure>
 
-    **2. Bezug zur Geometrie lösen:** Im Detailfenster unter `Origin` bei `Define By` von `Geometry Selection` auf `Global Coordinates` umstellen. Der Ursprung bleibt, wo er ist, hängt aber nicht mehr an der Fläche des Dummys, der im nächsten Schritt unterdrückt wird. Die Achsen zeigen wie die globalen Achsen, die Drehachse der Dummies ist x.
+    **2. Bezug zur Geometrie lösen:** Unter `Detailfenster → Origin` bei `Define By` von `Geometry Selection` auf `Global Coordinates` umstellen. Der Ursprung bleibt, wo er ist, hängt aber nicht mehr an der Fläche des Dummys, der im nächsten Schritt unterdrückt wird. Die Achsen zeigen wie die globalen Achsen, die Drehachse der Dummies ist x.
 
     <figure style="text-align:center;">
     <img src="../images/RD-Sequenz-02-KOS-Geometrie-Referenz-entfernen.webp" alt="Define By auf Global Coordinates umstellen" width="450" class="no-lightbox">
     </figure>
 
-    **3. Dummy unterdrücken:** Im Strukturbaum unter `Geometry` den Dummy anklicken, dann `Rechtsklick → Suppress Body`. Das Koordinatensystem bleibt erhalten, Lager und Joints am Dummy wirken danach nicht mehr.
+    **3. Dummy unterdrücken:** Unter `Strukturbaum → Geometry` den Dummy anklicken, dann `Rechtsklick → Suppress Body`. Das Koordinatensystem bleibt erhalten, Lager und Joints am Dummy wirken danach nicht mehr.
 
     <figure style="text-align:center;">
     <img src="../images/RD-Sequenz-03-Dummy-unterdruecken.webp" alt="Gabel-Dummy mit Suppress Body unterdrücken" width="450" class="no-lightbox">
@@ -161,7 +161,7 @@ Drehen Sie die Ansicht so, dass Sie von hinten auf die beiden Ausfallenden schau
 ### 3. Zum Vergleich: rigid
 
 - [ ] Im Projektschema aus der Toolbox ein neues `Static Structural` auf die Zelle `Model` von Analyse B ziehen. Beide Analysen nutzen dann dasselbe Modell (Geometrie, Netz), in Mechanical erscheint ein zweiter Eintrag `Static Structural` im Strukturbaum. Nur Randbedingungen und Lösung sind eigene. Diese neue Analyse heißt C.
-- [ ] Kraft und beide Remote Displacements im Strukturbaum von B auf `Static Structural` von C ziehen, das kopiert sie. Dann in C bei beiden Remote Displacements `Behavior` = `Rigid` einstellen
+- [ ] Kraft und beide Remote Displacements im `Strukturbaum` von B auf `Static Structural` von C ziehen, das kopiert sie. Dann in C bei beiden Remote Displacements `Behavior` = `Rigid` einstellen
 - [ ] Analyse C rechnen
 
 !!! question "Was ändert `rigid`?"

@@ -62,12 +62,12 @@ Nach dem Import der Archivdatei die Geometrie mit SpaceClaim öffnen und wie fol
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2"><code>Workbench Projektmenü</code>: Geometrie neu reinladen</p>
-    <p><code>Rechtsklick</code> auf <code>Model</code> > <code>Update</code></p>
+    <p><code>Rechtsklick Model → Update</code></p>
   </div>
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2"><code>Mechanical</code>: Material neu zuordnen</p>
-    <p>Im Strukturbaum: <code>Geometry</code> > <code>Lenker</code> anklicken und im Detailfenster unter <code>Asssignment</code> das Material <code>Alu</code> zuweisen</p>
+    <p><code>Strukturbaum → Geometry → Lenker</code> anklicken und unter <code>Detailfenster → Assignment</code> das Material <code>Alu</code> zuweisen</p>
   </div>
 
   <div class="step">

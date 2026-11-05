@@ -25,7 +25,7 @@ In `SpaceClaim` eine Skizze in der `x-y`-Ebene zeichnen:
     - y-Richtung = Achse der Rotation  
     Die Skizze wird also im x-y-Schnitt gezeichnet und um die y-Achse „gedreht“.
 
-Darauf achten, dass die Skizze beendet wird und im Strukturbaum der Eintrag `Surface` erscheint.
+Darauf achten, dass die Skizze beendet wird und im `Strukturbaum` der Eintrag `Surface` erscheint.
 
 <figure style="text-align:left;">
     <img src="../../02_ESZ/images/SpaceClaim2.png" alt="Auf Eintrag im Strukturbaum achten" width="200">
@@ -35,7 +35,7 @@ Darauf achten, dass die Skizze beendet wird und im Strukturbaum der Eintrag `Sur
 ## ANSYS Workbench Projektmenü
 
 <!-- --8<-- [start:WBProjektmenue] -->
-Im Workbench-Projektmenü per Rechtsklick auf `Geometry` im Properties-Fenster `Analysis Type = 2D` einstellen:
+Im Workbench-Projektmenü `Rechtsklick Geometry → Properties` und dort `Analysis Type = 2D` einstellen:
 
 <figure style="text-align:left;">
     <img src="../../02_ESZ/images/Geometry2D.png" alt="Einstellung WB Projektmenü für Geometry" width="800">
@@ -45,7 +45,7 @@ Im Workbench-Projektmenü per Rechtsklick auf `Geometry` im Properties-Fenster `
 ## ANSYS Mechanical
 
 <!-- --8<-- [start:Mechanical] -->
-In Mechanical die `Geometry` auswählen und im Detailfenster `2D Behavior = Axisymmetric` einstellen:
+In Mechanical `Strukturbaum → Geometry` auswählen und `Detailfenster → 2D Behavior: Axisymmetric` einstellen:
 
 <figure style="text-align:left;">
     <img src="../images/axissymmetric.png" alt="Einstellung Mechanical" width="400">

@@ -20,7 +20,7 @@ Körper werden zusammengeführt um das Netz über die Grenzen hinaus zu verwende
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Combine Tool starten</p>
-    <p>Im Reiter Sketch (oder Design) das <code>Combine</code> Tool auswählen</p>
+    <p><code>Reiter Sketch</code> (oder <code>Reiter Design</code>): <code>Combine-Tool</code> auswählen</p>
   </div>
 
   <div class="step" >

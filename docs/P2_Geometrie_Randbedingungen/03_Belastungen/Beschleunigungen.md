@@ -58,11 +58,11 @@ Beschleunigungen wirken nicht auf eine Fläche, sondern auf das ganze Volumen: J
 </figure>
 
 !!! warning "Ohne Dichte keine Massenkräfte"
-    Beschleunigungslasten brauchen die Dichte im Material (`Engineering Data` > `Density`). Fehlt sie oder stimmt sie nicht, stimmen auch die Kräfte nicht. Die Masse des Modells steht im Strukturbaum unter `Geometry` > Körper > `Properties` > `Mass`.
+    Beschleunigungslasten brauchen die Dichte im Material (`Engineering Data → Density`). Fehlt sie oder stimmt sie nicht, stimmen auch die Kräfte nicht. Die Masse des Modells steht unter `Strukturbaum → Geometry → Körper → Properties → Mass`.
 
 ## Eigengewicht mit `Standard Earth Gravity`
 
-Im Strukturbaum: `Rechtsklick` auf `Static Structural` > `Insert` > `Standard Earth Gravity`, dann im Detailfenster die Richtung wählen, zum Beispiel `-Y Direction`. ANSYS setzt $g = 9{,}81\,\mathrm{m/s^2}$ an, die Gewichtskraft ist $F = m \cdot g$.
+`Rechtsklick Strukturbaum Static Structural → Insert → Standard Earth Gravity`, dann im `Detailfenster` die Richtung wählen, zum Beispiel `-Y Direction`. ANSYS setzt $g = 9{,}81\,\mathrm{m/s^2}$ an, die Gewichtskraft ist $F = m \cdot g$.
 
 Ob das Eigengewicht neben den äußeren Lasten eine Rolle spielt, zeigt der Vergleich von $m \cdot g$ mit den angreifenden Kräften: Ist es deutlich kleiner, ändert es das Ergebnis kaum.
 
@@ -70,7 +70,7 @@ Ob das Eigengewicht neben den äußeren Lasten eine Rolle spielt, zeigt der Verg
 
 Wird ein Bauteil beschleunigt, etwa beim Anfahren, Bremsen oder in einer Kurve, wirken auf jedes Stück Material Trägheitskräfte $F = m \cdot a$, und zwar **entgegen** der Beschleunigung: Ein Bauteil, das nach oben beschleunigt wird, wird nach unten gedrückt.
 
-Im Strukturbaum: `Rechtsklick` auf `Static Structural` > `Insert` > `Acceleration`, dann Betrag und Richtung im Detailfenster eingeben.
+`Rechtsklick Strukturbaum Static Structural → Insert → Acceleration`, dann Betrag und Richtung im `Detailfenster` eingeben.
 
 Nach der Rechnung sollte die Verformung in die Richtung zeigen, in die die Trägheitskräfte wirken. Sonst ist das Vorzeichen der Beschleunigung vertauscht.
 
@@ -78,7 +78,7 @@ Nach der Rechnung sollte die Verformung in die Richtung zeigen, in die die Träg
 
 Dreht sich ein Bauteil, zum Beispiel ein Rad, eine Kurbel oder eine Scheibe, zieht die Fliehkraft $F = m \cdot \omega^2 \cdot r$ jedes Stück Material nach außen. Außen ist sie am größten.
 
-Im Strukturbaum: `Rechtsklick` auf `Static Structural` > `Insert` > `Rotational Velocity`, dann die Drehachse und die Drehzahl angeben (in rad/s oder RPM).
+`Rechtsklick Strukturbaum Static Structural → Insert → Rotational Velocity`, dann die Drehachse und die Drehzahl angeben (in rad/s oder RPM).
 
 ## Beschleunigung oder Kraft?
 

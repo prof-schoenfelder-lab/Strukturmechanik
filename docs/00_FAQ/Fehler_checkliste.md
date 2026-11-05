@@ -11,7 +11,7 @@ Generell gilt es den Strukturbaum von oben nach unten abzugehen:
 
 - [ ] `Geometrie` (Linienauswahl > Linien anklicken und ganz unten Länge ablesen)
 - [ ] `Materialdaten` (Einheit richtig? Werte richtig?)
-- [ ] `Materialzuordnung` (Geometry>Detailfenster>Assignment)
+- [ ] `Materialzuordnung` (`Strukturbaum → Geometry → Detailfenster → Assignment`)
 - [ ] `Netz` klein genug?
-- [ ] `Randbedingungen` (richtige Geometrie? Richtige Randbedingung? Ggf. Details im Detailsfenster?)
-- [ ] `Ergebnis` (auf richtiger Geometrie?  Ggf. Details im Detailsfenster?)
+- [ ] `Randbedingungen` (richtige Geometrie? Richtige Randbedingung? Ggf. Details im `Detailfenster`?)
+- [ ] `Ergebnis` (auf richtiger Geometrie?  Ggf. Details im `Detailfenster`?)

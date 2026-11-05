@@ -18,7 +18,7 @@ hide:
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Maximale Verformung einfügen</p>
-    <p>Im Strukturbaum <code>Rechtsklick Solution → Insert → Deformation → Total</code> auswählen</p>
+    <p><code>Rechtsklick Strukturbaum Solution → Insert → Deformation → Total</code> auswählen</p>
     <figure style="text-align:center;">
     <img src="../../images/Get_umax.png" alt="Aufgabenstellung" width="600" class="no-lightbox">
     </figure>
@@ -26,7 +26,7 @@ hide:
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Ergebnis abrufen</p>
-    <p>Im Strukturbaum <code>Rechtsklick Total Deformation → Evaluate All Results</code> auswählen</p>
+    <p><code>Rechtsklick Strukturbaum Total Deformation → Evaluate All Results</code> auswählen</p>
     <figure style="text-align:center;">
     <img src="../../images/Get_umax2.png" alt="Aufgabenstellung" width="430" class="no-lightbox">
     </figure>
@@ -48,7 +48,7 @@ Die Spannung ergibt sich ähnlich, nur das wir hier zusätzlich die y-Richtung a
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Normalspannung einfügen</p>
-    <p>Im Strukturbaum <code>Rechtsklick Solution → Insert → Stress → Normal</code> auswählen</p>
+    <p><code>Rechtsklick Strukturbaum Solution → Insert → Stress → Normal</code> auswählen</p>
     <figure style="text-align:center;">
     <img src="../../images/Get_sy1.png" alt="Get sy1" width="650" class="no-lightbox">
     </figure>
@@ -56,7 +56,7 @@ Die Spannung ergibt sich ähnlich, nur das wir hier zusätzlich die y-Richtung a
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">y-Richtung einstellen</p>
-    <p>Im Detailfenster bei <code>Orientation</code> auf <code>Y Axis</code> stellen</p>
+    <p><code>Detailfenster → Orientation: Y Axis</code> einstellen</p>
     <figure style="text-align:center;">
     <img src="../../images/Get_sy2.png" alt="Get sy2" width="300" class="no-lightbox">
     </figure>
@@ -64,7 +64,7 @@ Die Spannung ergibt sich ähnlich, nur das wir hier zusätzlich die y-Richtung a
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Ergebnis abrufen</p>
-    <p>Im Strukturbaum <code>Rechtsklick Normal Stress → Evaluate All Results</code> auswählen</p>
+    <p><code>Rechtsklick Strukturbaum Normal Stress → Evaluate All Results</code> auswählen</p>
     <figure style="text-align:center;">
     <img src="../../images/Get_sy3.png" alt="Get sy3" width="350" class="no-lightbox">
     </figure>

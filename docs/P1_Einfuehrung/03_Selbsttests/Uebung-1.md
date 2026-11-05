@@ -57,7 +57,7 @@ Belastung:
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Analyse umbenennen und Geometrie in SpaceClaim öffnen</p>
-    <p>Analyse durch Doppelklick auf den Namen ändern, dann <code>Rechtsklick Geometry → Edit Geometry in SpaceClaim...</code> auswählen</p>
+    <p>Analyse durch <code>Doppelklick</code> auf den Namen ändern, dann <code>Rechtsklick Geometry → Edit Geometry in SpaceClaim...</code> auswählen</p>
     <figure style="text-align:center;">
     <img src="../images/Analyse_duplizieren2.png" alt="Aufgabenstellung" width="300" class="no-lightbox">
     </figure>
@@ -65,7 +65,7 @@ Belastung:
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">In SpaceClaim: Split-Tool auswählen</p>
-    <p>Auf den Reiter <code>Design</code> klicken und <code>Split</code> auswählen</p>
+    <p><code>Reiter Design → Split</code> auswählen</p>
     <figure style="text-align:center;">
     <img src="../images/Kante_erzeugen1.png" alt="Split Tool" width="500" class="no-lightbox">
     </figure>
@@ -81,7 +81,7 @@ Belastung:
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Im Projektmenü: Geometrie neu reinladen und Mechanical öffnen</p>
-    <p><code>Rechtsklick</code> auf <code>Model</code> und anschließend auf <code>Update</code> und dann auf <code>Edit...</code> klicken.</p>
+    <p><code>Rechtsklick Model → Update</code>, danach <code>Rechtsklick Model → Edit...</code></p>
     <figure style="text-align:center;">
     <img src="../images/Geometrie_updaten.png" alt="Fläche halbieren" width="300" class="no-lightbox">
     </figure>
@@ -89,7 +89,7 @@ Belastung:
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Im Mechanical: Alte Flächenlast löschen</p>
-    <p>Im Strukturbaum: <code>Rechtsklick</code> auf <code>Force (alte Flächenlast)</code> und anschließend auf <code>Delete</code> klicken.</p>
+    <p><code>Rechtsklick Strukturbaum Force (alte Flächenlast) → Delete</code></p>
   </div>
 
 </div>

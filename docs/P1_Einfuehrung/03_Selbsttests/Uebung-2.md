@@ -55,14 +55,14 @@ Belastung:
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Lagerung: Feste Einspannung</p>
     <p>Bei einer festen Einspannung werden alle Freiheitsgrade auf der Stirnseite (Fläche) links unterdrückt.</p>
-    <p>Im Mechanical: <code>Klick</code> auf <code>Flächenauswahl</code> und die linke Stirnseite <code>auswählen</code>, dann im Strukturbaum <code>Rechtsklick</code> auf <code>Static Structural</code> > <code>Insert</code> > <code>Fixed Support</code>.</p>
+    <p>Im Mechanical: <code>Linksklick Flächenauswahl</code> und die linke Stirnseite <code>auswählen</code>, dann <code>Rechtsklick Strukturbaum Static Structural → Insert → Fixed Support</code></p>
   </div>
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Belastung: Kraft auf der oberen Kante</p>
     <p>Die Kraft wird oben am rechten Ende aufgebracht, also auf die <strong>obere Kante</strong> der rechten Stirnseite und nicht auf die Fläche.</p>
-    <p>Im Mechanical: <code>Klick</code> auf <code>Kantenauswahl</code> und die obere Kante rechts <code>auswählen</code>, dann im Strukturbaum <code>Rechtsklick</code> auf <code>Static Structural</code> > <code>Insert</code> > <code>Force</code>.</p>
-    <p>Im Detailfenster bei <code>Define By</code> auf <code>Components</code> umstellen und bei <code>Z Component</code> den Wert <code>-3000</code> eintragen (Kraft nach unten, also in negative z-Richtung).</p>
+    <p>Im Mechanical: <code>Linksklick Kantenauswahl</code> und die obere Kante rechts <code>auswählen</code>, dann <code>Rechtsklick Strukturbaum Static Structural → Insert → Force</code></p>
+    <p><code>Detailfenster → Define By: Components</code> umstellen und bei <code>Z Component</code> den Wert <code>-3000</code> eintragen (Kraft nach unten, also in negative z-Richtung).</p>
   </div>
 </div>
 
@@ -132,7 +132,7 @@ Um den Unterschied zur `Fixed Support` zu sehen fügen wir eine weitere Analyse 
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Kraft-Randbedingung kopieren</p>
-    <p>Im Mechanical: Im Strukturbaum erscheint jetzt eine zweite Analyse, die sich mit der ersten die Geometrie, das Material und das Netz teilt. Randbedingungen und Lösungen sind jedoch separat</p>
+    <p>Im Mechanical: Im <code>Strukturbaum</code> erscheint jetzt eine zweite Analyse, die sich mit der ersten die Geometrie, das Material und das Netz teilt. Randbedingungen und Lösungen sind jedoch separat</p>
     <p>Um die Kraft nicht neu einzugeben kann die Randbedingung <code>Force</code> per <code>Drag&Drop</code> auf die Static Structural gezogen werden</p>
   <figure style="text-align:center;">
   <img src="../images/RB_drag_n_drop.png" alt="Analyse auf Model" width="300" class="no-lightbox">
@@ -154,7 +154,7 @@ Um den Unterschied zur `Fixed Support` zu sehen fügen wir eine weitere Analyse 
     <figure style="text-align:center;">
     <img src="../images/Remote_Displacement.png" alt="Remote Displacement" width="550" class="no-lightbox">
     </figure>
-    <p>Im Detailfenster <code>Verschiebungen</code> und <code>Rotationen</code> auf <code>Null</code> setzen.</p>
+    <p>Im <code>Detailfenster</code> die <code>Verschiebungen</code> und <code>Rotationen</code> auf <code>Null</code> setzen.</p>
     <figure style="text-align:center;">
     <img src="../images/Remote_Displacement_Details.png" alt="Remote Displacement Details" width="300" class="no-lightbox">
     </figure>

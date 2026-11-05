@@ -20,7 +20,7 @@ Die angegebene Kraft hat die Einheit N (Newton) und soll sich gleichmäßig auf 
 
 <tutorial slug="flaechenlast-anbringen"></tutorial>
 
-Zur finalen Kontrolle der Randbedingung blenden wir durch die Auswahl von `Static Structural` im Strukturbaum eine Übersicht ein:
+Zur finalen Kontrolle der Randbedingung blenden wir durch die Auswahl von `Strukturbaum → Static Structural` eine Übersicht ein:
 
 <figure style="text-align:center;">
   <img src="../../images/RB_Uebersicht.png" alt="Uebersicht Randbedingungen" width="700" class="no-lightbox">

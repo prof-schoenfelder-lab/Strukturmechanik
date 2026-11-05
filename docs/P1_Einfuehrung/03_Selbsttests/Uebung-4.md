@@ -50,7 +50,7 @@ Rechte Handauflage auf einer Breite von 80mm:<br>
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">von-Mises Spannung einfügen</p>
-    <p>im Strukturbaum: <code>Rechtsklick</code> auf <code>Solution</code> und anschließend auf <code>Insert</code> > <code>Stress</code> > <code>Equivalent (von-Mises)</code> klicken.</p>
+    <p><code>Rechtsklick Strukturbaum Solution → Insert → Stress → Equivalent (von-Mises)</code></p>
     <figure style="text-align:center;">
     <img src="../images/vonMisesSpannung.png" alt="von Mises Spannung einfügen" width="600" class="no-lightbox">
     </figure>
@@ -58,11 +58,11 @@ Rechte Handauflage auf einer Breite von 80mm:<br>
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Ort der maximalen Spannung anzeigen</p>
-    <p>Im Strukturbaum (unter Solution) von Mises Spannung auswählen</p> 
-    <p>In der Menüleiste oben: Reiter<code>Result</code> auf <code>Maximum</code> klicken.</p>
+    <p><code>Strukturbaum → Solution</code>: von Mises Spannung auswählen</p> 
+    <p>In der Menüleiste oben: <code>Reiter Result → Maximum</code> klicken.</p>
     <figure style="text-align:center;">
     <img src="../images/Stress_Maximum.png" alt="Ort der Maximalen Spannung anzeigen" width="600" class="no-lightbox">
-    <p>Im Grafikfenster erscheint ein Hinweis mit dem Maximum</p> 
+    <p>Im <code>Grafikfenster</code> erscheint ein Hinweis mit dem Maximum</p> 
     </figure>
   </div>
 

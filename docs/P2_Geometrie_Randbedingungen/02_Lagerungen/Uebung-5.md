@@ -71,17 +71,17 @@ Anschließend die folgenden Größen berechnen:
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Directional Deformation einfügen</p>
-    <p>Im Strukturbaum: <code>Rechtsklick</code> auf <code>Solution</code> > <code>Insert</code> > <code>Deformation</code> > <code>Directional</code></p>
+    <p><code>Rechtsklick Strukturbaum Solution → Insert → Deformation → Directional</code></p>
   </div>
 
  <div class="step">
     <p class="step-title" role="heading" aria-level="2">z-Achse auswählen</p>
-    <p>Im Detailfenster: Unter <code>Orientation</code> die <code>z-Achse</code> auswählen</p>
+    <p>Unter <code>Detailfenster → Orientation</code> die <code>z-Achse</code> auswählen</p>
   </div>
 
  <div class="step">
     <p class="step-title" role="heading" aria-level="2">Mittelwert auslesen</p>
-    <p>Im Detailfenster: Unter <code>Results</code> den Mittelwert auslesen</p>
+    <p>Unter <code>Detailfenster → Results</code> den Mittelwert auslesen</p>
   </div>
 
 </div>

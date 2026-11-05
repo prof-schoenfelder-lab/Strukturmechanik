@@ -54,8 +54,7 @@ Mit globaler Netzverfeinerung ist gemeint, dass wir die Netzgröße für das ges
 
 !!! info "Erinnerung zur Darstellung der von-Mises-Spannung"
    
-    Im Strukturbaum: <code>Rechtsklick</code> auf <code>Solution</code> und anschließend  
-    <code>Insert</code> → <code>Stress</code> → <code>Equivalent (von-Mises)</code> auswählen.
+    <code>Rechtsklick Strukturbaum Solution → Insert → Stress → Equivalent (von-Mises)</code>
 
 Die maximale Spannung liegt für die Netzgröße von 2&nbsp;mm im Knick und beträgt  
 \(\sigma_\text{von Mises} = 354{,}48\,\mathrm{MPa}\).

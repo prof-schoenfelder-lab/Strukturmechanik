@@ -53,7 +53,7 @@ Zur Erstellung der Symmetrie-Randbedingungen:
     <figure style="text-align:center;">
     <img src="../images/ANSYS_Symmetrie1.png" alt="Symmetrie im Strukturbaum einfügen" width="600" class="no-lightbox">
     </figure>
-    <p>Im Strukturbaum <code>Rechtsklick</code> auf <code>Model</code> &gt; <code>Insert</code> &gt; <code>Symmetry</code></p>
+    <p><code>Rechtsklick Strukturbaum Model → Insert → Symmetry</code></p>
   </div>
 
   <div class="step">
@@ -62,7 +62,7 @@ Zur Erstellung der Symmetrie-Randbedingungen:
     <img src="../images/ANSYS_Symmetrie2.png" alt="Symmetrieebene einfügen" width="600" class="no-lightbox">
     </figure>
     <p><code>Flächenauswahltool</code> auswählen und die <code>Symmetrieebene</code> auswählen.</p>
-    <p>Im Strukturbaum <code>Rechtsklick</code> auf <code>Symmetry</code> &gt; <code>Insert</code> &gt; <code>Symmetry Region</code></p>
+    <p><code>Rechtsklick Strukturbaum Symmetry → Insert → Symmetry Region</code></p>
   </div>
 
   <div class="step">
@@ -70,7 +70,7 @@ Zur Erstellung der Symmetrie-Randbedingungen:
     <figure style="text-align:center;">
     <img src="../images/ANSYS_Symmetrie3.png" alt="Symmetrieebene einfügen" width="800" class="no-lightbox">
     </figure>
-    <p>Im Detailfenster unter <code>Symmetry Normal</code> die Richtung auswählen, die <code>senkrecht auf der Symmetrieebene</code> steht.</p>
+    <p>Unter <code>Detailfenster → Symmetry Normal</code> die Richtung auswählen, die <code>senkrecht auf der Symmetrieebene</code> steht.</p>
   </div>
 
 </div>
@@ -81,7 +81,7 @@ Zur Erstellung der Symmetrie-Randbedingungen:
 <!-- --8<-- [start:Darstellung] -->
 Durch eingeschaltete Beta-Option (siehe oben), können wir das Netz und die Ergebnisse so spiegeln, als hätten wir das Vollmodell gerechnet.  
 
-Dafür muss im Strukturbaum auf <code>Symmetry</code> geklickt werden und im Detailfenster eingestellt werden wie gespiegelt werden soll. 
+Dafür muss <code>Strukturbaum → Symmetry</code> angeklickt werden und im <code>Detailfenster</code> eingestellt werden, wie gespiegelt werden soll. 
 
 - Es muss angegeben werden, wie oft gespiegelt wird (hier jeweils 2 Mal) mit der Methode <code>Half</code>.
 - Es wird der Abstand senkrecht zur Symmetrieebene angegeben. Wenn die Symmetrieebene genau in der Koordinate 0 liegt muss einfach ein sehr kleiner Wert angegeben werden. Liegt die Symmetrieebene z.B. 20mm entfernt muss der Wert 20mm angegeben werden

@@ -25,7 +25,7 @@ Linienstrukturen mit BEAM-Elementen können auf zwei Arten erstellt werden:
   </div>
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Linie auswählen und im Reiter <code>Prepare</code> unter <code>Profiles</code> das gewünschte Profil zuweisen</p>
+    <p class="step-title" role="heading" aria-level="2">Linie auswählen und unter <code>Reiter Prepare → Profiles</code> das gewünschte Profil zuweisen</p>
   </div>
 
 </div>
@@ -48,7 +48,7 @@ Diese Option ist besonders praktisch wenn man bereits viele Linienstrukturen hat
   </div>
 
   <div class="step">
-    <p class="step-title" role="heading" aria-level="2">Im Reiter <code>Prepare</code> auf <code>Extract</code> klicken und den Volumenkörper auswählen</p>
+    <p class="step-title" role="heading" aria-level="2"><code>Reiter Prepare → Extract</code> klicken und den Volumenkörper auswählen</p>
   </div>
 
 </div>
@@ -59,7 +59,7 @@ Diese Option ist besonders praktisch wenn man bereits viele Linienstrukturen hat
 ## Profilgeometrie anpassen
 
 <!-- --8<-- [start:ProfilAnpassen] -->
-In Mechanical im Strukturbaum unter <code>Cross Sections</code> das jeweilige `Profil` auswählen und im Detailfenster unter <code>Dimensions</code> die Größe anpassen.
+In Mechanical unter <code>Strukturbaum → Cross Sections</code> das jeweilige `Profil` auswählen und unter <code>Detailfenster → Dimensions</code> die Größe anpassen.
 
 <figure style="text-align:left;">
     <img src="../images/Mechanical1.png" alt="Einstellung Mechanical 1" width="300">
@@ -69,7 +69,7 @@ In Mechanical im Strukturbaum unter <code>Cross Sections</code> das jeweilige `P
 ## Elementdarstellung (nur optisch, also optional)
 
 <!-- --8<-- [start:Elementdarstellung] -->
-In Mechanical im Strukturbaum `Mesh` auswählen und in der Menüleiste oben im Reiter <code>Display</code> den Eintrag <code>Thick Shells and Beams</code> auswählen.
+In Mechanical `Strukturbaum → Mesh` auswählen und in der Menüleiste oben `Reiter Display → Thick Shells and Beams` auswählen.
 
 <figure style="text-align:left;">
     <img src="../images/Mechanical2.png" alt="Thick Shells and Beams" width="700">
@@ -81,7 +81,7 @@ Im Netz werden die BEAM-Elemente dann mit ihrem Querschnitt dargestellt (statt n
 ## Ergebnisdarstellung (nur optisch, aber empfohlen)
 
 <!-- --8<-- [start:Ergebnisdarstellung] -->
-In Mechanical im Strukturbaum `Solution` auswählen und im Detailfenster den Eintrag <code>Beam Section Results</code> auf <code>Yes</code> stellen.
+In Mechanical `Strukturbaum → Solution` auswählen und `Detailfenster → Beam Section Results: Yes` einstellen.
 
 <figure style="text-align:left;">
     <img src="../images/Mechanical3.png" alt="Beam Section Results" width="400">
@@ -101,5 +101,5 @@ Außerdem muss ggf. mit dem Lagerungstyp `Fixed Rotation` darauf geachtet werden
     <img src="../images/FixedRotation.png" alt="Fixed Rotation" width="500">
 </figure>
 
-Im Detailfenster können dort die entsprechenden Rotationsachsen wieder freigegeben werden wenn gewünscht.
+Im `Detailfenster` können dort die entsprechenden Rotationsachsen wieder freigegeben werden wenn gewünscht.
 <!-- --8<-- [end:Randbedingungen] -->

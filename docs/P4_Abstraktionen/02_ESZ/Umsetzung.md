@@ -15,7 +15,7 @@ In `SpaceClaim` eine Skizze immer in der `x-y` Ebene zeichnen:
     <img src="../images/SpaceClaim1.png" alt="Skizze in x-y Ebene" width="800">
 </figure>
 
-Und darauf achten dass die Skizze beendet wird und im Strukturbaum der Eintrag `Surface` steht.
+Und darauf achten dass die Skizze beendet wird und im `Strukturbaum` der Eintrag `Surface` steht.
 
 <figure style="text-align:left;">
     <img src="../images/SpaceClaim2.png" alt="Auf Eintrag im Strukturbaum achten" width="200">
@@ -25,7 +25,7 @@ Und darauf achten dass die Skizze beendet wird und im Strukturbaum der Eintrag `
 ## ANSYS Workbench Projektmenü
 
 <!-- --8<-- [start:WBProjektmenue] -->
-Im Workbench Projektmenü Rechtsklick auf `Geometry` und im Properties Fenster `Analysis Type=2D` einstellen: 
+Im Workbench Projektmenü `Rechtsklick Geometry → Properties` und dort `Analysis Type = 2D` einstellen: 
 
 <figure style="text-align:left;">
     <img src="../images/Geometry2D.png" alt="Einstellung WB Projektmenü für Geometry" width="800">
@@ -35,13 +35,13 @@ Im Workbench Projektmenü Rechtsklick auf `Geometry` und im Properties Fenster `
 ## ANSYS Mechanical
 
 <!-- --8<-- [start:Mechanical] -->
-Im Mechanical die `Geometry auswählen` und im Detailfenster `2D Behavior=Plane Stress` einstellen:  
+Im Mechanical `Strukturbaum → Geometry` auswählen und `Detailfenster → 2D Behavior: Plane Stress` einstellen:  
 
 <figure style="text-align:left;">
     <img src="../images/PlaneStress.png" alt="Einstellung Mechanical" width="400">
 </figure>
 
-Im Mechanical die `Fläche auswählen` und im Detailfenster über `thickness` die Dicke in die Richtung die reduziert wurde (z-Richtung) einstellen:  
+Im Mechanical die `Fläche auswählen` und unter `Detailfenster → Thickness` die Dicke in die Richtung, die reduziert wurde (z-Richtung), einstellen:  
 
 <figure style="text-align:left;">
     <img src="../images/PlaneStress2.png" alt="Dicke einstellen" width="400">

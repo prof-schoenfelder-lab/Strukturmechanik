@@ -37,7 +37,7 @@ hide:
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Fenster wiederherstellen</p>
-    <p>Menüleiste oben: Im Reiter <code>Home</code> > <code>Reset Layout</code> (ganz rechts)</p>
+    <p>Menüleiste oben: <code>Reiter Home → Reset Layout</code> (ganz rechts)</p>
   </div>
 
 </div>

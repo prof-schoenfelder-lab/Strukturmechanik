@@ -20,7 +20,7 @@ Wie im Praktikum 2 gezeigt zur Geometrieanpassung können wir innenliegenden Kan
 
   <div class="step" >
     <p class="step-title" role="heading" aria-level="2">Pull Tool starten</p>
-    <p>Im Reiter Sketch (oder Design) das <code>Pull-Tool</code> auswählen</p>
+    <p><code>Reiter Sketch</code> (oder <code>Reiter Design</code>): <code>Pull-Tool</code> auswählen</p>
   </div>
 
   <div class="step" >

@@ -26,17 +26,17 @@ Wir starten in diese Fall mit einer Step Datei eines Fahrradrahmens:
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2"><code>Workbench Projektmenü</code>: Neue Strukturmechanische Analyse hinzufügen</p>
-    <p>Im Workbench Projektmenü in der Liste der Analysen <code>Doppelklick</code> auf <code>Static Structural</code></p>
+    <p>Im Workbench Projektmenü in der Liste der Analysen <code>Doppelklick Static Structural</code></p>
   </div>
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2"><code>Workbench Projektmenü</code>: Geometrie importieren</p>
-    <p>In der neuen Analyse <code>Rechtsklick</code> auf <code>Geometry</code> > <code>Import</code> und geladene Datei auswählen</p>
+    <p>In der neuen Analyse <code>Rechtsklick Geometry → Import</code> und geladene Datei auswählen</p>
   </div>
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2"><code>Workbench Projektmenü</code>: Geometrie mit SpaceClaim bearbeiten</p>
-    <p>In der neuen Analyse <code>Rechtsklick</code> auf <code>Geometry</code> > <code>Edit with SpaceClaim...</code> auswählen</p>
+    <p>In der neuen Analyse <code>Rechtsklick Geometry → Edit with SpaceClaim...</code> auswählen</p>
   </div>
 
 </div>
