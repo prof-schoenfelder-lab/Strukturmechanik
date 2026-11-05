@@ -6,10 +6,10 @@ hide:
 
 # Diskussion
 
-Wir haben zu Beginn gelernt, dass bei einer `Sensitivitätsanalyse` die Netzgröße so lange (mindestens) halbiert wird, bis die Abweichung unter 1&nbsp;% liegt. Wenn wir uns dies jedoch für unser L-Profil-Beispiel anschauen, sehen wir, dass sich bereits nach der Verfeinerung von 3&nbsp;mm auf 1,5&nbsp;mm die Spannung nur um 0,2&nbsp;% verringert:
+Wir haben zu Beginn gelernt, dass bei einer `Sensitivitätsanalyse` die Netzgröße so lange (mindestens) halbiert wird, bis die Abweichung unter 1&nbsp;% liegt. Wenn wir uns dies jedoch für unser L-Profil-Beispiel anschauen, sehen wir, dass sich bereits nach der Verfeinerung von 3&nbsp;mm auf 1,5&nbsp;mm die Spannung nur um 0,04&nbsp;% ändert:
 
 <figure style="text-align:center;">
-    <img src="../images/Diskussion.excalidraw.png" alt="Diskussion" width="700">
+    <img src="../images/Diskussion_2025R2.excalidraw.png" alt="Diskussion" width="700">
 </figure>
 
 Somit ist **nicht nur die Netzgröße**, sondern auch der **Spannungsgradient innerhalb eines Elements** ein wichtiger Faktor. Dies kann man über den Wert `Nodal Fraction` in der `Display Option` des Spannungs-Plots ausgeben. 
@@ -42,25 +42,26 @@ Hier mal am Beispiel von 3mm und 0,25mm die normalen Spannungswerte (DisplayOpti
 
 <figure style="text-align:center;">
     <img src="../images/Averaged_vs_NodalFraction.excalidraw.png" alt="Averaged vs NodalFraction" width="1100">
+    <figcaption>Bilder aus ANSYS 2024 R2, die Werte unterscheiden sich etwas von der Tabelle unten (2025 R2).</figcaption>
 </figure>
 
 Hier nun alle Werte für unser Beispiel:
 
 | Elementgröße [mm] | Spannung σ<sub>vM</sub> [MPa] | Spannungsdifferenz zur nächsten Verfeinerung                         | max. Nodal Fraction                             | Konvergenz?                                      |
 | -----------------:| -----------------------------:| ---------------------------------------------------------------------:| -----------------------------------------------:|:------------------------------------------------|
-| 3                 | 549,5                         | –                                                                     | <span style="color:red;">32&nbsp;%</span>       | <span style="color:red;">Nein</span>            |
-| 1,5               | 548,2                         | <span style="color:green;">−0,2&nbsp;%</span>                        | <span style="color:red;">12&nbsp;%</span>       | <span style="color:red;">Nein</span>            |
-| 0,5               | 586                           | <span style="color:red;">+6,9&nbsp;%</span>                          | <span style="color:green;">9&nbsp;%</span>      | <span style="color:red;">Nein</span>            |
-| 0,25              | 582                           | <span style="color:green;">−0,6&nbsp;%</span>                        | <span style="color:green;">5&nbsp;%</span>      | <span style="color:green;">Ja</span>            |
+| 3                 | 547,3                         | –                                                                     | <span style="color:red;">31&nbsp;%</span>       | <span style="color:red;">Nein</span>            |
+| 1,5               | 547,5                         | <span style="color:green;">+0,04&nbsp;%</span>                       | <span style="color:red;">13&nbsp;%</span>       | <span style="color:red;">Nein</span>            |
+| 0,5               | 584,7                         | <span style="color:red;">+6,8&nbsp;%</span>                          | <span style="color:green;">6&nbsp;%</span>      | <span style="color:red;">Nein</span>            |
+| 0,25              | 595,8                         | <span style="color:red;">+1,9&nbsp;%</span>                          | <span style="color:green;">3&nbsp;%</span>      | <span style="color:red;">Nein</span>            |
+| 0,125             | 599,6                         | <span style="color:green;">+0,6&nbsp;%</span>                        | <span style="color:green;">4&nbsp;%</span>      | <span style="color:green;">Ja</span>            |
 
 !!! important "Wichtig"
 
-    Auch die Netzgröße von 0,5 mm ist in diesem Fall ausreichend, 
-    da sie nahezu die gleiche Spannung liefert wie 0,25 mm und 
-    ebenfalls eine Nodal Fraction < 10 % aufweist. 
-    Um dies sicher beurteilen zu können, musste jedoch zunächst 
-    bis auf 0,25 mm verfeinert werden, um zu zeigen, dass sich 
-    die Spannung gegenüber 0,5 mm nicht mehr nennenswert ändert.
+    Bei 0,5 mm und 0,25 mm liegt die Nodal Fraction bereits unter 10 %,
+    die Spannung ändert sich aber noch um mehr als 1 %.
+    Erst bei 0,125 mm sind beide Kriterien erfüllt.
+    Wenn nur eines der beiden Kriterien geprüft wird,
+    kann das Netz also noch zu grob sein.
 
 
 !!! info "Vereinfacht kann man auch sagen:"

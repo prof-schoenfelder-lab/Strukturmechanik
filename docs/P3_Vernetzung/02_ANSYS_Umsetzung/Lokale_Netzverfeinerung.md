@@ -112,17 +112,17 @@ Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wi
 
 - [ ] Die von-Mises-Vergleichsspannung in MPa in der Verrundung mit einem dortigen lokalen Netz von <code>0,5&nbsp;mm</code> (globales Netz 3&nbsp;mm) berechnen.
 
-<div class="numeric-question" data-answer="586.0" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 0,5mm?">
+<div class="numeric-question" data-answer="584.68" data-tolerance="2" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 0,5mm?" data-diagnose="547.29: Das ist der Wert ohne lokale Verfeinerung. Sizing auf der Verrundung einfügen. | 595.76: Das ist der Wert für 0,25 mm. Lokale Netzgröße auf 0,5 mm stellen.">
 </div>
 
 - [ ] Die von-Mises-Vergleichsspannung in MPa in der Verrundung mit einem dortigen lokalen Netz von <code>0,25&nbsp;mm</code> (globales Netz 3&nbsp;mm) berechnen.
 
-<div class="numeric-question" data-answer="582.28" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 0,25mm?">
+<div class="numeric-question" data-answer="595.76" data-tolerance="2" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 0,25mm?" data-diagnose="584.68: Das ist der Wert für 0,5 mm. Lokale Netzgröße auf 0,25 mm stellen. | 599.55: Das ist der Wert für 0,125 mm. Lokale Netzgröße auf 0,25 mm stellen. | 582.28: Dieser Wert entsteht mit ANSYS 2024 R2. Im PC-Pool läuft 2025 R2, dort vernetzt ANSYS etwas anders.">
 </div>
 
 Wurde somit eine Konvergenz erreicht mit einer lokalen Netzgröße von 0,25&nbsp;mm?
 
-<div class="multiple-choice-question" data-correct="A" data-points="5" data-attempts="3">
+<div class="multiple-choice-question" data-correct="B" data-points="5" data-attempts="3">
   <div class="mc-options">
     <div class="mc-option" data-value="A">
       <input type="checkbox" id="q1a" name="q1">
@@ -133,6 +133,11 @@ Wurde somit eine Konvergenz erreicht mit einer lokalen Netzgröße von 0,25&nbsp
       <label for="q1b">Nein</label>
     </div>
   </div>
+</div>
+
+- [ ] Das lokale Netz noch einmal halbieren: Die von-Mises-Vergleichsspannung in MPa in der Verrundung mit einem dortigen lokalen Netz von <code>0,125&nbsp;mm</code> (globales Netz 3&nbsp;mm) berechnen.
+
+<div class="numeric-question" data-answer="599.55" data-tolerance="2" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 0,125mm?" data-diagnose="595.76: Das ist der Wert für 0,25 mm. Lokale Netzgröße auf 0,125 mm stellen.">
 </div>
 
 Unser Vorgehen wächst erneut: Wenn die maximale Spannung an einer scharfen Kante liegt, verrunden wir die Kante und verfeinern das Netz nur dort.
@@ -165,20 +170,27 @@ Unser Vorgehen wächst erneut: Wenn die maximale Spannung an einer scharfen Kant
   <tr>
     <td>0,5&nbsp;mm</td>
     <td>&ndash;</td>
-    <td>586,00&nbsp;</td>
+    <td>584,68&nbsp;</td>
   </tr>
   <tr>
     <td>0,25&nbsp;mm</td>
     <td>&ndash;</td>
-    <td>582,28&nbsp;(−0,6&nbsp;%)</td>
+    <td>595,76&nbsp;(+1,9&nbsp;%)</td>
+  </tr>
+  <tr>
+    <td>0,125&nbsp;mm</td>
+    <td>&ndash;</td>
+    <td>599,55&nbsp;(+0,6&nbsp;%)</td>
   </tr>
 </table>
+
+<p>Von 0,5&nbsp;mm auf 0,25&nbsp;mm ändert sich die Spannung noch um 1,9&nbsp;%, das ist noch keine Konvergenz. Erst von 0,25&nbsp;mm auf 0,125&nbsp;mm liegt die Änderung mit 0,6&nbsp;% unter 1&nbsp;%.</p>
 
 <p>
   <small>
     Hinweis: Die prozentuale Änderung bezieht sich jeweils auf das vorherige Netz
     in derselben Spalte. Die lokalen Spannungen stammen aus dem Modell mit
-    Kantenverrundung (Radius 3&nbsp;mm); bei 0,5&nbsp;mm und 0,25&nbsp;mm wurde zusätzlich
+    Kantenverrundung (Radius 3&nbsp;mm); bei 0,5&nbsp;mm, 0,25&nbsp;mm und 0,125&nbsp;mm wurde zusätzlich
     eine lokale Netzverfeinerung in der Verrundung bei global 3&nbsp;mm verwendet.
   </small>
 </p>
