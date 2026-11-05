@@ -87,5 +87,4 @@ Dazu die Haken bei `Nodes`/`Elements` entfernen und stattdessen z.&nbsp;B. `Maxi
 
 <figure style="text-align:center;">
     <img src="../images/Result_Tracking.png" alt="Result Tracking" width="1100">
-    <figcaption>Bild aus ANSYS 2024 R2, die Werte unterscheiden sich etwas von Ihren.</figcaption>
 </figure>

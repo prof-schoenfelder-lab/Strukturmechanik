@@ -41,8 +41,7 @@ Somit ist **nicht nur die Netzgröße**, sondern auch der **Spannungsgradient in
 Hier mal am Beispiel von 3mm und 0,25mm die normalen Spannungswerte (DisplayOption: averaged) und die Nodal Fraction:
 
 <figure style="text-align:center;">
-    <img src="../images/Averaged_vs_NodalFraction.excalidraw.png" alt="Averaged vs NodalFraction" width="1100">
-    <figcaption>Bilder aus ANSYS 2024 R2, die Werte unterscheiden sich etwas von der Tabelle unten (2025 R2).</figcaption>
+    <img src="../images/Averaged_ohneWerte.excalidraw.png" alt="Averaged vs NodalFraction" width="1100">
 </figure>
 
 Hier nun alle Werte für unser Beispiel:
