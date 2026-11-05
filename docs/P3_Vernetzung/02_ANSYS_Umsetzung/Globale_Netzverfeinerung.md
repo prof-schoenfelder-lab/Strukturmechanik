@@ -21,7 +21,7 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung)
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Projekt speichern</p>
     <p>Im Workbench-Projektmenü in der Menüleiste auf <code>File</code> und <code>Save As...</code> klicken, um das aktuelle Projekt zu speichern.</p>
-    <p>Am besten unter <code>D:\Studierende\</code> einen Ordner mit dem eigenen Namen anlegen und dort das Projekt unter dem Namen <code>Praktikum3</code> speichern. Daran denken, keine Umlaute und keine Leerzeichen zu verwenden!</p>
+    <p>Am besten lokal auf dem PC in einem Ordner, auf den Sie Zugriff haben, das Projekt unter dem Namen <code>Praktikum3</code> speichern. Daran denken, keine Umlaute und keine Leerzeichen zu verwenden!</p>
   </div>
 
   <div class="step">

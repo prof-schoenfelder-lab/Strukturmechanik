@@ -27,7 +27,7 @@ Empfehlung um den Fortschritt während des Praktikums nicht zu verlieren.
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Dateiname</p>
     <p>Pfad und Dateinamen immer <code>ohne Umlaute im Dateipfad!</code></p>
-    <p>Im PC-Pool Empfehlung auf <code>D:/Studierende/ihrName/Dateiname.wbpj</code> abspeichern </code></p>
+    <p>Empfehlung: lokal auf dem PC in einem Ordner speichern, auf den Sie Zugriff haben.</p>
     <p>Dabei wird eine Datei <code>Dateiname.wbpj</code> und ein Ordner <code>Dateiname</code> erstellt.</p>
   </div>
 
