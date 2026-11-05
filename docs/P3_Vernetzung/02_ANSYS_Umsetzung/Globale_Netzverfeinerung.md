@@ -101,6 +101,73 @@ Nun haben wir nur noch einen Unterschied von etwa 0,5 % zwischen den Spannungswe
 
 🎯 <strong>Lösung</strong>
 
+<figure style="text-align:center;">
+<svg viewBox="0 0 720 392" width="720" style="max-width:100%;height:auto" role="img" aria-label="Liniendiagramm: maximale von-Mises-Spannung über der Elementgröße. Im gesamten Bauteil steigt sie von 354,48 über 393,35 auf 562,21 MPa, im Knick bleibt sie bei rund 354 MPa. Alle Werte stehen auch in der Tabelle unter dem Diagramm.">
+  <g stroke="var(--kurs-line, #e2e8ec)">
+    <line x1="62" y1="40" x2="488" y2="40"/>
+    <line x1="62" y1="136.7" x2="488" y2="136.7"/>
+    <line x1="62" y1="233.3" x2="488" y2="233.3"/>
+    <line x1="62" y1="330" x2="488" y2="330" stroke="var(--kurs-line-2, #cdd6dc)"/>
+  </g>
+  <g font-size="13" fill="var(--kurs-text-2, #566166)">
+    <text x="0" y="16">maximale von-Mises-Spannung in MPa</text>
+    <text x="330" y="16">gesamtes Bauteil</text>
+    <text x="480" y="16">im Knick</text>
+    <g text-anchor="end">
+      <text x="54" y="45">600</text>
+      <text x="54" y="141">500</text>
+      <text x="54" y="238">400</text>
+      <text x="54" y="335">300</text>
+    </g>
+    <g text-anchor="middle">
+      <text x="100" y="352">2 mm</text>
+      <text x="290" y="352">1 mm</text>
+      <text x="480" y="352">0,5 mm</text>
+      <text x="290" y="380">Elementgröße, nach rechts feiner →</text>
+    </g>
+    <text x="92" y="318">Maximum noch im Knick</text>
+    <text x="496" y="99">gesamtes Bauteil</text>
+    <text x="496" y="116">43 % mehr als bei 1 mm:</text>
+    <text x="496" y="132">Hinweis auf eine Singularität</text>
+    <text x="496" y="300">im Knick</text>
+    <text x="496" y="317">etwa 0,5 % mehr als bei 1 mm:</text>
+    <text x="496" y="333">ausreichend konvergiert</text>
+  </g>
+  <g font-size="16" font-weight="700" fill="var(--kurs-text, #2e3639)">
+    <text x="92" y="302">354,48 MPa</text>
+    <text x="496" y="81">562,21 MPa</text>
+    <text x="496" y="282">355,06 MPa</text>
+  </g>
+  <g fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="#E5007D" d="M300 11h24"/>
+    <path stroke="#009EE3" d="M450 11h24"/>
+    <polyline stroke="#E5007D" points="100,277.3 290,239.8 480,76.5"/>
+    <polyline stroke="#009EE3" points="100,277.3 290,278.7 480,276.8"/>
+  </g>
+  <g stroke="var(--kurs-surface, #fff)" stroke-width="2">
+    <g fill="#E5007D">
+      <circle cx="312" cy="11" r="5"/>
+      <circle cx="290" cy="239.8" r="5"/>
+      <circle cx="480" cy="76.5" r="5"/>
+    </g>
+    <g fill="#009EE3">
+      <circle cx="462" cy="11" r="5"/>
+      <circle cx="100" cy="277.3" r="5"/>
+      <circle cx="290" cy="278.7" r="5"/>
+      <circle cx="480" cy="276.8" r="5"/>
+    </g>
+  </g>
+  <g fill="transparent">
+    <circle cx="100" cy="277.3" r="14"><title>2 mm: 354,48 MPa, gesamtes Bauteil und im Knick</title></circle>
+    <circle cx="290" cy="239.8" r="14"><title>1 mm, gesamtes Bauteil: 393,35 MPa</title></circle>
+    <circle cx="290" cy="278.7" r="14"><title>1 mm, im Knick: 353,11 MPa</title></circle>
+    <circle cx="480" cy="76.5" r="14"><title>0,5 mm, gesamtes Bauteil: 562,21 MPa</title></circle>
+    <circle cx="480" cy="276.8" r="14"><title>0,5 mm, im Knick: 355,06 MPa</title></circle>
+  </g>
+</svg>
+<figcaption>Spannung über der Elementgröße</figcaption>
+</figure>
+
 <table border="1">
   <tr>
     <th>Netzgröße</th>
