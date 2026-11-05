@@ -40,31 +40,23 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung)
 
 - [ ] In SpaceClaim mit dem Pull-Tool an der Kante eine Kantenverrundung mit einem Radius von <code>3&nbsp;mm</code> erstellen. 
 
-Wie im Praktikum&nbsp;2 zur Geometrieanpassung gezeigt, können innenliegende Kanten in <code>SpaceClaim</code> mit Hilfe des <code>Pull</code>-Tools verrundet werden (hier im Beispiel an einer Außenkante!):
+??? tip "<code>HILFE</code>: Kurzanleitung Kantenverrundung (klicken zum aufklappen)"
 
-<div class="steps" markdown="1" data-kategorie="Geometrie">
+    Wie im Praktikum&nbsp;2 zur Geometrieanpassung gezeigt, können innenliegende Kanten in <code>SpaceClaim</code> mit Hilfe des <code>Pull</code>-Tools verrundet werden (hier im Beispiel an einer Außenkante!):
 
-  <div class="step" >
-    <p class="step-title" role="heading" aria-level="2">Pull-Tool starten</p>
-    <p>In SpaceClaim: <code>Reiter Sketch</code> (oder <code>Reiter Design</code>): <code>Pull-Tool</code> auswählen.</p>
-  </div>
+    <figure style="text-align:center;">
+        <img src="../../../P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/images/Verrundung_einfuegen.png" alt="Verrundungen einfügen mit Pull" width="500">
+    </figure>
 
-  <div class="step" >
-    <p class="step-title" role="heading" aria-level="2">Verrundungskante wählen</p>
-    <p>Die <code>Kante</code> anklicken, die verrundet werden soll.</p>
-  </div>
+    <figure style="text-align:center;">
+        <img src="../../../P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/images/Verrundung_einfuegen.gif" alt="Verrundungen einfügen mit Pull" width="800">
+    </figure>
 
-  <div class="step" >
-    <p class="step-title" role="heading" aria-level="2">Verrundung erstellen und bemaßen</p>
-    <p><code>Wert eingeben (3mm in diesem Fall)</code> mit <code>ENTER</code> bestätigen und mit zweimal <code>ESC</code> beenden.</p>
-  </div>
+    1. In SpaceClaim: <code>Reiter Sketch</code> (oder <code>Reiter Design</code>): <code>Pull-Tool</code> auswählen.
+    2. Die <code>Kante</code> anklicken, die verrundet werden soll.
+    3. <code>Wert eingeben (3mm in diesem Fall)</code> mit <code>ENTER</code> bestätigen und mit zweimal <code>ESC</code> beenden.
 
-  <div class="step" >
-    <p class="step-title" role="heading" aria-level="2">Geometrie aktualisieren</p>
-    <p>In Mechanical: <code>Rechtsklick Strukturbaum Geometry → Update Geometry from Source</code></p>
-  </div>
-
-</div>
+- [ ] In Mechanical die Geometrie aktualisieren: <code>Rechtsklick Strukturbaum Geometry → Update Geometry from Source</code>
 
 # Lokale Netzverfeinerung
 
