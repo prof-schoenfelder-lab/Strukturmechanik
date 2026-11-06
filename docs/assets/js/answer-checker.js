@@ -249,7 +249,9 @@
     } catch (e) { }
   }
 
-  // Fragenkatalog (aus /api/questions, ohne Antworten), 6h im localStorage gecacht
+  // Fragenkatalog (aus /api/questions, ohne Antworten), 6h im localStorage gecacht.
+  // KATALOG_STAND hochzählen, wenn Fragen umziehen oder wegfallen: Dann laden alle Browser den Katalog sofort neu.
+  var KATALOG_STAND = 2;
   function cachedCatalog() {
     try {
       var rec = safeJSONParse(localStorage.getItem('ac_qcatalog'));
@@ -266,13 +268,14 @@
       var base = (window.AC_BACKEND_URL || '').replace(/\/$/, '');
       if (!base || !window.fetch) return;
       var rec = safeJSONParse(localStorage.getItem('ac_qcatalog'));
-      if (rec && rec.t && (Date.now() - rec.t) < 21600000) return;
+      if (rec && rec.v === KATALOG_STAND && rec.t && (Date.now() - rec.t) < 21600000) return;
       fetch(base + '/api/questions')
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (cat) {
           if (!cat) return;
-          localStorage.setItem('ac_qcatalog', JSON.stringify({ t: Date.now(), data: cat }));
+          localStorage.setItem('ac_qcatalog', JSON.stringify({ v: KATALOG_STAND, t: Date.now(), data: cat }));
           try { document.dispatchEvent(new CustomEvent('answer-checker:katalog')); } catch (e) { }
+          initializeNavIcons();
           updatePlayerBadge();
           evaluateBadges(false); // Baseline ohne Feuerwerk
           renderZwischenspiele();
@@ -415,6 +418,7 @@
       function normalizePath(p) { try { var s = String(p || ''); if (!s.startsWith('/')) { try { s = new URL(s, location.href).pathname; } catch (e) { } } s = decodeURIComponent(s); if (s.length > 1 && s.endsWith('/')) s = s.slice(0, -1); return s; } catch (e) { return String(p || ''); } }
       var normPage = normalizePath(pagePath);
       var qidSet = Object.create(null);
+      var katalog = cachedCatalog();   // umgezogene oder gelöschte Fragen bleiben im Browser liegen, zählen aber nicht mit
       for (var i = 0; i < localStorage.length; i++) {
         var k = localStorage.key(i);
         if (!k) continue;
@@ -422,7 +426,7 @@
         if (k.indexOf('answer_max_') === 0) m = k.replace('answer_max_', '');
         else if (k.indexOf('answer_best_') === 0) m = k.replace('answer_best_', '');
         else if (k.indexOf('answer_done_') === 0) m = k.replace('answer_done_', '');
-        if (!m) continue;
+        if (!m || (katalog && !katalog[m])) continue;
         var base = String(m).split(/:q|:mc/)[0] || m;
         if (normalizePath(base) === normPage) qidSet[m] = true;
       }
