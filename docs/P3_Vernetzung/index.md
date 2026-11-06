@@ -11,8 +11,8 @@ hide:
 !!! abstract "Lernziele"
 
 
-    - [ ] Wie bestimmte ich die richtige Netzgröße?
-    - [ ] Wie gehe ich mit Singularitäten um? (Spannung steigt bei stetiger Netzverfeinerung ins unendliche)
+    - [ ] Wie bestimme ich die richtige Netzgröße?
+    - [ ] Wie gehe ich mit Singularitäten um? (Spannung steigt bei stetiger Netzverfeinerung ins Unendliche)
 
 
 ## Grundlagen

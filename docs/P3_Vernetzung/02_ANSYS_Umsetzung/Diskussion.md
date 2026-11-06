@@ -12,9 +12,9 @@ Wir haben zu Beginn gelernt, dass bei einer `Sensitivitätsanalyse` die Netzgrö
     <img src="../images/Diskussion_2025R2.excalidraw.png" alt="Diskussion" width="700">
 </figure>
 
-Somit ist **nicht nur die Netzgröße**, sondern auch der **Spannungsgradient innerhalb eines Elements** ein wichtiger Faktor. Dies kann man über den Wert `Nodal Fraction` in der `Display Option` des Spannungs-Plots ausgeben. 
+Somit ist **nicht nur die Netzgröße**, sondern auch der **Spannungssprung zwischen benachbarten Elementen** ein wichtiger Faktor. Dies kann man über den Wert `Nodal Fraction` in der `Display Option` des Spannungs-Plots ausgeben. 
 
-`Nodal Fraction` ist die normierte prozentuale Abweichung der Knotenspannungen pro Element. Dieser Wert sollte im interessierenden Bereich **möglichst kleiner als 10&nbsp;%** sein.
+`Nodal Fraction` vergleicht an jedem Knoten die Spannungen der Elemente, die sich diesen Knoten teilen: größte Differenz geteilt durch den Mittelwert. Dieser Wert sollte im interessierenden Bereich **möglichst kleiner als 10&nbsp;%** sein.
 
 <figure style="text-align:center;">
     <img src="../images/DisplayOption.png" alt="Display Option" width="400">
@@ -22,23 +22,25 @@ Somit ist **nicht nur die Netzgröße**, sondern auch der **Spannungsgradient in
 
 ??? info "Für Interessierte: Berechnung des Nodal-Fraction-Wertes (Klick auf den Pfeil rechts)"
     
-    `Elemental Fraction` = `Elemental Difference` / `Elemental Mean`
+    `Nodal Fraction` = `Nodal Difference` / `Nodal Average`
 
-    `Elemental Difference` =  
+    `Nodal Difference` = größte Differenz der ungemittelten Spannungen am Knoten:
+
     \[
-      \max\bigl(\lvert N1 - N2 \rvert,\; \lvert N2 - N3 \rvert,\; \lvert N3 - N4 \rvert,\; \lvert N4 - N1 \rvert \bigr)
+      \max(\sigma_1, \dots, \sigma_n) - \min(\sigma_1, \dots, \sigma_n)
     \]
 
-    N1, N2, N3, N4 ... Knotenspannungen an den Knoten 1, 2, 3, 4
+    - \(\sigma_1, \dots, \sigma_n\): ungemittelte Spannungen am Knoten, je angrenzendem Element ein Wert
+    - \(n\): Anzahl der Elemente, die sich den Knoten teilen
 
-    `Elemental Mean` = Mittelwert aus den Knotenspannungen 
+    `Nodal Average` = Mittelwert dieser Spannungen
 
     <figure style="text-align:center;">
-        <img src="../images/Nodal_Fraction.excalidraw.png" alt="Nodal Fraction" width="800">
+        <img src="../images/Nodal_Fraction_Knoten.excalidraw.png" alt="Vier Elemente an einem Knoten mit 96, 104, 100 und 100 MPa: Nodal Difference 8 MPa, Nodal Average 100 MPa, Nodal Fraction 8 %" width="700">
     </figure>
 
 
-Hier mal am Beispiel von 3mm und 0,25mm die normalen Spannungswerte (DisplayOption: averaged) und die Nodal Fraction:
+Hier mal am Beispiel von 3&nbsp;mm und 0,25&nbsp;mm die normalen Spannungswerte (DisplayOption: averaged) und die Nodal Fraction:
 
 <figure style="text-align:center;">
     <img src="../images/Averaged_ohneWerte.excalidraw.png" alt="Averaged vs NodalFraction" width="1100">
@@ -46,9 +48,9 @@ Hier mal am Beispiel von 3mm und 0,25mm die normalen Spannungswerte (DisplayOpti
 
 Hier nun alle Werte für unser Beispiel:
 
-| Elementgröße [mm] | Spannung σ<sub>vM</sub> [MPa] | Spannungsdifferenz zur nächsten Verfeinerung                         | max. Nodal Fraction                             | Konvergenz?                                      |
+| Elementgröße [mm] | Spannung σ<sub>vM</sub> [MPa] | Änderung zur vorigen Netzgröße                                       | max. Nodal Fraction                             | Konvergenz?                                      |
 | -----------------:| -----------------------------:| ---------------------------------------------------------------------:| -----------------------------------------------:|:------------------------------------------------|
-| 3                 | 547,3                         | –                                                                     | <span style="color:red;">31&nbsp;%</span>       | <span style="color:red;">Nein</span>            |
+| 3                 | 547,3                         |                                                                       | <span style="color:red;">31&nbsp;%</span>       | <span style="color:red;">Nein</span>            |
 | 1,5               | 547,5                         | <span style="color:green;">+0,04&nbsp;%</span>                       | <span style="color:red;">13&nbsp;%</span>       | <span style="color:red;">Nein</span>            |
 | 0,5               | 584,7                         | <span style="color:red;">+6,8&nbsp;%</span>                          | <span style="color:green;">6&nbsp;%</span>      | <span style="color:red;">Nein</span>            |
 | 0,25              | 595,8                         | <span style="color:red;">+1,9&nbsp;%</span>                          | <span style="color:green;">3&nbsp;%</span>      | <span style="color:red;">Nein</span>            |
@@ -65,7 +67,7 @@ Hier nun alle Werte für unser Beispiel:
 
 !!! info "Vereinfacht kann man auch sagen:"
 
-    Wenn sich die der rote Bereich der Spannung über mehrere Elemente erstreckt, ist der Spannungsgradient im Element meist klein genug.
+    Wenn sich der rote Bereich der Spannung über mehrere Elemente erstreckt, ist der Spannungsgradient im Element meist klein genug.
 
     Die Darstellung der Elemente im Spannungsplot kann man einstellen, wenn im `Strukturbaum` ein Ergebnis ausgewählt ist: `Reiter Result → Edges → Show Elements`
 

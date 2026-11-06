@@ -3,7 +3,7 @@ hide:
  - toc
 ---
 
-# Übung 4 – Vorbau 
+# Übung 4: Vorbau
 
 Im vierten Beispiel betrachten wir einen aktuell im bikelab laufenden Dauerversuch an einem Vorbau. 
 
@@ -64,14 +64,14 @@ Die maximale Verformung und die maximale von-Mises-Vergleichsspannung für das B
 ## Hinweise
 
 - Mit dem **Split-Tool** lässt sich der Bereich, in dem das Netz verfeinert wird, etwas kleiner machen.
-- Darauf achten, dass die Bereiche, in denen sich normalerweise der Gabelschaft befindet (Bereich der festen Einspannung) und in denen der Lenker angreift (Kraftangriffsfläche), insgesamt steif genug sind – so, wie es im realen Aufbau mit eingebautem Gabelschaft und Lenker der Fall wäre.  
+- Darauf achten, dass die Bereiche, in denen sich normalerweise der Gabelschaft befindet (Bereich der festen Einspannung) und in denen der Lenker angreift (Kraftangriffsfläche), insgesamt steif genug sind, so wie es im realen Aufbau mit eingebautem Gabelschaft und Lenker der Fall wäre.  
   Dafür bei den **Remote Forces** `Detailfenster → Behavior: Rigid` einstellen.
 
 ## Gesucht
 
 Die folgenden Größen berechnen:
 
-### Die maximale Durchbiegung \(u_{\max}\) in mm
+### Die maximale Verformung \(u_{\max}\) in mm
 
 <div class="numeric-question" data-answer="0.35953" data-tolerance="0.05" data-points="5" data-attempts="5" data-hints="Einheit auf mm gewechselt? Kräfte mit richtigem Abstand und Richtung? Remote Forces auf Behavior Rigid gestellt?" data-diagnose="0.1258: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Aluminium (E = 70 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet? | 0.45974: Dieser Wert entsteht mit verformbarer Kraftangriffsfläche. Bei den Remote Forces Behavior auf Rigid stellen.">
 </div>

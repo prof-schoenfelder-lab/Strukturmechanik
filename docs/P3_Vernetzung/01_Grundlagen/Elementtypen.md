@@ -28,7 +28,7 @@ Daneben gibt es noch 2D-Elemente (Flächenelemente), mit denen wir uns im nächs
 
 # Elementgröße
 
-Die Elementgröße (auch Netzgröße genannt) gibt eine charakteristische Kantenlänge der Elemente zu Beginn der Vernetzung vor. Je mehr Elemente man hat, desto besser kann man z. B. die Durchbiegung abbilden – hier stark vereinfacht an einer Balkenbiegung dargestellt:
+Die Elementgröße (auch Netzgröße genannt) gibt eine charakteristische Kantenlänge der Elemente zu Beginn der Vernetzung vor. Je mehr Elemente man hat, desto besser kann man z. B. die Durchbiegung abbilden, hier stark vereinfacht an einer Balkenbiegung dargestellt:
 
 <figure style="text-align:center;">
     <img src="../images/Netzgroesse_einfach.excalidraw.png" alt="vereinfachte Darstellung Netzgröße" width="300">

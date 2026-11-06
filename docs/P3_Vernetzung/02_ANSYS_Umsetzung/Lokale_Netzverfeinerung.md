@@ -42,7 +42,7 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung)
 
 ??? tip "<code>HILFE</code>: Kurzanleitung Kantenverrundung (klicken zum aufklappen)"
 
-    Wie im Praktikum&nbsp;2 zur Geometrieanpassung gezeigt, können innenliegende Kanten in <code>SpaceClaim</code> mit Hilfe des <code>Pull</code>-Tools verrundet werden (hier im Beispiel an einer Außenkante!):
+    Wie im Praktikum&nbsp;2 zur Geometrieanpassung gezeigt, können Kanten in <code>SpaceClaim</code> mit Hilfe des <code>Pull</code>-Tools verrundet werden. Die Bilder zeigen eine Außenkante, die Innenkante am L-Profil verrunden Sie genauso:
 
     <figure style="text-align:center;">
         <img src="../../../P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/images/Verrundung_einfuegen.png" alt="Verrundungen einfügen mit Pull" width="500">

@@ -3,7 +3,7 @@ hide:
  - toc
 ---
 
-# Übung 3 - Kurbelarm
+# Übung 3: Kurbelarm
 
 Im dritten Beispiel wenden wir nun das Gelernte bezüglich der Vernetzung an einem Kurbelarm an.
 
@@ -42,20 +42,20 @@ Belastung:
 
 ## Aufgabenstellung
 
-Die maximale Verformung und maximale von-Mises Vergleichsspannung für das Bauteil mit einem konvergiertem Netz berechnen.
+Die maximale Verformung und die maximale von-Mises-Vergleichsspannung für das Bauteil mit einem konvergierten Netz berechnen.
 
 ## Gesucht
 
 Die folgenden Größen berechnen:
 
-### Die maximale Durchbiegung $u_{\max }$ in mm
+### Die maximale Verformung $u_{\max }$ in mm
 
-<div class="numeric-question" data-answer="1.0" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Kraft in negative x-Richtung mit 50mm Abstand von Mittelpunkt der Bohrung?" data-diagnose="0.35: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Aluminium (E = 70 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
+<div class="numeric-question" data-answer="1.0" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Kraft in negative x-Richtung?" data-diagnose="0.35: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Aluminium (E = 70 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
 </div>
 
-### Die maximale von-Mises Vergleichsspannung $\sigma_{von Mises}$ in MPa
+### Die maximale von-Mises-Vergleichsspannung $\sigma_{von Mises}$ in MPa
 
-<div class="numeric-question" data-answer="99.5" data-tolerance="2" data-points="5" data-attempts="5"  data-hints="Spannung außerhalb der festen Einspannung ausgewertet? Netz genug verfeinert?">
+<div class="numeric-question" data-answer="99.5" data-tolerance="2" data-points="5" data-attempts="5"  data-hints="Spannung außerhalb der festen Einspannung ausgewertet? Netz genug verfeinert? Kraft mit 50 mm Abstand vom Mittelpunkt der Bohrung?">
 </div>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->
@@ -65,7 +65,7 @@ Die folgenden Größen berechnen:
 
 <br>
 
-Netz: global 3mm , im Bereich des Spannungsmaximums: 0,1 mm
+Netz: global 3&nbsp;mm, im Bereich des Spannungsmaximums: 0,1&nbsp;mm
 
 <figure style="text-align:center;">
   <img src="../images/Loesung-Uebung03-FixedSupport.png" alt="Lagerung Spannung Fixed Support" width="900">
@@ -73,7 +73,7 @@ Netz: global 3mm , im Bereich des Spannungsmaximums: 0,1 mm
 </figure>
 
 <figure style="text-align:center;">
-  <img src="../images/Loesung-Uebung03-RemoteDisplacement.png" alt="Lagerung Spannung Fixed Support" width="900">
+  <img src="../images/Loesung-Uebung03-RemoteDisplacement.png" alt="Spannung mit Remote Displacement" width="900">
   <figcaption>Spannung mit Remote Displacement</figcaption>
 </figure>
 

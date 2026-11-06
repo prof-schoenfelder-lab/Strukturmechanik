@@ -34,14 +34,14 @@ Feste Einspannungen können außerdem durch andere Lagerungsbedingungen (z. B. E
 
 !!! tip "Vertiefung: Lagerungen in Übung 4 aus Praktikum 2"
 
-    In **Übung 4 / Praktikum 2** hatten wir die unterschiedliche Lagerungsarten (feste Einspannung, Elastic Support, Remote Displacement) am Beispiel des Inbus systematisch durchgespielt.
+    In **Übung 4 / Praktikum 2** hatten wir die unterschiedlichen Lagerungsarten (feste Einspannung, Elastic Support, Remote Displacement) am Beispiel des Inbus systematisch durchgespielt.
 
     <figure style="text-align:center;">
         <img src="../../../P2_Geometrie_Randbedingungen/02_Lagerungen/images/Uebung-06.png" alt="Lagerungen in Übung 4" width="700">
-        <figcaption>Beispiel: Randbedingungen in Übung&nbsp;2 (Übung&nbsp;6)</figcaption>
+        <figcaption>Beispiel: Randbedingungen in Übung&nbsp;4 aus Praktikum&nbsp;2</figcaption>
     </figure>
 
-    [Zu Übung6 vom Praktikum 2](../../P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-6.md){ .md-button .md-button--primary }
+    [Zu Übung 4 aus Praktikum 2](../../P2_Geometrie_Randbedingungen/02_Lagerungen/Uebung-6.md){ .md-button .md-button--primary }
 
 
 # Vorgehen zur Bestimmung der geeigneten Netzgröße
@@ -54,7 +54,7 @@ Der Kern des Vorgehens ist eine Schleife: Netzgröße halbieren, neu rechnen, Sp
 
 !!! info "TL;DR:"
 
-    1. Spannungen an Singularitäten nicht bewerten (oder nur mit großem Vorbehalt) – ggf. Geometrie/Randbedingungen realitätsnäher modellieren.
+    1. Spannungen an Singularitäten nicht bewerten (oder nur mit großem Vorbehalt), gegebenenfalls Geometrie oder Randbedingungen realitätsnäher modellieren.
     2. Netzgröße so lange (insbesondere in kritischen Bereichen) verfeinern, bis sich die relevanten Spannungen nur noch maximal um etwa 1 % ändern.
 
 

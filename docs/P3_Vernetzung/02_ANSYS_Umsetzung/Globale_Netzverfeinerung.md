@@ -6,9 +6,9 @@ hide:
 
 Zur globalen Netzverfeinerung verwenden wir unser bekanntes Beispiel mit dem Inbus, das hier heruntergeladen werden kann.
 
-Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung):
+Es ist das gesamte Projektarchiv gegeben (Material, Geometrie, Netz und Belastung):
 
-[:material-paperclip: Übung-01–Inbus.wbpz](assets/Uebung-01-Inbus.wbpz)
+[:material-paperclip: Uebung-01-Inbus.wbpz](assets/Uebung-01-Inbus.wbpz)
 
 <figure style="text-align:center;">
   <img src="../images/Uebung01-Inbus.png" alt="Inbus" width="400" class="no-lightbox">
@@ -73,7 +73,7 @@ Die maximale Spannung liegt für die Netzgröße von 2&nbsp;mm im Knick und betr
 <div class="numeric-question" data-answer="562.21" data-tolerance="1" data-points="5" data-attempts="5" data-hints="Einheit in mm gewechselt?" data-diagnose="393.35: Das ist der Wert für 1 mm. Netzgröße auf 0,5 mm stellen. | 354.5: Das ist der Wert im Knick. Gefragt ist das Maximum im gesamten Bauteil.">
 </div>
 
-Zwischen den beiden Spannungswerten ergibt sich eine Steigerung von rund 43 %. Die Spannung nimmt also mit Netzverfeinerung stark zu – ein typischer Hinweis auf eine Singularität. Da die maximale Spannung außerdem an der festen Einspannung auftritt, können wir diesen Verdacht hier bestätigen.
+Zwischen den beiden Spannungswerten ergibt sich eine Steigerung von rund 43 %. Die Spannung nimmt also mit Netzverfeinerung stark zu, ein typischer Hinweis auf eine Singularität. Da die maximale Spannung außerdem an der festen Einspannung auftritt, können wir diesen Verdacht hier bestätigen.
 
 ## Spannungsauswertung außerhalb der Singularität
 
