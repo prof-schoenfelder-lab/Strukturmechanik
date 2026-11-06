@@ -95,7 +95,7 @@ Wir verwenden nun unsere erste Lösungsstrategie und werten die Spannung außerh
 
 Nun haben wir nur noch einen Unterschied von etwa 0,5 % zwischen den Spannungswerten. Damit können wir ab einer Netzgröße von 0,5 mm von einer ausreichenden Konvergenz ausgehen und haben ein geeignet feines Netz für die Bewertung der Spannung im Knick gefunden.
 
-Unser Vorgehen wächst damit um einen Schritt: Wenn die maximale Spannung an einer Singularität liegt, nehmen wir diesen Bereich aus der Spannungsauswertung heraus.
+Unser Vorgehen wächst damit um einen Schritt: Wenn die maximale Spannung an einer Singularität liegt und wir an anderer Stelle auswerten, nehmen wir diesen Bereich aus der Spannungsauswertung heraus.
 
 <figure style="text-align:center;">
   <img src="../images/Vorgehen_Stufe2.excalidraw.png" alt="Vorgehen mit Prüfung auf Singularität und Lösung 1" width="800">

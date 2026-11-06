@@ -29,7 +29,7 @@ Bei <code>scharfen Kanten</code> kann man die Geometrie oft realitätsnäher mit
 
 Bei <code>festen Einspannungen</code> und <code>Einzelkräften</code> können die direkt betroffenen Bereiche von der Spannungsauswertung ausgeschlossen werden. Stattdessen betrachtet man die Spannungen in einem gewissen Abstand im „unauffälligen“ Bereich des Bauteils.
 
-Feste Einspannungen können außerdem durch andere Lagerungsbedingungen (z. B. Elastic Support oder Remote Displacement) ersetzt werden. Gerade bei Remote Displacement ist jedoch zu prüfen, ob die resultierende Verformungsform noch der realen Situation entspricht. 
+Wenn die gesuchte Spannung genau an der Einspannung liegt, wie am Kragarm, hilft das Ausschließen nicht. Dann kann die feste Einspannung durch andere Lagerungsbedingungen (z. B. Elastic Support oder Remote Displacement) ersetzt werden. Gerade bei Remote Displacement ist jedoch zu prüfen, ob die resultierende Verformungsform noch der realen Situation entspricht. 
 
 
 !!! tip "Vertiefung: Lagerungen in Übung 4 aus Praktikum 2"
