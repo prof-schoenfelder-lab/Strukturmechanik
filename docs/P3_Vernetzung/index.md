@@ -75,10 +75,10 @@ hide:
     </span>
   </a>
   <a class="prakt-card" href="02_ANSYS_Umsetzung/Uebung-5/">
-    <img class="prakt-cimg no-lightbox" src="02_ANSYS_Umsetzung/images/Uebung-05.png" alt="">
+    <img class="prakt-cimg no-lightbox" src="02_ANSYS_Umsetzung/images/Uebung-05-Vorschau.png" alt="">
     <span class="prakt-cbody">
       <span class="prakt-ctitle">Übung 5</span>
-      <span class="prakt-cdesc">bikelab ROTOR Rahmen</span>
+      <span class="prakt-cdesc">Schweißnaht am Fahrradrahmen</span>
     </span>
   </a>
 </div>
