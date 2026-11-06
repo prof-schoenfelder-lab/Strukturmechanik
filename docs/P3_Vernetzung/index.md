@@ -88,5 +88,12 @@ hide:
       <span class="prakt-cdesc">Schweißnaht am Fahrradrahmen</span>
     </span>
   </a>
+  <a class="prakt-card" href="02_ANSYS_Umsetzung/Quiz/">
+    <img class="prakt-cimg no-lightbox" src="02_ANSYS_Umsetzung/images/Quiz_Verlauf.excalidraw.png" alt="">
+    <span class="prakt-cbody">
+      <span class="prakt-ctitle">Quiz</span>
+      <span class="prakt-cdesc">Welcher Schritt kommt als Nächstes?</span>
+    </span>
+  </a>
 </div>
 
