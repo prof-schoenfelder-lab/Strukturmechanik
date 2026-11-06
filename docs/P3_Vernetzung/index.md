@@ -60,6 +60,13 @@ hide:
       <span class="prakt-ctitle">Ergebnis Tracking</span>
     </span>
   </a>
+  <a class="prakt-card" href="02_ANSYS_Umsetzung/Netzeinstellungen/">
+    <img class="prakt-cimg no-lightbox" src="02_ANSYS_Umsetzung/images/Netz_Defeaturing.excalidraw.png" alt="">
+    <span class="prakt-cbody">
+      <span class="prakt-ctitle">Netzeinstellungen</span>
+      <span class="prakt-cdesc">Defeaturing und Transition</span>
+    </span>
+  </a>
   <a class="prakt-card" href="02_ANSYS_Umsetzung/Uebung-3/">
     <img class="prakt-cimg no-lightbox" src="02_ANSYS_Umsetzung/images/Kurbelarm.png" alt="">
     <span class="prakt-cbody">
