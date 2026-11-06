@@ -46,7 +46,7 @@ Feste Einspannungen können außerdem durch andere Lagerungsbedingungen (z. B. E
 
 # Vorgehen zur Bestimmung der geeigneten Netzgröße
 
-Der Kern des Vorgehens ist eine Schleife: Netzgröße halbieren, neu rechnen, Spannungen vergleichen. In den folgenden Beispielen bauen wir diese Schleife Schritt für Schritt aus, das vollständige Vorgehen steht am Ende in der [Zusammenfassung](../02_ANSYS_Umsetzung/Zusammenfassung.md#7-vorgehen-zur-bestimmung-der-geeigneten-netzgroe).
+Der Kern des Vorgehens ist eine Schleife: Netzgröße halbieren, neu rechnen, Spannungen vergleichen. In den folgenden Beispielen bauen wir diese Schleife Schritt für Schritt aus, das vollständige Vorgehen steht am Ende in der [Zusammenfassung](../02_ANSYS_Umsetzung/Zusammenfassung.md).
 
 <figure style="text-align:center;">
     <img src="../images/Vorgehen_Stufe1.excalidraw.png" alt="Schleife: Netzgröße halbieren, bis sich die Spannung um weniger als 1 % ändert" width="600">
