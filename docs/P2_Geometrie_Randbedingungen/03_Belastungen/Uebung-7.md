@@ -12,6 +12,8 @@ thumb: images/Uebung-07.excalidraw.png
 
 Im fünften Beispiel verwenden wir erneut den vereinfachten Fahrradrahmen. Wer dies in dem vorherigen Teil nicht gemacht hat, kann auch die gegebene Geometrie verwenden. 
 
+So wird die Lenkkopfsteifigkeit gemessen, zum Beispiel in den Rahmentests von Fahrradmagazinen: Der Rahmen ist an den Ausfallenden eingespannt. Im Steuerrohr steckt ein Vollprofil, also eine massive Stange, die viel steifer ist als das Steuerrohr selbst. An ihrem Ende, 1000&nbsp;mm vom Mittelpunkt des Steuerrohrs entfernt, greift die Kraft quer zur Fahrtrichtung an.
+
 <figure style="text-align:center;">
   <img src="../images/Uebung-07.excalidraw.png" alt="Fahrradrahmen mit externen Kräften" width="700" class="no-lightbox">
 </figure>
@@ -43,7 +45,7 @@ Lagerung:
 
 Belastung:
 
-- Kraft $F_{x}=100\,\mathrm{N}$ horizontal quer zur Fahrtrichtung auf den Remote Point
+- Kraft $F=100\,\mathrm{N}$ horizontal quer zur Fahrtrichtung am Ende des Vollprofils, 1000&nbsp;mm vom Mittelpunkt des Steuerrohrs (Remote Point)
 
 ## Hinweis
 
@@ -59,9 +61,11 @@ Für die Remote Force muss ein neues Koordinatensystem in das Steuerrohr gesetzt
 
 Anschließend die folgenden Größen berechnen:
 
-### Die maximale Verschiebung in x-Richtung $u_{x,max}$ in mm
+### Die größte Verschiebung in Richtung der Kraft, als Betrag ohne Vorzeichen, in mm
 
-<div class="numeric-question" data-answer="3.1152" data-tolerance="0.25" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Koordinatensystem eingefügt? Kraft in richtige Richtung? Richtige Verschiebungsrichtung ausgewertet? Netzgröße 10 mm eingestellt?" data-diagnose="1.064: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Aluminium 6061-T6 (E = 68,3 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
+Je nachdem, in welche Richtung die x-Achse zeigt, steht dieser Wert in ANSYS als Max oder als Min der Directional Deformation.
+
+<div class="numeric-question" data-answer="3.1152" data-tolerance="0.25" data-points="5" data-attempts="5"  data-hints="Einheit auf mm gewechselt? Koordinatensystem eingefügt? Verschiebung in Kraftrichtung ausgewertet und als Betrag eingegeben? Netzgröße 10 mm eingestellt? Wie steif ist das Vollprofil im Steuerrohr?" data-diagnose="1.064: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Aluminium 6061-T6 (E = 68,3 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet? | -3.1152: Richtiger Wert, aber mit Vorzeichen. Gefragt ist der Betrag. | 0.67617: Das ist die größte Verschiebung entgegen der Kraft. Gefragt ist die Verschiebung in Kraftrichtung, je nach Achsrichtung steht sie unter Min.">
 </div>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->
@@ -76,7 +80,7 @@ Anschließend die folgenden Größen berechnen:
 
 <figure style="text-align:center;">
   <img src="../images/Uebung-07-Loesung-disp.png" alt="Verschiebung Lösung" width="700">
-  <figcaption>Gesamtverschiebung</figcaption>
+  <figcaption>Verschiebung in x-Richtung (Directional Deformation), Kraft hier in positiver x-Richtung. Zeigt die Kraft in negative x-Richtung, steht derselbe Wert als Min: −3,1152&nbsp;mm.</figcaption>
 </figure>
 
 </div>
