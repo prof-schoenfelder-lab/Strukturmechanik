@@ -62,16 +62,15 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung)
 
 Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wieder auf 3&nbsp;mm</code> und anschließend nur die <code>Verrundung auf 1&nbsp;mm</code>. Dazu kommt eine <code>Inflation</code> auf der Verrundung.
 
-<!-- ENTWURF 10.11.2026 (Felix prüft): Die Wenn-dann-Sätze sind ein Vorschlag, Kernaussagen formuliert Felix. Das Bild ist
-     eine Nachbildung aus gmsh (bilder/P3_LProfil_Inflation_Kurs.py im Vault) und wird durch ein ANSYS-Bild aus dem
-     Pooltest ersetzt. -->
+<!-- ENTWURF 10.11.2026 (Felix prüft): Die Wenn-dann-Sätze sind ein Vorschlag, Kernaussagen formuliert Felix. Bild:
+     ANSYS 2025 R2 von Felix, lokal 0,5 mm ohne und mit Inflation (bilder/P3_LProfil_ANSYS_Vergleich.py im Vault). -->
 
 ??? info "Warum Inflation?"
 
     Eine lokale Netzgröße auf der Verrundung legt nur fest, wie lang die Elemente auf der Oberfläche sind. Wie tief sie in das Bauteil reichen, entscheidet ANSYS selbst, und das kann auf zwei Rechnern verschieden ausfallen.
 
     <figure style="text-align:center;">
-        <img src="../images/LProfil_Inflation_Netz.png" alt="Netz an der Verrundung: ohne Inflation unregelmäßig in die Tiefe, mit Inflation fünf dünne Lagen parallel zur Oberfläche" width="800">
+        <img src="../images/LProfil_Inflation_Netz.png" alt="ANSYS-Netz an der Verrundung bei lokal 0,5 mm: ohne Inflation Vierecke, die an der Ecke unregelmäßig in die Tiefe wachsen; mit Inflation Tetraeder und dünne Lagen entlang des Bogens" width="800">
     </figure>
 
     - Wenn die Spannung an einer Verrundung ausgewertet wird, fällt sie in die Tiefe steil ab: beim L-Profil auf den ersten 0,5&nbsp;mm um rund ein Drittel. Dann hängt der Wert davon ab, wie dick die erste Elementlage ist.
@@ -122,7 +121,7 @@ Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wi
     <p class="step-title" role="heading" aria-level="2">Netz generieren</p>
     <p><code>Rechtsklick Strukturbaum Mesh → Generate Mesh</code></p>
     <figure style="text-align:center;">
-        <img src="../images/Lokale_Netzverfeinerung4.png" alt="Lokale Netzverfeinerung 3" width="500">
+        <img src="../images/LProfil_Netz_Inflation_1mm.png" alt="Netz an der Verrundung mit lokal 1 mm und Inflation: Tetraeder und dünne Lagen entlang des Bogens" width="700">
     </figure>
   </div>
 
@@ -224,6 +223,10 @@ Unser Vorgehen wächst erneut: Wenn die maximale Spannung an einer scharfen Kant
     <td>597,67&nbsp;(&minus;0,7&nbsp;%)</td>
   </tr>
 </table>
+
+<figure style="text-align:center;">
+  <img src="../images/LProfil_Spannung_Inflation_0-25mm.png" alt="Vergleichsspannung an der Verrundung mit lokal 0,25 mm und Inflation, Maximum 597,67 MPa in Bauteilmitte" width="800">
+</figure>
 
 <p>Von 1&nbsp;mm auf 0,5&nbsp;mm ändert sich die Spannung noch um 3,7&nbsp;%, das ist noch keine Konvergenz. Von 0,5&nbsp;mm auf 0,25&nbsp;mm liegt die Änderung mit 0,7&nbsp;% unter 1&nbsp;%: Das Netz ist konvergiert.</p>
 
