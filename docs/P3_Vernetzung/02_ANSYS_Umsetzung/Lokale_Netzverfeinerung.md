@@ -107,8 +107,9 @@ Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wi
     </figure>
   </div>
 
-  <!-- ENTWURF: Klickweg aus der ANSYS-Hilfe, im Pool zu prüfen (Teil B, Variante 1). Bild folgt aus dem Pooltest.
-       Falls Variante 2 (Sweep mit Inflation) gewinnt, steht der Ersatztext in der Vault-Notiz P3_LProfil_Netztest_Pool. -->
+  <!-- ENTWURF: Klickweg Variante 1 (Inflation am Körper, Boundary die Fläche der Verrundung), so von Felix am 10.11.2026
+       in ANSYS gerechnet. Bild folgt. -->
+
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Inflation auf der Verrundung einfügen</p>
     <p>(1) <code>Rechtsklick Strukturbaum Mesh → Insert → Inflation</code></p>
