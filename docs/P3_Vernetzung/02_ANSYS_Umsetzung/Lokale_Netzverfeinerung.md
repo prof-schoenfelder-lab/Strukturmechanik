@@ -129,15 +129,16 @@ Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wi
 </div>
 
 <!-- ENTWURF: Sollwerte von Felix (ANSYS 2025 R2, 10.11.2026, Inflation am Körper, Smooth Transition, Standardwerte):
-     0,5 mm 601,92 und 0,25 mm 597,67 MPa. 1 mm fehlt noch, bis dahin 0 als Platzhalter; dann auch prüfen, ob die
-     Auswahlfrage nach 0,5 mm bei „Nein“ bleibt (Änderung von 1 auf 0,5 mm über 1 %).
-     Das Backend ordnet Diagnosen bis 3 % Abstand zu. Die Nachbarwerte der Reihe liegen nur 0,7 bis 2 % auseinander
-     und sind deshalb keine Diagnosen; Werte ohne Inflation bei 0,25 mm (595,76 und 600,95) liegen im Sollband.
+     1 mm 624,82, 0,5 mm 601,92, 0,25 mm 597,67, 0,125 mm 597,88 MPa (−3,7 %, −0,7 %, +0,04 %).
+     Ohne Inflation (nur Face Sizing): 552,84, 584,68, 595,76, 599,55 MPa; ganz ohne lokale Verfeinerung 547,29.
+     Das Backend ordnet Diagnosen bis 3 % Abstand zu. Die Nachbarwerte der Reihe liegen nur 0,7 bis 4 % auseinander
+     und sind deshalb keine Diagnosen; bei 1 mm liegen „ohne Inflation“ und „ohne lokale Verfeinerung“ 1 % auseinander
+     und teilen sich eine Diagnose; Werte ohne Inflation bei 0,25 mm (595,76 und 600,95) liegen im Sollband.
      Fragen-IDs hängen an der Position: q2 bis q4 und mc0 bekommen eine neue Bedeutung, mc1 ist neu. -->
 
 - [ ] Die von-Mises-Vergleichsspannung in MPa in der Verrundung mit einem dortigen lokalen Netz von <code>1&nbsp;mm</code> (globales Netz 3&nbsp;mm, Inflation auf der Verrundung) berechnen.
 
-<div class="numeric-question" data-answer="0" data-tolerance="2" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 1mm, Inflation auf der Verrundung?" data-diagnose="547.29: Das ist der Wert ohne lokale Verfeinerung. Face Sizing und Inflation auf der Verrundung einfügen.">
+<div class="numeric-question" data-answer="624.82" data-tolerance="2" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 1mm, Inflation auf der Verrundung?" data-diagnose="552.84: Dieser Wert entsteht ohne Inflation, ganz ohne lokale Verfeinerung kommt fast dasselbe heraus. Face Sizing 1 mm und Inflation auf der Verrundung prüfen: Geometry der Körper, Boundary die Fläche der Verrundung.">
 </div>
 
 - [ ] Die von-Mises-Vergleichsspannung in MPa in der Verrundung mit einem dortigen lokalen Netz von <code>0,5&nbsp;mm</code> (globales Netz 3&nbsp;mm, Inflation auf der Verrundung) berechnen.
@@ -207,16 +208,15 @@ Unser Vorgehen wächst erneut: Wenn die maximale Spannung an einer scharfen Kant
     <td>592,32&nbsp;(+35,6&nbsp;%)</td>
     <td>-</td>
   </tr>
-  <!-- ENTWURF: Wert bei 1 mm und die Änderung von 1 auf 0,5 mm fehlen noch (Felix) -->
   <tr>
     <td>1&nbsp;mm</td>
     <td>&ndash;</td>
-    <td>folgt&nbsp;</td>
+    <td>624,82&nbsp;</td>
   </tr>
   <tr>
     <td>0,5&nbsp;mm</td>
     <td>&ndash;</td>
-    <td>601,92&nbsp;</td>
+    <td>601,92&nbsp;(&minus;3,7&nbsp;%)</td>
   </tr>
   <tr>
     <td>0,25&nbsp;mm</td>
@@ -225,7 +225,7 @@ Unser Vorgehen wächst erneut: Wenn die maximale Spannung an einer scharfen Kant
   </tr>
 </table>
 
-<p>Von 1&nbsp;mm auf 0,5&nbsp;mm ändert sich die Spannung noch deutlich, das ist noch keine Konvergenz. Von 0,5&nbsp;mm auf 0,25&nbsp;mm liegt die Änderung mit 0,7&nbsp;% unter 1&nbsp;%: Das Netz ist konvergiert.</p>
+<p>Von 1&nbsp;mm auf 0,5&nbsp;mm ändert sich die Spannung noch um 3,7&nbsp;%, das ist noch keine Konvergenz. Von 0,5&nbsp;mm auf 0,25&nbsp;mm liegt die Änderung mit 0,7&nbsp;% unter 1&nbsp;%: Das Netz ist konvergiert.</p>
 
 <p>
   <small>
