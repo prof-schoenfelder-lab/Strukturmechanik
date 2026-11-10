@@ -112,8 +112,8 @@ Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wi
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Inflation auf der Verrundung einfügen</p>
     <p>(1) <code>Rechtsklick Strukturbaum Mesh → Insert → Inflation</code></p>
-    <p>(2) <code>Körperauswahltool</code> wählen, den Körper anklicken und unter <code>Detailfenster → Geometry</code> mit <code>Apply</code> bestätigen.</p>
-    <p>(3) <code>Flächenauswahltool</code> wählen, die Fläche der Verrundung anklicken und unter <code>Detailfenster → Boundary</code> mit <code>Apply</code> bestätigen.</p>
+    <p>(2) <code>Körperauswahltool</code> wählen, den Körper anklicken und unter <code>Detailfenster → Geometry</code> mit <code>Apply</code> bestätigen. Unter Geometry muss <code>1 Body</code> stehen. Steht dort <code>1 Face</code>, hat ANSYS die Verrundung aus dem vorigen Schritt übernommen, und bei Boundary lassen sich nur Kanten wählen.</p>
+    <p>(3) <code>Flächenauswahltool</code> wählen, die Fläche der Verrundung anklicken und unter <code>Detailfenster → Boundary</code> mit <code>Apply</code> bestätigen. Von dieser Fläche aus wachsen die dünnen Lagen in das Bauteil.</p>
     <p>(4) Alles andere bleibt auf dem Standard: <code>Inflation Option: Smooth Transition</code>, <code>Maximum Layers: 5</code>, <code>Growth Rate: 1.2</code>.</p>
   </div>
 
