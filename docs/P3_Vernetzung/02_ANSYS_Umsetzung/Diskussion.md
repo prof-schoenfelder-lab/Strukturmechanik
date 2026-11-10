@@ -46,7 +46,10 @@ Hier mal am Beispiel von 3&nbsp;mm und 0,25&nbsp;mm die normalen Spannungswerte 
     <img src="../images/Averaged_ohneWerte.excalidraw.png" alt="Averaged vs NodalFraction" width="1100">
 </figure>
 
-Hier nun alle Werte für unser Beispiel:
+Hier nun alle Werte für unser Beispiel, gerechnet **ohne Inflation** (global 3&nbsp;mm, lokale Elementgröße auf der Verrundung):
+
+<!-- ENTWURF 10.11.2026: Reihe ohne Inflation bleibt als Beispiel für die beiden Kriterien. Später durch die Reihe mit
+     Inflation samt Nodal Fraction ersetzen (Werte von Felix). -->
 
 | Elementgröße [mm] | Spannung σ<sub>vM</sub> [MPa] | Änderung zur vorigen Netzgröße                                       | max. Nodal Fraction                             | Konvergenz?                                      |
 | -----------------:| -----------------------------:| ---------------------------------------------------------------------:| -----------------------------------------------:|:------------------------------------------------|
@@ -63,6 +66,10 @@ Hier nun alle Werte für unser Beispiel:
     Erst bei 0,125 mm sind beide Kriterien erfüllt.
     Wenn nur eines der beiden Kriterien geprüft wird,
     kann das Netz also noch zu grob sein.
+
+!!! note "Mit Inflation geht es schneller"
+
+    In der Übung auf der Seite [Lokale Netzverfeinerung](Lokale_Netzverfeinerung.md) liegt zusätzlich eine `Inflation` auf der Verrundung. Damit ändert sich die Spannung schon von 0,5&nbsp;mm auf 0,25&nbsp;mm nur noch um 0,7&nbsp;%, und die Werte hängen kaum davon ab, wie ANSYS das Netz im Einzelnen legt. Warum, steht auf der Seite [Netzeinstellungen](Netzeinstellungen.md).
 
 
 !!! info "Vereinfacht kann man auch sagen:"

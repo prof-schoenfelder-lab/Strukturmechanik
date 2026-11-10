@@ -128,18 +128,21 @@ Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wi
 
 </div>
 
-<!-- ENTWURF: Sollwerte (data-answer) und Diagnosen kommen aus dem Pooltest, bis dahin 0. Nachbildung mit
-     gmsh-Sweep und Inflation: 1 mm 615,0, 0,5 mm 603,1, 0,25 mm 599,1 MPa (fällt von oben, −1,95 % und −0,66 %).
+<!-- ENTWURF: Sollwerte von Felix (ANSYS 2025 R2, 10.11.2026, Inflation am Körper, Smooth Transition, Standardwerte):
+     0,5 mm 601,92 und 0,25 mm 597,67 MPa. 1 mm fehlt noch, bis dahin 0 als Platzhalter; dann auch prüfen, ob die
+     Auswahlfrage nach 0,5 mm bei „Nein“ bleibt (Änderung von 1 auf 0,5 mm über 1 %).
+     Das Backend ordnet Diagnosen bis 3 % Abstand zu. Die Nachbarwerte der Reihe liegen nur 0,7 bis 2 % auseinander
+     und sind deshalb keine Diagnosen; Werte ohne Inflation bei 0,25 mm (595,76 und 600,95) liegen im Sollband.
      Fragen-IDs hängen an der Position: q2 bis q4 und mc0 bekommen eine neue Bedeutung, mc1 ist neu. -->
 
 - [ ] Die von-Mises-Vergleichsspannung in MPa in der Verrundung mit einem dortigen lokalen Netz von <code>1&nbsp;mm</code> (globales Netz 3&nbsp;mm, Inflation auf der Verrundung) berechnen.
 
-<div class="numeric-question" data-answer="0" data-tolerance="2" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 1mm, Inflation auf der Verrundung?">
+<div class="numeric-question" data-answer="0" data-tolerance="2" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 1mm, Inflation auf der Verrundung?" data-diagnose="547.29: Das ist der Wert ohne lokale Verfeinerung. Face Sizing und Inflation auf der Verrundung einfügen.">
 </div>
 
 - [ ] Die von-Mises-Vergleichsspannung in MPa in der Verrundung mit einem dortigen lokalen Netz von <code>0,5&nbsp;mm</code> (globales Netz 3&nbsp;mm, Inflation auf der Verrundung) berechnen.
 
-<div class="numeric-question" data-answer="0" data-tolerance="2" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 0,5mm, Inflation auf der Verrundung?">
+<div class="numeric-question" data-answer="601.92" data-tolerance="2" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 0,5mm, Inflation auf der Verrundung?" data-diagnose="584.68: Das ist der Wert ohne Inflation. Inflation einfügen: Geometry der Körper, Boundary die Fläche der Verrundung. | 547.29: Das ist der Wert ohne lokale Verfeinerung. Face Sizing und Inflation auf der Verrundung einfügen.">
 </div>
 
 Wurde somit eine Konvergenz erreicht mit einer lokalen Netzgröße von 0,5&nbsp;mm?
@@ -159,7 +162,7 @@ Wurde somit eine Konvergenz erreicht mit einer lokalen Netzgröße von 0,5&nbsp;
 
 - [ ] Das lokale Netz noch einmal halbieren: Die von-Mises-Vergleichsspannung in MPa in der Verrundung mit einem dortigen lokalen Netz von <code>0,25&nbsp;mm</code> (globales Netz 3&nbsp;mm, Inflation auf der Verrundung) berechnen.
 
-<div class="numeric-question" data-answer="0" data-tolerance="2" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 0,25mm, Inflation auf der Verrundung?">
+<div class="numeric-question" data-answer="597.67" data-tolerance="2" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 0,25mm, Inflation auf der Verrundung?" data-diagnose="547.29: Das ist der Wert ohne lokale Verfeinerung. Face Sizing und Inflation auf der Verrundung einfügen.">
 </div>
 
 Wurde jetzt eine Konvergenz erreicht mit einer lokalen Netzgröße von 0,25&nbsp;mm?
@@ -204,25 +207,25 @@ Unser Vorgehen wächst erneut: Wenn die maximale Spannung an einer scharfen Kant
     <td>592,32&nbsp;(+35,6&nbsp;%)</td>
     <td>-</td>
   </tr>
-  <!-- ENTWURF: Werte aus dem Pooltest -->
+  <!-- ENTWURF: Wert bei 1 mm und die Änderung von 1 auf 0,5 mm fehlen noch (Felix) -->
   <tr>
     <td>1&nbsp;mm</td>
     <td>&ndash;</td>
-    <td>Pooltest&nbsp;</td>
+    <td>folgt&nbsp;</td>
   </tr>
   <tr>
     <td>0,5&nbsp;mm</td>
     <td>&ndash;</td>
-    <td>Pooltest&nbsp;(rund &minus;2&nbsp;%)</td>
+    <td>601,92&nbsp;</td>
   </tr>
   <tr>
     <td>0,25&nbsp;mm</td>
     <td>&ndash;</td>
-    <td>Pooltest&nbsp;(unter 1&nbsp;%)</td>
+    <td>597,67&nbsp;(&minus;0,7&nbsp;%)</td>
   </tr>
 </table>
 
-<p>Von 1&nbsp;mm auf 0,5&nbsp;mm ändert sich die Spannung noch um rund 2&nbsp;%, das ist noch keine Konvergenz. Von 0,5&nbsp;mm auf 0,25&nbsp;mm liegt die Änderung unter 1&nbsp;%: Das Netz ist konvergiert.</p>
+<p>Von 1&nbsp;mm auf 0,5&nbsp;mm ändert sich die Spannung noch deutlich, das ist noch keine Konvergenz. Von 0,5&nbsp;mm auf 0,25&nbsp;mm liegt die Änderung mit 0,7&nbsp;% unter 1&nbsp;%: Das Netz ist konvergiert.</p>
 
 <p>
   <small>
