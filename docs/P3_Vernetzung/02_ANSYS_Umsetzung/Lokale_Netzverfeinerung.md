@@ -60,7 +60,22 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung)
 
 # Lokale Netzverfeinerung
 
-Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wieder auf 3&nbsp;mm</code> und anschließend nur die <code>Verrundung auf 0,5&nbsp;mm</code>.
+Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wieder auf 3&nbsp;mm</code> und anschließend nur die <code>Verrundung auf 1&nbsp;mm</code>. Dazu kommt eine <code>Inflation</code> auf der Verrundung.
+
+<!-- ENTWURF 10.11.2026 (Felix prüft): Die Wenn-dann-Sätze sind ein Vorschlag, Kernaussagen formuliert Felix. Das Bild ist
+     eine Nachbildung aus gmsh (bilder/P3_LProfil_Inflation_Kurs.py im Vault) und wird durch ein ANSYS-Bild aus dem
+     Pooltest ersetzt. -->
+
+??? info "Warum Inflation?"
+
+    Eine lokale Netzgröße auf der Verrundung legt nur fest, wie lang die Elemente auf der Oberfläche sind. Wie tief sie in das Bauteil reichen, entscheidet ANSYS selbst, und das kann auf zwei Rechnern verschieden ausfallen.
+
+    <figure style="text-align:center;">
+        <img src="../images/LProfil_Inflation_Netz.png" alt="Netz an der Verrundung: ohne Inflation unregelmäßig in die Tiefe, mit Inflation fünf dünne Lagen parallel zur Oberfläche" width="800">
+    </figure>
+
+    - Wenn die Spannung an einer Verrundung ausgewertet wird, fällt sie in die Tiefe steil ab: beim L-Profil auf den ersten 0,5&nbsp;mm um rund ein Drittel. Dann hängt der Wert davon ab, wie dick die erste Elementlage ist.
+    - Wenn eine Inflation auf der Verrundung liegt, baut ANSYS dort dünne Elementlagen parallel zur Oberfläche. Dann bekommt jeder Rechner an der Verrundung dasselbe Netz und denselben Wert.
 
 <div class="steps" markdown="1" data-kategorie="Vernetzung">
 
@@ -86,10 +101,20 @@ Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wi
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Lokale Netzgröße einstellen</p>
     <p>(1) Die lokale Netzverfeinerung auswählen: <code>Strukturbaum → Mesh → Face Sizing</code></p>
-    <p>(2) <code>Detailfenster → Element Size: 0,5 mm</code> einstellen (Einheit auf mm!).</p>
+    <p>(2) <code>Detailfenster → Element Size: 1 mm</code> einstellen (Einheit auf mm!).</p>
     <figure style="text-align:center;">
         <img src="../images/Lokale_Netzverfeinerung3.png" alt="Lokale Netzverfeinerung 2" width="300">
     </figure>
+  </div>
+
+  <!-- ENTWURF: Klickweg aus der ANSYS-Hilfe, im Pool zu prüfen (Teil B, Variante 1). Bild folgt aus dem Pooltest.
+       Falls Variante 2 (Sweep mit Inflation) gewinnt, steht der Ersatztext in der Vault-Notiz P3_LProfil_Netztest_Pool. -->
+  <div class="step">
+    <p class="step-title" role="heading" aria-level="2">Inflation auf der Verrundung einfügen</p>
+    <p>(1) <code>Rechtsklick Strukturbaum Mesh → Insert → Inflation</code></p>
+    <p>(2) <code>Körperauswahltool</code> wählen, den Körper anklicken und unter <code>Detailfenster → Geometry</code> mit <code>Apply</code> bestätigen.</p>
+    <p>(3) <code>Flächenauswahltool</code> wählen, die Fläche der Verrundung anklicken und unter <code>Detailfenster → Boundary</code> mit <code>Apply</code> bestätigen.</p>
+    <p>(4) Alles andere bleibt auf dem Standard: <code>Inflation Option: Smooth Transition</code>, <code>Maximum Layers: 5</code>, <code>Growth Rate: 1.2</code>.</p>
   </div>
 
   <div class="step">
@@ -102,17 +127,21 @@ Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wi
 
 </div>
 
-- [ ] Die von-Mises-Vergleichsspannung in MPa in der Verrundung mit einem dortigen lokalen Netz von <code>0,5&nbsp;mm</code> (globales Netz 3&nbsp;mm) berechnen.
+<!-- ENTWURF: Sollwerte (data-answer) und Diagnosen kommen aus dem Pooltest, bis dahin 0. Nachbildung mit
+     gmsh-Sweep und Inflation: 1 mm 615,0, 0,5 mm 603,1, 0,25 mm 599,1 MPa (fällt von oben, −1,95 % und −0,66 %).
+     Fragen-IDs hängen an der Position: q2 bis q4 und mc0 bekommen eine neue Bedeutung, mc1 ist neu. -->
 
-<div class="numeric-question" data-answer="584.68" data-tolerance="2" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 0,5mm?" data-diagnose="547.29: Das ist der Wert ohne lokale Verfeinerung. Sizing auf der Verrundung einfügen. | 595.76: Das ist der Wert für 0,25 mm. Lokale Netzgröße auf 0,5 mm stellen.">
+- [ ] Die von-Mises-Vergleichsspannung in MPa in der Verrundung mit einem dortigen lokalen Netz von <code>1&nbsp;mm</code> (globales Netz 3&nbsp;mm, Inflation auf der Verrundung) berechnen.
+
+<div class="numeric-question" data-answer="0" data-tolerance="2" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 1mm, Inflation auf der Verrundung?">
 </div>
 
-- [ ] Die von-Mises-Vergleichsspannung in MPa in der Verrundung mit einem dortigen lokalen Netz von <code>0,25&nbsp;mm</code> (globales Netz 3&nbsp;mm) berechnen.
+- [ ] Die von-Mises-Vergleichsspannung in MPa in der Verrundung mit einem dortigen lokalen Netz von <code>0,5&nbsp;mm</code> (globales Netz 3&nbsp;mm, Inflation auf der Verrundung) berechnen.
 
-<div class="numeric-question" data-answer="595.76" data-tolerance="2" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 0,25mm?" data-diagnose="584.68: Das ist der Wert für 0,5 mm. Lokale Netzgröße auf 0,25 mm stellen. | 599.55: Das ist der Wert für 0,125 mm. Lokale Netzgröße auf 0,25 mm stellen. | 582.28: Dieser Wert entsteht mit ANSYS 2024 R2. Im PC-Pool läuft 2025 R2, dort vernetzt ANSYS etwas anders.">
+<div class="numeric-question" data-answer="0" data-tolerance="2" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 0,5mm, Inflation auf der Verrundung?">
 </div>
 
-Wurde somit eine Konvergenz erreicht mit einer lokalen Netzgröße von 0,25&nbsp;mm?
+Wurde somit eine Konvergenz erreicht mit einer lokalen Netzgröße von 0,5&nbsp;mm?
 
 <div class="multiple-choice-question" data-correct="B" data-points="5" data-attempts="3">
   <div class="mc-options">
@@ -127,12 +156,27 @@ Wurde somit eine Konvergenz erreicht mit einer lokalen Netzgröße von 0,25&nbsp
   </div>
 </div>
 
-- [ ] Das lokale Netz noch einmal halbieren: Die von-Mises-Vergleichsspannung in MPa in der Verrundung mit einem dortigen lokalen Netz von <code>0,125&nbsp;mm</code> (globales Netz 3&nbsp;mm) berechnen.
+- [ ] Das lokale Netz noch einmal halbieren: Die von-Mises-Vergleichsspannung in MPa in der Verrundung mit einem dortigen lokalen Netz von <code>0,25&nbsp;mm</code> (globales Netz 3&nbsp;mm, Inflation auf der Verrundung) berechnen.
 
-<div class="numeric-question" data-answer="599.55" data-tolerance="2" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 0,125mm?" data-diagnose="595.76: Das ist der Wert für 0,25 mm. Lokale Netzgröße auf 0,125 mm stellen.">
+<div class="numeric-question" data-answer="0" data-tolerance="2" data-points="5" data-attempts="5" data-hints="Globales Netz 3mm, lokales Netz 0,25mm, Inflation auf der Verrundung?">
 </div>
 
-Unser Vorgehen wächst erneut: Wenn die maximale Spannung an einer scharfen Kante liegt, verrunden wir die Kante und verfeinern das Netz nur dort.
+Wurde jetzt eine Konvergenz erreicht mit einer lokalen Netzgröße von 0,25&nbsp;mm?
+
+<div class="multiple-choice-question" data-correct="A" data-points="5" data-attempts="3">
+  <div class="mc-options">
+    <div class="mc-option" data-value="A">
+      <input type="checkbox" id="q2a" name="q2">
+      <label for="q2a">Ja</label>
+    </div>
+    <div class="mc-option" data-value="B">
+      <input type="checkbox" id="q2b" name="q2">
+      <label for="q2b">Nein</label>
+    </div>
+  </div>
+</div>
+
+Unser Vorgehen wächst erneut: Wenn die maximale Spannung an einer scharfen Kante liegt, verrunden wir die Kante, verfeinern das Netz nur dort und legen mit einer Inflation die Elementlagen in die Tiefe fest.
 
 <figure style="text-align:center;">
   <img src="../images/Vorgehen_Stufe3.excalidraw.png" alt="Vorgehen mit Kantenverrundung und lokaler Netzgröße" width="800">
@@ -159,31 +203,32 @@ Unser Vorgehen wächst erneut: Wenn die maximale Spannung an einer scharfen Kant
     <td>592,32&nbsp;(+35,6&nbsp;%)</td>
     <td>-</td>
   </tr>
+  <!-- ENTWURF: Werte aus dem Pooltest -->
+  <tr>
+    <td>1&nbsp;mm</td>
+    <td>&ndash;</td>
+    <td>Pooltest&nbsp;</td>
+  </tr>
   <tr>
     <td>0,5&nbsp;mm</td>
     <td>&ndash;</td>
-    <td>584,68&nbsp;</td>
+    <td>Pooltest&nbsp;(rund &minus;2&nbsp;%)</td>
   </tr>
   <tr>
     <td>0,25&nbsp;mm</td>
     <td>&ndash;</td>
-    <td>595,76&nbsp;(+1,9&nbsp;%)</td>
-  </tr>
-  <tr>
-    <td>0,125&nbsp;mm</td>
-    <td>&ndash;</td>
-    <td>599,55&nbsp;(+0,6&nbsp;%)</td>
+    <td>Pooltest&nbsp;(unter 1&nbsp;%)</td>
   </tr>
 </table>
 
-<p>Von 0,5&nbsp;mm auf 0,25&nbsp;mm ändert sich die Spannung noch um 1,9&nbsp;%, das ist noch keine Konvergenz. Erst von 0,25&nbsp;mm auf 0,125&nbsp;mm liegt die Änderung mit 0,6&nbsp;% unter 1&nbsp;%.</p>
+<p>Von 1&nbsp;mm auf 0,5&nbsp;mm ändert sich die Spannung noch um rund 2&nbsp;%, das ist noch keine Konvergenz. Von 0,5&nbsp;mm auf 0,25&nbsp;mm liegt die Änderung unter 1&nbsp;%: Das Netz ist konvergiert.</p>
 
 <p>
   <small>
     Hinweis: Die prozentuale Änderung bezieht sich jeweils auf das vorherige Netz
     in derselben Spalte. Die lokalen Spannungen stammen aus dem Modell mit
-    Kantenverrundung (Radius 3&nbsp;mm); bei 0,5&nbsp;mm, 0,25&nbsp;mm und 0,125&nbsp;mm wurde zusätzlich
-    eine lokale Netzverfeinerung in der Verrundung bei global 3&nbsp;mm verwendet.
+    Kantenverrundung (Radius 3&nbsp;mm); bei 1&nbsp;mm, 0,5&nbsp;mm und 0,25&nbsp;mm wurde zusätzlich
+    eine lokale Netzverfeinerung mit Inflation in der Verrundung bei global 3&nbsp;mm verwendet.
   </small>
 </p>
 
