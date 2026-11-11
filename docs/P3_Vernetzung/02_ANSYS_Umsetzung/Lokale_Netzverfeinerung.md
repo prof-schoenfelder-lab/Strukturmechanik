@@ -76,6 +76,21 @@ Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wi
     - Wenn die Spannung an einer Verrundung ausgewertet wird, fällt sie in die Tiefe steil ab: beim L-Profil auf den ersten 0,5&nbsp;mm um rund ein Drittel. Dann hängt der Wert davon ab, wie dick die erste Elementlage ist.
     - Wenn eine Inflation auf der Verrundung liegt, baut ANSYS dort dünne Elementlagen parallel zur Oberfläche. Dann bekommt jeder Rechner an der Verrundung dasselbe Netz und denselben Wert.
 
+<!-- ENTWURF 11.11.2026 (Felix' Idee, Felix prüft): Die Wenn-dann-Sätze sind ein Vorschlag. Skizze im Vault:
+     bilder/P3_Vorgehen_excalidraw.py Netz_Global. Belege: Inbus als Sweep mit Hexaedern (Bild Inbus_2mm_einstellen),
+     mit globalem Netz gleiche Werte im Pool (L-Profil global 1,5 mm: 592,32 MPa bei Felix und beim Studenten). -->
+
+??? info "Warum ging es beim Inbus ohne Inflation?"
+
+    Beim Inbus haben Sie die Elementgröße global eingestellt, also für das ganze Bauteil. ANSYS vernetzt ihn mit Hexaedern, die überall gleich groß sind.
+
+    <figure style="text-align:center;">
+        <img src="../images/Netz_Global.excalidraw.png" alt="Schnitt durch eine Verrundung, schematisch: Mit globaler Elementgröße sind die Elemente überall gleich groß, auch in der Tiefe. Mit Face Sizing ist nur an der Oberfläche h klein, die erste Elementlage reicht mal flach, mal tief." width="800" class="no-lightbox">
+    </figure>
+
+    - Wenn die Elementgröße global eingestellt ist, sind die Elemente in der Tiefe genauso klein wie an der Oberfläche. Dann ist auch der Abfall der Spannung in die Tiefe fein aufgelöst, und jeder Rechner bekommt dasselbe Netz.
+    - Wenn nur die Fläche der Verrundung verfeinert ist, sind nur die Elemente an der Oberfläche klein. Dahinter wachsen sie bis auf die globale Größe von 3&nbsp;mm, und wie tief die erste Lage reicht, entscheidet ANSYS. Diese Tiefe legt die Inflation fest.
+
 <div class="steps" markdown="1" data-kategorie="Vernetzung">
 
   <div class="step">
@@ -107,7 +122,7 @@ Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wi
   </div>
 
   <!-- ENTWURF: Klickweg Variante 1 (Inflation am Körper, Boundary die Fläche der Verrundung), so von Felix am 10.11.2026
-       in ANSYS gerechnet. Bild folgt. -->
+       in ANSYS gerechnet. Bild vom Dialog folgt. Skizze (11.11.2026): bilder/P3_Vorgehen_excalidraw.py Netz_Inflation im Vault. -->
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Inflation auf der Verrundung einfügen</p>
@@ -115,13 +130,19 @@ Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wi
     <p>(2) <code>Körperauswahltool</code> wählen, den Körper anklicken und unter <code>Detailfenster → Geometry</code> mit <code>Apply</code> bestätigen. Unter Geometry muss <code>1 Body</code> stehen. Steht dort <code>1 Face</code>, hat ANSYS die Verrundung aus dem vorigen Schritt übernommen, und bei Boundary lassen sich nur Kanten wählen.</p>
     <p>(3) <code>Flächenauswahltool</code> wählen, die Fläche der Verrundung anklicken und unter <code>Detailfenster → Boundary</code> mit <code>Apply</code> bestätigen. Von dieser Fläche aus wachsen die dünnen Lagen in das Bauteil.</p>
     <p>(4) Alles andere bleibt auf dem Standard: <code>Inflation Option: Smooth Transition</code>, <code>Maximum Layers: 5</code>, <code>Growth Rate: 1.2</code>.</p>
+    <p>Das Face Sizing aus dem vorigen Schritt legt nur die Elementlänge auf der Oberfläche fest, die Inflation zusätzlich die Tiefe:</p>
+    <figure style="text-align:center;">
+        <img src="../images/Netz_Inflation.excalidraw.png" alt="Schnitt durch die Verrundung, schematisch: Mit Face Sizing ist nur die Elementlänge h auf der Oberfläche fest, die erste Elementlage reicht mal flach, mal tief. Mit Inflation liegen fünf dünne Lagen parallel zur Oberfläche, zusammen etwa h dick, die dünnste an der Oberfläche." width="700" class="no-lightbox">
+    </figure>
   </div>
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Netz generieren</p>
     <p><code>Rechtsklick Strukturbaum Mesh → Generate Mesh</code></p>
-    <figure style="text-align:center;">
-        <img src="../images/LProfil_Netz_Inflation_1mm.png" alt="Netz an der Verrundung mit lokal 1 mm und Inflation: Tetraeder und dünne Lagen entlang des Bogens" width="700">
+    <figure style="flex-wrap:wrap; gap:12px 16px; align-items:flex-end;">
+        <img src="../images/LProfil_Netz_Inflation_1mm.png" alt="Netz an der Verrundung mit lokal 1 mm und Inflation: Tetraeder und dünne Lagen entlang des Bogens" width="500">
+        <img src="../images/LProfil_Inflation_Lagen_0-25mm.png" alt="Ausschnitt am Bogen bei lokal 0,25 mm: die dünnen Lagen der Inflation als dunkles Band entlang der Verrundung" width="180">
+        <figcaption style="flex-basis:100%;">Rechts ein Ausschnitt am Bogen bei lokal 0,25&nbsp;mm: Die dünnen Lagen liegen als Band entlang der Verrundung.</figcaption>
     </figure>
   </div>
 

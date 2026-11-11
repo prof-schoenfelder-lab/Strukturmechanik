@@ -45,9 +45,16 @@ Nach einer lokalen Netzverfeinerung wachsen die Elemente wieder auf die globale 
 
 ## Inflation: dünne Lagen an der Verrundung
 
-<!-- ENTWURF 10.11.2026 (Felix prüft). Bild: ANSYS 2025 R2 von Felix, L-Profil lokal 0,5 mm ohne und mit Inflation. -->
+<!-- ENTWURF 10.11.2026 (Felix prüft). Bild: ANSYS 2025 R2 von Felix, L-Profil lokal 0,5 mm ohne und mit Inflation.
+     Skizze (11.11.2026): bilder/P3_Vorgehen_excalidraw.py Netz_Inflation im Vault. -->
 
 Eine lokale Netzgröße auf einer Fläche legt nur fest, wie lang die Elemente auf der Oberfläche sind. Wie tief sie in das Bauteil reichen, entscheidet ANSYS selbst. In einer Verrundung fällt die Spannung in die Tiefe aber steil ab, beim L-Profil auf den ersten 0,5&nbsp;mm um rund ein Drittel. `Inflation` legt dort dünne Elementlagen parallel zur Oberfläche.
+
+<figure style="text-align:center;">
+  <img src="../images/Netz_Inflation.excalidraw.png" alt="Schnitt durch die Verrundung, schematisch: Mit Face Sizing ist nur die Elementlänge h auf der Oberfläche fest, die erste Elementlage reicht mal flach, mal tief. Mit Inflation liegen fünf dünne Lagen parallel zur Oberfläche, zusammen etwa h dick, die dünnste an der Oberfläche." width="800" class="no-lightbox">
+</figure>
+
+So sieht das in ANSYS aus, hier mit lokal 0,5&nbsp;mm:
 
 <figure style="text-align:center;">
   <img src="../images/LProfil_Inflation_Netz.png" alt="ANSYS-Netz an der Verrundung des L-Profils bei lokal 0,5 mm: ohne Inflation Vierecke, die an der Ecke unregelmäßig in die Tiefe wachsen; mit Inflation Tetraeder und dünne Lagen entlang des Bogens" width="800">
@@ -55,7 +62,7 @@ Eine lokale Netzgröße auf einer Fläche legt nur fest, wie lang die Elemente a
 
 - Einfügen mit `Rechtsklick Strukturbaum Mesh → Insert → Inflation`: unter `Geometry` der Körper, unter `Boundary` die Fläche der Verrundung.
 - Wenn unter `Geometry` eine Fläche statt des Körpers steht, lassen sich bei `Boundary` nur Kanten wählen. Dann zuerst den Körper auswählen.
-- Wenn `Inflation Option` auf `Smooth Transition` steht (Standard), richtet sich die Dicke der Lagen nach der Elementgröße auf der Fläche. Die äußerste Lage ist 0,272-mal so dick wie eine Elementkante (`Transition Ratio`), jede Lage darunter 1,2-mal dünner (`Growth Rate`). Die 5 Lagen (`Maximum Layers`) sind zusammen etwa so dick wie eine Elementkante.
+- Wenn `Inflation Option` auf `Smooth Transition` steht (Standard), richtet sich die Dicke der Lagen nach der Elementgröße auf der Fläche. Die Lage an der Oberfläche ist die dünnste, jede weitere ist 1,2-mal so dick wie die vorige (`Growth Rate`). Die letzte Lage, an die die Tetraeder anschließen, ist 0,272-mal so dick wie eine Elementkante (`Transition Ratio`). Die 5 Lagen (`Maximum Layers`) sind zusammen etwa so dick wie eine Elementkante.
 - Wenn Sie die Elementgröße auf der Fläche halbieren, werden auch die Lagen halb so dick. Für die Konvergenzstudie ändern Sie deshalb nur die Elementgröße im `Face Sizing`.
 - Wenn eine Inflation am Körper liegt, vernetzt ANSYS ihn mit Tetraedern und Prismen statt mit Hexaedern.
 
