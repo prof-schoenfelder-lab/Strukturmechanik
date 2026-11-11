@@ -122,7 +122,8 @@ Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wi
   </div>
 
   <!-- ENTWURF: Klickweg Variante 1 (Inflation am Körper, Boundary die Fläche der Verrundung), so von Felix am 10.11.2026
-       in ANSYS gerechnet. Bild vom Dialog folgt. Skizze (11.11.2026): bilder/P3_Vorgehen_excalidraw.py Netz_Inflation im Vault. -->
+       in ANSYS gerechnet. Bild vom Dialog von Felix (11.11.2026), Nummern: bilder/P3_LProfil_ANSYS_Vergleich.py dialog im Vault.
+       Skizze (11.11.2026): bilder/P3_Vorgehen_excalidraw.py Netz_Inflation im Vault. -->
 
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Inflation auf der Verrundung einfügen</p>
@@ -130,6 +131,9 @@ Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wi
     <p>(2) <code>Körperauswahltool</code> wählen, den Körper anklicken und unter <code>Detailfenster → Geometry</code> mit <code>Apply</code> bestätigen. Unter Geometry muss <code>1 Body</code> stehen. Steht dort <code>1 Face</code>, hat ANSYS die Verrundung aus dem vorigen Schritt übernommen, und bei Boundary lassen sich nur Kanten wählen.</p>
     <p>(3) <code>Flächenauswahltool</code> wählen, die Fläche der Verrundung anklicken und unter <code>Detailfenster → Boundary</code> mit <code>Apply</code> bestätigen. Von dieser Fläche aus wachsen die dünnen Lagen in das Bauteil.</p>
     <p>(4) Alles andere bleibt auf dem Standard: <code>Inflation Option: Smooth Transition</code>, <code>Maximum Layers: 5</code>, <code>Growth Rate: 1.2</code>.</p>
+    <figure style="text-align:center;">
+        <img src="../images/LProfil_Inflation_Dialog.png" alt="Inflation im Strukturbaum unter Mesh, Detailfenster mit Geometry 1 Body, Boundary 1 Face und den Standardwerten Smooth Transition, 5 Lagen, Growth Rate 1,2; im Grafikfenster der Körper blau und die Fläche der Verrundung rot" width="700">
+    </figure>
     <p>Das Face Sizing aus dem vorigen Schritt legt nur die Elementlänge auf der Oberfläche fest, die Inflation zusätzlich die Tiefe:</p>
     <figure style="text-align:center;">
         <img src="../images/Netz_Inflation.excalidraw.png" alt="Schnitt durch die Verrundung, schematisch: Mit Face Sizing ist nur die Elementlänge h auf der Oberfläche fest, die erste Elementlage reicht mal flach, mal tief. Mit Inflation liegen fünf dünne Lagen parallel zur Oberfläche, zusammen etwa h dick, die dünnste an der Oberfläche." width="700" class="no-lightbox">
