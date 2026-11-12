@@ -92,7 +92,7 @@ Mehr dazu in der ANSYS-Hilfe: [Mesh Defeaturing](https://ansyshelp.ansys.com/pub
 
 - In der Verrundung höchstens ein Viertel des Radius als Elementgröße (r/4), entlang der Oberfläche und in die Tiefe. So steht es in den [IIW-Empfehlungen für Schweißnähte](https://svv.cz/files/IIW182307FatigueRecomm20121017.pdf) (Abschnitt 2.2.4.2), die Regel gilt aber für jede Kerbe. Auf einem 90°-Bogen sind das mindestens 6 Elemente.
 - Die Tiefe mit `Inflation` festlegen.
-- Die Faustregel liefert nur den Startwert. Ob das Netz reicht, zeigt die Konvergenzstudie, siehe [Konvergenz prüfen](#konvergenz-prufen) unten.
+- Die Faustregel liefert nur den Startwert. Ob das Netz reicht, zeigt erst die Konvergenzstudie.
 
 
 ## Konvergenz prüfen
