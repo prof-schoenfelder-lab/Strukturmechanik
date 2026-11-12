@@ -45,19 +45,13 @@ Nach einer lokalen Netzverfeinerung wachsen die Elemente wieder auf die globale 
 
 ## Inflation: dünne Lagen an der Verrundung
 
-<!-- ENTWURF 10.11.2026 (Felix prüft). Bild: ANSYS 2025 R2 von Felix, L-Profil lokal 0,5 mm ohne und mit Inflation.
+<!-- ENTWURF 10.11.2026 (Felix prüft). ANSYS-Bildpaar ohne und mit Inflation am 12.11. entfernt (wirkte wie zwei Netzgrößen).
      Skizze (11.11.2026): bilder/P3_Vorgehen_excalidraw.py Netz_Inflation im Vault. -->
 
 Eine lokale Netzgröße auf einer Fläche legt nur fest, wie lang die Elemente auf der Oberfläche sind. Wie tief sie in das Bauteil reichen, entscheidet ANSYS selbst. In einer Verrundung fällt die Spannung in die Tiefe aber steil ab, beim L-Profil auf den ersten 0,5&nbsp;mm um rund ein Drittel. `Inflation` legt dort dünne Elementlagen parallel zur Oberfläche.
 
 <figure style="text-align:center;">
   <img src="../images/Netz_Inflation.excalidraw.png" alt="Schnitt durch die Verrundung, schematisch: Mit Face Sizing ist nur die Elementlänge h auf der Oberfläche fest, die erste Elementlage reicht mal flach, mal tief. Mit Inflation liegen fünf dünne Lagen parallel zur Oberfläche, zusammen etwa h dick, die dünnste an der Oberfläche." width="800" class="no-lightbox">
-</figure>
-
-So sieht das in ANSYS aus, hier mit lokal 0,5&nbsp;mm:
-
-<figure style="text-align:center;">
-  <img src="../images/LProfil_Inflation_Netz.png" alt="ANSYS-Netz an der Verrundung des L-Profils bei lokal 0,5 mm: ohne Inflation Vierecke, die an der Ecke unregelmäßig in die Tiefe wachsen; mit Inflation Tetraeder und dünne Lagen entlang des Bogens" width="800">
 </figure>
 
 - Einfügen mit `Rechtsklick Strukturbaum Mesh → Insert → Inflation`: unter `Geometry` der Körper, unter `Boundary` die Fläche der Verrundung.

@@ -62,34 +62,20 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung)
 
 Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wieder auf 3&nbsp;mm</code> und anschließend nur die <code>Verrundung auf 1&nbsp;mm</code>. Dazu kommt eine <code>Inflation</code> auf der Verrundung.
 
-<!-- ENTWURF 12.11.2026: Text nach Felix gekürzt. Bild: ANSYS 2025 R2 von Felix, lokal 0,5 mm ohne und mit Inflation
-     (bilder/P3_LProfil_ANSYS_Vergleich.py im Vault). -->
+<!-- ENTWURF 12.11.2026: Text nach Felix gekürzt, ohne Bild (das ANSYS-Bildpaar wirkte wie zwei verschiedene Netzgrößen). -->
 
 ??? info "Warum Inflation?"
 
     - Ohne Inflation gilt die lokale Netzgröße nur auf der Oberfläche.
     - Mit Inflation vernetzt ANSYS auch in die Tiefe feiner. Wie viele der eingestellten Lagen (`Maximum Layers`) es baut, entscheidet ANSYS selbst.
 
-    <figure style="text-align:center;">
-        <img src="../images/LProfil_Inflation_Netz.png" alt="ANSYS-Netz an der Verrundung bei lokal 0,5 mm: ohne Inflation Vierecke, die an der Ecke unregelmäßig in die Tiefe wachsen; mit Inflation Tetraeder und dünne Lagen entlang des Bogens" width="800">
-    </figure>
-
     **Wirkung:** Die Vernetzung in die Tiefe ist ebenso wichtig wie die auf der Oberfläche. Das verlangen auch die Richtlinien für Kerben, siehe die Faustregeln auf der Seite [Netzeinstellungen](Netzeinstellungen.md#inflation-dunne-lagen-an-der-verrundung).
 
-<!-- ENTWURF 11.11.2026 (Felix' Idee, Felix prüft): Die Wenn-dann-Sätze sind ein Vorschlag. Skizze im Vault:
-     bilder/P3_Vorgehen_excalidraw.py Netz_Global. Belege: Inbus als Sweep mit Hexaedern (Bild Inbus_2mm_einstellen),
-     mit globalem Netz gleiche Werte im Pool (L-Profil global 1,5 mm: 592,32 MPa bei Felix und beim Studenten). -->
+<!-- ENTWURF 12.11.2026: nach Felix nur Text, ohne Skizze. -->
 
 ??? info "Warum ging es beim Inbus ohne Inflation?"
 
-    Beim Inbus haben Sie die Elementgröße global eingestellt, also für das ganze Bauteil. ANSYS vernetzt ihn mit Hexaedern, die überall gleich groß sind.
-
-    <figure style="text-align:center;">
-        <img src="../images/Netz_Global.excalidraw.png" alt="Schnitt durch eine Verrundung, schematisch: Mit globaler Elementgröße sind die Elemente überall gleich groß, auch in der Tiefe. Mit Face Sizing ist nur an der Oberfläche h klein, die erste Elementlage reicht mal flach, mal tief." width="800" class="no-lightbox">
-    </figure>
-
-    - Wenn die Elementgröße global eingestellt ist, sind die Elemente in der Tiefe genauso klein wie an der Oberfläche. Dann ist auch der Abfall der Spannung in die Tiefe fein aufgelöst, und jeder Rechner bekommt dasselbe Netz.
-    - Wenn nur die Fläche der Verrundung verfeinert ist, sind nur die Elemente an der Oberfläche klein. Dahinter wachsen sie bis auf die globale Größe von 3&nbsp;mm, und wie tief die erste Lage reicht, entscheidet ANSYS. Diese Tiefe legt die Inflation fest.
+    Beim Inbus haben Sie die Elementgröße global eingestellt, also für das ganze Bauteil. Damit war auch die Vernetzung in die Tiefe geregelt, eine Inflation brauchte es nicht.
 
 <div class="steps" markdown="1" data-kategorie="Vernetzung">
 
