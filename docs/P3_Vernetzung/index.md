@@ -48,23 +48,17 @@ hide:
       <span class="prakt-ctitle">Lokale Netzverfeinerung</span>
     </span>
   </a>
-  <a class="prakt-card" href="02_ANSYS_Umsetzung/Diskussion/">
-    <img class="prakt-cimg no-lightbox" src="01_Grundlagen/images/Netzverfeinerung.excalidraw.png" alt="">
+  <a class="prakt-card" href="02_ANSYS_Umsetzung/Netzeinstellungen/">
+    <img class="prakt-cimg no-lightbox" src="02_ANSYS_Umsetzung/images/Netz_Defeaturing.excalidraw.png" alt="">
     <span class="prakt-cbody">
-      <span class="prakt-ctitle">Konvergenz prüfen</span>
+      <span class="prakt-ctitle">Netzeinstellungen und Konvergenz</span>
+      <span class="prakt-cdesc">Defeaturing, Transition, Inflation, Konvergenz prüfen</span>
     </span>
   </a>
   <a class="prakt-card" href="02_ANSYS_Umsetzung/Ergebnis_Tracking/">
     <img class="prakt-cimg no-lightbox" src="02_ANSYS_Umsetzung/images/Result_Tracking.png" alt="">
     <span class="prakt-cbody">
       <span class="prakt-ctitle">Ergebnis Tracking</span>
-    </span>
-  </a>
-  <a class="prakt-card" href="02_ANSYS_Umsetzung/Netzeinstellungen/">
-    <img class="prakt-cimg no-lightbox" src="02_ANSYS_Umsetzung/images/Netz_Defeaturing.excalidraw.png" alt="">
-    <span class="prakt-cbody">
-      <span class="prakt-ctitle">Netzeinstellungen</span>
-      <span class="prakt-cdesc">Defeaturing und Transition</span>
     </span>
   </a>
   <a class="prakt-card" href="02_ANSYS_Umsetzung/Uebung-3/">

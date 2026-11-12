@@ -3,15 +3,15 @@ hide:
  - toc
 ---
 
-# Wichtige Netzeinstellungen
+# Netzeinstellungen und Konvergenz
 
-Bisher haben wir nur die Elementgröße vorgegeben. Drei weitere Einstellungen sollten Sie kennen, weil sie das Netz verändern, auch wenn die Elementgröße gleich bleibt:
+Neben der Elementgröße sollten Sie drei weitere Einstellungen kennen, weil sie das Netz verändern, auch wenn die Elementgröße gleich bleibt:
 
 - `Defeature Size`: welche kleinen Details im Netz ankommen
 - `Transition`: wie schnell die Elemente vom feinen zum groben Bereich wachsen
 - `Inflation`: dünne Elementlagen an einer Oberfläche, zum Beispiel in einer Verrundung
 
-`Defeature Size` und `Transition` bleiben in den Übungen auf dem Standardwert, die Sollwerte gelten nur dafür. `Inflation` kommt dazu, wo die Spannung in einer Verrundung ausgewertet wird.
+`Defeature Size` und `Transition` bleiben in den Übungen auf dem Standardwert, die Sollwerte gelten nur dafür. `Inflation` kommt dazu, wo die Spannung in einer Verrundung ausgewertet wird. Am Ende der Seite steht, wie Sie prüfen, ob das Netz reicht.
 
 ## Defeaturing: kleine Details weglassen
 
@@ -64,6 +64,29 @@ Eine lokale Netzgröße auf einer Fläche legt nur fest, wie lang die Elemente a
     - Quadratische Elemente verwenden. Das ist in Mechanical der Standard für Volumenkörper.
     - In der Verrundung höchstens ein Viertel des Radius als Elementgröße (r/4), entlang der Oberfläche und in die Tiefe. So steht es in den [IIW-Empfehlungen für Schweißnähte](https://svv.cz/files/IIW182307FatigueRecomm20121017.pdf) (Abschnitt 2.2.4.2), die Regel gilt aber für jede Kerbe. Auf einem 90°-Bogen sind das mindestens 6 Elemente.
     - Die Tiefe mit `Inflation` festlegen.
-    - Die Faustregel liefert nur den Startwert. Ob das Netz reicht, zeigt die Konvergenzstudie: halbieren, bis sich die Spannung um weniger als 1&nbsp;% ändert.
+    - Die Faustregel liefert nur den Startwert. Ob das Netz reicht, zeigt die Konvergenzstudie, siehe [Konvergenz prüfen](#konvergenz-prufen) unten.
 
 Mehr dazu in der ANSYS-Hilfe: [Mesh Defeaturing](https://ansyshelp.ansys.com/public/Views/Secured/corp/v252/en/wb_msh/msh_auto_defeat.html), [Transition](https://ansyshelp.ansys.com/public/Views/Secured/corp/v252/en/wb_msh/msh_Trans.html) und [Inflation](https://ansyshelp.ansys.com/public/Views/Secured/corp/v252/en/wb_msh/ds_Inflation_Group.html).
+
+## Konvergenz prüfen
+
+<!-- ENTWURF 12.11.2026 (Felix): war die eigene Seite „Diskussion“, dann „Konvergenz prüfen“; jetzt Abschnitt dieser Seite.
+     Nur die Empfehlung (mindestens drei Netze, immer halbieren, letzte Änderung unter 1 %), Felix prüft die Formulierung. -->
+
+Ob das Netz an der Stelle reicht, an der Sie die Spannung auswerten, zeigt eine Netzstudie:
+
+- Mit **mindestens drei Netzen** rechnen und die Elementgröße dabei **jedes Mal halbieren**.
+- Wenn sich die Spannung beim letzten Halbieren um **weniger als 1&nbsp;%** ändert, gilt das Netz als konvergiert.
+- Wenn die Änderung beim Halbieren nicht kleiner wird, liegt wahrscheinlich eine **Singularität** vor. Dann den Ort prüfen (scharfe Kante, feste Einspannung, Punktlast) und dort nicht auswerten.
+
+**Warum mindestens drei Netze?** Zwei Netze reichen nicht: Ein großer Sprung kann auch von einem zu groben ersten Netz kommen, und ein kleiner Unterschied kann täuschen. Erst das dritte Netz zeigt, ob die Änderung kleiner wird.
+
+So sah das beim L-Profil aus (mit Inflation, global 3&nbsp;mm):
+
+| lokale Elementgröße | Spannung σ<sub>vM</sub> | Änderung zur vorigen Netzgröße |
+| ------------------:| -----------------------:| ------------------------------:|
+| 1&nbsp;mm          | 624,82&nbsp;MPa          |                                |
+| 0,5&nbsp;mm        | 601,92&nbsp;MPa          | −3,7&nbsp;%                    |
+| 0,25&nbsp;mm       | 597,67&nbsp;MPa          | <span style="color:green;">−0,7&nbsp;%</span> |
+
+Die Änderung wird kleiner und liegt beim letzten Halbieren unter 1&nbsp;%: Das Netz mit 0,25&nbsp;mm ist konvergiert.
