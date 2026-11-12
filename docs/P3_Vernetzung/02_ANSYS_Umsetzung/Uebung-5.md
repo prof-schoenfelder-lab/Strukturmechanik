@@ -48,7 +48,7 @@ Lagerung und Kraft sind im Archiv gesetzt, hier ändern Sie nichts.
      Satz zur Konvergenz und Bild Uebung-05-Konvergenz nachziehen (Generator bilder/P3_Uebung5_render.py im Vault).
      Ohne Inflation (Netzstudie 06.11., global 5 mm): 35,68, 43,36, 43,68 MPa; global 2,5 mm, lokal 0,075 mm: 46,246 MPa (Felix 12.11.),
      mit Inflation dort 48,693 MPa (Felix 11.11.); mit global 5 mm vernetzt ANSYS lokal 0,075 mm nicht.
-     Boundary der Inflation: die 8 Radiusflächen wie beim Sizing (angenommen, Felix bestätigt). -->
+     Boundary der Inflation: die Radiusflächen wie beim Sizing (Felix, 12.11.). -->
 
 ## Aufgabenstellung
 
