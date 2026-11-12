@@ -52,7 +52,7 @@ hide:
     <img class="prakt-cimg no-lightbox" src="02_ANSYS_Umsetzung/images/Netz_Defeaturing.excalidraw.png" alt="">
     <span class="prakt-cbody">
       <span class="prakt-ctitle">Netzeinstellungen und Konvergenz</span>
-      <span class="prakt-cdesc">Defeaturing, Transition, Inflation, Konvergenz prüfen</span>
+      <span class="prakt-cdesc">Method, Transition, Defeaturing, Inflation, Konvergenz</span>
     </span>
   </a>
   <a class="prakt-card" href="02_ANSYS_Umsetzung/Ergebnis_Tracking/">
