@@ -5,13 +5,34 @@ hide:
 
 # Netzeinstellungen und Konvergenz
 
-Neben der Elementgröße sollten Sie drei weitere Einstellungen kennen, weil sie das Netz verändern, auch wenn die Elementgröße gleich bleibt:
+Neben der Elementgröße sollten Sie vier weitere Einstellungen kennen, weil sie das Netz verändern, auch wenn die Elementgröße gleich bleibt:
 
+- `Method`: mit welcher Elementform ANSYS vernetzt, Tetraeder oder Hexaeder
 - `Defeature Size`: welche kleinen Details im Netz ankommen
 - `Transition`: wie schnell die Elemente vom feinen zum groben Bereich wachsen
 - `Inflation`: dünne Elementlagen an einer Oberfläche, zum Beispiel in einer Verrundung
 
-`Defeature Size` und `Transition` bleiben in den Übungen auf dem Standardwert, die Sollwerte gelten nur dafür. `Inflation` kommt dazu, wo die Spannung in einer Verrundung ausgewertet wird. Am Ende der Seite steht, wie Sie prüfen, ob das Netz reicht.
+`Method`, `Defeature Size` und `Transition` bleiben in den Übungen auf dem Standard, die Sollwerte gelten nur dafür. `Inflation` kommt dazu, wo die Spannung in einer Verrundung ausgewertet wird. Am Ende der Seite steht, wie Sie prüfen, ob das Netz reicht.
+
+## Method: Tetraeder oder Hexaeder
+
+<!-- ENTWURF 12.11.2026 (Felix): Method fehlte, vor allem Tetraeder, Sweep und MultiZone. Wann was, üben die Studierenden nicht.
+     Beleg L-Profil: Felix 10. und 12.11.2026, lokal 0,5 mm, ohne Inflation. -->
+
+**Was macht es?** `Method` legt fest, mit welcher Elementform ANSYS einen Körper vernetzt. Einfügen mit `Rechtsklick Strukturbaum Mesh → Insert → Method`, unter `Geometry` den Körper wählen.
+
+- `Automatic` (Standard): Lässt sich der Körper sweepen, vernetzt ANSYS mit Hexaedern, sonst mit Tetraedern.
+- `Tetrahedrons`: Tetraeder, passen auf jede Geometrie.
+- `Sweep`: Hexaeder entlang eines Weges, für Körper mit gleichbleibendem Querschnitt, etwa gezogene oder gedrehte Teile.
+- `MultiZone`: zerlegt einen Körper selbst in Bereiche, die sich sweepen lassen, und vernetzt diese mit Hexaedern.
+
+**Wann benutzt man es?** Wenn ANSYS einen Körper nicht vernetzt oder Sie die Elementform bewusst wählen wollen. Hexaeder brauchen für dieselbe Elementgröße weniger Knoten, Tetraeder gehen immer.
+
+**Worauf achten?**
+
+- Die Elementform ändert das Ergebnis, auch bei gleicher Elementgröße. Beim L-Profil mit lokal 0,5&nbsp;mm ohne Inflation: Hexaeder (Sweep) 584,68&nbsp;MPa, Tetraeder 595,19&nbsp;MPa.
+- Wenn eine Inflation am Körper liegt, vernetzt `Automatic` mit Tetraedern und Prismen.
+- Mehr zu den Elementformen auf der Seite [Elementtypen](../01_Grundlagen/Elementtypen.md).
 
 ## Defeaturing: kleine Details weglassen
 
