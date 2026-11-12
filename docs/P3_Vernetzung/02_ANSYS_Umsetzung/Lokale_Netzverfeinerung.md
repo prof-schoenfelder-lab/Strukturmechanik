@@ -76,7 +76,7 @@ Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wi
         <figcaption>Beide Netze mit lokal 0,5&nbsp;mm und Tetraedern, nur die Inflation ist verschieden. Rechts sind am Ende des Bogens die dünnen Lagen zu sehen.</figcaption>
     </figure>
 
-    **Wirkung:** Die Vernetzung in die Tiefe ist ebenso wichtig wie die auf der Oberfläche. Das verlangen auch die Richtlinien für Kerben, siehe die Faustregeln auf der Seite [Netzeinstellungen](Netzeinstellungen.md#inflation-dunne-lagen-an-der-verrundung).
+    **Wirkung:** Die Vernetzung in die Tiefe ist ebenso wichtig wie die auf der Oberfläche. Das verlangen auch die Richtlinien für Kerben, siehe die [Faustregeln für Verrundungen und Kerben](Netzeinstellungen.md#faustregeln-fur-spannungen-in-verrundungen-und-kerben).
 
 <!-- ENTWURF 12.11.2026: nach Felix nur Text, ohne Skizze. -->
 

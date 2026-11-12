@@ -86,13 +86,15 @@ Neben der Elementgröße sollten Sie vier weitere Einstellungen kennen, weil sie
 - Wenn Sie die Elementgröße auf der Fläche halbieren, werden auch die Lagen halb so dick. Für die Konvergenzstudie ändern Sie deshalb nur die Elementgröße im `Face Sizing`.
 - Mit Inflation vernetzt ANSYS den Körper mit Tetraedern und Prismen statt mit Hexaedern.
 
-!!! tip "Faustregeln für Spannungen in Verrundungen und Kerben"
-    - Quadratische Elemente verwenden. Das ist in Mechanical der Standard für Volumenkörper.
-    - In der Verrundung höchstens ein Viertel des Radius als Elementgröße (r/4), entlang der Oberfläche und in die Tiefe. So steht es in den [IIW-Empfehlungen für Schweißnähte](https://svv.cz/files/IIW182307FatigueRecomm20121017.pdf) (Abschnitt 2.2.4.2), die Regel gilt aber für jede Kerbe. Auf einem 90°-Bogen sind das mindestens 6 Elemente.
-    - Die Tiefe mit `Inflation` festlegen.
-    - Die Faustregel liefert nur den Startwert. Ob das Netz reicht, zeigt die Konvergenzstudie, siehe [Konvergenz prüfen](#konvergenz-prufen) unten.
-
 Mehr dazu in der ANSYS-Hilfe: [Mesh Defeaturing](https://ansyshelp.ansys.com/public/Views/Secured/corp/v252/en/wb_msh/msh_auto_defeat.html), [Transition](https://ansyshelp.ansys.com/public/Views/Secured/corp/v252/en/wb_msh/msh_Trans.html) und [Inflation](https://ansyshelp.ansys.com/public/Views/Secured/corp/v252/en/wb_msh/ds_Inflation_Group.html).
+
+## Faustregeln für Spannungen in Verrundungen und Kerben
+
+- Quadratische Elemente verwenden. Das ist in Mechanical der Standard für Volumenkörper.
+- In der Verrundung höchstens ein Viertel des Radius als Elementgröße (r/4), entlang der Oberfläche und in die Tiefe. So steht es in den [IIW-Empfehlungen für Schweißnähte](https://svv.cz/files/IIW182307FatigueRecomm20121017.pdf) (Abschnitt 2.2.4.2), die Regel gilt aber für jede Kerbe. Auf einem 90°-Bogen sind das mindestens 6 Elemente.
+- Die Tiefe mit `Inflation` festlegen.
+- Die Faustregel liefert nur den Startwert. Ob das Netz reicht, zeigt die Konvergenzstudie, siehe [Konvergenz prüfen](#konvergenz-prufen) unten.
+
 
 ## Konvergenz prüfen
 
