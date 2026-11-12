@@ -62,19 +62,19 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung)
 
 Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wieder auf 3&nbsp;mm</code> und anschließend nur die <code>Verrundung auf 1&nbsp;mm</code>. Dazu kommt eine <code>Inflation</code> auf der Verrundung.
 
-<!-- ENTWURF 10.11.2026 (Felix prüft): Die Wenn-dann-Sätze sind ein Vorschlag, Kernaussagen formuliert Felix. Bild:
-     ANSYS 2025 R2 von Felix, lokal 0,5 mm ohne und mit Inflation (bilder/P3_LProfil_ANSYS_Vergleich.py im Vault). -->
+<!-- ENTWURF 12.11.2026: Text nach Felix gekürzt. Bild: ANSYS 2025 R2 von Felix, lokal 0,5 mm ohne und mit Inflation
+     (bilder/P3_LProfil_ANSYS_Vergleich.py im Vault). -->
 
 ??? info "Warum Inflation?"
 
-    Eine lokale Netzgröße auf der Verrundung legt nur fest, wie lang die Elemente auf der Oberfläche sind. Wie tief sie in das Bauteil reichen, entscheidet ANSYS selbst, und das kann auf zwei Rechnern verschieden ausfallen.
+    - Ohne Inflation gilt die lokale Netzgröße nur auf der Oberfläche.
+    - Mit Inflation vernetzt ANSYS auch in die Tiefe feiner. Wie viele der eingestellten Lagen (`Maximum Layers`) es baut, entscheidet ANSYS selbst.
 
     <figure style="text-align:center;">
         <img src="../images/LProfil_Inflation_Netz.png" alt="ANSYS-Netz an der Verrundung bei lokal 0,5 mm: ohne Inflation Vierecke, die an der Ecke unregelmäßig in die Tiefe wachsen; mit Inflation Tetraeder und dünne Lagen entlang des Bogens" width="800">
     </figure>
 
-    - Wenn die Spannung an einer Verrundung ausgewertet wird, fällt sie in die Tiefe steil ab: beim L-Profil auf den ersten 0,5&nbsp;mm um rund ein Drittel. Dann hängt der Wert davon ab, wie dick die erste Elementlage ist.
-    - Wenn eine Inflation auf der Verrundung liegt, baut ANSYS dort dünne Elementlagen parallel zur Oberfläche. Dann bekommt jeder Rechner an der Verrundung dasselbe Netz und denselben Wert.
+    **Wirkung:** Die Vernetzung in die Tiefe ist ebenso wichtig wie die auf der Oberfläche. Das verlangen auch die Richtlinien für Kerben, siehe die Faustregeln auf der Seite [Netzeinstellungen](Netzeinstellungen.md#inflation-dunne-lagen-an-der-verrundung).
 
 <!-- ENTWURF 11.11.2026 (Felix' Idee, Felix prüft): Die Wenn-dann-Sätze sind ein Vorschlag. Skizze im Vault:
      bilder/P3_Vorgehen_excalidraw.py Netz_Global. Belege: Inbus als Sweep mit Hexaedern (Bild Inbus_2mm_einstellen),
