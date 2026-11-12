@@ -27,7 +27,7 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung)
 
 !!! failure "Wir haben nun zwei Probleme:"
 
-    - Die Spannung ist um etwa 36&nbsp;% gestiegen, was auf eine Singularität hindeutet. Diese befindet sich in der <code>unendlich scharfen</code> Kante.  
+    - Die Spannung ist um etwa 36&nbsp;% gestiegen. Das allein ist nur ein Hinweis, auch ein zu grobes Netz kann so springen. Entscheidend ist der Ort: Die maximale Spannung liegt in der <code>unendlich scharfen</code> Kante, also an einer Singularität.  
       <br>→  Dies können wir mit der <code>Kantenverrundung</code> lösen.
     - Durch die globale Netzgröße hat die <code>Rechnung sehr lange gedauert</code>.  
       <br>→  Dies können wir mit der <code>lokalen Netzverfeinerung</code> lösen.
