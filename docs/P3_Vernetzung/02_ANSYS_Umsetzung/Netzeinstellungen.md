@@ -15,20 +15,16 @@ Neben der Elementgröße sollten Sie drei weitere Einstellungen kennen, weil sie
 
 ## Defeaturing: kleine Details weglassen
 
-Beim Vernetzen entfernt ANSYS kleine Details, damit sie das Netz nicht unnötig fein machen. Die Geometrie bleibt dabei unverändert, nur das Netz übergeht das Detail.
+<!-- ENTWURF 12.11.2026: nach Felix gekürzt. -->
+
+Kleine Details wie winzige Flächen oder kurze Kanten, oft aus dem CAD-Import, erschweren die Vernetzung: Sie erzwingen sehr kleine Elemente oder lassen die Vernetzung scheitern. Mit Defeaturing übergeht das Netz alle Details, die nicht größer sind als die `Defeature Size`. Das ist standardmäßig aktiv, die `Defeature Size` richtet sich nach der Elementgröße.
 
 <figure style="text-align:center;">
   <img src="../images/Netz_Defeaturing.excalidraw.png" alt="Platte mit kleiner Nut: Ist die Defeature Size kleiner als die Nut, folgt das Netz der Nut. Ist sie größer, fehlt die Nut im Netz." width="800" class="no-lightbox">
 </figure>
 
-- Wenn ein Detail nicht größer ist als die `Defeature Size`, fehlt es im Netz.
-- Wenn `Detailfenster → Mesh Defeaturing` auf `Yes` steht, ist das aktiv. Das ist der Standard.
-- Wenn Sie die `Element Size` ändern, rechnet ANSYS die Standard-`Defeature Size` neu, denn sie hängt an der Elementgröße.
-- Wenn eine lokale Netzverfeinerung die Elementgröße verändert, kann ANSYS die `Defeature Size` anpassen und meldet das als Warnung. Das ist kein Fehler.
-- Wenn Sie unter `Detailfenster → Defeature Size` einen eigenen Wert eintragen, bleibt er fest, auch wenn sich die Elementgröße ändert.
-
-!!! warning "Netz an der Auswertestelle ansehen"
-    Wenn ein Radius im Netz fehlt, ist dort eine scharfe Kante und damit eine Singularität. Schauen Sie sich das Netz deshalb immer dort an, wo Sie die Spannung auswerten.
+- Das Netz ist dann nicht mehr genau das Bauteil. Das ist nur in Ordnung, wenn die weggelassenen Details für die Auswertung keine Rolle spielen.
+- Wenn ein Radius im Netz fehlt, ist dort eine scharfe Kante und damit eine Singularität. Schauen Sie sich das Netz deshalb immer dort an, wo Sie die Spannung auswerten.
 
 ## Transition: vom feinen zum groben Netz
 
