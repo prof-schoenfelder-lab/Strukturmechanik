@@ -45,7 +45,7 @@ Lagerung und Kraft sind im Archiv gesetzt, hier ändern Sie nichts.
 <!-- ENTWURF 12.11.2026 (Felix: „Ja, zum 16.11.“): Übung 5 mit Inflation wie das L-Profil.
      Sollwert 0,125 mm mit Inflation: 107,15 MPa (Felix 11.11., 1000 N, global 5 mm) mal 0,45 = 48,22 MPa.
      Mit Inflation bei global 5 mm und 450 N (Felix 12.11.): lokal 0,5 mm 38,028, 0,25 mm 46,891 MPa, also +23,3 % und +2,8 %.
-     Variante A (wartet auf Felix' OK): Frage nach dem Wert bei 0,125 mm, die Lösung nennt die 2,8 % und die Kontrollrechnung.
+     Felix 12.11.: Die Studierenden hören bei 0,125 mm auf, die Lösung nennt die 2,8 % und die Kontrollrechnung.
      Bild Uebung-05-Konvergenz: bilder/P3_Vorgehen_excalidraw.py Uebung-05-Konvergenz im Vault (KURS_REPO=…-entwurf).
      Ohne Inflation (Netzstudie 06.11., global 5 mm): 35,68, 43,36, 43,68 MPa; global 2,5 mm, lokal 0,075 mm: 46,246 MPa (Felix 12.11.),
      mit Inflation dort 48,693 MPa (Felix 11.11.); mit global 5 mm vernetzt ANSYS lokal 0,075 mm nicht.
@@ -102,7 +102,6 @@ Die von-Mises-Vergleichsspannung in der Schweißnaht zwischen Oberrohr und Steue
   </tr>
 </table>
 
-<!-- ENTWURF: Variante A, wartet auf Felix' OK. -->
 <p>Von 0,25&nbsp;mm auf 0,125&nbsp;mm ändert sich die Spannung noch um 2,8&nbsp;%. Nach der 1-%-Regel wäre noch einmal zu halbieren, mit global 5&nbsp;mm vernetzt ANSYS den Rahmen dann aber nicht mehr. Eine Kontrollrechnung mit global 2,5&nbsp;mm und lokal 0,075&nbsp;mm ergibt 48,69&nbsp;MPa, nur 1&nbsp;% mehr. Der Wert bei 0,125&nbsp;mm liegt also nah genug am konvergierten Wert.</p>
 
 <!-- ENTWURF: Absatz zur Inflation von Claude, Felix formuliert die Aussage. Werte: Felix 06., 11. und 12.11.2026. -->
