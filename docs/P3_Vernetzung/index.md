@@ -49,9 +49,9 @@ hide:
     </span>
   </a>
   <a class="prakt-card" href="02_ANSYS_Umsetzung/Diskussion/">
-    <img class="prakt-cimg no-lightbox" src="02_ANSYS_Umsetzung/images/Averaged_vs_NodalFraction.excalidraw.png" alt="">
+    <img class="prakt-cimg no-lightbox" src="01_Grundlagen/images/Netzverfeinerung.excalidraw.png" alt="">
     <span class="prakt-cbody">
-      <span class="prakt-ctitle">Diskussion</span>
+      <span class="prakt-ctitle">Konvergenz prüfen</span>
     </span>
   </a>
   <a class="prakt-card" href="02_ANSYS_Umsetzung/Ergebnis_Tracking/">

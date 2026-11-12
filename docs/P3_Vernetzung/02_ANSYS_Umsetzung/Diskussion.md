@@ -1,84 +1,31 @@
 ---
-icon: material/chat-question
+icon: material/check-circle-outline
 hide:
   - toc
 ---
 
-# Diskussion
+# Konvergenz prüfen
 
-Wir haben zu Beginn gelernt, dass bei einer `Sensitivitätsanalyse` die Netzgröße so lange (mindestens) halbiert wird, bis die Abweichung unter 1&nbsp;% liegt. Wenn wir uns dies jedoch für unser L-Profil-Beispiel anschauen, sehen wir, dass sich bereits nach der Verfeinerung von 3&nbsp;mm auf 1,5&nbsp;mm die Spannung nur um 0,04&nbsp;% ändert:
+<!-- ENTWURF 12.11.2026 (Felix): Die Seite hieß „Diskussion“ und zeigte die Reihe ohne Inflation mit Nodal Fraction.
+     Jetzt nur die Empfehlung: mindestens drei Netze, immer halbieren, letzte Änderung unter 1 %. Felix prüft die Formulierung.
+     Datei bleibt Diskussion.md, damit Adresse und Verweise gleich bleiben. -->
 
-<figure style="text-align:center;">
-    <img src="../images/Diskussion_2025R2.excalidraw.png" alt="Diskussion" width="700">
-</figure>
+Ob das Netz an der Stelle reicht, an der Sie die Spannung auswerten, zeigt eine Netzstudie:
 
-Somit ist **nicht nur die Netzgröße**, sondern auch der **Spannungssprung zwischen benachbarten Elementen** ein wichtiger Faktor. Dies kann man über den Wert `Nodal Fraction` in der `Display Option` des Spannungs-Plots ausgeben. 
+- Mit **mindestens drei Netzen** rechnen und die Elementgröße dabei **jedes Mal halbieren**.
+- Wenn sich die Spannung beim letzten Halbieren um **weniger als 1&nbsp;%** ändert, gilt das Netz als konvergiert.
+- Wenn die Änderung beim Halbieren nicht kleiner wird, liegt wahrscheinlich eine **Singularität** vor. Dann den Ort prüfen (scharfe Kante, feste Einspannung, Punktlast) und dort nicht auswerten.
 
-`Nodal Fraction` vergleicht an jedem Knoten die Spannungen der Elemente, die sich diesen Knoten teilen: größte Differenz geteilt durch den Mittelwert. Dieser Wert sollte im interessierenden Bereich **möglichst kleiner als 10&nbsp;%** sein.
+**Warum mindestens drei Netze?** Zwei Netze reichen nicht: Ein großer Sprung kann auch von einem zu groben ersten Netz kommen, und ein kleiner Unterschied kann täuschen. Erst das dritte Netz zeigt, ob die Änderung kleiner wird.
 
-<figure style="text-align:center;">
-    <img src="../images/DisplayOption.png" alt="Display Option" width="400">
-</figure>
+So sah das beim L-Profil aus (mit Inflation, global 3&nbsp;mm):
 
-??? info "Für Interessierte: Berechnung des Nodal-Fraction-Wertes (Klick auf den Pfeil rechts)"
-    
-    `Nodal Fraction` = `Nodal Difference` / `Nodal Average`
+| lokale Elementgröße | Spannung σ<sub>vM</sub> | Änderung zur vorigen Netzgröße |
+| ------------------:| -----------------------:| ------------------------------:|
+| 1&nbsp;mm          | 624,82&nbsp;MPa          |                                |
+| 0,5&nbsp;mm        | 601,92&nbsp;MPa          | −3,7&nbsp;%                    |
+| 0,25&nbsp;mm       | 597,67&nbsp;MPa          | <span style="color:green;">−0,7&nbsp;%</span> |
 
-    `Nodal Difference` = größte Differenz der ungemittelten Spannungen am Knoten:
+Die Änderung wird kleiner und liegt beim letzten Halbieren unter 1&nbsp;%: Das Netz mit 0,25&nbsp;mm ist konvergiert.
 
-    \[
-      \max(\sigma_1, \dots, \sigma_n) - \min(\sigma_1, \dots, \sigma_n)
-    \]
-
-    - \(\sigma_1, \dots, \sigma_n\): ungemittelte Spannungen am Knoten, je angrenzendem Element ein Wert
-    - \(n\): Anzahl der Elemente, die sich den Knoten teilen
-
-    `Nodal Average` = Mittelwert dieser Spannungen
-
-    <figure style="text-align:center;">
-        <img src="../images/Nodal_Fraction_Knoten.excalidraw.png" alt="Vier Elemente an einem Knoten mit 96, 104, 100 und 100 MPa: Nodal Difference 8 MPa, Nodal Average 100 MPa, Nodal Fraction 8 %" width="700">
-    </figure>
-
-
-Hier mal am Beispiel von 3&nbsp;mm und 0,25&nbsp;mm die normalen Spannungswerte (DisplayOption: averaged) und die Nodal Fraction:
-
-<figure style="text-align:center;">
-    <img src="../images/Averaged_ohneWerte.excalidraw.png" alt="Averaged vs NodalFraction" width="1100">
-</figure>
-
-Hier nun alle Werte für unser Beispiel, gerechnet **ohne Inflation** (global 3&nbsp;mm, lokale Elementgröße auf der Verrundung):
-
-<!-- ENTWURF 10.11.2026: Reihe ohne Inflation bleibt als Beispiel für die beiden Kriterien. Später durch die Reihe mit
-     Inflation samt Nodal Fraction ersetzen (Werte von Felix). -->
-
-| Elementgröße [mm] | Spannung σ<sub>vM</sub> [MPa] | Änderung zur vorigen Netzgröße                                       | max. Nodal Fraction                             | Konvergenz?                                      |
-| -----------------:| -----------------------------:| ---------------------------------------------------------------------:| -----------------------------------------------:|:------------------------------------------------|
-| 3                 | 547,3                         |                                                                       | <span style="color:red;">31&nbsp;%</span>       | <span style="color:red;">Nein</span>            |
-| 1,5               | 547,5                         | <span style="color:green;">+0,04&nbsp;%</span>                       | <span style="color:red;">13&nbsp;%</span>       | <span style="color:red;">Nein</span>            |
-| 0,5               | 584,7                         | <span style="color:red;">+6,8&nbsp;%</span>                          | <span style="color:green;">6&nbsp;%</span>      | <span style="color:red;">Nein</span>            |
-| 0,25              | 595,8                         | <span style="color:red;">+1,9&nbsp;%</span>                          | <span style="color:green;">3&nbsp;%</span>      | <span style="color:red;">Nein</span>            |
-| 0,125             | 599,6                         | <span style="color:green;">+0,6&nbsp;%</span>                        | <span style="color:green;">4&nbsp;%</span>      | <span style="color:green;">Ja</span>            |
-
-!!! important "Wichtig"
-
-    Bei 0,5 mm und 0,25 mm liegt die Nodal Fraction bereits unter 10 %,
-    die Spannung ändert sich aber noch um mehr als 1 %.
-    Erst bei 0,125 mm sind beide Kriterien erfüllt.
-    Wenn nur eines der beiden Kriterien geprüft wird,
-    kann das Netz also noch zu grob sein.
-
-!!! note "Mit Inflation geht es schneller"
-
-    In der Übung auf der Seite [Lokale Netzverfeinerung](Lokale_Netzverfeinerung.md) liegt zusätzlich eine `Inflation` auf der Verrundung. Damit ändert sich die Spannung schon von 0,5&nbsp;mm auf 0,25&nbsp;mm nur noch um 0,7&nbsp;%, und die Werte hängen kaum davon ab, wie ANSYS das Netz im Einzelnen legt. Warum, steht auf der Seite [Netzeinstellungen](Netzeinstellungen.md).
-
-
-!!! info "Vereinfacht kann man auch sagen:"
-
-    Wenn sich der rote Bereich der Spannung über mehrere Elemente erstreckt, ist der Spannungsgradient im Element meist klein genug.
-
-    Die Darstellung der Elemente im Spannungsplot kann man einstellen, wenn im `Strukturbaum` ein Ergebnis ausgewählt ist: `Reiter Result → Edges → Show Elements`
-
-    <figure style="text-align:center;">
-        <img src="../images/Show_Elements.png" alt="Averaged vs NodalFraction" width="800">
-    </figure>
- 
+Wie Sie das Netz in Verrundungen und Kerben einstellen (Elementgröße, Inflation), steht auf der Seite [Netzeinstellungen](Netzeinstellungen.md).

@@ -228,7 +228,7 @@ nav:
               - Umsetzung in ANSYS:
                       - Globale Netzverfeinerung: P3_Vernetzung/02_ANSYS_Umsetzung/Globale_Netzverfeinerung.md
                       - Lokale Netzverfeinerung: P3_Vernetzung/02_ANSYS_Umsetzung/Lokale_Netzverfeinerung.md
-                      - Diskussion: P3_Vernetzung/02_ANSYS_Umsetzung/Diskussion.md
+                      - Konvergenz prüfen: P3_Vernetzung/02_ANSYS_Umsetzung/Diskussion.md
                       - Ergebnis-Tracking: P3_Vernetzung/02_ANSYS_Umsetzung/Ergebnis_Tracking.md
                       - Netzeinstellungen: P3_Vernetzung/02_ANSYS_Umsetzung/Netzeinstellungen.md
                       - Übung 3: P3_Vernetzung/02_ANSYS_Umsetzung/Uebung-3.md
