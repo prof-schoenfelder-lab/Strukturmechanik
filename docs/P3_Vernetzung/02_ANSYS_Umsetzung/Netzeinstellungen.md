@@ -15,46 +15,55 @@ Neben der Elementgröße sollten Sie drei weitere Einstellungen kennen, weil sie
 
 ## Defeaturing: kleine Details weglassen
 
-<!-- ENTWURF 12.11.2026: nach Felix gekürzt. -->
+<!-- ENTWURF 12.11.2026: nach Felix gekürzt und je Einstellung gegliedert: Was macht es? Wann benutzt man es? Worauf achten? -->
 
-Kleine Details wie winzige Flächen oder kurze Kanten, oft aus dem CAD-Import, erschweren die Vernetzung: Sie erzwingen sehr kleine Elemente oder lassen die Vernetzung scheitern. Mit Defeaturing übergeht das Netz alle Details, die nicht größer sind als die `Defeature Size`. Das ist standardmäßig aktiv, die `Defeature Size` richtet sich nach der Elementgröße.
+**Was macht es?** Das Netz übergeht alle Details, die nicht größer sind als die `Defeature Size`. Die Geometrie bleibt unverändert, nur das Netz bildet das Detail nicht ab. Das ist standardmäßig aktiv, die `Defeature Size` richtet sich nach der Elementgröße.
 
 <figure style="text-align:center;">
   <img src="../images/Netz_Defeaturing.excalidraw.png" alt="Platte mit kleiner Nut: Ist die Defeature Size kleiner als die Nut, folgt das Netz der Nut. Ist sie größer, fehlt die Nut im Netz." width="800" class="no-lightbox">
 </figure>
+
+**Wann benutzt man es?** Wenn kleine Details wie winzige Flächen oder kurze Kanten, oft aus dem CAD-Import, sehr kleine Elemente erzwingen oder die Vernetzung scheitern lassen.
+
+**Worauf achten?**
 
 - Das Netz ist dann nicht mehr genau das Bauteil. Das ist nur in Ordnung, wenn die weggelassenen Details für die Auswertung keine Rolle spielen.
 - Wenn ein Radius im Netz fehlt, ist dort eine scharfe Kante und damit eine Singularität. Schauen Sie sich das Netz deshalb immer dort an, wo Sie die Spannung auswerten.
 
 ## Transition: vom feinen zum groben Netz
 
-Nach einer lokalen Netzverfeinerung wachsen die Elemente wieder auf die globale Größe an. Wie schnell das geht, legt `Detailfenster → Transition` fest.
+**Was macht es?** Nach einer lokalen Netzverfeinerung wachsen die Elemente wieder auf die globale Größe an. `Detailfenster → Transition` legt fest, wie schnell: Mit `Fast` (Standard) wird bei Volumenkörpern jede Elementlage rund 1,85-mal so lang wie die vorige, mit `Slow` wachsen die Elemente langsamer.
 
 <figure style="text-align:center;">
   <img src="../images/Netz_Transition.excalidraw.png" alt="Elementlagen vom feinen zum groben Bereich: Mit Fast ist die globale Größe nach wenigen Lagen erreicht, mit Slow nach deutlich mehr Lagen." width="800" class="no-lightbox">
 </figure>
 
-- `Fast` ist der Standard: Bei Volumenkörpern wird jede Elementlage rund 1,85-mal so lang wie die vorige (`Growth Rate`).
-- `Slow`: Die Elemente wachsen langsamer. Das Netz bekommt mehr Elemente und rechnet länger.
-- Wenn sich die Spannung direkt neben der lokalen Verfeinerung noch stark ändert, kann der Übergang mit `Fast` zu abrupt sein. Dann helfen `Slow` oder ein größerer verfeinerter Bereich.
+**Wann benutzt man es?** Wenn sich die Spannung direkt neben der lokalen Verfeinerung noch stark ändert, kann der Übergang mit `Fast` zu abrupt sein. Dann helfen `Slow` oder ein größerer verfeinerter Bereich.
+
+**Worauf achten?**
+
+- Mit `Slow` bekommt das Netz mehr Elemente und rechnet länger.
 - `Transition` wirkt nur, wenn `Detailfenster → Use Adaptive Sizing` auf `Yes` steht. Das ist der Standard.
 
 ## Inflation: dünne Lagen an der Verrundung
 
-<!-- ENTWURF 10.11.2026 (Felix prüft). ANSYS-Bildpaar ohne und mit Inflation am 12.11. entfernt (wirkte wie zwei Netzgrößen).
+<!-- ENTWURF 10.11.2026 (Felix prüft), am 12.11. gegliedert wie die anderen Einstellungen. ANSYS-Bildpaar ohne und mit Inflation am 12.11. entfernt.
      Skizze (11.11.2026): bilder/P3_Vorgehen_excalidraw.py Netz_Inflation im Vault. -->
 
-Eine lokale Netzgröße auf einer Fläche legt nur fest, wie lang die Elemente auf der Oberfläche sind. Wie tief sie in das Bauteil reichen, entscheidet ANSYS selbst. In einer Verrundung fällt die Spannung in die Tiefe aber steil ab, beim L-Profil auf den ersten 0,5&nbsp;mm um rund ein Drittel. `Inflation` legt dort dünne Elementlagen parallel zur Oberfläche.
+**Was macht es?** Eine lokale Netzgröße auf einer Fläche legt nur fest, wie lang die Elemente auf der Oberfläche sind. Wie tief sie reichen, entscheidet ANSYS. `Inflation` legt zusätzlich dünne Elementlagen parallel zur Oberfläche und damit die Elementgröße in die Tiefe fest.
 
 <figure style="text-align:center;">
   <img src="../images/Netz_Inflation.excalidraw.png" alt="Schnitt durch die Verrundung, schematisch: Mit Face Sizing ist nur die Elementlänge h auf der Oberfläche fest, die erste Elementlage reicht mal flach, mal tief. Mit Inflation liegen fünf dünne Lagen parallel zur Oberfläche, zusammen etwa h dick, die dünnste an der Oberfläche." width="800" class="no-lightbox">
 </figure>
 
-- Einfügen mit `Rechtsklick Strukturbaum Mesh → Insert → Inflation`: unter `Geometry` der Körper, unter `Boundary` die Fläche der Verrundung.
-- Wenn unter `Geometry` eine Fläche statt des Körpers steht, lassen sich bei `Boundary` nur Kanten wählen. Dann zuerst den Körper auswählen.
-- Wenn `Inflation Option` auf `Smooth Transition` steht (Standard), richtet sich die Dicke der Lagen nach der Elementgröße auf der Fläche. Die Lage an der Oberfläche ist die dünnste, jede weitere ist 1,2-mal so dick wie die vorige (`Growth Rate`). Die letzte Lage, an die die Tetraeder anschließen, ist 0,272-mal so dick wie eine Elementkante (`Transition Ratio`). Die 5 Lagen (`Maximum Layers`) sind zusammen etwa so dick wie eine Elementkante.
+**Wann benutzt man es?** Wenn die Spannung in einer Verrundung oder Kerbe ausgewertet wird. Dort fällt sie in die Tiefe steil ab, beim L-Profil auf den ersten 0,5&nbsp;mm um rund ein Drittel.
+
+**Worauf achten?**
+
+- Einfügen mit `Rechtsklick Strukturbaum Mesh → Insert → Inflation`: unter `Geometry` der Körper, unter `Boundary` die Fläche der Verrundung. Steht unter `Geometry` eine Fläche statt des Körpers, lassen sich bei `Boundary` nur Kanten wählen.
+- Die Standardwerte lassen (`Smooth Transition`, 5 Lagen, `Growth Rate` 1,2). Dann sind die Lagen zusammen etwa so dick wie eine Elementkante, die dünnste liegt an der Oberfläche.
 - Wenn Sie die Elementgröße auf der Fläche halbieren, werden auch die Lagen halb so dick. Für die Konvergenzstudie ändern Sie deshalb nur die Elementgröße im `Face Sizing`.
-- Wenn eine Inflation am Körper liegt, vernetzt ANSYS ihn mit Tetraedern und Prismen statt mit Hexaedern.
+- Mit Inflation vernetzt ANSYS den Körper mit Tetraedern und Prismen statt mit Hexaedern.
 
 !!! tip "Faustregeln für Spannungen in Verrundungen und Kerben"
     - Quadratische Elemente verwenden. Das ist in Mechanical der Standard für Volumenkörper.
