@@ -62,12 +62,19 @@ Es ist das gesamte Projektarchiv gegeben (Material,Geometrie,Netz und Belastung)
 
 Bei der lokalen Netzverfeinerung stellen wir zunächst das <code>globale Netz wieder auf 3&nbsp;mm</code> und anschließend nur die <code>Verrundung auf 1&nbsp;mm</code>. Dazu kommt eine <code>Inflation</code> auf der Verrundung.
 
-<!-- ENTWURF 12.11.2026: Text nach Felix gekürzt, ohne Bild (das ANSYS-Bildpaar wirkte wie zwei verschiedene Netzgrößen). -->
+<!-- ENTWURF 12.11.2026: Text nach Felix gekürzt. Bild nach Felix: Spannung bei lokal 0,5 mm, beide Netze aus Tetraedern
+     (ohne Inflation 595,19, mit 601,92 MPa); das alte Bildpaar Hexaeder gegen Tetraeder wirkte wie zwei Netzgrößen.
+     Generator: bilder/P3_LProfil_ANSYS_Vergleich.py tetraeder im Vault. -->
 
 ??? info "Warum Inflation?"
 
     - Ohne Inflation gilt die lokale Netzgröße nur auf der Oberfläche.
     - Mit Inflation vernetzt ANSYS auch in die Tiefe feiner. Wie viele der eingestellten Lagen (`Maximum Layers`) es baut, entscheidet ANSYS selbst.
+
+    <figure style="text-align:center;">
+        <img src="../images/LProfil_Inflation_Tetraeder.png" alt="Spannung an der Verrundung des L-Profils bei lokal 0,5 mm, beide Netze aus Tetraedern: links ohne Inflation, rechts mit Inflation, dort liegen am Ende des Bogens dünne Lagen parallel zur Oberfläche" width="800">
+        <figcaption>Beide Netze mit lokal 0,5&nbsp;mm und Tetraedern, nur die Inflation ist verschieden. Rechts sind am Ende des Bogens die dünnen Lagen zu sehen.</figcaption>
+    </figure>
 
     **Wirkung:** Die Vernetzung in die Tiefe ist ebenso wichtig wie die auf der Oberfläche. Das verlangen auch die Richtlinien für Kerben, siehe die Faustregeln auf der Seite [Netzeinstellungen](Netzeinstellungen.md#inflation-dunne-lagen-an-der-verrundung).
 
