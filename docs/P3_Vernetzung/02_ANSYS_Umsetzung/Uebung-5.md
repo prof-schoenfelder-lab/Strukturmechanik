@@ -40,7 +40,7 @@ Lagerung und Kraft sind im Archiv gesetzt, hier ändern Sie nichts.
 
 - Am Rahmen wechseln Breite und Form der Naht. Im Modell steht deshalb eine gleichmäßige Fase von 7 mm, das ergibt die am Rahmen gemessene Breite von rund 10 mm.
 - Wenn am Übergang zwischen Fase und Rohr kein Radius modelliert ist, entsteht dort eine scharfe Kante und damit eine Singularität. Deshalb sitzt an beiden Übergängen ein Radius von 1 mm.
-- Fase und Radius lehnen sich an die [IIW-Empfehlungen für Schweißnähte](https://svv.cz/files/IIW182307FatigueRecomm20121017.pdf) an. Dort ist der Radius erst ab 5 mm Wanddicke vorgesehen, hier ist die Wand 1,8 mm dick. Für diese Netzstudie ist das eine Modellannahme, die Spannung ist kein Festigkeitsnachweis.
+- Fase und Radius lehnen sich an die [IIW-Empfehlungen für Schweißnähte](https://doi.org/10.1007/978-3-319-23757-2) an. Dort ist der Radius erst ab 5 mm Wanddicke vorgesehen, hier ist die Wand 1,8 mm dick. Für diese Netzstudie ist das eine Modellannahme, die Spannung ist kein Festigkeitsnachweis.
 
 <!-- ENTWURF 12.11.2026 (Felix: „Ja, zum 16.11.“): Übung 5 mit Inflation wie das L-Profil.
      Sollwert 0,125 mm mit Inflation: 107,15 MPa (Felix 11.11., 1000 N, global 5 mm) mal 0,45 = 48,22 MPa.

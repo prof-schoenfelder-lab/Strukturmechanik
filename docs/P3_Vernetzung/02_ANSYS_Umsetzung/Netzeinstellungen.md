@@ -102,7 +102,7 @@ Mehr dazu in der ANSYS-Hilfe: [Transition](https://ansyshelp.ansys.com/public/Vi
 ## Faustregeln für Spannungen in Verrundungen und Kerben
 
 - In der Verrundung höchstens ein Viertel des Radius als Elementgröße (r/4), entlang der Oberfläche und in die Tiefe. Auf einem 90°-Bogen sind das mindestens 7 Elemente.
-- Diese Regel steht in den [IIW-Empfehlungen für Schweißnähte](https://svv.cz/files/IIW182307FatigueRecomm20121017.pdf) (Abschnitt 2.2.4.2) und lässt sich auf andere Kerben übertragen.
+- Diese Regel steht in den [IIW-Empfehlungen für Schweißnähte](https://doi.org/10.1007/978-3-319-23757-2) (Hobbacher, Springer 2016, Abschnitt 2.2.4) und lässt sich auf andere Kerben übertragen.
 - Die Tiefe mit `Inflation` festlegen.
 - Die Faustregel liefert nur den Startwert. Ob das Netz reicht, zeigt erst die Konvergenzstudie.
 
