@@ -149,10 +149,11 @@ extra:
               bild: P4_Abstraktionen/Praktikum04.excalidraw.png
               link: P4_Abstraktionen/
               knackpunkt:
-                    teil: teil-1
-                    name: Kragarm (Praktikum 4)
+                    # Halbmodell mit Symmetrie-Lager, braucht Knackpunkt ab 0.15.0 auf GitHub Pages (SM-40)
+                    teil: bau-2f6._______________.lB001sRe06.T05f63h
+                    name: Balken als Halbmodell (Praktikum 4)
                     text:
-                          - "Zum Schluss der Klassiker unter den Balken: der Kragarm, links eingespannt, rechts belastet. Nehmen Sie so viel Material weg wie möglich, ohne dass er versagt."
+                          - "Der Balken aus dem Zwischenspiel noch einmal, jetzt als Halbmodell: Rechts liegt die Symmetrieebene. Das Symmetrie-Lager hält die Schnittkante nur waagerecht, also senkrecht zur Ebene; entlang der Ebene darf sie gleiten. Links genügt deshalb ein Loslager, und die Last ist halbiert: 12,5 kN auf 150 mm. Was Sie wegnehmen, gilt gespiegelt für den ganzen Balken. Schaffen Sie mehr als im Zwischenspiel?"
                           - "Wer alle vier Praktika abgeschlossen hat, schaltet das ganze Spiel frei: Zufallsbauteile, Baukasten, Herausforderungen und Wettkämpfe. Der Knopf dazu erscheint auf der Startseite des Kurses."
 # Lenker-Übung aus P2 vorerst raus (Felix, 26.10.2026); Datei bleibt für eine spätere Fassung
 exclude_docs: |

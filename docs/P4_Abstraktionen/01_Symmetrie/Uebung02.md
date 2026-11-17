@@ -100,3 +100,8 @@ Um eine Symmetrie zu verwenden, müssen bei der Spiegelung um diese Symmetrieebe
 
 <div class="numeric-question" data-answer="3.3462" data-tolerance="0.1" data-points="5" data-attempts="5"  data-hints="Symmetrie in y-z Ebene? Kraft halbiert? Netzgröße 5 mm eingestellt?" data-diagnose="1.171: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt Aluminium (E = 70 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
 </div>
+
+<div class="zwischenspiel" data-seite="/P4_Abstraktionen/01_Symmetrie/Uebung01,/P4_Abstraktionen/01_Symmetrie/Uebung02" data-voraussetzung="Übung 1 und 2" data-name="Balken mit Streckenlast (Übung 1)" data-teil="bau-2u6.______________________________.fB001lBt01.T05u66y">
+<h2>Zwischenspiel: Knackpunkt</h2>
+<p>Der Balken aus Übung 1: Festlager links, Loslager rechts, die Last gleichmäßig auf der ganzen Oberseite. Im Spiel ist er 300 mm lang und 60 mm hoch, eine 10 mm dicke Platte aus Stahl S235, belastet mit 25 kN. Nehmen Sie so viel Material weg wie möglich, ohne dass er versagt. Das Spiel rechnet übrigens selbst mit einer Abstraktion: 2D im ebenen Spannungszustand mit 10 mm Dicke, das ist das nächste Thema. Merken Sie sich Ihr Ergebnis: Am Ende des Praktikums kommt derselbe Balken als Halbmodell.</p>
+</div>
