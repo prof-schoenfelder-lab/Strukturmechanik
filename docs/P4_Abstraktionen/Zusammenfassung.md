@@ -20,6 +20,10 @@ Hier noch mal die wichtigsten Kernaussagen des vierten Praktikums:
   <div class="step">
     <p class="step-title" role="heading" aria-level="2">Symmetrie</p>
     <p>Sind Geometrie und Randbedingungen (Lager und Lasten) symmetrisch, immer die Symmetrie nutzen und nur ein Halb- oder Viertelmodell rechnen.</p>
+    <p><strong>1. Geometrie:</strong> nur den Teil bis zur Symmetrieebene zeichnen, oder ein vorhandenes Bauteil in SpaceClaim mit <code>Split Body</code> an der Ebene teilen.</p>
+    <p><strong>2. Mechanical:</strong> Symmetrie anlegen, <code>Rechtsklick Strukturbaum Model → Insert → Symmetry</code>, dann die Schnittfläche wählen und <code>Rechtsklick Strukturbaum Symmetry → Insert → Symmetry Region</code>. Unter <code>Detailfenster → Symmetry Normal</code> die Achse senkrecht zur Schnittfläche wählen.</p>
+    <p><strong>3. Lasten:</strong> Kräfte auf geteilten Flächen anteilig eintragen, im Halbmodell F/2, im Viertelmodell F/4. Drücke bleiben gleich.</p>
+    <p><strong>4. Lager:</strong> Die Symmetrie hält das Modell senkrecht zur Schnittfläche. Ein Festlager, das nur Starrkörperbewegungen verhindert, wird im Halbmodell deshalb zum Loslager.</p>
   </div>
 
   <div class="step">
