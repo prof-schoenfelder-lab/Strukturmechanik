@@ -49,23 +49,29 @@ Kreisförmige Scheibe
 ## Hinweise
 
 
-??? tip "<code>HINWEIS</code> – Geometrie (klicken zum aufklappen)"
+??? tip "<code>HINWEIS</code>: Geometrie (klicken zum aufklappen)"
 
     --8<-- "P4_Abstraktionen/03_Rotationssymmetrie/Umsetzung.md:Geometrie"
 
-??? tip "<code>HINWEIS</code> – Workbench Projektmenü Einstellungen (klicken zum aufklappen)"
+??? tip "<code>HINWEIS</code>: Workbench Projektmenü Einstellungen (klicken zum aufklappen)"
 
     --8<-- "P4_Abstraktionen/03_Rotationssymmetrie/Umsetzung.md:WBProjektmenue"
 
-??? tip "<code>HINWEIS</code> – Mechanical-Einstellungen (klicken zum aufklappen)"
+??? tip "<code>HINWEIS</code>: Mechanical-Einstellungen (klicken zum aufklappen)"
 
     --8<-- "P4_Abstraktionen/03_Rotationssymmetrie/Umsetzung.md:Mechanical"
 
-??? tip "<code>HINWEIS</code> – Randbedingungen (klicken zum aufklappen)"
+??? tip "<code>HINWEIS</code>: Randbedingungen (klicken zum aufklappen)"
 
     --8<-- "P4_Abstraktionen/03_Rotationssymmetrie/Umsetzung.md:Randbedingungen"
 
-??? tip "<code>HINWEIS</code> 1. Hauptspannung (klicken zum aufklappen)"
+??? tip "<code>HINWEIS</code>: Last und Lager setzen (klicken zum aufklappen)"
+
+    - Last und Lager brauchen Punkte auf den Kanten: die Kontur gleich mit Punkten bei x = 1 mm (oben, Ende der Lastfläche) und x = 30 mm (unten, Auflagerring) zeichnen.
+    - Die Kraft für den ganzen Umfang eintragen (1000 N), nicht anteilig.
+    - Loslager am Ring: nur die y-Richtung sperren (`Displacement`, y = 0), x bleibt frei.
+
+??? tip "<code>HINWEIS</code>: 1. Hauptspannung (klicken zum aufklappen)"
 
     Die erste Hauptspannung befindet sich unter `Stress` > `Maximum Principal Stress`
 
@@ -97,8 +103,8 @@ Die folgenden Größen berechnen:
 </figure>
 
 <figure style="text-align:center;">
-  <img src="../images/Uebung03_sigmamax.png" alt="maximale Vergleichsspannung" width="900">
-  <figcaption>Maximale Vergleichsspannung</figcaption>
+  <img src="../images/Uebung03_sigmamax.png" alt="maximale 1. Hauptspannung" width="900">
+  <figcaption>Maximale 1. Hauptspannung</figcaption>
 </figure>
 
 </div>

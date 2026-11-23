@@ -22,4 +22,4 @@ Wichtig ist:
 
 Sind diese Bedingungen erfüllt, beschreibt das achsensymmetrische 2D-Modell das reale 3D-Problem **ohne nennenswerten Genauigkeitsverlust**, spart aber sehr viel Rechenzeit.
 
-Nicht geeignet ist die Rotationssymmetrie hingegen für nicht-rotationssymmetrische Effekte, z. B. lokale Einzellasten, Kerben oder Bohrungen, die nur an einer Stelle des Umfangs auftreten.
+Nicht geeignet ist die Rotationssymmetrie hingegen für nicht-rotationssymmetrische Effekte, z. B. Einzellasten neben der Achse, Kerben oder Bohrungen, die nur an einer Stelle des Umfangs auftreten.

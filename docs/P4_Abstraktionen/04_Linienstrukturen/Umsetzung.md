@@ -78,7 +78,7 @@ In Mechanical `Strukturbaum → Mesh` auswählen und in der Menüleiste oben `Re
 Im Netz werden die BEAM-Elemente dann mit ihrem Querschnitt dargestellt (statt nur als Linie).
 <!-- --8<-- [end:Elementdarstellung] -->
 
-## Ergebnisdarstellung (nur optisch, aber empfohlen)
+## Ergebnisdarstellung (für die gefragte Spannung einschalten)
 
 <!-- --8<-- [start:Ergebnisdarstellung] -->
 In Mechanical `Strukturbaum → Solution` auswählen und `Detailfenster → Beam Section Results: Yes` einstellen.
@@ -87,7 +87,7 @@ In Mechanical `Strukturbaum → Solution` auswählen und `Detailfenster → Beam
     <img src="../images/Mechanical3.png" alt="Beam Section Results" width="400">
 </figure>
 
-Die Ergebnisse werden dann auf den Querschnitt gemappt (für Standardprofile), wodurch die Ergebnisdarstellung den bisherigen 3D-Analysen ähnlicher wird.
+Die Ergebnisse werden dann auf den Querschnitt gemappt (für Standardprofile), wodurch die Ergebnisdarstellung den bisherigen 3D-Analysen ähnlicher wird. Die Lösung der Übung ist mit dieser Einstellung gerechnet.
 <!-- --8<-- [end:Ergebnisdarstellung] -->
 
 ## Randbedingungen

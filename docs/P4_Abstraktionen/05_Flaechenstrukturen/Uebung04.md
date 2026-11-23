@@ -25,9 +25,9 @@ multikristallines Silizium
 
 - Elastizitätsmodul: \(E = 163\,\mathrm{GPa}\)
 - Querkontraktionszahl: \(\nu = 0{,}22\)
-- Dichte: \(\rho = 2329 \frac{kg}{m^3}\)
+- Dichte: \(\rho = 2329\,\mathrm{kg/m^3}\)
 
-## Symmetrie
+### Symmetrie
 
 - Eine Viertelsymmetrie verwenden
 
@@ -35,6 +35,7 @@ multikristallines Silizium
 
 - Wafergrundfläche: \(156\,\mathrm{mm}\) x \(156\,\mathrm{mm}\)
 - Waferdicke: \(0{,}1\,\mathrm{mm}\)
+- Lage: in der x-y-Ebene, das Eigengewicht wirkt in negativer z-Richtung
 
 ### Vernetzung
 
@@ -53,19 +54,24 @@ multikristallines Silizium
 
 ## Aufgabenstellung
 
-!!! abstract "Die Aufgabe mit der 2D-Abstraktion mit SHELL-Elementen und voller Ausnutzung jeglicher Symmetrien lösen"
+!!! abstract "Die Aufgabe mit der 2D-Abstraktion mit SHELL-Elementen und Viertelsymmetrie lösen"
 
 ## Hinweise
 
-??? tip "<code>HINWEIS</code> – Flächen erstellen (klicken zum Aufklappen)"
+??? tip "<code>HINWEIS</code>: Flächen erstellen (klicken zum Aufklappen)"
 
     --8<-- "P4_Abstraktionen/05_Flaechenstrukturen/Umsetzung.md:Flaechen_erstellen"
 
-??? tip "<code>HINWEIS</code> – Dicke einstellen (klicken zum Aufklappen)"
+??? tip "<code>HINWEIS</code>: Dicke einstellen (klicken zum Aufklappen)"
 
     --8<-- "P4_Abstraktionen/05_Flaechenstrukturen/Umsetzung.md:Dicke_einstellen"
 
-??? tip "<code>HINWEIS</code> – Elementdarstellung (klicken zum Aufklappen)"
+??? tip "<code>HINWEIS</code>: Symmetrie und Lager bei Schalen (klicken zum Aufklappen)"
+
+    - Symmetrie: `Symmetry Region` auf die zwei Schnittkanten des Viertels. Bei Schalen sperrt sie dabei auch Drehungen.
+    - Lager: Die beiden Kantenmitten sind Ecken des Viertels. Dort nur die Verschiebung senkrecht zur Platte sperren (`Displacement`, z = 0), den Rest übernimmt die Symmetrie.
+
+??? tip "<code>HINWEIS</code>: Elementdarstellung (klicken zum Aufklappen)"
 
     --8<-- "P4_Abstraktionen/05_Flaechenstrukturen/Umsetzung.md:Elementdarstellung"
 

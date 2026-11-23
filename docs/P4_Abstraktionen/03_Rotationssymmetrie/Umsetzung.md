@@ -20,10 +20,12 @@ In `SpaceClaim` eine Skizze in der `x-y`-Ebene zeichnen:
 
 !!! danger "Die Rotationsachse muss immer die y-Achse sein"
 
-    Für ein achsensymmetrisches Modell in Ansys gilt:  
-    - x-Richtung = Radius  
-    - y-Richtung = Achse der Rotation  
-    Die Skizze wird also im x-y-Schnitt gezeichnet und um die y-Achse „gedreht“.
+    Für ein achsensymmetrisches Modell in ANSYS gilt:
+
+    - x-Richtung = Radius
+    - y-Richtung = Achse der Rotation
+
+    Die Skizze wird also im x-y-Schnitt gezeichnet und um die y-Achse „gedreht“. Sie muss ganz rechts der y-Achse liegen (x ≥ 0).
 
 Darauf achten, dass die Skizze beendet wird und im `Strukturbaum` der Eintrag `Surface` erscheint.
 

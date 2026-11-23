@@ -5,7 +5,7 @@ hide:
 
 # Zweiseitig gelagerter Balken mit Flächenlast
 
-Wieder unser bekanntes Beispiel – diesmal in 1D-Abstraktion mit `BEAM`-Elementen:
+Wieder unser bekanntes Beispiel, diesmal in 1D-Abstraktion mit `BEAM`-Elementen:
 
 <figure style="text-align:center;">
   <img src="../../02_ESZ/images/Uebung01-2D.excalidraw.png" alt="Uebung 1 2D" width="400" class="no-lightbox">
@@ -52,29 +52,38 @@ Balken mit rechteckigem Querschnitt
 
 ## Hinweise
 
-??? tip "<code>HINWEIS</code> – Geometrie mit Linie erstellen (klicken zum Aufklappen)"
+??? tip "<code>HINWEIS</code>: Geometrie mit Linie erstellen (klicken zum Aufklappen)"
 
     --8<-- "P4_Abstraktionen/04_Linienstrukturen/Umsetzung.md:Linienstruktur_erstellen"
 
-??? tip "<code>HINWEIS</code> – Geometrie aus Volumengeometrie ableiten (klicken zum Aufklappen)"
+??? tip "<code>HINWEIS</code>: Geometrie aus Volumengeometrie ableiten (klicken zum Aufklappen)"
 
     --8<-- "P4_Abstraktionen/04_Linienstrukturen/Umsetzung.md:Linienstruktur_umwandeln"
 
-??? tip "<code>HINWEIS</code> – Profil anpassen (klicken zum Aufklappen)"
+??? tip "<code>HINWEIS</code>: Profil anpassen (klicken zum Aufklappen)"
 
     --8<-- "P4_Abstraktionen/04_Linienstrukturen/Umsetzung.md:ProfilAnpassen"
 
-??? tip "<code>HINWEIS</code> – Elementdarstellung (klicken zum Aufklappen)"
+??? tip "<code>HINWEIS</code>: Elementdarstellung (klicken zum Aufklappen)"
 
     --8<-- "P4_Abstraktionen/04_Linienstrukturen/Umsetzung.md:Elementdarstellung"
 
-??? tip "<code>HINWEIS</code> – Ergebnisdarstellung (klicken zum Aufklappen)"
+??? tip "<code>HINWEIS</code>: Ergebnisdarstellung für die Spannung (klicken zum Aufklappen)"
 
     --8<-- "P4_Abstraktionen/04_Linienstrukturen/Umsetzung.md:Ergebnisdarstellung"
 
-??? tip "<code>HINWEIS</code> – Randbedingungen (klicken zum Aufklappen)"
+??? tip "<code>HINWEIS</code>: Randbedingungen (klicken zum Aufklappen)"
 
     --8<-- "P4_Abstraktionen/04_Linienstrukturen/Umsetzung.md:Randbedingungen"
+
+??? tip "<code>HINWEIS</code>: Zusatz Symmetrie bei Linien (klicken zum Aufklappen)"
+
+    Eine `Symmetry Region` gibt es nur für Volumen- und Flächenkörper, nicht für Linien. In Balkenmitte deshalb von Hand sperren, was die Symmetrie sperren würde:
+
+    - Verschiebung in Längsrichtung: `Displacement`, Längsrichtung 0
+    - Drehungen: `Fixed Rotation`
+
+    Dazu die Linie nur bis zur Mitte zeichnen (500 mm) und die halbe Kraft aufbringen (500 N). Am Lager nur noch die beiden Querrichtungen sperren, die Längsrichtung hält jetzt die Mitte.
 
 ## Gesucht
 
@@ -87,7 +96,7 @@ Die folgenden Größen berechnen:
 
 ### Die maximale von-Mises-Vergleichsspannung im Bauteil \(\sigma_\text{von Mises}\) in MPa
 
-<div class="numeric-question" data-answer="27.778" data-tolerance="0.25" data-points="5" data-attempts="5"  data-hints="Anstieg (Rotation) am Lager fälschlich durch Fixed Support auf Null gesetzt? Netzgröße 10 mm eingestellt?" data-diagnose="18.52: Dieser Wert entsteht, wenn die Drehung an den Lagern gesperrt ist (Fixed Support). Die Lager müssen die Drehung zulassen.">
+<div class="numeric-question" data-answer="27.778" data-tolerance="0.25" data-points="5" data-attempts="5"  data-hints="Anstieg (Rotation) am Lager fälschlich durch Fixed Support auf Null gesetzt? Netzgröße 10 mm eingestellt? Beam Section Results auf Yes?" data-diagnose="18.52: Dieser Wert entsteht, wenn die Drehung an den Lagern gesperrt ist (Fixed Support). Die Lager müssen die Drehung zulassen.">
 </div>
 
 <!-- Lösungsbilder - werden automatisch angezeigt, wenn alle Fragen beantwortet sind -->

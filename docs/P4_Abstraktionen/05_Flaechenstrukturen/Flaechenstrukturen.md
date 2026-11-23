@@ -28,7 +28,8 @@ Sie sind auch besonders effizient bei Bauteilen mit sehr geringer Dicke im Vergl
 Diese Abstraktion wirkt auf den ersten Blick ähnlich zur bereits bekannten 2D-Abstraktion mit *plane stress*.  
 Wichtiger Unterschied:
 
-- `plane stress`-Modelle liegen in einer festen Ebene (x–y) und beschreiben einen **2D-Schnitt**.
+- `plane stress`-Modelle liegen in einer festen Ebene (x-y) und beschreiben einen **2D-Schnitt**.
 - `SHELL`-Elemente können dagegen beliebig im 3D-Raum liegen, gekrümmt sein und auch komplexe Flächengeometrien (z. B. Schalen, Bleche mit Krümmung) abbilden.
+- `plane stress` trägt nur Lasten in der Ebene. `SHELL`-Elemente tragen auch Lasten senkrecht zur Fläche (Biegung wie bei einer Platte), deshalb lässt sich der Wafer in Übung 4 nur mit Schalen rechnen.
 
 SHELL-Modelle sind also 2D-Elemente, die im **vollen 3D-Raum** eingebettet sind, während *plane stress* eine reine 2D-Vereinfachung in einer Ebene ist.
