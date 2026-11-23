@@ -83,12 +83,12 @@ Durch eingeschaltete Beta-Option (siehe oben), können wir das Netz und die Erge
 
 Dafür muss <code>Strukturbaum → Symmetry</code> angeklickt werden und im <code>Detailfenster</code> eingestellt werden, wie gespiegelt werden soll. 
 
-- Es muss angegeben werden, wie oft gespiegelt wird (hier jeweils 2 Mal) mit der Methode <code>Half</code>.
+- Es muss angegeben werden, wie oft gespiegelt wird (je Symmetrieebene 2 Mal) mit der Methode <code>Half</code>.
 - Es wird der Abstand senkrecht zur Symmetrieebene angegeben. Wenn die Symmetrieebene genau in der Koordinate 0 liegt muss einfach ein sehr kleiner Wert angegeben werden. Liegt die Symmetrieebene z.B. 20mm entfernt muss der Wert 20mm angegeben werden
 
 <figure style="text-align:center;">
 <img src="../images/Spiegelungseinstellung.png" alt="Spiegelungseinstellung" width="600" class="no-lightbox">
 </figure>
 
-Werden diese Einstellungen übernommen, wird das Viertelmodell (2 Symmetrieebenen) als Vollmodell im Netz und in den Lösungskonturen dargestellt.
+Werden diese Einstellungen übernommen, wird das Halb- oder Viertelmodell als Vollmodell im Netz und in den Lösungskonturen dargestellt.
 <!-- --8<-- [end:Darstellung] -->

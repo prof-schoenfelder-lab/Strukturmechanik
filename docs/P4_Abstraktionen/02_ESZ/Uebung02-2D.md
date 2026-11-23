@@ -40,11 +40,7 @@ Lagerung:
 
 Belastung:
 
-- Kraft $F=3000 \mathrm{N}$ auf der Kante rechts
-
-!!! danger "Wird die Kraftangriffsfläche geteilt, muss die Kraft auch durch Anzahl der Symmetrie geteilt werden"
-
-    Die Kraft würde sich im Vollmodell auf die ganze Fläche aufteilen. Hier wird durch die Symmetrie aber eine kleinere Fläche verwendet und daher muss auch der Kraftwert geändert werden. 
+- Kraft $F=3000 \mathrm{N}$ am Eckpunkt oben rechts
 
 ## Aufgabenstellung
 
@@ -52,15 +48,15 @@ Belastung:
 
 ## Hinweise
 
-??? tip "<code>HINWEIS</code> – Geometrie (klicken zum aufklappen)"
+??? tip "<code>HINWEIS</code>: Geometrie (klicken zum aufklappen)"
 
     --8<-- "P4_Abstraktionen/02_ESZ/Umsetzung.md:Geometrie"
 
-??? tip "<code>HINWEIS</code> – Workbench Projektmenü Einstellungen (klicken zum aufklappen)"
+??? tip "<code>HINWEIS</code>: Workbench Projektmenü Einstellungen (klicken zum aufklappen)"
 
     --8<-- "P4_Abstraktionen/02_ESZ/Umsetzung.md:WBProjektmenue"
 
-??? tip "<code>HINWEIS</code> – Mechanical (klicken zum aufklappen)"
+??? tip "<code>HINWEIS</code>: Mechanical (klicken zum aufklappen)"
 
     --8<-- "P4_Abstraktionen/02_ESZ/Umsetzung.md:Mechanical"
 

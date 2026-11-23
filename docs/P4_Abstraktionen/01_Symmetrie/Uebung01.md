@@ -44,14 +44,9 @@ Balken mit rechteckigem Querschnitt
   \(F = 1000\,\mathrm{N}\) über die gesamte Balkenlänge  
   (entspricht einer Streckenlast \(q_0 = 1\,\mathrm{N/mm}\)).
 
-!!! danger "Wird die Kraftangriffsfläche geteilt, muss die Kraft auch durch die Anzahl der Symmetrie geteilt werden"
+!!! danger "Wird die Kraftangriffsfläche geteilt, muss auch die Kraft geteilt werden"
 
-    Die Kraft würde sich im Vollmodell auf die gesamte betroffene Fläche verteilen.  
-    Durch die Verwendung von Symmetrie wird jedoch nur ein Teil dieser Fläche im Modell abgebildet.  
-    Daher muss im reduzierten Modell auch der **Kraftwert** entsprechend angepasst werden.
-
-    Beispiel: Bei zwei Symmetrieebenen (Viertelmodell) wirkt im Modell nur noch  
-    \(F_\text{Modell} = F_\text{voll} / 4 = 250\,\mathrm{N}\).
+    Im reduzierten Modell ist nur ein Teil der belasteten Fläche vorhanden, also darf auch nur der passende Teil der Kraft angreifen: im Halbmodell F/2, im Viertelmodell F/4. Drücke (in MPa) sind schon flächenbezogen und bleiben gleich.
 
 ## Aufgabenstellung
 
@@ -93,34 +88,18 @@ Um eine Symmetrie zu verwenden, müssen bei der Spiegelung um diese Symmetrieebe
 ## Hinweise
 
 
-??? tip "<code>HINWEIS</code> – Geometrie (klicken zum aufklappen)"
+??? tip "<code>HINWEIS</code>: Geometrie (klicken zum aufklappen)"
 
     --8<-- "P4_Abstraktionen/01_Symmetrie/Umsetzung.md:Geometrie"
 
-??? tip "<code>HINWEIS</code> – Symmetrie (klicken zum aufklappen)"
+??? tip "<code>HINWEIS</code>: Symmetrie (klicken zum aufklappen)"
 
     --8<-- "P4_Abstraktionen/01_Symmetrie/Umsetzung.md:Symmetrie"
 
-??? success "<code>LÖSUNG</code> – Detailfenstereinstellungen für die Symmetrieebenen (klicken zum aufklappen)"
-
-    <figure style="text-align:center;">
-    <img src="../images/Symmetrie_xz.png" alt="Symmetrieebene xz" width="600" class="no-lightbox">
-    </figure>
-
-    <figure style="text-align:center;">
-    <img src="../images/Symmetrie_yz.png" alt="Symmetrieebene yz" width="600" class="no-lightbox">
-    </figure>
-
-??? tip "<code>HINWEIS</code> – Darstellung als Vollmodell (klicken zum aufklappen)"
+??? tip "<code>HINWEIS</code>: Darstellung als Vollmodell (klicken zum aufklappen)"
 
     --8<-- "P4_Abstraktionen/01_Symmetrie/Umsetzung.md:Darstellung"
 
-
-!!! danger "Wird die Kraftangriffsfläche geteilt, muss die Kraft auch durch die Anzahl der Symmetrie geteilt werden"
-
-    Die Kraft würde sich im Vollmodell auf die gesamte Fläche aufteilen. Hier wird durch die Symmetrie jedoch nur ein Teil dieser Fläche verwendet, und daher muss der Kraftwert entsprechend reduziert werden. 
-
-    Wenn die Belastung bereits flächennormiert wäre (also z. B. ein Druck in MPa), wäre dies nicht notwendig.
 
 ## Gesucht
 
@@ -140,6 +119,16 @@ Die folgenden Größen berechnen:
 <div class="solution-images">
 
 🎯 <strong>Lösung</strong>
+
+<figure style="text-align:center;">
+  <img src="../images/Symmetrie_xz.png" alt="Symmetrieebene x-z" width="600">
+  <figcaption>Symmetrieebene x-z</figcaption>
+</figure>
+
+<figure style="text-align:center;">
+  <img src="../images/Symmetrie_yz.png" alt="Symmetrieebene y-z" width="600">
+  <figcaption>Symmetrieebene y-z</figcaption>
+</figure>
 
 <figure style="text-align:center;">
   <img src="../images/Uebung01_umax.png" alt="maximale Durchbiegung" width="900">

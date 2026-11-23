@@ -58,7 +58,7 @@ Hier hilft uns nun die Definition der Symmetrieebene selbst:
     - die Verschiebung **senkrecht zur Ebene** ist dort null  
     - die Verformung ist zur Ebene hin **spiegelsymmetrisch** (keine „Knicke“ in der Ebene)
 
-Da die Symmetrieebene nun dafür sorgt, dass sich die Geometrie in der Mitte nicht mehr nach rechts und links bewegen kann, brauchen wir das Festlager nicht mehr – die Symmetriebedingungen übernehmen diesen Job.  
+Da die Symmetrieebene nun dafür sorgt, dass sich die Geometrie in der Mitte nicht mehr nach rechts und links bewegen kann, brauchen wir das Festlager nicht mehr: Die Symmetriebedingungen übernehmen diesen Job.  
 
 Wir können an dieser Stelle daher ein **Loslager** verwenden:
 
@@ -76,10 +76,10 @@ Da es jedoch unnötig wäre, zwei Systeme zu berechnen, die sich ohnehin gleich 
 
 # Aufteilung von Kräften
 
-Werden Kräfte auf Linien oder Flächen angebracht und diese durch Symmetrieebenen geteilt, so müssen die Kraftwerte auch durch die Anzahl der Teilungen geteilt werden. Hier folgendes Beispiel:
+Werden Linien oder Flächen, auf denen eine Kraft sitzt, durch Symmetrieebenen geteilt, muss auch die Kraft geteilt werden, und zwar durch die Zahl der Teile: im Halbmodell F/2, im Viertelmodell F/4. Das gilt auch für Kräfte, die genau auf einer Symmetrieebene sitzen. Hier ein Beispiel mit einer Symmetrieebene:
 
 <figure style="text-align:left;">
     <img src="../images/Kraft.excalidraw.png" alt="Kraftaufteilung" width="400" class="no-lightbox">
 </figure>
 
-Werden jedoch Drücke angegeben, müssen diese nicht geteilt werden weil diese ja bereits Flächennormiert sind.
+Drücke werden nicht geteilt, weil sie schon auf die Fläche bezogen sind. Dasselbe gilt für Beschleunigungen wie das Eigengewicht.

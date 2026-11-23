@@ -52,7 +52,7 @@ Um Rechenzeit zu sparen, sollte immer versucht werden, das Modell so weit wie mÃ
 </div>
 
 
-## 2D â€” Ebener Spannungszustand (Plane Stress)
+## 2D: Ebener Spannungszustand (Plane Stress)
 
 <div class="prakt-cards">
   <a class="prakt-card" href="02_ESZ/EbenerSpannungszustand/">
@@ -84,7 +84,7 @@ Um Rechenzeit zu sparen, sollte immer versucht werden, das Modell so weit wie mÃ
 </div>
 
 
-## 2D â€” Rotationssymmetrie
+## 2D: Rotationssymmetrie
 
 <div class="prakt-cards">
   <a class="prakt-card" href="03_Rotationssymmetrie/Rotationssymmetrie/">

@@ -40,15 +40,15 @@ Lagerung:
 
 Belastung:
 
-- Kraft $F=3000 \mathrm{N}$ auf der Kante rechts
+- Kraft $F=3000 \mathrm{N}$ auf der oberen Kante der rechten Stirnseite
 
-!!! danger "Wird die Kraftangriffsfläche geteilt, muss die Kraft auch durch Anzahl der Symmetrie geteilt werden"
+!!! danger "Wird die Kraftangriffsfläche geteilt, muss auch die Kraft geteilt werden"
 
-    Die Kraft würde sich im Vollmodell auf die ganze Fläche aufteilen. Hier wird durch die Symmetrie aber eine kleinere Fläche verwendet und daher muss auch der Kraftwert geändert werden. 
+    Im reduzierten Modell ist nur ein Teil der belasteten Fläche vorhanden, also darf auch nur der passende Teil der Kraft angreifen: im Halbmodell F/2, im Viertelmodell F/4. Drücke (in MPa) sind schon flächenbezogen und bleiben gleich.
 
 ## Aufgabenstellung
 
-!!! abstract "Alle möglichen Symmetrien ausnutzen und die unten gefragten Verschiebung berechnen."
+!!! abstract "Alle möglichen Symmetrien ausnutzen und die unten gefragte Verschiebung berechnen."
 
 ### Symmetrie
 
@@ -82,17 +82,6 @@ Um eine Symmetrie zu verwenden, müssen bei der Spiegelung um diese Symmetrieebe
     </div>
   </div>
 </div>
-
-## Hinweise
-
-### Kraft
-
-!!! danger "Wird die Kraftangriffsfläche geteilt, muss die Kraft auch durch Anzahl der Symmetrie geteilt werden"
-
-    Die Kraft würde sich im Vollmodell auf die ganze Fläche aufteilen. Hier wird durch die Symmetrie aber eine kleinere Fläche verwendet und daher muss auch der Kraftwert geändert werden. 
-
-    Wenn die Belastung bereits Flächennormiert wäre (also Druck in MPa) wäre dies nicht notwendig.
-
 
 ## Gesucht
 

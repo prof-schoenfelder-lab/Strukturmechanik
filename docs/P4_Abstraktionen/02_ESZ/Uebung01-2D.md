@@ -54,17 +54,21 @@ Balken mit rechteckigem Querschnitt
 ## Hinweise
 
 
-??? tip "<code>HINWEIS</code> – Geometrie (klicken zum aufklappen)"
+??? tip "<code>HINWEIS</code>: Geometrie (klicken zum aufklappen)"
 
     --8<-- "P4_Abstraktionen/02_ESZ/Umsetzung.md:Geometrie"
 
-??? tip "<code>HINWEIS</code> – Workbench Projektmenü Einstellungen (klicken zum aufklappen)"
+??? tip "<code>HINWEIS</code>: Workbench Projektmenü Einstellungen (klicken zum aufklappen)"
 
     --8<-- "P4_Abstraktionen/02_ESZ/Umsetzung.md:WBProjektmenue"
 
-??? tip "<code>HINWEIS</code> – Mechanical (klicken zum aufklappen)"
+??? tip "<code>HINWEIS</code>: Mechanical (klicken zum aufklappen)"
 
     --8<-- "P4_Abstraktionen/02_ESZ/Umsetzung.md:Mechanical"
+
+??? tip "<code>HINWEIS</code>: Zusatz Symmetrie in 2D (klicken zum aufklappen)"
+
+    Wie in 3D, nur sitzt die `Symmetry Region` in 2D auf der Schnittkante statt auf einer Fläche. Im Halbmodell wirkt die halbe Kraft (500 N).
 
 ## Gesucht
 
