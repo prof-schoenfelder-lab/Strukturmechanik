@@ -91,7 +91,7 @@ Die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung im Bauteil \(u_\text{max}\) in mm
 
-<div class="numeric-question" data-answer="0.92055" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Anstieg (Rotation) am Lager fälschlich durch Fixed Support auf Null gesetzt? Netzgröße 10 mm eingestellt?" data-diagnose="0.1858: Dieser Wert entsteht, wenn die Drehung an den Lagern gesperrt ist (Fixed Support). Die Lager müssen die Drehung zulassen.">
+<div class="numeric-question" data-answer="0.92055" data-tolerance="0.03" data-points="5" data-attempts="5"  data-hints="Anstieg (Rotation) am Lager fälschlich durch Fixed Support auf Null gesetzt? Netzgröße 10 mm eingestellt?" data-diagnose="0.1858: Dieser Wert entsteht, wenn die Drehung an den Lagern gesperrt ist (Fixed Support). Die Lager müssen die Drehung zulassen. | 0.967: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt des vorgegebenen Stahls (E = 210 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
 </div>
 
 ### Die maximale von-Mises-Vergleichsspannung im Bauteil \(\sigma_\text{von Mises}\) in MPa

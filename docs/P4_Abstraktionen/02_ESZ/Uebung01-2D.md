@@ -76,7 +76,7 @@ Die folgenden Größen berechnen:
 
 ### Die maximale Durchbiegung im Bauteil \(u_\text{max}\) in mm
 
-<div class="numeric-question" data-answer="0.921" data-tolerance="0.05" data-points="5" data-attempts="5"  data-hints="Dicke auf 30mm gestellt? Kraft in negative y-Richtung? Netzgröße 5 mm eingestellt?">
+<div class="numeric-question" data-answer="0.921" data-tolerance="0.03" data-points="5" data-attempts="5"  data-hints="Dicke auf 30mm gestellt? Kraft in negative y-Richtung? Netzgröße 5 mm eingestellt?" data-diagnose="0.967: Dieser Wert entsteht mit dem Standardmaterial Structural Steel (E = 200 GPa) statt des vorgegebenen Stahls (E = 210 GPa). Ist das vorgegebene Material angelegt und dem Körper zugeordnet?">
 </div>
 
 ### Die maximale von-Mises-Vergleichsspannung im Bauteil \(\sigma_\text{von Mises}\) in MPa
