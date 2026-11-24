@@ -8,7 +8,8 @@
     { prefix: '/P1_Einfuehrung/', name: 'Praktikum 1 · Einführung', href: 'P1_Einfuehrung/' },
     { prefix: '/P2_Geometrie_Randbedingungen/', name: 'Praktikum 2 · Geometrie & RB', href: 'P2_Geometrie_Randbedingungen/' },
     { prefix: '/P3_Vernetzung/', name: 'Praktikum 3 · Vernetzung', href: 'P3_Vernetzung/' },
-    { prefix: '/P4_Abstraktionen/', name: 'Praktikum 4 · Abstraktionen', href: 'P4_Abstraktionen/' }
+    { prefix: '/P4_Abstraktionen/', name: 'Praktikum 4 · Abstraktionen', href: 'P4_Abstraktionen/' },
+    { prefix: '/P5_Baugruppen_Auswertung/', name: 'Praktikum 5 · Baugruppen & Auswertung', href: 'P5_Baugruppen_Auswertung/' }
   ];
 
   function localBest(qid) {

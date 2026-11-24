@@ -1,0 +1,81 @@
+{
+  "slug": "P5_Baugruppen_Auswertung",
+  "nav": "BAUGRUPPEN & AUSWERTUNG",
+  "kinder": [
+    {
+      "extern": "P5_Baugruppen_Auswertung/index.md"
+    },
+    {
+      "gruppe": "Verbindungen und Kontakte",
+      "kinder": [
+        {
+          "titel": "Bauteile verbinden",
+          "extern": "P5_Baugruppen_Auswertung/01_Verbindungen/Verbindungen.md"
+        },
+        {
+          "titel": "Kontaktarten",
+          "extern": "P5_Baugruppen_Auswertung/01_Verbindungen/Kontakte.md"
+        },
+        {
+          "titel": "Umsetzung ANSYS",
+          "extern": "P5_Baugruppen_Auswertung/01_Verbindungen/Umsetzung.md"
+        },
+        {
+          "titel": "Übung 1",
+          "extern": "P5_Baugruppen_Auswertung/01_Verbindungen/Uebung-1.md"
+        }
+      ]
+    },
+    {
+      "gruppe": "Schrauben",
+      "kinder": [
+        {
+          "titel": "Schrauben berechnen",
+          "extern": "P5_Baugruppen_Auswertung/02_Schraube/Schraube.md"
+        },
+        {
+          "titel": "Geführtes Beispiel",
+          "extern": "P5_Baugruppen_Auswertung/02_Schraube/Beispiel.md"
+        }
+      ]
+    },
+    {
+      "gruppe": "Ergebnisse prüfen und darstellen",
+      "kinder": [
+        {
+          "titel": "Ergebnisse prüfen",
+          "extern": "P5_Baugruppen_Auswertung/03_Auswertung/Pruefen.md"
+        },
+        {
+          "titel": "Spannungen darstellen",
+          "extern": "P5_Baugruppen_Auswertung/03_Auswertung/Farbskala.md"
+        },
+        {
+          "titel": "Bilder speichern",
+          "extern": "P5_Baugruppen_Auswertung/03_Auswertung/Bilder.md"
+        },
+        {
+          "titel": "Übung 2",
+          "extern": "P5_Baugruppen_Auswertung/03_Auswertung/Uebung-2.md"
+        }
+      ]
+    },
+    {
+      "gruppe": "Ausblick",
+      "kinder": [
+        {
+          "titel": "Nichtlinearitäten",
+          "extern": "P5_Baugruppen_Auswertung/04_Ausblick/Nichtlinearitaeten.md"
+        },
+        {
+          "titel": "Meldungen und große Modelle",
+          "extern": "P5_Baugruppen_Auswertung/04_Ausblick/Alltag.md"
+        }
+      ]
+    },
+    {
+      "titel": "Zusammenfassung",
+      "extern": "P5_Baugruppen_Auswertung/Zusammenfassung.md"
+    }
+  ]
+}

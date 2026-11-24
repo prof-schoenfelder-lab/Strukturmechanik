@@ -289,7 +289,8 @@
     ['/P1_Einfuehrung/', 'Einführungs-Profi', '📥', 'Praktikum 1 komplett gelöst'],
     ['/P2_Geometrie_Randbedingungen/', 'Geometrie-Meister', '📐', 'Praktikum 2 komplett gelöst'],
     ['/P3_Vernetzung/', 'Singularitäten-Jäger', '🔍', 'Praktikum 3 komplett gelöst'],
-    ['/P4_Abstraktionen/', 'Abstraktions-Künstler', '🧩', 'Praktikum 4 komplett gelöst']
+    ['/P4_Abstraktionen/', 'Abstraktions-Künstler', '🧩', 'Praktikum 4 komplett gelöst'],
+    ['/P5_Baugruppen_Auswertung/', 'Baugruppen-Profi', '🔩', 'Praktikum 5 komplett gelöst']
   ];
   function evaluateBadges(celebrate, catOverride) {
     var cat = catOverride || cachedCatalog();

@@ -114,7 +114,7 @@ extra_css:
       - "styles/modern.css"
       - "assets/styles/spickzettel.css"
 
-# Die vier Praktika: Startseite (Liste) und Abschluss-Karte am Ende jedes Praktikums;
+# Die Praktika: Startseite (Liste) und Abschluss-Karte am Ende jedes Praktikums;
 # knackpunkt: Runde über der Abschluss-Karte (Bauteil, Name in der Bestenliste, Absätze)
 extra:
       praktika:
@@ -154,7 +154,12 @@ extra:
                     name: Balken als Halbmodell (Praktikum 4)
                     text:
                           - "Der Balken aus dem Zwischenspiel noch einmal, jetzt als Halbmodell: Rechts liegt die Symmetrieebene. Das Symmetrie-Lager hält die Schnittkante nur waagerecht, also senkrecht zur Ebene; entlang der Ebene darf sie gleiten. Links genügt deshalb ein Loslager, und die Last ist halbiert: 12,5 kN auf 150 mm. Was Sie wegnehmen, gilt gespiegelt für den ganzen Balken. Schaffen Sie mehr als im Zwischenspiel?"
-                          - "Wer alle vier Praktika abgeschlossen hat, schaltet das ganze Spiel frei: Zufallsbauteile, Baukasten, Herausforderungen und Wettkämpfe. Der Knopf dazu erscheint auf der Startseite des Kurses."
+                          - "Wer alle Praktika abgeschlossen hat, schaltet das ganze Spiel frei: Zufallsbauteile, Baukasten, Herausforderungen und Wettkämpfe. Der Knopf dazu erscheint auf der Startseite des Kurses."
+            - nr: 5
+              titel: Baugruppen und Auswertung
+              text: "Bauteile verbinden, Schrauben vorspannen, Ergebnisse prüfen und darstellen."
+              bild: P5_Baugruppen_Auswertung/01_Verbindungen/images/Verbindungen.excalidraw.png
+              link: P5_Baugruppen_Auswertung/
 # Lenker-Übung aus P2 vorerst raus (Felix, 26.10.2026); Datei bleibt für eine spätere Fassung
 exclude_docs: |
       P2_Geometrie_Randbedingungen/01_Geometrie_anpassen/Uebung-2.md
@@ -262,6 +267,25 @@ nav:
                       - Umsetzung ANSYS: P4_Abstraktionen/05_Flaechenstrukturen/Umsetzung.md
                       - Übung 4: P4_Abstraktionen/05_Flaechenstrukturen/Uebung04.md
               - Zusammenfassung: P4_Abstraktionen/Zusammenfassung.md
+      - BAUGRUPPEN & AUSWERTUNG:
+              - P5_Baugruppen_Auswertung/index.md
+              - Verbindungen und Kontakte:
+                      - Bauteile verbinden: P5_Baugruppen_Auswertung/01_Verbindungen/Verbindungen.md
+                      - Kontaktarten: P5_Baugruppen_Auswertung/01_Verbindungen/Kontakte.md
+                      - Umsetzung ANSYS: P5_Baugruppen_Auswertung/01_Verbindungen/Umsetzung.md
+                      - Übung 1: P5_Baugruppen_Auswertung/01_Verbindungen/Uebung-1.md
+              - Schrauben:
+                      - Schrauben berechnen: P5_Baugruppen_Auswertung/02_Schraube/Schraube.md
+                      - Geführtes Beispiel: P5_Baugruppen_Auswertung/02_Schraube/Beispiel.md
+              - Ergebnisse prüfen und darstellen:
+                      - Ergebnisse prüfen: P5_Baugruppen_Auswertung/03_Auswertung/Pruefen.md
+                      - Spannungen darstellen: P5_Baugruppen_Auswertung/03_Auswertung/Farbskala.md
+                      - Bilder speichern: P5_Baugruppen_Auswertung/03_Auswertung/Bilder.md
+                      - Übung 2: P5_Baugruppen_Auswertung/03_Auswertung/Uebung-2.md
+              - Ausblick:
+                      - Nichtlinearitäten: P5_Baugruppen_Auswertung/04_Ausblick/Nichtlinearitaeten.md
+                      - Meldungen und große Modelle: P5_Baugruppen_Auswertung/04_Ausblick/Alltag.md
+              - Zusammenfassung: P5_Baugruppen_Auswertung/Zusammenfassung.md
       # <<< AUTO-NAV
       - HILFE:
               - Anleitungen: tutorials.md

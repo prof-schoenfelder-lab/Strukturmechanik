@@ -1879,7 +1879,8 @@ def pool_status(db):
     answers = aktive_answers(db)  # ausgeschaltete Spiele zählen nicht mit
     total_q = len(answers) or 1
     praktika = [("P1_Einfuehrung", "Praktikum 1"), ("P2_Geometrie_Randbedingungen", "Praktikum 2"),
-                ("P3_Vernetzung", "Praktikum 3"), ("P4_Abstraktionen", "Praktikum 4")]
+                ("P3_Vernetzung", "Praktikum 3"), ("P4_Abstraktionen", "Praktikum 4"),
+                ("P5_Baugruppen_Auswertung", "Praktikum 5")]
     q_per_p = {key: sum(1 for qid in answers if "/" + key + "/" in qid) or 1 for key, _ in praktika}
 
     rows = [r for r in db.execute("SELECT pseudonym, qid, best, attempts FROM results")
